@@ -1,0 +1,40 @@
+.js .nav {
+		display:none;
+}	
+.js #rspnavigation {
+	display:block;
+}
+#rspnavigation ul{
+    margin: 0;
+    padding: 0;
+}
+#header h1 {
+    text-align: center;
+}
+#header .unav {
+    text-align: center;
+}
+.dash_menu li a {
+    font-size: 0;
+}
+.box .box_pic {
+    width: 100%;
+    text-align: center;
+}
+.box .box_description {
+    width: 100%;
+    text-align: center;
+}
+.box .box_actions {
+    width: 100%;
+    text-align: center;
+}
+.footer .copy {
+    font-size: 10px;
+}
+.loginSection {
+    padding: 0;
+}
+.logo {
+    margin-top: 0px;
+}
