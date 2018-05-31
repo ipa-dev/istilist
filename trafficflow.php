@@ -53,10 +53,10 @@ if(!empty($_GET['sz'])){
 google.setOnLoadCallback(trafficflowyear);
 function trafficflowyear(){
     var data = new google.visualization.DataTable();
-    
+
     data.addColumn('string', 'Month');
     data.addColumn('number', 'No. of Shoppers');
-    
+
     data.addRows([
         <?php
             $hour = 0;
@@ -66,7 +66,7 @@ function trafficflowyear(){
             while($month++ <= 12){
                 //$timetoprint = date('m',mktime(0,0,0,$month,0,$year));
                 $monthName = date('F', mktime(0, 0, 0, $month, 10));
-                
+
                 $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
@@ -75,7 +75,7 @@ function trafficflowyear(){
                     'monthnum' => $month,
                     'year' => $year,
                 );
-                
+
                 $the_query1 = new WP_Query( $arg1 );
                 $user_count = $the_query1->found_posts;
 		console.log("TEST");
@@ -83,13 +83,17 @@ function trafficflowyear(){
             }
         ?>
     ]);
-    
+
     var options = {
         hAxis: {
             title: 'Months',
             maxValue: 12
         },
         vAxis: {
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
             title: 'Number of Shoppers'
         },
         legend: {position: 'top', maxLines: 3},
@@ -97,7 +101,7 @@ function trafficflowyear(){
         width: '100%',
         height: 350
     };
-      
+
     var chart = new google.visualization.LineChart(document.getElementById('trafficflowyear'));
     google.visualization.events.addListener(chart, 'ready', function () {
         var chart_to_png_trafficflowyear = document.getElementById('chart_to_png_trafficflowyear');
@@ -126,10 +130,10 @@ else {
 google.setOnLoadCallback(trafficflowlastmonth);
 function trafficflowlastmonth(){
     var data = new google.visualization.DataTable();
-    
+
     data.addColumn('string', 'Days');
     data.addColumn('number', 'No. of Shoppers');
-    
+
     data.addRows([
         <?php
             $hour = 0;
@@ -139,7 +143,7 @@ function trafficflowlastmonth(){
             $number_of_days = cal_days_in_month(CAL_GREGORIAN,$month,$year);
             while($day++ < $number_of_days){
                 $timetoprint = date('m/d/Y',mktime($hour,0,0,$month,$day,$year));
-                
+
                 $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
@@ -149,27 +153,31 @@ function trafficflowlastmonth(){
                     'monthnum' => $month,
                     'day' => $day,
                 );
-                
+
                 $the_query1 = new WP_Query( $arg1 );
                 $user_count = $the_query1->found_posts;
                 echo "['$timetoprint', $user_count],";
             }
         ?>
     ]);
-    
+
     var options = {
         hAxis: {
             title: 'Days'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
         width: '100%',
         height: 380
     };
-      
+
     var chart = new google.visualization.LineChart(document.getElementById('trafficflowlastmonth'));
     google.visualization.events.addListener(chart, 'ready', function () {
         var chart_to_png_trafficflowlastmonth = document.getElementById('chart_to_png_trafficflowlastmonth');
@@ -198,10 +206,10 @@ else {
 google.setOnLoadCallback(trafficflowthismonth);
 function trafficflowthismonth(){
     var data = new google.visualization.DataTable();
-    
+
     data.addColumn('string', 'Days');
     data.addColumn('number', 'No. of Shoppers');
-    
+
     data.addRows([
         <?php
             $hour = 0;
@@ -211,7 +219,7 @@ function trafficflowthismonth(){
             $number_of_days = cal_days_in_month(CAL_GREGORIAN,$month,$year);
             while($day++ < $number_of_days){
                 $timetoprint = date('m/d/Y',mktime($hour,0,0,$month,$day,$year));
-                
+
                 $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
@@ -221,27 +229,31 @@ function trafficflowthismonth(){
                     'monthnum' => $month,
                     'day' => $day,
                 );
-                
+
                 $the_query1 = new WP_Query( $arg1 );
                 $user_count = $the_query1->found_posts;
                 echo "['$timetoprint', $user_count],";
             }
         ?>
     ]);
-    
+
     var options = {
         hAxis: {
             title: 'Days'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
         width: '100%',
         height: 380
     };
-      
+
     var chart = new google.visualization.LineChart(document.getElementById('trafficflowthismonth'));
     google.visualization.events.addListener(chart, 'ready', function () {
         var chart_to_png_trafficflowthismonth = document.getElementById('chart_to_png_trafficflowthismonth');
@@ -270,10 +282,10 @@ else {
 google.setOnLoadCallback(trafficflow7days);
 function trafficflow7days(){
     var data = new google.visualization.DataTable();
-    
+
     data.addColumn('string', 'Days');
     data.addColumn('number', 'No. of Shoppers');
-    
+
     data.addRows([
         <?php
             $year = date('Y');
@@ -290,31 +302,35 @@ function trafficflow7days(){
                     'year' => $year,
                     'monthnum' => $month,
                     'day' => $today
-                    
+
                 );
-                
+
                 $the_query2 = new WP_Query( $arg2 );
                 $user_count = $the_query2->found_posts;
-                
+
                 echo "['$timetoprint', $user_count],";
                 $today--;
             }while($today > $end_date);
         ?>
     ]);
-    
+
     var options = {
         hAxis: {
             title: 'Days'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
         width: '100%',
         height: 380
     };
-      
+
     var chart = new google.visualization.LineChart(document.getElementById('trafficflow7days'));
     google.visualization.events.addListener(chart, 'ready', function () {
         var chart_to_png_trafficflow7days = document.getElementById('chart_to_png_trafficflow7days');
@@ -343,10 +359,10 @@ else {
 google.setOnLoadCallback(trafficflowtoday);
 function trafficflowtoday(){
     var data = new google.visualization.DataTable();
-    
+
     data.addColumn('string', 'Time');
     data.addColumn('number', 'No. of Shoppers');
-    
+
     data.addRows([
         <?php
             $hour = 7;
@@ -374,7 +390,7 @@ function trafficflowtoday(){
                          $offset = 0;
                          break;
                 }
-                //END MASONS CODE 
+                //END MASONS CODE
                 $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
@@ -385,27 +401,31 @@ function trafficflowtoday(){
                     'day' => $date,
                     'hour' => ($hour+$offset)
                 );
-                
+
                 $the_query1 = new WP_Query( $arg1 );
                 $user_count = $the_query1->found_posts;
                 echo "['$timetoprint', $user_count],";
             }
         ?>
     ]);
-    
+
     var options = {
         hAxis: {
             title: 'Time'
         },
         vAxis: {
             title: 'Number of Shoppers'
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
         width: '100%',
         height: 380
     };
-      
+
     var chart = new google.visualization.LineChart(document.getElementById('trafficflowtoday'));
     google.visualization.events.addListener(chart, 'ready', function () {
         var chart_to_png_trafficflowtoday = document.getElementById('chart_to_png_trafficflowtoday');
@@ -448,28 +468,28 @@ else {
 google.setOnLoadCallback(trafficflowcustom);
 function trafficflowcustom(){
     var data = new google.visualization.DataTable();
-    
+
     data.addColumn('string', 'Days');
     data.addColumn('number', 'No. of Shoppers');
-    
+
     data.addRows([
         <?php
             $date1 = explode('-', $_POST['fromdate']);
-            
+
             $startDate_month = $date1[0];
             $startDate_year = $date1[2];
             $startDate_date = $date1[1];
-            
-            $startDate = strtotime($startDate_year.'-'.$startDate_month.'-'.$startDate_date.' 00:00:01'); 
-            
+
+            $startDate = strtotime($startDate_year.'-'.$startDate_month.'-'.$startDate_date.' 00:00:01');
+
             $date2 = explode('-', $_POST['todate']);
-            
+
             $endDate_month = $date2[0];
             $endDate_year = $date2[2];
             $endDate_date = $date2[1];
-            
-            $endDate = strtotime($endDate_year.'-'.$endDate_month.'-'.$endDate_date.' 23:59:59');        
-            
+
+            $endDate = strtotime($endDate_year.'-'.$endDate_month.'-'.$endDate_date.' 23:59:59');
+
             for ( $i = $startDate; $i <= $endDate; $i = $i + 86400 ) {
                 $thisYear = date( 'Y', $i ); // 2010-05-01, 2010-05-02, etc
                 $thisMonth = date( 'm', $i );
@@ -484,28 +504,32 @@ function trafficflowcustom(){
                     'monthnum' => $thisMonth,
                     'day' => $thisDate
                 );
-                
+
                 $the_query2 = new WP_Query( $arg2 );
                 $user_count = $the_query2->found_posts;
-                
+
                 echo "['$timetoprint', $user_count],";
             }
         ?>
     ]);
-    
+
     var options = {
         hAxis: {
             title: 'Days'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
         width: '100%',
         height: 380
     };
-      
+
     var chart = new google.visualization.LineChart(document.getElementById('trafficflowcustom'));
     google.visualization.events.addListener(chart, 'ready', function () {
         var chart_to_png_trafficflowcustom = document.getElementById('chart_to_png_trafficflowcustom');
@@ -524,7 +548,7 @@ else {
 }
 </script>
 <h4>Traffic Flow Between <?php echo $_POST['fromdate']; ?> to <?php echo $_POST['todate']; ?></h4>
-<div id="trafficflowcustom"></div><br /><br />   
+<div id="trafficflowcustom"></div><br /><br />
 <?php } ?>
 <?php } ?>
 
