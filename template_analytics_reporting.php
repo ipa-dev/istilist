@@ -7,10 +7,10 @@ $store_id = get_user_meta($user_ID, 'store_id', true);
 if(isset($_POST['download_csv'])){
     $output_filename = 'export_' . strftime( '%Y-%m-%d-%H-%M-%S' )  . '.csv';
     $output_handle = @fopen( 'php://output', "a" );
-    
+
     $csv_header = array();
     array_push($csv_header, 'registered_timestamp');
-    
+
     if(check_is_active('customer_fname') == 1){
         array_push($csv_header, 'customer_fname');
     }
@@ -60,15 +60,15 @@ if(isset($_POST['download_csv'])){
     $table_name2 = $wpdb->prefix.'dynamic_form';
     $sql2 = "SELECT * FROM $table_name2 WHERE store_owner_id = $store_id AND is_custom = 1 ORDER BY id";
     $results2 = $wpdb->get_results($sql2);
-    foreach($results2 as $r2){             
+    foreach($results2 as $r2){
         if(check_is_active($r2->form_slug) == 1){
             array_push($csv_header, $r2->form_slug);
         }
     }
-    
-    
+
+
     fputcsv( $output_handle, $csv_header );
-    
+
     $post_args1 = array(
         'post_type' => 'shopper',
         'post_status' => 'publish',
@@ -79,14 +79,14 @@ if(isset($_POST['download_csv'])){
 
     $the_query1 = new WP_Query( $post_args1 );
     $posts = $the_query1->posts;
-    
+
     header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
     header( 'Content-Description: File Transfer' );
     header( 'Content-type: text/csv' );
     header( 'Content-Disposition: attachment; filename=' . $output_filename );
     header( 'Expires: 0' );
     header( 'Pragma: public' );
-    
+
     foreach ( $posts as $post ) {
         $output = array();
         array_push($output, get_the_date("m-d-Y H:i:s", $post->ID));
@@ -143,12 +143,12 @@ if(isset($_POST['download_csv'])){
         $table_name2 = $wpdb->prefix.'dynamic_form';
         $sql2 = "SELECT * FROM $table_name2 WHERE store_owner_id = $store_id AND is_custom = 1 ORDER BY id";
         $results2 = $wpdb->get_results($sql2);
-        foreach($results2 as $r2){             
+        foreach($results2 as $r2){
             if(check_is_active($r2->form_slug) == 1){
                 array_push($output, get_post_meta($post->ID, $r2->form_slug, true));
             }
         }
-            
+
     	// Add row to file
     	fputcsv( $output_handle, $output );
     }
@@ -191,6 +191,10 @@ if(isset($_POST['download_csv'])){
                         <h3 class="toggleHeading">Size Preferences</h3>
                         <div class="toggleSection"><?php get_template_part('size_preff'); ?></div>
                     </div>
+                    <div class="reportBox" id="toggleheading7">
+                        <h3 class="toggleHeading">Purchases</h3>
+                        <div class="toggleSection"><?php get_template_part('purchaseflow'); ?></div>
+                    </div>
                     <div class="reportBox">
                         <h3>Export all registered shoppers</h3>
                         <span class="h1inlinelink">
@@ -201,7 +205,7 @@ if(isset($_POST['download_csv'])){
                         <div style="clear: both;"></div>
                     </div>
                 </div>
-                <?php get_footer(); ?>                          
+                <?php get_footer(); ?>
 	        </div>
 	    </div>
 	</div>
