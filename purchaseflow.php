@@ -564,7 +564,10 @@ function customerpurchasecustom(){
             title: 'Days'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
