@@ -1,6 +1,6 @@
 <?php global $user_ID; ?>
-<?php $user_role = get_user_role($user_ID); ?> 
-<div class="col span_3_of_12 matchheight">  
+<?php $user_role = get_user_role($user_ID); var_dump($user_role); ?> 
+<div class="col span_3_of_12 matchheight">
     <div class="dash_menu">
         <!-- If role == storeowner -->
         <?php if($user_role == 'storeowner'){ ?>
@@ -14,5 +14,5 @@
         <?php if($user_role == 'storesupervisor'){ ?>
         <?php wp_nav_menu(array('theme_location'=>'storesupervisormenu')); ?>
         <?php } ?>
-    </div>                        
+    </div>
 </div>
