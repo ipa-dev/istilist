@@ -1,5 +1,5 @@
 <?php global $user_ID; ?>
-<?php $user_role = get_user_role($user_ID); var_dump($user_role); ?> 
+<?php $user_role = get_user_role($user_ID); var_dump($user_role); exit(); ?> 
 <div class="col span_3_of_12 matchheight">
     <div class="dash_menu">
         <!-- If role == storeowner -->
