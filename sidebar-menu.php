@@ -4,7 +4,7 @@
     <div class="dash_menu">
         <!-- If role == storeowner -->
         <?php if($user_role == 'storeowner'){ ?>
-        <?php !wp_nav_menu(array('theme_location'=>'mainmenu')) ?>
+        <?php wp_nav_menu(array('theme_location'=>'mainmenu')) ?>
         <?php } ?>
         <!-- If role == storeemployee -->
         <?php if($user_role == 'storeemployee'){ ?>
