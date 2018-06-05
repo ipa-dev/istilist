@@ -536,7 +536,7 @@ function trafficflowtoday(){
             title: 'Time'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
             viewWindowMode: 'explicit',
             viewWindow: {
               min: 0,
