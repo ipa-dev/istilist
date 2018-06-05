@@ -56,6 +56,7 @@ function trafficflowyear(){
 
     data.addColumn('string', 'Month');
     data.addColumn('number', 'No. of Shoppers');
+    data.addColumn('number', 'No. of Purchases');
 
     data.addRows([
         <?php
@@ -78,8 +79,30 @@ function trafficflowyear(){
 
                 $the_query1 = new WP_Query( $arg1 );
                 $user_count = $the_query1->found_posts;
-		console.log("TEST");
-                echo "['$monthName', $user_count],";
+
+                $arg2 = array(
+                    'post_type' => 'shopper',
+                    'post_status' => 'publish',
+                    'meta_query' => array(
+                      array(
+                        'key' => 'store_id',
+                        'value' => $store_id,
+                        'compare' => '=',
+                      ),
+                      array(
+                        'key' => 'complete_purchase',
+                        'value' => 1,
+                        'compare' => '=',
+                      ),
+                      'relation' => 'AND',
+                    ),
+                    'monthnum' => $month,
+                    'year' => $year,
+                );
+
+                $the_query2 = new WP_Query( $arg2 );
+                $purchase_count = $the_query2->found_posts;
+                echo "['$monthName', $user_count, $purchase_count],";
             }
         ?>
     ]);
@@ -133,6 +156,7 @@ function trafficflowlastmonth(){
 
     data.addColumn('string', 'Days');
     data.addColumn('number', 'No. of Shoppers');
+    data.addColumn('number', 'No. of Purchases');
 
     data.addRows([
         <?php
@@ -156,7 +180,31 @@ function trafficflowlastmonth(){
 
                 $the_query1 = new WP_Query( $arg1 );
                 $user_count = $the_query1->found_posts;
-                echo "['$timetoprint', $user_count],";
+
+                $arg2 = array(
+                    'post_type' => 'shopper',
+                    'post_status' => 'publish',
+                    'meta_query' => array(
+                      array(
+                        'key' => 'store_id',
+                        'value' => $store_id,
+                        'compare' => '=',
+                      ),
+                      array(
+                        'key' => 'complete_purchase',
+                        'value' => 1,
+                        'compare' => '=',
+                      ),
+                      'relation' => 'AND',
+                    ),
+                    'monthnum' => $month,
+                    'year' => $year,
+                    'day' => $day,
+                );
+
+                $the_query2 = new WP_Query( $arg2 );
+                $purchase_count = $the_query2->found_posts;
+                echo "['$timetoprint', $user_count, $purchase_count],";
             }
         ?>
     ]);
@@ -209,6 +257,7 @@ function trafficflowthismonth(){
 
     data.addColumn('string', 'Days');
     data.addColumn('number', 'No. of Shoppers');
+    data.addColumn('number', 'No. of Purchases');
 
     data.addRows([
         <?php
@@ -232,7 +281,31 @@ function trafficflowthismonth(){
 
                 $the_query1 = new WP_Query( $arg1 );
                 $user_count = $the_query1->found_posts;
-                echo "['$timetoprint', $user_count],";
+                $arg2 = array(
+                    'post_type' => 'shopper',
+                    'post_status' => 'publish',
+                    'meta_query' => array(
+                      array(
+                        'key' => 'store_id',
+                        'value' => $store_id,
+                        'compare' => '=',
+                      ),
+                      array(
+                        'key' => 'complete_purchase',
+                        'value' => 1,
+                        'compare' => '=',
+                      ),
+                      'relation' => 'AND',
+                    ),
+                    'monthnum' => $month,
+                    'year' => $year,
+                    'day' => $day,
+                );
+
+                $the_query2 = new WP_Query( $arg2 );
+                $purchase_count = $the_query2->found_posts;
+                echo "['$timetoprint', $user_count, $purchase_count],";
+
             }
         ?>
     ]);
@@ -285,6 +358,7 @@ function trafficflow7days(){
 
     data.addColumn('string', 'Days');
     data.addColumn('number', 'No. of Shoppers');
+    data.addColumn('number', 'No. of Purchases');
 
     data.addRows([
         <?php
@@ -294,7 +368,7 @@ function trafficflow7days(){
             $today = date('d');
             do{
                 $timetoprint = date('m/d/Y',mktime(0,0,0,$month,$today,$year));
-                $arg2 = array(
+                $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_key' => 'store_id',
@@ -305,10 +379,33 @@ function trafficflow7days(){
 
                 );
 
-                $the_query2 = new WP_Query( $arg2 );
-                $user_count = $the_query2->found_posts;
+                $the_query1 = new WP_Query( $arg1 );
+                $user_count = $the_query1->found_posts;
 
-                echo "['$timetoprint', $user_count],";
+                $arg2 = array(
+                    'post_type' => 'shopper',
+                    'post_status' => 'publish',
+                    'meta_query' => array(
+                      array(
+                        'key' => 'store_id',
+                        'value' => $store_id,
+                        'compare' => '=',
+                      ),
+                      array(
+                        'key' => 'complete_purchase',
+                        'value' => 1,
+                        'compare' => '=',
+                      ),
+                      'relation' => 'AND',
+                    ),
+                    'monthnum' => $month,
+                    'year' => $year,
+                    'day' => $today,
+                );
+
+                $the_query2 = new WP_Query( $arg2 );
+                $purchase_count = $the_query2->found_posts;
+                echo "['$timetoprint', $user_count, $purchase_count],";
                 $today--;
             }while($today > $end_date);
         ?>
@@ -362,6 +459,7 @@ function trafficflowtoday(){
 
     data.addColumn('string', 'Time');
     data.addColumn('number', 'No. of Shoppers');
+    data.addColumn('number', 'No. of Purchases');
 
     data.addRows([
         <?php
@@ -404,7 +502,31 @@ function trafficflowtoday(){
 
                 $the_query1 = new WP_Query( $arg1 );
                 $user_count = $the_query1->found_posts;
-                echo "['$timetoprint', $user_count],";
+                $arg2 = array(
+                    'post_type' => 'shopper',
+                    'post_status' => 'publish',
+                    'meta_query' => array(
+                      array(
+                        'key' => 'store_id',
+                        'value' => $store_id,
+                        'compare' => '=',
+                      ),
+                      array(
+                        'key' => 'complete_purchase',
+                        'value' => 1,
+                        'compare' => '=',
+                      ),
+                      'relation' => 'AND',
+                    ),
+                    'monthnum' => $month,
+                    'year' => $year,
+                    'day' => $date,
+                    'hour' => ($hour+$offset),
+                );
+
+                $the_query2 = new WP_Query( $arg2 );
+                $purchase_count = $the_query2->found_posts;
+                echo "['$timetoprint', $user_count, $purchase_count],";
             }
         ?>
     ]);
@@ -471,6 +593,7 @@ function trafficflowcustom(){
 
     data.addColumn('string', 'Days');
     data.addColumn('number', 'No. of Shoppers');
+    data.addColumn('number', 'No. of Purchases');
 
     data.addRows([
         <?php
@@ -495,7 +618,7 @@ function trafficflowcustom(){
                 $thisMonth = date( 'm', $i );
                 $thisDate = date( 'd', $i );
                 $timetoprint = date( 'm/d/Y', $i );
-                $arg2 = array(
+                $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_key' => 'store_id',
@@ -505,10 +628,33 @@ function trafficflowcustom(){
                     'day' => $thisDate
                 );
 
-                $the_query2 = new WP_Query( $arg2 );
-                $user_count = $the_query2->found_posts;
+                $the_query1 = new WP_Query( $arg1 );
+                $user_count = $the_query1->found_posts;
 
-                echo "['$timetoprint', $user_count],";
+                $arg2 = array(
+                    'post_type' => 'shopper',
+                    'post_status' => 'publish',
+                    'meta_query' => array(
+                      array(
+                        'key' => 'store_id',
+                        'value' => $store_id,
+                        'compare' => '=',
+                      ),
+                      array(
+                        'key' => 'complete_purchase',
+                        'value' => 1,
+                        'compare' => '=',
+                      ),
+                      'relation' => 'AND',
+                    ),
+                    'monthnum' => $thisMonth,
+                    'year' => $thisYear,
+                    'day' => $thisDate,
+                );
+
+                $the_query2 = new WP_Query( $arg2 );
+                $purchase_count = $the_query2->found_posts;
+                echo "['$timetoprint', $user_count, $purchase_count],";
             }
         ?>
     ]);
