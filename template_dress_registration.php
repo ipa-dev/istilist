@@ -306,14 +306,37 @@ if(isset($_POST['download_csv'])){
                     </div>
                     <?php $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; ?>
                     <?php
-                        $post_args = array(
+                        if (isset($_POST['search_query'])) {
+                          $post_args = array(
+                            'post_type' => 'dress_reg',
+                            'post_status' => 'publish',
+                            'meta_query' => array(
+                              array(
+                                'key' => 'store_id',
+                                'value' => get_user_meta($user_ID, 'store_id', true),
+                                'relation' => '='
+                              ),
+                              array(
+                                'key' => 'style_number',
+                                'value' => $_POST['search_query'],
+                                'relation' => '='
+                              ),
+                              'relation' => 'AND'
+                            )
+                            'paged' => $paged,
+                            'posts_per_page' => 15
+                          );
+                        }
+                        else {
+                          $post_args = array(
                             'post_type' => 'dress_reg',
                             'post_status' => 'publish',
                             'meta_key' => 'store_id',
                             'meta_value' => get_user_meta($user_ID, 'store_id', true),
                             'paged' => $paged,
                             'posts_per_page' => 15
-                        );
+                          );
+                        }
 
                         $the_query = new WP_Query( $post_args );
 

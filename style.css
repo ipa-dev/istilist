@@ -778,9 +778,9 @@ span.h1inlinelink a{
 #search_btn{
     position: absolute;
     font-family: FontAwesome;
-    top: 0;
+    top: 6px;
     right: 0;
-    padding: 8px 12px;
+    padding: 9px 12px;
     border-radius: 0;
 }
 .numbers{
