@@ -6,7 +6,7 @@ if(isset($_POST['download_csv'])){
     $store_id = get_user_meta($user_ID, 'store_id', true);
     $output_filename = 'export_' . strftime( '%Y-%m-%d-%H-%M-%S' )  . '.csv';
     $output_handle = @fopen( 'php://output', "a" );
-    
+
     $csv_header = array(
         'id',
         'purchase_date',
@@ -22,7 +22,7 @@ if(isset($_POST['download_csv'])){
         'customer_wear_date'
     );
     fputcsv( $output_handle, $csv_header );
-    
+
     $post_args1 = array(
         'post_type' => 'dress_reg',
         'post_status' => 'publish',
@@ -33,9 +33,9 @@ if(isset($_POST['download_csv'])){
 
     $the_query1 = new WP_Query( $post_args1 );
     $posts = $the_query1->posts;
-    
-    
-    
+
+
+
     foreach ( $posts as $post ) {
         $output = array(
             $post->ID,
@@ -57,7 +57,7 @@ if(isset($_POST['download_csv'])){
     /*
     //rewind($output_handle);
     $attachments = stream_get_contents($output_handle);
-    
+
     $from = get_option('admin_email');
     $headers = 'From: '.$from . "\r\n";
     //$headers .= "Reply-To: ". strip_tags($_POST['req-email']) . "\r\n";
@@ -65,11 +65,11 @@ if(isset($_POST['download_csv'])){
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
     $subject = "Dress Registration CSV";
-    $msg = 'Dress Registration CSV'; 
+    $msg = 'Dress Registration CSV';
     $emailto = 'bhulbhal981@gmail.com';
     $sent_message = wp_mail( $emailto, $subject, $msg, $headers, $attachments );
     */
-    
+
     fclose( $output_handle );
     header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
     header( 'Content-Description: File Transfer' );
@@ -79,14 +79,14 @@ if(isset($_POST['download_csv'])){
     header( 'Pragma: public' );
     //echo $data;
     exit;
-} 
+}
 ?>
 <?php get_header(); ?>
 <?php if(is_user_logged_in()){ ?>
 <?php global $user_ID; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <?php $store_owner_id = get_user_meta($user_ID, 'store_id', true); ?>
-<?php $user_role = get_user_role($user_ID); ?> 
+<?php $user_role = get_user_role($user_ID); ?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
 	    <div class="section group">
@@ -94,7 +94,7 @@ if(isset($_POST['download_csv'])){
 	        <div class="col span_9_of_12 matchheight">
                 <div class="dash_content">
                     <?php if(($user_role == 'storeowner') || ($user_role == 'storesupervisor')){ ?>
-                    <h1><?php the_title(); ?> 
+                    <h1><?php the_title(); ?>
                         <span class="h1inlinelink">
                             <form method="post" id="download_form" action="">
                                 <input type="submit" name="download_csv" class="download_csv" value="&#xf019; Export to CSV" />
@@ -102,14 +102,14 @@ if(isset($_POST['download_csv'])){
                         </span>
                     </h1>
                     <?php } ?>
-                    
+
                     <?php if($user_role == 'storeemployee'){ ?>
                     <h1><?php the_title(); ?></h1>
                     <?php } ?>
                     <div class="box">
                         <?php
-                            
-                            
+
+
                             if(isset($_POST['dress_registration'])){
                                 global $wpdb;
                                 $post_arg = array(
@@ -121,7 +121,7 @@ if(isset($_POST['download_csv'])){
                                     'post_status' => 'publish'
                                 );
                                 $new_post_id = wp_insert_post( $post_arg );
-                                
+
                                 if($new_post_id){
                                     add_post_meta($new_post_id, 'purchase_date', $_POST['purchase_date']);
                                     add_post_meta($new_post_id, 'stylist_employee', $_POST['stylist_employee']);
@@ -135,7 +135,7 @@ if(isset($_POST['download_csv'])){
                                     add_post_meta($new_post_id, 'spacial_order', $_POST['spacial_order']);
                                     add_post_meta($new_post_id, 'customer_wear_date', $_POST['customer_wear_date']);
                                     add_post_meta($new_post_id, 'store_id', $store_id);
-                                    
+
                                     echo '<p class="successMsg">Thank you for your valuable time and information.</p>';
                                     //header("Location: ".get_bloginfo('home')."/dashboard");
                                 } else {
@@ -294,6 +294,14 @@ if(isset($_POST['download_csv'])){
                         </form>
                     </div>
                     <div>
+                    <div class="box">
+                      <form method="post" action="<?php blogin('url'); ?>/dashboard" style="width:25%;margin-bottom:2%;float:right;">
+                        <div class="searchForm">
+                            <input placeholder="Style No." type="text" id="search_query" name="search_query" value="<?php echo $_POST['search_query']; ?>" />
+                            <input type="submit" id="search_btn" name="search_btn" value="&#xf002" />
+                        </div>
+                      </form>
+                    </div>
                     <?php $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; ?>
                     <?php
                         $post_args = array(
@@ -304,9 +312,9 @@ if(isset($_POST['download_csv'])){
                             'paged' => $paged,
                             'posts_per_page' => 15
                         );
-                        
+
                         $the_query = new WP_Query( $post_args );
-                        
+
                         if ( $the_query->have_posts() ){
                             while ( $the_query->have_posts() ) : $the_query->the_post();
                             $reg_id = get_the_ID();
@@ -375,9 +383,9 @@ if(isset($_POST['download_csv'])){
                         <?php wp_reset_postdata(); ?>
                         <div class="paginationWrapper"><?php if(function_exists('wp_pagenavi')) { wp_pagenavi( array( 'query' => $the_query ) ); } ?></div>
                     </div>
-                    
+
                 </div>
-                <?php get_footer(); ?>                          
+                <?php get_footer(); ?>
 	        </div>
 	    </div>
 	</div>

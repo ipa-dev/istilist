@@ -14,10 +14,10 @@ if(isset($_POST['submit'])){
     update_post_meta($shopper_id, 'assign_stylist', $current_date);
     update_post_meta($shopper_id, 'stylist_id', $_POST['stylist_id']);
     update_post_meta($shopper_id, 'fitting_room_id', $_POST['fitting_room_id']);
-    
-    
+
+
     $prev_stylist_array = get_post_meta($shopper_id, 'prev_stylists', TRUE);
-    
+
     //Store all information on each stylist girl has been assigned
     if (empty($prev_stylist_array)) {
     	$prev_stylist_array = array (
@@ -34,7 +34,7 @@ if(isset($_POST['submit'])){
     	array_push($prev_stylist_array, $array_addition);
     	update_post_meta($shopper_id, 'prev_stylists', $prev_stylist_array);
     }
-    
+
     $hit_plus = get_post_meta($_POST['shopper_id'], 'hit_plus', true);
     if (!empty($hit_plus)) {
     	if ($hit_plus == 'true') {
@@ -63,28 +63,28 @@ if(isset($_POST['submit'])){
     	//user has not hit plus button after first round
     	$test = 0;
     }
-        
+
     header('Location: '.get_bloginfo('url').'/dashboard');
 }
 
 //When user presses plus button
 if(isset($_POST['plusbtn'])){
 
-    
+
 
     $my_post = array(
         'ID' => $_POST['shopper_id'],
         'post_modified' => date('Y-m-d H:i:s')
     );
     wp_update_post($my_post);
-    
-    
+
+
     update_post_meta($_POST['shopper_id'], 'dollar_button_clicked', 0);
     update_post_meta($_POST['shopper_id'], 'complete_purchase', 0);
     update_post_meta($_POST['shopper_id'], 'reason_not_purchased', '');
     delete_post_meta($_POST['shopper_id'], 'notified');
 
-    
+
     $timestamp_array = get_post_meta($_POST['shopper_id'], 'timestamps', true);
     if (!empty($timestamp_array)) {
     	array_push($timestamp_array, date('Y-m-d H:i:s'));
@@ -95,7 +95,7 @@ if(isset($_POST['plusbtn'])){
     	array_push($timestamp_array, date('Y-m-d H:i:s'));
     	add_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
     }
-    
+
     $hit_plus = get_post_meta($_POST['shopper_id'], 'hit_plus', true);
     if (!empty($hit_plus)) {
     	update_post_meta($_POST['shopper_id'], 'hit_plus', 'false');
@@ -112,44 +112,44 @@ if (isset($_POST['bulk_select'])) {
 			if ($value == "yes") {
 					update_post_meta($key, 'complete_purchase', 1);
 					update_post_meta($key, 'dollar_button_clicked', 1);
-					
+
 					$shopper_email = get_post_meta($key, 'customer_email', true);
-					
+
 					$table_name1 = $wpdb->prefix.'folloup_messages';
 					$sql2 = "SELECT * FROM $table_name1 WHERE message_type = 'thankyou' and store_id = $store_id";
 					$result2 = $wpdb->get_row($sql2);
-					
+
 					$shopper_name1 = get_post_meta($key, 'customer_fname', true).' '.get_post_meta($key, 'customer_lname', true);
 					$msg_body1 = str_replace("{Shopper's Name}",$shopper_name1,$result2->body);
-					
+
 					$styist_id = get_post_meta($key, 'stylist_id', true);
-					
+
 					$stylist_name = get_the_author_meta('display_name', $styist_id);
 					$msg_body2 = str_replace("{Stylist's Name}",$stylist_name,$msg_body1);
-					
-					
+
+
 					$store_name = get_the_author_meta('display_name', $store_id);
 					$from = get_user_meta($store_id, 'email_to_shopper', true);
-					
+
 					$shopper_name  = $shopper_name1;
 					$headers = 'From: '.$store_name.'<'.$from.'>'."\r\n";
 					$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
 					$headers .= "MIME-Version: 1.0\r\n";
 					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 					$subject = $result2->subject;
-					$msg = $msg_body2; 
-					
-					
+					$msg = $msg_body2;
+
+
 					if(!empty($store_name)){
 					    if(!empty($from)){
 					        //wp_mail( $shopper_email, $subject, $msg, $headers);
 					        mail( $shopper_email, $subject, $msg, $headers);
-					    }   
+					    }
 					}
-	
-				
+
+
 			}
-			
+
 		}
 	}
 	if ($_POST['bulk_select'] == 'not-purchased') {
@@ -158,32 +158,32 @@ if (isset($_POST['bulk_select'])) {
 
 					$reason = ".";
 					$table_name1 = $wpdb->prefix.'folloup_messages';
-	
+
 					update_post_meta($key, 'reason_not_purchased', $reason);
 					update_post_meta($key, 'dollar_button_clicked', 1);
-					
+
 					$shopper_email = get_post_meta($key, 'customer_email', true);
-					
+
 					$sql2 = "SELECT * FROM $table_name1 WHERE message_type = 'promo' and store_id = $store_id";
 					$result2 = $wpdb->get_row($sql2);
-					
+
 					$shopper_name1 = get_post_meta($key, 'customer_fname', true).' '.get_post_meta($key, 'customer_lname', true);
 					$msg_body1 = str_replace("{Shopper's Name}",$shopper_name1,$result2->body);
-					
+
 					$styist_id = get_post_meta($key, 'stylist_id', true);
-					
+
 					$stylist_name = get_the_author_meta('display_name', $styist_id);
 					$msg_body2 = str_replace("{Stylist's Name}",$stylist_name,$msg_body1);
-					
+
 					if($options['smtp-active'] == 1){
 					    $from = get_user_meta($user_ID, 'email_to_shopper', true); //get_the_author_meta('user_email', $store_id);
 					} else {
 					    $from = get_user_meta($user_ID, 'email_to_shopper', true); //get_the_author_meta('user_email', $store_id);
 					}
-					
+
 					$store_name = get_the_author_meta('display_name', $store_id);
 					$from = get_user_meta($store_id, 'email_to_shopper', true);
-					
+
 					$shopper_name  = $shopper_name1;
 					$headers = 'From: '.$store_name.'<'.$from.'>'."\r\n";
 					$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
@@ -191,20 +191,20 @@ if (isset($_POST['bulk_select'])) {
 					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 					$subject = $result2->subject;
 					$msg = $msg_body2;
-					
+
 					if(!empty($store_name)){
 					    if(!empty($from)){
 					        //wp_mail( $shopper_email, $subject, $msg, $headers );
 					        mail( $shopper_email, $subject, $msg, $headers);
-					    }   
+					    }
 					}
-				
+
 			}
 
 		}
-	}   
-	
-}                   
+	}
+
+}
 ?>
 <form method="post" action="">
     <div class="section group">
@@ -224,7 +224,7 @@ if (isset($_POST['bulk_select'])) {
                 }
                 ?>
             </select>
-            
+
         </div>
     </div>
     <div class="section group">
@@ -267,12 +267,12 @@ if (isset($_POST['bulk_select'])) {
 	                    	<option value="purchased">Purchased</option>
 	                    	<option value="not-purchased">Not Purchased</option>
 	                    </select>
-	                    
+
                     </div>
                     <?php if (!isset($_POST['search_query'])) { ?>
                     <?php $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; ?>
                     <?php
-		
+
                              $post_args = array(
                             'post_type' => 'shopper',
                             'post_status' => 'publish',
@@ -282,7 +282,7 @@ if (isset($_POST['bulk_select'])) {
                             'posts_per_page' => 30,
                             'orderby'=> 'modified',
                              );
-                             
+
                              $store_reverse_order = get_user_meta($store_id, 'reverse_order', true);
                              if (empty($store_reverse_order) || $store_reverse_order == NULL) {
                              	$post_args['order'] = 'DESC';
@@ -290,10 +290,10 @@ if (isset($_POST['bulk_select'])) {
                              else if ($store_reverse_order == "on") {
                              	$post_args['order'] = 'ASC';
                              }
-                       
+
 
                         $the_query = new WP_Query( $post_args );
-                        
+
                         if ( $the_query->have_posts() ){
                             while ( $the_query->have_posts() ) : $the_query->the_post();
                             $shopper_id = get_the_ID();
@@ -302,16 +302,16 @@ if (isset($_POST['bulk_select'])) {
                             <div class="box active">
                         <?php } else { ?>
                             <div class="box">
-                        <?php } ?> 
+                        <?php } ?>
                             <div class="box_pic">
                             <?php echo get_profile_img($shopper_id); ?>
                             </div>
                             <div class="box_description" data-shopperid="<?php echo $shopper_id; ?>">
                                 <h2>
                                 	<?php echo get_post_meta($shopper_id, 'customer_fname', true); ?> <?php echo get_post_meta($shopper_id, 'customer_lname', true); ?>
-                                	
+
                                 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                	<span><strong>Event:</strong> <?php echo get_post_meta($shopper_id, 'school_event', true); ?></span> 
+                                	<span><strong>Event:</strong> <?php echo get_post_meta($shopper_id, 'school_event', true); ?></span>
                                 	<br />
                                 	<?php
 						$timestamps = get_post_meta($shopper_id, 'timestamps', true);
@@ -360,7 +360,7 @@ if (isset($_POST['bulk_select'])) {
                                 	</div>
                                 </div>
                                 <p><?php echo excerpt(40); ?></p>
-                                <?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) { ?>
+                                <?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1 && get_post_meta($shopper_id, 'hit_plus', true) == 'false') { ?>
                                 <?php $purchased = get_post_meta($shopper_id, 'reason_not_purchased', true); ?>
                                 <?php if($purchased){ ?>
                                     <p class="reasone" style="padding-bottom: 5px;"><strong>Purchased?: </strong>NO</p>
@@ -381,7 +381,7 @@ if (isset($_POST['bulk_select'])) {
                                             <input hidden="" value="<?php echo get_the_modified_date('Y-m-d H:i:s'); ?>" />
                                             <input type="hidden" name="shopper_id" value="<?php echo $shopper_id; ?>" />
                                             <input class="submitbtnimg" <?php $timestamps = get_post_meta($shopper_id, 'timestamps', TRUE); if (!empty($timestamps)) echo "style='color:#14b9d6'"; ?> type="submit" name="plusbtn" value="&#xf067;" />
-                                        </form> 
+                                        </form>
                                     </li>
                                     <li><a href="javascript:void(0);" <?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) echo "style='color:#14b9d6'"; ?> class="dollar" rel="<?php echo $shopper_id; ?>"><i class="fa fa-usd"></i></a></li>
                                     <li><a href="javascript:void(0);" onclick="check(<?php echo $shopper_id; ?>);" id="checkBox<?php echo $shopper_id; ?>"></a></li>
@@ -403,77 +403,77 @@ if (isset($_POST['bulk_select'])) {
                     <?php } ?>
                     <?php if (isset($_POST['search_query'])) {
                     	include 'pagination.class.php';
-                        $current_user_store_id = get_user_meta($user_ID, 'store_id', true);                   
-                        /*Query 2 */                                        
+                        $current_user_store_id = get_user_meta($user_ID, 'store_id', true);
+                        /*Query 2 */
                         $arg2 = array(
                         	'meta_key' => 'customer_email',
                                 'meta_value' => $_POST['search_query'],
                                 'post_type' => 'shopper',
                                 'post_status' => 'publish',
-                                'posts_per_page' => -1                                            
+                                'posts_per_page' => -1
                         );
                         $query2 = new WP_Query($arg2);
                         $ids2 = array();
                         while ( $query2->have_posts() ) : $query2->the_post();
                         	array_push($ids2,get_the_ID());
                         endwhile;
-                                        
+
                         /* Query 3 */
                         $arg3 = array(
                         	'meta_key' => 'customer_address',
                                 'meta_value' => $_POST['search_query'],
                                 'post_type' => 'shopper',
                                 'post_status' => 'publish',
-                                'posts_per_page' => -1                                            
+                                'posts_per_page' => -1
                         );
                         $query3 = new WP_Query($arg3);
                         $ids3 = array();
                         while ( $query3->have_posts() ) : $query3->the_post();
                         	array_push($ids3,get_the_ID());
                         endwhile;
-                                        
+
                         /* Query 4 */
                         $arg4 = array(
                         	'meta_key' => 'customer_city',
                                 'meta_value' => $_POST['search_query'],
                                 'post_type' => 'shopper',
                                 'post_status' => 'publish',
-                                'posts_per_page' => -1                                            
+                                'posts_per_page' => -1
                         );
                         $query4 = new WP_Query($arg4);
                         $ids4 = array();
                         while ( $query4->have_posts() ) : $query4->the_post();
                         	array_push($ids4,get_the_ID());
                         endwhile;
-                                        
+
                         /* Query 5 */
                         $arg5 = array(
                         	'meta_key' => 'customer_state',
                                 'meta_value' => $_POST['search_query'],
                                 'post_type' => 'shopper',
                                 'post_status' => 'publish',
-                                'posts_per_page' => -1                                            
+                                'posts_per_page' => -1
                         );
                         $query5 = new WP_Query($arg5);
                         $ids5 = array();
                         while ( $query5->have_posts() ) : $query5->the_post();
                         	array_push($ids5,get_the_ID());
                         endwhile;
-                                        
+
                         /* Query 6 */
                         $arg6 = array(
                         	'meta_key' => 'customer_zip',
                                 'meta_value' => $_POST['search_query'],
                                 'post_type' => 'shopper',
                                 'post_status' => 'publish',
-                                'posts_per_page' => -1                                            
+                                'posts_per_page' => -1
                         );
                         $query6 = new WP_Query($arg6);
                         $ids6 = array();
                         while ( $query6->have_posts() ) : $query6->the_post();
                         	array_push($ids6,get_the_ID());
                         endwhile;
-                                        
+
                         /* Query 7 */
                         /* Code Allows for Partial Searches */
                         function name_filter( $where, &$query7 )
@@ -491,7 +491,7 @@ if (isset($_POST['bulk_select'])) {
                        		 'search_shopper_name' => $_POST['search_query'], // added code for partial searches
                         	'post_type' => 'shopper',
                         	'post_status' => 'publish',
-                                'posts_per_page' => -1                                            
+                                'posts_per_page' => -1
                         );
                         add_filter( 'posts_where', 'name_filter', 10, 2 ); //added code for partial searches
                         $query7 = new WP_Query($arg7);
@@ -500,21 +500,21 @@ if (isset($_POST['bulk_select'])) {
                         while ( $query7->have_posts() ) : $query7->the_post();
                         	array_push($ids7,get_the_ID());
                         endwhile;
-                                        
+
                         /* Query 8 */
                         $arg8 = array(
                         	'meta_key' => 'customer_lname',
                                 'meta_value' => $_POST['search_query'],
                                 'post_type' => 'shopper',
                                 'post_status' => 'publish',
-                                'posts_per_page' => -1                                            
+                                'posts_per_page' => -1
                         );
                         $query8 = new WP_Query($arg8);
                         $ids8 = array();
                         while ( $query8->have_posts() ) : $query8->the_post();
                         	array_push($ids8,get_the_ID());
                         endwhile;
-                                        
+
                         /* Marge IDs and get Unique IDs*/
                         $mergedposts = array_merge( $ids2, $ids3, $ids4, $ids5, $ids6, $ids7, $ids8 );
                         $postids = array();
@@ -530,8 +530,8 @@ if (isset($_POST['bulk_select'])) {
                                                 array_push($uniqueposts,$uniqueposts1[$i]);
                                             }
                                         }
-                                        
-                                    
+
+
                         ?>
                                 <?php if (count($uniqueposts)) { ?>
                                 <?php $pagination = new pagination($uniqueposts, (isset($_GET['pageno']) ? $_GET['pageno'] : 1), 5); ?>
@@ -586,7 +586,7 @@ if (isset($_POST['bulk_select'])) {
                                                 <input hidden="" value="<?php echo get_the_modified_date('Y-m-d H:i:s'); ?>" />
                                                 <input type="hidden" name="shopper_id" value="<?php echo $shopper_id; ?>" />
                                                 <input class="submitbtnimg" type="submit" name="plusbtn" value="&#xf067;" />
-                                            </form> 
+                                            </form>
                                             </li>
                                             <li><a href="javascript:void(0);" class="dollar" rel="<?php echo $shopper_id; ?>"><i class="fa fa-usd"></i></a></li>
                                         </ul>
@@ -598,7 +598,7 @@ if (isset($_POST['bulk_select'])) {
                                 <?php } // end of foreach loop ?>
                                 <?php } // end of if loop ?>
                                 <?php } // end of main if loop ?>
-                    
+
                     <!-- BX Slider -->
                     <div class="slider">
                         <div class="bxslider">
@@ -608,7 +608,7 @@ if (isset($_POST['bulk_select'])) {
                                     'post_status' => 'publish',
                                     'posts_per_page' => 3
                                 );
-                                
+
                                 $tips_query = new WP_Query($tips_args);
                                 if($tips_query->have_posts()){
                                     while ( $tips_query->have_posts() ) : $tips_query->the_post();
@@ -617,7 +617,7 @@ if (isset($_POST['bulk_select'])) {
                                     <h2><?php the_title(); ?></h2>
                                     <?php the_content(); ?>
                                 </div>
-                                <?php endwhile ?>    
+                                <?php endwhile ?>
                             <?php } else{ ?>
                                 <div>No Tips</div>
                             <?php } ?>
@@ -629,7 +629,7 @@ if (isset($_POST['bulk_select'])) {
                         </div>
                     </div>
                 </div>
-                <?php get_footer(); ?>                          
+                <?php get_footer(); ?>
 	        </div>
 	    </div>
 	</div>
@@ -638,7 +638,7 @@ if (isset($_POST['bulk_select'])) {
 function sendTextNotification(shopper_id, is_phone) {
     /*
         Send AJAX notification if customer_phone meta is set
-    
+
     */
     if (is_phone == 'TRUE') {
             //Send AJAX request to PHP script that sends text message to shopper
@@ -675,11 +675,11 @@ function sendTextNotification(shopper_id, is_phone) {
             });
     }
     jQuery('#'+shopper_id+'-bell').css('color', '#14b9d6');
-} 
+}
 
 function check(shopper_id) {
 	var input = document.getElementById('checkInput'+shopper_id);
-	
+
 	if (input.value == "" || input.value == "no") {
 		input.value = "yes";
 		jQuery('#checkBox'+shopper_id).append('<i class="fa fa-check"></i>');
@@ -703,7 +703,7 @@ function confirmation() {
 	        confirmButtonText: "Yes",
 	        cancelButtonText: "No",
 	        closeOnConfirm: false,
-	        closeOnCancel: true 
+	        closeOnCancel: true
 	}, function (isConfirm) {
 		if (isConfirm) {
 			document.getElementById("bulkActionForm").submit();
@@ -712,13 +712,13 @@ function confirmation() {
 }
 
 jQuery(document).ready(function(){
-    
+
     // this is for second button
     jQuery('.assignStylist').click(function(){
         var shopper_id = jQuery(this).attr('rel');
         jQuery('#shopper_id').val(shopper_id);
     });
-    
+
     // this is for 3rd button
     jQuery('.dollar').click(function(){
         var shopper_id = jQuery(this).attr('rel');
@@ -730,7 +730,7 @@ jQuery(document).ready(function(){
             confirmButtonText: "Yes",
             cancelButtonText: "No",
             closeOnConfirm: false,
-            closeOnCancel: false 
+            closeOnCancel: false
         }, function(isConfirm){
             if (isConfirm){
                 jQuery.ajax({
@@ -749,16 +749,16 @@ jQuery(document).ready(function(){
                 	error:function(responce){
                 	    console.log(responce);
                 		alert("failure : "+responce);
-                	}   
+                	}
                 });
             } else {
                 swal({
                     title: "Reason",
                     //text: "Reason:",
                     type: "input",
-                    showCancelButton: true,   
-                    closeOnConfirm: false,   
-                    animation: "slide-from-top",   
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
                     inputPlaceholder: ""
                 },function(inputValue){
                     if (inputValue === false) return false;
@@ -777,7 +777,7 @@ jQuery(document).ready(function(){
                     	error:function(responce){
                     	   console.log(responce);
                     		alert("failure : "+responce);
-                    	}   
+                    	}
                     });
                 });
             }
