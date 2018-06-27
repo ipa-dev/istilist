@@ -322,7 +322,7 @@ if(isset($_POST['download_csv'])){
                                 'relation' => '='
                               ),
                               'relation' => 'AND'
-                            )
+                            ),
                             'paged' => $paged,
                             'posts_per_page' => 15
                           );
