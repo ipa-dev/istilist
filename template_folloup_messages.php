@@ -133,6 +133,50 @@
                         </form>
                     </div>
                     <div class="reportBox">
+                      <h3>Send Email to all Shoppers</h3>
+                      <form id='shopper_email_form' method='post' action=''>
+                        <div class="section group">
+                            <div class="col span_2_of_12">Subject</div>
+                            <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value=""/></div>
+                        </div>
+                        <div class="section group">
+                            <div class="col span_2_of_12">Email Body</div>
+                            <div class="col span_10_of_12">
+                            <?php
+                                $settings3 = array(
+                                    'wpautop' => true,
+                                    'media_buttons' => true,
+                                    'textarea_name' => 'shopper_email_body',
+                                    'textarea_rows' => 40,
+                                    'tabindex' => '',
+                                    'editor_css' => '',
+                                    'editor_class' => 'msgClass',
+                                    'teeny' => false,
+                                    'dfw' => true,
+                                    'tinymce' => true,
+                                    'quicktags' => true,
+                                    'drag_drop_upload' => true
+                                );
+                            ?>
+
+                            <?php wp_editor('', 'shopper_email_body', $settings3); ?>
+                            <div class="allowedtag">
+                                <em>{Shopper's Name}</em> for auto generated shopper's name<br />
+                                <em>{Stylist's Name}</em> for auto generated stylist's name
+                            </div>
+                            </div>
+                        </div>
+                        <div class="section group">
+                            <div class="col span_12_of_12">
+                                <div class="alignright">
+                                    <input type="submit" name="shopper_email_template" value="Send E-mail" />
+                                </div>
+                            </div>
+                        </div>
+
+                      </form>
+                    </div>
+                    <div class="reportBox">
                         <h3>Thank You Text Template</h3>
                         <?php
                             if (isset($_POST['thankyou_text_template'])) {
