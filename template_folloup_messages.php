@@ -134,7 +134,27 @@
                     </div>
                     <div class="reportBox">
                       <h3>Send Email to all Shoppers</h3>
-                      <form id='shopper_email_form' method='post' action=''>
+                      <?php
+                        if(isset($_POST['shopper_email_form'])){
+                            $args = array(
+                              'post_type' => 'shopper',
+                            	'post_status' => 'publish',
+                            	'meta_key' => 'store_id',
+                            	'meta_value' => $store_id,
+                            	'paged' => $paged,
+                            	'posts_per_page' => -1,
+                            );
+                            $the_query = new WP_Query( $args );
+
+                            if ( $the_query->have_posts() ){
+                                while ( $the_query->have_posts() ) {
+                                  $the_query->the_post();
+                                  
+                                }
+                            }
+                        }
+                      ?>
+                      <form name='shopper_email_form' id='shopper_email_form' method='post' action=''>
                         <div class="section group">
                             <div class="col span_2_of_12">Subject</div>
                             <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value=""/></div>
