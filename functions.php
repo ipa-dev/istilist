@@ -440,7 +440,7 @@ add_action( 'admin_head', 'add_scripts' );
 
 function get_unique_post_meta_values( $searchkey = '', $searchvalue = '', $status = 'publish', $type = 'post', $findkey = '') {
     global $wpdb;
-    if( empty( $key ) )
+    if( empty( $searchkey ) )
         return;
     $res = $wpdb->get_col( $wpdb->prepare( "
           SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm WHERE pm.post_id IN
