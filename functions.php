@@ -437,4 +437,21 @@ function add_scripts() {
     }
 }
 add_action( 'admin_head', 'add_scripts' );
+
+function get_unique_post_meta_values( $searchkey = '', $searchvalue = '', $status = 'publish', $type = 'post', $findkey = '') {
+    global $wpdb;
+    if( empty( $key ) )
+        return;
+    $res = $wpdb->get_col( $wpdb->prepare( "
+          SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm WHERE pm.post_id IN
+          (SELECT pm.post_id FROM {$wpdb->postmeta} pm
+          LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+          WHERE pm.meta_key = '%s'
+          AND pm.meta_value = '%s'
+          AND p.post_status = '%s'
+          AND p.post_type = '%s')
+          AND pm.meta_key = '%s'
+    ", $searchkey, $searchvalue, $status, $type, $findkey) );
+    return $res;
+}
 ?>
