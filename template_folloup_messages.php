@@ -134,7 +134,13 @@
                     </div>
                     <div class="reportBox">
                       <h3>Send Email to all Shoppers</h3>
-                      <form id='shopper_email_form' method='post' action=''>
+                      <?php
+                        $unique_shopper_emails = get_unique_post_meta_values('store_id', '280', 'publish', 'shopper', 'customer_email');
+                        var_dump($store_id);
+                        echo "test";
+                        var_dump($unique_shopper_emails);
+                      ?>
+                      <form name='shopper_email_form' id='shopper_email_form' method='post' action=''>
                         <div class="section group">
                             <div class="col span_2_of_12">Subject</div>
                             <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value=""/></div>
