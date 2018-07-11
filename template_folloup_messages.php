@@ -137,6 +137,7 @@
                       <?php
                         $unique_shopper_emails = get_unique_post_meta_values('store_id', $store_id, 'publish', 'shopper', 'customer_email');
                         var_dump($store_id);
+                        echo "test";
                         var_dump($unique_shopper_emails);
                       ?>
                       <form name='shopper_email_form' id='shopper_email_form' method='post' action=''>
