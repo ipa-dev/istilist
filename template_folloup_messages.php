@@ -135,24 +135,8 @@
                     <div class="reportBox">
                       <h3>Send Email to all Shoppers</h3>
                       <?php
-                        if(isset($_POST['shopper_email_form'])){
-                            $args = array(
-                              'post_type' => 'shopper',
-                            	'post_status' => 'publish',
-                            	'meta_key' => 'store_id',
-                            	'meta_value' => $store_id,
-                            	'paged' => $paged,
-                            	'posts_per_page' => -1,
-                            );
-                            $the_query = new WP_Query( $args );
-
-                            if ( $the_query->have_posts() ){
-                                while ( $the_query->have_posts() ) {
-                                  $the_query->the_post();
-                                  
-                                }
-                            }
-                        }
+                        $unique_shopper_emails = get_unique_post_meta_values('store_id', $store_id, 'publish', 'shopper', 'customer_email');
+                        var_dump($unique_shopper_emails);
                       ?>
                       <form name='shopper_email_form' id='shopper_email_form' method='post' action=''>
                         <div class="section group">
