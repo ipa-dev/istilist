@@ -57,9 +57,9 @@
                                         'quicktags' => true,
                                         'drag_drop_upload' => true
                                     );
+
+                                    wp_editor($result1->body, 'thankyou_email_body', $settings1);
                                 ?>
-                                <?php wp_editor($result1->body, 'thankyou_email_body', $settings1); ?>
-                                <?php //the_editor($result1->body, 'content');?>
                                 <div class="allowedtag">
                                     <em>{Shopper's Name}</em> for auto generated shopper's name<br />
                                     <em>{Stylist's Name}</em> for auto generated stylist's name
@@ -134,13 +134,7 @@
                     </div>
                     <div class="reportBox">
                       <h3>Send Email to all Shoppers</h3>
-                      <?php
-                        $unique_shopper_emails = get_unique_post_meta_values('store_id', '280', 'publish', 'shopper', 'customer_email');
-                        var_dump($store_id);
-                        echo "test";
-                        var_dump($unique_shopper_emails);
-                      ?>
-                      <form name='shopper_email_form' id='shopper_email_form' method='post' action=''>
+                      <form name='shopper_email_form' id='shopper_email_form' method='post' action='<?php bloginfo('url'); ?>/send-all-shoppers-email'>
                         <div class="section group">
                             <div class="col span_2_of_12">Subject</div>
                             <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value=""/></div>
@@ -175,6 +169,7 @@
                         <div class="section group">
                             <div class="col span_12_of_12">
                                 <div class="alignright">
+                                    <input type="submit" name="shopper_email_template" value="Send Test E-mail" />
                                     <input type="submit" name="shopper_email_template" value="Send E-mail" />
                                 </div>
                             </div>
