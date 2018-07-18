@@ -20,6 +20,8 @@ if ($_POST['shopper_email_template'] == 'Send Test E-mail') {
 else {
   $unique_shopper_emails = get_unique_post_meta_values('store_id',
     $store_id, 'publish', 'shopper', 'customer_email');
+  var_dump ($unique_shopper_emails);
+  exit();
   foreach ($unique_shopper_emails as $unique_shopper_email) {
 
     $filtered_email = filter_var($unique_shopper_email, FILTER_VALIDATE_EMAIL);
