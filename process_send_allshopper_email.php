@@ -14,8 +14,8 @@ $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 if ($_POST['shopper_email_template'] == 'Send Test E-mail') {
-  $deliv = mail( get_user_meta($user_ID, 'store_email', true), $POST['shopper_email_subject'],
-    $POST['shopper_email_body'], $headers);
+  $deliv = mail( get_user_meta($user_ID, 'store_email', true), $_POST['shopper_email_subject'],
+    $_POST['shopper_email_body'], $headers);
 }
 else {
   $unique_shopper_emails = get_unique_post_meta_values('store_id',
@@ -27,7 +27,7 @@ else {
     $filtered_email = filter_var($unique_shopper_email, FILTER_VALIDATE_EMAIL);
     if ($filtered_email) {
 
-      $deliv = mail( $filtered_email, $POST['shopper_email_subject'],
+      $deliv = mail( $filtered_email, $_POST['shopper_email_subject'],
         $POST['shopper_email_body'], $headers);
     }
   }
