@@ -4,7 +4,7 @@
 if(is_user_logged_in()){
     global $user_ID;
     $timezone = get_user_meta($user_ID, 'selecttimezone', true);
-    if (isempty($timezone)) {
+    if (empty($timezone)) {
       $timezone = 'US/Eastern';
     }
     date_default_timezone_set($timezone);
