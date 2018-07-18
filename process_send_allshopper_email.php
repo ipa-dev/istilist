@@ -14,7 +14,7 @@ $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 if ($_POST['shopper_email_template'] == 'Send Test E-mail') {
-  mail( get_user_meta($user_ID, 'store_email', true), $POST['shopper_email_subject'],
+  $deliv = mail( get_user_meta($user_ID, 'store_email', true), $POST['shopper_email_subject'],
     $POST['shopper_email_body'], $headers);
 }
 else {
@@ -25,10 +25,25 @@ else {
     $filtered_email = filter_var($unique_shopper_email, FILTER_VALIDATE_EMAIL);
     if ($filtered_email) {
 
-      mail( $filtered_email, $POST['shopper_email_subject'],
+      $deliv = mail( $filtered_email, $POST['shopper_email_subject'],
         $POST['shopper_email_body'], $headers);
     }
   }
-}
-}
+}?>
+<div class="maincontent">
+    <div class="section group">
+        <div class="col span_3_of_12"></div>
+        <div class="col span_6_of_12">
+<?php
+if ($deliv) {
 ?>
+  <div class="successMsg">E-mail Sent</div>
+<?php } else { ?>
+  <div class="errorMsg">There was an error in processing your message. Please do not retry to send your message as some users may have received one copy</div>
+<?php } ?>
+        </div>
+        <div class="col span_3_of_12"></div>
+
+    </div>
+</div>
+<?php } ?>
