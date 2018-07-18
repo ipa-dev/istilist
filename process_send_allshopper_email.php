@@ -1,4 +1,4 @@
-<?php /* Template Name: Send All Shopper Email */ ?>
+<?php /* Template Name: Send All Shoppers Email */ ?>
 <?php get_header(); ?>
 <?php if(is_user_logged_in()){ ?>
 <?php global $user_ID; global $wpdb; ?>
