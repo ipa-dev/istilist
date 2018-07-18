@@ -41,11 +41,11 @@ if ($deliv) {
 ?>
   <div class="successMsg">E-mail Sent</div>
 <?php } else { ?>
-  <div class="errorMsg">There was an error in processing your message. Please do not retry to send your message as some users may have received one copy</div>
-<?php } ?>
+  <div class="errorMsg">There was an error in processing your message. Please do not retry to send your message as some users may have received one copy
+  Error Message: </div>
+<?php print_r(error_get_last());} ?>
         </div>
         <div class="col span_3_of_12"></div>
-
     </div>
 </div>
 <?php } ?>
