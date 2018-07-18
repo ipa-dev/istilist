@@ -189,7 +189,7 @@ function get_profile_img($postid){
 }
 
 function get_store_img($userid){
-    if(get_user_meta($user_ID,'profile_pic_on_off', true) == 1){
+    if(get_user_meta($userid,'profile_pic_on_off', true) == 1){
         $attachment_id = get_user_meta($userid, 'profile_pic', true);
         $image_attributes = wp_get_attachment_image_src( $attachment_id, 'img_49_49' );
         if(!empty($image_attributes[0])){

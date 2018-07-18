@@ -1,7 +1,7 @@
 <?php /* Template Name: Send All Shoppers Email */ ?>
 <?php get_header(); ?>
 <?php if(is_user_logged_in()){ ?>
-<?php global $user_ID; global $wpdb; ?>
+<?php global $user_ID; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <?php $user_role = get_user_role($user_ID); ?>
 <?php
