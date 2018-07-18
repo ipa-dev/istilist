@@ -1,5 +1,10 @@
 <?php ob_start(); ?>
-<?php session_start(); ?>
+<?php
+    if(!isset($_SESSION))
+    {
+        session_start();
+    }
+?>
 <?php
 if(is_user_logged_in()){
     global $user_ID;
