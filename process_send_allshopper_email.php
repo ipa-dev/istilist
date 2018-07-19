@@ -14,7 +14,8 @@ $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 if ($_POST['shopper_email_template'] == 'Send Test E-mail') {
-  $deliv = mail( (get_userdata($user_ID))->user_email, $_POST['shopper_email_subject'],
+  $user_info = get_userdata($user_ID);
+  $deliv = mail( $user_info->user_email, $_POST['shopper_email_subject'],
     $_POST['shopper_email_body'], $headers);
 }
 else {
