@@ -15,7 +15,7 @@ $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 if ($_POST['shopper_email_template'] == 'Send Test E-mail') {
   $user_info = get_userdata($user_ID);
-  $deliv = mail( $user_info->user_email, $_POST['shopper_email_subject'],
+  $deliv = wp_mail( $user_info->user_email, $_POST['shopper_email_subject'],
     $_POST['shopper_email_body'], $headers);
 }
 else {
@@ -26,7 +26,7 @@ else {
     $filtered_email = filter_var($unique_shopper_email, FILTER_VALIDATE_EMAIL);
     if ($filtered_email) {
 
-      $deliv = mail( $filtered_email, $_POST['shopper_email_subject'],
+      $deliv = wp_mail( $filtered_email, $_POST['shopper_email_subject'],
         $POST['shopper_email_body'], $headers);
     }
   }

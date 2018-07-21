@@ -49,8 +49,8 @@ function yoursite_wp_mail_from_name($name) {
 }*/
 if(!empty($store_name)){
     if(!empty($from)){
-        //wp_mail( $shopper_email, $subject, $msg, $headers);
-        mail( $shopper_email, $subject, $msg, $headers);
+        wp_mail( $shopper_email, $subject, $msg, $headers);
+        //mail( $shopper_email, $subject, $msg, $headers);
     }
 }
 
