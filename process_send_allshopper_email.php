@@ -27,7 +27,7 @@ else {
     if ($filtered_email) {
 
       $deliv = wp_mail( $filtered_email, $_POST['shopper_email_subject'],
-        $POST['shopper_email_body'], $headers);
+        $_POST['shopper_email_body'], $headers);
     }
   }
 }?>
