@@ -46,5 +46,12 @@ if ($deliv) {
         </div>
         <div class="col span_3_of_12"></div>
     </div>
+    <div class="section group">
+      <div class="col span_5_of_12"></div>
+      <div class="col span_2_of_12">
+        <a href="<?php bloginfo('url') ?>/dashboard">Return to Dashboard</a>
+      </div>
+      <div class="col span_5_of_12"></div>
+    </div>
 </div>
 <?php } ?>
