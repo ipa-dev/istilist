@@ -142,8 +142,7 @@ if (isset($_POST['bulk_select'])) {
 
 					if(!empty($store_name)){
 					    if(!empty($from)){
-					        //wp_mail( $shopper_email, $subject, $msg, $headers);
-					        mail( $shopper_email, $subject, $msg, $headers);
+					        wp_mail( $shopper_email, $subject, $msg, $headers);
 					    }
 					}
 
@@ -248,7 +247,6 @@ if (isset($_POST['bulk_select'])) {
 	        <div class="col span_9_of_12 matchheight">
                 <div class="dash_content">
                     <div class="banner1">
-                        <?php //if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('Dashboard Banner') ) : ?> <?php // endif; ?>
                         <?php echo do_shortcode('[rev_slider home]'); ?>
                     </div>
                     <form method="post" action="http://istilist.com/dashboard" style="width:25%;margin-bottom:2%;float:right;">
@@ -315,10 +313,16 @@ if (isset($_POST['bulk_select'])) {
                                 	<br />
                                 	<?php
 						$timestamps = get_post_meta($shopper_id, 'timestamps', true);
+            $purchases = get_post_meta($shopper_id, 'purchase_array', true);
                                 		if (!empty($timestamps)) {
                                 			$index = count($timestamps);
 							while($index) {
-  								echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]))."</span><br />";
+  								echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]));
+                  if ($index != count($timestamps)) {
+                    if ($purchases == 'true') echo "\tPurchase";
+                    else echo "\tNo Purchase";
+                  }
+                  echo "</span><br />";
 							}
                                 		}
                                 	?>
@@ -738,7 +742,6 @@ jQuery(document).ready(function(){
                 	type: "post",
                 	data: {"store_id": <?php echo get_user_meta($user_ID, 'store_id', true); ?>, "shopper_id": shopper_id},
                 	success: function(responce){
-                	   //alert(responce);
                         swal({
                             title: "Thank You",
                             type: "success",

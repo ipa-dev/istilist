@@ -7,12 +7,19 @@ $reason = $_POST['reason'];
 
 require ("twilio-php-master/Twilio/autoload.php");
 use Twilio\Rest\Client;
-//require_once(TEMPLATEPATH.'/smtp/class.phpmailer.php');
 
 $table_name1 = $wpdb->prefix.'folloup_messages';
 
 update_post_meta($shopper_id, 'reason_not_purchased', $reason);
 update_post_meta($shopper_id, 'dollar_button_clicked', 1);
+$purchase_array = get_post_meta($shopper_id, 'purchase_array', true);
+if (empty($purchase_array)) {
+  $purchase_array = ['false'];
+  add_post_meta($shopper_id, 'purchase_array', $purchase_array, true);
+} else {
+  $purchase_array = array_push($purchase_array, 'false');
+  update_post_meta($shopper_id, 'purchase_array', $purchase_array);
+}
 
 $shopper_email = get_post_meta($shopper_id, 'customer_email', true);
 
@@ -28,9 +35,9 @@ $stylist_name = get_the_author_meta('display_name', $styist_id);
 $msg_body2 = str_replace("{Stylist's Name}",$stylist_name,$msg_body1);
 
 if($options['smtp-active'] == 1){
-    $from = get_user_meta($user_ID, 'email_to_shopper', true); //get_the_author_meta('user_email', $store_id);
+    $from = get_user_meta($user_ID, 'email_to_shopper', true);
 } else {
-    $from = get_user_meta($user_ID, 'email_to_shopper', true); //get_the_author_meta('user_email', $store_id);
+    $from = get_user_meta($user_ID, 'email_to_shopper', true);
 }
 
 $store_name = get_the_author_meta('display_name', $store_id);
