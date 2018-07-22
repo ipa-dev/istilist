@@ -21,9 +21,9 @@
                                     'post_content' => $_POST['shoppers_feedback'],
                                     'post_author' => $user_ID
                                 );
-                                
+
                                 wp_update_post( $post_arg );
-                                
+
                                 update_post_meta($shopper_id, 'customer_fname', $_POST['customer_fname']);
                                 update_post_meta($shopper_id, 'customer_lname', $_POST['customer_lname']);
                                 update_post_meta($shopper_id, 'school_event', $_POST['school_event']);
@@ -41,7 +41,7 @@
                                 update_post_meta($shopper_id, 'sms_agreement', $_POST['sms_agreement']);
                                 //update_post_meta($shopper_id, 'entry_date', date('Y-m-d H:i:s'));
                                 //update_post_meta($shopper_id, 'store_id', get_user_meta($user_ID, 'store_id', true));
-                                
+
                                 $store_id = get_user_meta($user_ID, 'store_id', true);
                                 $table_name3 = $wpdb->prefix.'dynamic_form';
                                 $sql3 = "SELECT * FROM $table_name3 WHERE store_owner_id = $store_id AND is_custom = 1 ORDER BY id";
@@ -53,15 +53,15 @@
                                         update_post_meta($shopper_id, $var1, $var2);
                                     }
                                 }
-                                
-                                require_once(ABSPATH . "wp-admin" . '/includes/image.php'); 
-                                require_once(ABSPATH . "wp-admin" . '/includes/file.php'); 
+
+                                require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+                                require_once(ABSPATH . "wp-admin" . '/includes/file.php');
                                 require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-                                
+
                                 $image = $_FILES['profile_pic'];
-                            	if ($image['size']) {     // if it is an image     
-                            		if ( preg_match('/(jpg|jpeg|png|gif)$/', $image['type']) ) {       
-                            			$override = array('test_form' => false);       // save the file, and store an array, containing its location in $file       
+                            	if ($image['size']) {     // if it is an image
+                            		if ( preg_match('/(jpg|jpeg|png|gif)$/', $image['type']) ) {
+                            			$override = array('test_form' => false);       // save the file, and store an array, containing its location in $file
                             			$file = wp_handle_upload( $image, $override );
                             			$attachment = array(
                             				'post_title' => $image['name'],
@@ -70,14 +70,14 @@
                             				'post_mime_type' => $image['type'],
                             				'guid' => $file['url']
                             			);
-                            			
+
                             			$attach_id = wp_insert_attachment( $attachment, $file[ 'file' ], $shopper_id);
                             			$attach_data = wp_generate_attachment_metadata( $attach_id, $file['file'] );
                             			wp_update_attachment_metadata( $attach_id, $attach_data );
-                            			update_post_meta($shopper_id, 'profile_pic', $attach_id);    
-                            		} else { wp_die('No image was uploaded.'); }   
+                            			update_post_meta($shopper_id, 'profile_pic', $attach_id);
+                            		} else { wp_die('No image was uploaded.'); }
                             	}
-                                
+
                                 if($shopper_id){
                                     echo '<p class="successMsg">Thank you for your valuable time and information.</p>';
                                     header("Location: ".get_bloginfo('home')."/dashboard");
@@ -287,7 +287,7 @@
                             </div>
                             <div class="section group">
                             <?php
-                                
+
                                 $table_name2 = $wpdb->prefix.'dynamic_form';
                                 $sql2 = "SELECT * FROM $table_name2 WHERE store_owner_id = $store_id AND is_custom = 1 ORDER BY id";
                                 $results2 = $wpdb->get_results($sql2);
@@ -299,13 +299,13 @@
                                 <?php if($r2->form_type == 'text'){ ?>
                                     <input type="text" name="<?php echo $r2->form_slug; ?>" value="<?php echo get_post_meta($shopper_id, $r2->form_slug, true); ?>" />
                                 <?php } ?>
-                                
+
                                 <?php if($r2->form_type == 'textarea'){ ?>
                                     <textarea name="<?php echo $r2->form_slug; ?>"><?php echo get_post_meta($shopper_id, $r2->form_slug, true); ?></textarea>
                                 <?php } ?>
                             </div>
                            <?php } ?>
-                            <?php } ?>    
+                            <?php } ?>
                             </div>
                             <div class="section group">
                                 <div class="col span_12_of_12">
@@ -326,7 +326,7 @@
                         </form>
                     </div>
                 </div>
-                <?php get_footer(); ?>                          
+                <?php get_footer(); ?>
 	        </div>
 	    </div>
 	</div>
@@ -335,7 +335,7 @@
 
 	jQuery(document).ready( function () {
 		jQuery('#delete_shopper').click(function () {
-	          swal({              
+	          swal({
 	            title: "Are you sure?",
 	            text: "You will not be able to recover this shopper's information",
 	            type: "warning",
@@ -344,7 +344,7 @@
 	            confirmButtonText: "Yes",
 	            cancelButtonText: "No",
 	            closeOnConfirm: false,
-	            closeOnCancel: false 
+	            closeOnCancel: false
 	          }, function(isConfirm){
 	            if (isConfirm){
 	                jQuery.ajax({
@@ -358,13 +358,13 @@
 	                            text: "This shopper has been deleted.",
 	                            type: "success",
 	                        }, function(){
-	                            window.location="http://istilist.com/dashboard/";
+	                            window.location="<?php bloginfo('url') ?>/dashboard/";
 	                        });
 	                	},
 	                	error:function(responce){
 	                	    console.log(responce);
 	                	    alert("failure : "+responce);
-	                	}   
+	                	}
 	                });
 	            } else {
 	                swal.close();
