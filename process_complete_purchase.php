@@ -13,7 +13,7 @@ update_post_meta($shopper_id, 'complete_purchase', 1);
 update_post_meta($shopper_id, 'dollar_button_clicked', 1);
 $purchase_array = get_post_meta($shopper_id, 'purchase_array', true);
 if (empty($purchase_array)) {
-  $purchase_array = ['true'];
+  $purchase_array = array('true');
   add_post_meta($shopper_id, 'purchase_array', $purchase_array, true);
 } else {
   $purchase_array = array_push($purchase_array, 'true');
