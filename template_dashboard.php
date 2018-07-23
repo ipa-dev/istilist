@@ -336,8 +336,13 @@ if (isset($_POST['bulk_select'])) {
                                 		}
                                 	?>
                                 	<span>on <?php echo date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?> at <?php echo date('h:i a', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?>
-                                  <?php if ($purchases[0] == 'true') echo "\tPurchase";
-                                  else echo "\tNo Purchase"; ?></span>
+                                  <?php
+                                    if (!empty($purchases)) {
+                                      if ($purchases[0] == 'true') echo "\tPurchase";
+                                      else echo "\tNo Purchase";
+                                    }
+                                  ?>
+                                  </span>
                                 </h2>
                                 <?php $assign_stylist = get_post_meta($shopper_id, 'assign_stylist', true); ?>
                                 <?php if(!empty($assign_stylist)){ ?>
