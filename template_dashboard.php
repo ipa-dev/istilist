@@ -78,7 +78,15 @@ if(isset($_POST['plusbtn'])){
     );
     wp_update_post($my_post);
 
-
+    $purchases = get_post_meta($_POST['shopper_id'], 'purchase_array', true);
+    if ('dollar_button_clicked' == 0) {
+      if (empty($purchases)) {
+        add_post_meta($_POST['shopper_id'], 'purchase_array', ['false']);
+      }
+      else {
+        update_post_meta($_POST['shopper_id'], 'purchase_array', array_push($purchases, 'false'));
+      }
+    }
     update_post_meta($_POST['shopper_id'], 'dollar_button_clicked', 0);
     update_post_meta($_POST['shopper_id'], 'complete_purchase', 0);
     update_post_meta($_POST['shopper_id'], 'reason_not_purchased', '');
