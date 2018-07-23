@@ -328,7 +328,7 @@ if (isset($_POST['bulk_select'])) {
 							while($index) {
   								echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]));
                     if ($index != (count($timestamps) - 1)) {
-                      if ($purchases[$index] == 'true') echo "\tPurchase";
+                      if ($purchases[$index - 1] == 'true') echo "\tPurchase";
                       else echo "\tNo Purchase";
                     }
 
