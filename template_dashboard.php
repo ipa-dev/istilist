@@ -318,7 +318,7 @@ if (isset($_POST['bulk_select'])) {
                                 			$index = count($timestamps);
 							while($index) {
   								echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]));
-                    if ($index != (count($timestamps) - 1)) {
+                    if ($index != count($timestamps)) {
                       if ($purchases[$index] == 'true') echo "\tPurchase";
                       else echo "\tNo Purchase";
                     }
@@ -327,7 +327,9 @@ if (isset($_POST['bulk_select'])) {
 							}
                                 		}
                                 	?>
-                                	<span>on <?php echo date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?> at <?php echo date('h:i a', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?></span>
+                                	<span>on <?php echo date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?> at <?php echo date('h:i a', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?>
+                                  <?php if ($purchases[0] == 'true') echo "\tPurchase";
+                                  else echo "\tNo Purchase"; ?></span>
                                 </h2>
                                 <?php $assign_stylist = get_post_meta($shopper_id, 'assign_stylist', true); ?>
                                 <?php if(!empty($assign_stylist)){ ?>
