@@ -84,7 +84,8 @@ if(isset($_POST['plusbtn'])){
         add_post_meta($_POST['shopper_id'], 'purchase_array', ['false']);
       }
       else {
-        update_post_meta($_POST['shopper_id'], 'purchase_array', array_push($purchases, 'false'));
+        array_push($purchases, 'false');
+        update_post_meta($_POST['shopper_id'], 'purchase_array', $purchases);
       }
     }
     update_post_meta($_POST['shopper_id'], 'dollar_button_clicked', 0);

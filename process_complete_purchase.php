@@ -16,7 +16,7 @@ if (empty($purchase_array)) {
   $purchase_array = array('true');
   add_post_meta($shopper_id, 'purchase_array', $purchase_array, true);
 } else {
-  $purchase_array = array_push($purchase_array, 'true');
+  array_push($purchase_array, 'true');
   update_post_meta($shopper_id, 'purchase_array', $purchase_array);
 }
 
