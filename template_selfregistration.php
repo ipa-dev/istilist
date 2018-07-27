@@ -334,8 +334,8 @@
                 </div>
           </div>
           <div class="col span_2_of_12"></div>
-          <?php get_footer(); ?>
       </div>
+      <?php get_footer(); ?>
   </div>
 </div>
 <script>
