@@ -100,15 +100,12 @@
                 } else { wp_die('No image was uploaded.'); }
               }
 
-                if($new_post_id){
-                    echo '<p class="successMsg">Thank you for your valuable time and information.</p>';
-                    header("Location: ".get_bloginfo('home')."/dashboard");
-                } else {
+                if(!$new_post_id) {
                     echo '<p class="errorMsg">Sorry, your information is not updated.</p>';
                 }
           ?>
             <div class="col span_8_of_12">
-              <p class="successMsg">Thank you for registering!</p>
+              <p class="successMsg">Thank you for your valuable time and information.!</p>
               <a style="justify-content:center" href="<?php bloginfo('url'); ?>/self-registration">New user? Register!</a>
             </div>
           <?php } else { ?>
