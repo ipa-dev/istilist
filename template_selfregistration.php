@@ -7,7 +7,7 @@
 <div id="dashboard">
 	<div class="maincontent noPadding">
 	    <div class="section group">
-	        <?php get_sidebar('menu'); ?>
+	        <?php //get_sidebar('menu'); ?>
 	        <div class="col span_9_of_12 matchheight">
                 <div class="dash_content">
                   <?php
@@ -325,7 +325,7 @@
                       <div class="section group">
                           <div class="col span_12_of_12">
                               <div style="text-align: right;">
-                                  <input type="submit" name="add_new_shopper" value="Add New Shopper" />
+                                  <input type="submit" name="add_new_shopper" value="Register!" />
                               </div>
                           </div>
                       </div>
