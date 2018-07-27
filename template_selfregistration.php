@@ -105,7 +105,7 @@
                 }
           ?>
             <div class="col span_8_of_12">
-              <p class="successMsg">Thank you for your valuable time and information.!</p>
+              <p class="successMsg">Thank you for your valuable time and information!</p>
               <a style="justify-content:center" href="<?php bloginfo('url'); ?>/self-registration">New user? Register!</a>
             </div>
           <?php } else { ?>
