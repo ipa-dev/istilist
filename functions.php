@@ -2,35 +2,6 @@
 global $options;
 
 
-add_action('admin_menu', 'add_textstats_page');
-
-function add_textstats_page() {
-    add_menu_page('Retailer Text Statistics', 'Retailer Text', 'manage_options', 'textstats', 'textstats_page');
-}
-
-function textstats_page() {
-?>
-<h1>Retailer Text Statistics</h1>
-<?php
-    if(!empty($_POST['submit'])){
-        $handle = fopen("retailer_text_stats.csv", "r");
-        header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="retailer_text_stats.csv"');
-        header("Content-Length: " . filesize("retailer_text_stats.csv"));
-        ob_clean();
-        flush();
-        fpassthru($handle);
-        fclose($handle);
-    }
-?>
-<p>Download report of last month's retailer text statistics for billing (New reports available on the 2nd of each month)</p>
-<form method="POST" action="">
-    <input class="button button-primary" type="submit" value="Export" name="submit">
-</form>
-<?php
-}
-
-
 add_option('cipher_key', 'l5qbZFEoKFn0Hau5q4fYatlq91T9c391');
 add_option('cipher_method', 'AES-256-CBC');
 
