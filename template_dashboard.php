@@ -70,8 +70,6 @@ if(isset($_POST['submit'])){
 //When user presses plus button
 if(isset($_POST['plusbtn'])){
 
-
-
     $my_post = array(
         'ID' => $_POST['shopper_id'],
         'post_modified' => date('Y-m-d H:i:s')
