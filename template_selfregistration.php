@@ -8,7 +8,8 @@
 	<div class="maincontent noPadding">
 	    <div class="section group">
 	        <?php //get_sidebar('menu'); ?>
-	        <div class="col span_9_of_12 matchheight">
+          <div class="col span_2_of_12"></div>
+	        <div class="col span_8_of_12 matchheight">
                 <div class="dash_content">
                   <?php
                     if(isset($_POST['add_new_shopper'])){
@@ -332,6 +333,7 @@
                   </form>
                 </div>
           </div>
+          <div class="col span_2_of_12"></div>
           <?php get_footer(); ?>
       </div>
   </div>
