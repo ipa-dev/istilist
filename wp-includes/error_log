@@ -1,0 +1,5 @@
+[24-Mar-2017 23:33:16 America/Denver] PHP Fatal error:  Call to undefined function _deprecated_file() in /home/istilist/public_html/wp-includes/registration-functions.php on line 7
+[27-Nov-2017 07:23:44 America/Denver] PHP Fatal error:  Class 'Walker' not found in /home/istilist/public_html/wp-includes/class-walker-nav-menu.php on line 17
+[19-Jan-2018 17:42:17 America/Denver] PHP Fatal error:  Call to undefined function _deprecated_file() in /home/istilist/public_html/wp-includes/locale.php on line 10
+[14-Mar-2018 15:49:22 America/Denver] PHP Fatal error:  Class 'Walker' not found in /home/istilist/public_html/wp-includes/class-walker-nav-menu.php on line 17
+[23-Mar-2018 00:55:51 America/Denver] PHP Fatal error:  Call to undefined function _deprecated_file() in /home/istilist/public_html/wp-includes/locale.php on line 10
