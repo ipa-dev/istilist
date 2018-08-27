@@ -2,35 +2,6 @@
 global $options;
 
 
-add_action('admin_menu', 'add_textstats_page');
-
-function add_textstats_page() {
-    add_menu_page('Retailer Text Statistics', 'Retailer Text', 'manage_options', 'textstats', 'textstats_page');
-}
-
-function textstats_page() {
-?>
-<h1>Retailer Text Statistics</h1>
-<?php
-    if(!empty($_POST['submit'])){
-        $handle = fopen("retailer_text_stats.csv", "r");
-        header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="retailer_text_stats.csv"');
-        header("Content-Length: " . filesize("retailer_text_stats.csv"));
-        ob_clean();
-        flush();
-        fpassthru($handle);
-        fclose($handle);
-    }
-?>
-<p>Download report of last month's retailer text statistics for billing (New reports available on the 2nd of each month)</p>
-<form method="POST" action="">
-    <input class="button button-primary" type="submit" value="Export" name="submit">
-</form>
-<?php
-}
-
-
 add_option('cipher_key', 'l5qbZFEoKFn0Hau5q4fYatlq91T9c391');
 add_option('cipher_method', 'AES-256-CBC');
 
@@ -189,7 +160,7 @@ function get_profile_img($postid){
 }
 
 function get_store_img($userid){
-    if(get_user_meta($user_ID,'profile_pic_on_off', true) == 1){
+    if(get_user_meta($userid,'profile_pic_on_off', true) == 1){
         $attachment_id = get_user_meta($userid, 'profile_pic', true);
         $image_attributes = wp_get_attachment_image_src( $attachment_id, 'img_49_49' );
         if(!empty($image_attributes[0])){
@@ -440,7 +411,7 @@ add_action( 'admin_head', 'add_scripts' );
 
 function get_unique_post_meta_values( $searchkey = '', $searchvalue = '', $status = 'publish', $type = 'post', $findkey = '') {
     global $wpdb;
-    if( empty( $key ) )
+    if( empty( $searchkey ) )
         return;
     $res = $wpdb->get_col( $wpdb->prepare( "
           SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm WHERE pm.post_id IN

@@ -70,15 +70,22 @@ if(isset($_POST['submit'])){
 //When user presses plus button
 if(isset($_POST['plusbtn'])){
 
-
-
     $my_post = array(
         'ID' => $_POST['shopper_id'],
         'post_modified' => date('Y-m-d H:i:s')
     );
     wp_update_post($my_post);
 
-
+    $purchases = get_post_meta($_POST['shopper_id'], 'purchase_array', true);
+    if ('dollar_button_clicked' == 0) {
+      if (empty($purchases)) {
+        add_post_meta($_POST['shopper_id'], 'purchase_array', ['false']);
+      }
+      else {
+        array_push($purchases, 'false');
+        update_post_meta($_POST['shopper_id'], 'purchase_array', $purchases);
+      }
+    }
     update_post_meta($_POST['shopper_id'], 'dollar_button_clicked', 0);
     update_post_meta($_POST['shopper_id'], 'complete_purchase', 0);
     update_post_meta($_POST['shopper_id'], 'reason_not_purchased', '');
@@ -142,8 +149,7 @@ if (isset($_POST['bulk_select'])) {
 
 					if(!empty($store_name)){
 					    if(!empty($from)){
-					        //wp_mail( $shopper_email, $subject, $msg, $headers);
-					        mail( $shopper_email, $subject, $msg, $headers);
+					        wp_mail( $shopper_email, $subject, $msg, $headers);
 					    }
 					}
 
@@ -248,7 +254,6 @@ if (isset($_POST['bulk_select'])) {
 	        <div class="col span_9_of_12 matchheight">
                 <div class="dash_content">
                     <div class="banner1">
-                        <?php //if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('Dashboard Banner') ) : ?> <?php // endif; ?>
                         <?php echo do_shortcode('[rev_slider home]'); ?>
                     </div>
                     <form method="post" action="http://istilist.com/dashboard" style="width:25%;margin-bottom:2%;float:right;">
@@ -315,14 +320,28 @@ if (isset($_POST['bulk_select'])) {
                                 	<br />
                                 	<?php
 						$timestamps = get_post_meta($shopper_id, 'timestamps', true);
+            $purchases = get_post_meta($shopper_id, 'purchase_array', true);
                                 		if (!empty($timestamps)) {
                                 			$index = count($timestamps);
 							while($index) {
-  								echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]))."</span><br />";
+  								echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]));
+                    if ($index != (count($timestamps) - 1)) {
+                      if ($purchases[$index - 1] == 'true') echo "\tPurchase";
+                      else echo "\tNo Purchase";
+                    }
+
+                  echo "</span><br />";
 							}
                                 		}
                                 	?>
-                                	<span>on <?php echo date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?> at <?php echo date('h:i a', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?></span>
+                                	<span>on <?php echo date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?> at <?php echo date('h:i a', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?>
+                                  <?php
+                                    if (!empty($purchases)) {
+                                      if ($purchases[0] == 'true') echo "\tPurchase";
+                                      else echo "\tNo Purchase";
+                                    }
+                                  ?>
+                                  </span>
                                 </h2>
                                 <?php $assign_stylist = get_post_meta($shopper_id, 'assign_stylist', true); ?>
                                 <?php if(!empty($assign_stylist)){ ?>
@@ -738,7 +757,6 @@ jQuery(document).ready(function(){
                 	type: "post",
                 	data: {"store_id": <?php echo get_user_meta($user_ID, 'store_id', true); ?>, "shopper_id": shopper_id},
                 	success: function(responce){
-                	   //alert(responce);
                         swal({
                             title: "Thank You",
                             type: "success",
