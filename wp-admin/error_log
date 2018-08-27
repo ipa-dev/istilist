@@ -226,3 +226,21 @@
 [01-Jun-2018 21:22:35 UTC] PHP Fatal error:  Call to undefined function media_handle_upload() in /home/istilist/public_html/staging/wp-admin/includes/ajax-actions.php on line 2120
 [01-Jun-2018 21:24:58 UTC] PHP Fatal error:  Call to undefined function media_handle_upload() in /home/istilist/public_html/staging/wp-admin/includes/ajax-actions.php on line 2120
 [01-Jun-2018 21:26:20 UTC] PHP Fatal error:  Call to undefined function media_handle_upload() in /home/istilist/public_html/staging/wp-admin/includes/ajax-actions.php on line 2120
+[27-Aug-2018 18:31:41 UTC] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php:72
+Stack trace:
+#0 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(157): UniteBaseAdminClassRev::addMetaBox('Revolution Slid...', Object(UniteSettingsAdvancedRev), Array, NULL)
+#1 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(68): RevSliderAdmin->addSliderMetaBox()
+#2 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(40): RevSliderAdmin->init()
+#3 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider.php(146): RevSliderAdmin->__construct('/home/istilist/...')
+#4 /home/istilist/public_html/staging/wp-settings.php(305): include_once('/home/istilist/...')
+#5 /home/istilist/public_html/staging/wp-config.php(82): require_once('/home/istilist/...')
+#6 /home/istilist/public_html/staging/wp-load.php(37): require_once('/home/istilist/. in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php on line 72
+[27-Aug-2018 18:34:06 UTC] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php:72
+Stack trace:
+#0 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(157): UniteBaseAdminClassRev::addMetaBox('Revolution Slid...', Object(UniteSettingsAdvancedRev), Array, NULL)
+#1 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(68): RevSliderAdmin->addSliderMetaBox()
+#2 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(40): RevSliderAdmin->init()
+#3 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider.php(146): RevSliderAdmin->__construct('/home/istilist/...')
+#4 /home/istilist/public_html/staging/wp-settings.php(305): include_once('/home/istilist/...')
+#5 /home/istilist/public_html/staging/wp-config.php(82): require_once('/home/istilist/...')
+#6 /home/istilist/public_html/staging/wp-load.php(37): require_once('/home/istilist/. in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php on line 72
