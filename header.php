@@ -267,7 +267,7 @@ jQuery(document).ready(function(){
 	<div class="maincontent noPadding">
 	    <div class="section group">
 	        <div class="col span_6_of_12">
-                <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a> <span style="font-size: 20px;">Beta Test</span></h1>                          
+                <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a></h1>                          
 	        </div>
 	        <div class="col span_6_of_12">
                 <?php if(is_user_logged_in()){ ?>
