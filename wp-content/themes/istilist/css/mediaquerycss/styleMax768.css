@@ -1,0 +1,50 @@
+.js .nav {
+		display:none;
+}	
+.js #rspnavigation {
+	display:block;
+}
+#rspnavigation ul{
+    margin: 0;
+    padding: 0;
+}
+#header .span_6_of_12 {
+    width: 100%;
+}
+#header .col {
+    margin-left: 0;
+}
+#header h1 {
+    text-align: center;
+}
+#header .unav {
+    text-align: center;
+}
+.box .box_pic {
+    width: 100%;
+    text-align: center;
+}
+.box .box_description {
+    width: 100%;
+    text-align: center;
+}
+.box .box_actions {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+}
+.loginSection {
+    padding: 0;
+}
+.logo {
+    margin-top: 0px;
+}
+.loginLinks div:nth-child(2) {
+    float: left;
+}
+.addnewshoppers .span_6_of_12{
+    width: 100%;
+}
+.addnewshoppers .col{
+    margin-left: 0 !important;
+}
