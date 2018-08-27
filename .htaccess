@@ -1,4 +1,3 @@
-SetEnv MAGICK_THREAD_LIMIT 1
 # BEGIN WordPress
 
 # WPhtc: Begin Custom htaccess
