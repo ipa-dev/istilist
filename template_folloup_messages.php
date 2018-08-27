@@ -6,7 +6,7 @@
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <?php $user_role = get_user_role($user_ID); ?>
 <?php
-    require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+  require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 ?>
@@ -51,21 +51,21 @@
                                         'tabindex' => '',
                                         'editor_css' => '',
                                         'editor_class' => 'msgClass',
-                                        'teeny' => false, 
+                                        'teeny' => false,
                                         'dfw' => true,
                                         'tinymce' => true,
                                         'quicktags' => true,
                                         'drag_drop_upload' => true
                                     );
+
+                                    wp_editor($result1->body, 'thankyou_email_body', $settings1);
                                 ?>
-                                <?php wp_editor($result1->body, 'thankyou_email_body', $settings1); ?>
-                                <?php //the_editor($result1->body, 'content');?>
                                 <div class="allowedtag">
                                     <em>{Shopper's Name}</em> for auto generated shopper's name<br />
-                                    <em>{Stylist's Name}</em> for auto generated stylist's name 
+                                    <em>{Stylist's Name}</em> for auto generated stylist's name
                                 </div>
                             </div>
-                            
+
                             <div class="section group">
                                 <div class="col span_12_of_12">
                                     <div class="alignright">
@@ -108,18 +108,18 @@
                                         'tabindex' => '',
                                         'editor_css' => '',
                                         'editor_class' => 'msgClass',
-                                        'teeny' => false, 
+                                        'teeny' => false,
                                         'dfw' => true,
                                         'tinymce' => true,
                                         'quicktags' => true,
                                         'drag_drop_upload' => true
                                     );
                                 ?>
-                                
+
                                 <?php wp_editor($result3->body, 'promo_email_body', $settings3); ?>
                                 <div class="allowedtag">
                                     <em>{Shopper's Name}</em> for auto generated shopper's name<br />
-                                    <em>{Stylist's Name}</em> for auto generated stylist's name 
+                                    <em>{Stylist's Name}</em> for auto generated stylist's name
                                 </div>
                                 </div>
                             </div>
@@ -133,8 +133,53 @@
                         </form>
                     </div>
                     <div class="reportBox">
+                      <h3>Send Email to all Shoppers</h3>
+                      <form name='shopper_email_form' id='shopper_email_form' method='post' action='<?php bloginfo('url'); ?>/send-all-shoppers-email'>
+                        <div class="section group">
+                            <div class="col span_2_of_12">Subject</div>
+                            <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value=""/></div>
+                        </div>
+                        <div class="section group">
+                            <div class="col span_2_of_12">Email Body</div>
+                            <div class="col span_10_of_12">
+                            <?php
+                                $settings3 = array(
+                                    'wpautop' => true,
+                                    'media_buttons' => true,
+                                    'textarea_name' => 'shopper_email_body',
+                                    'textarea_rows' => 40,
+                                    'tabindex' => '',
+                                    'editor_css' => '',
+                                    'editor_class' => 'msgClass',
+                                    'teeny' => false,
+                                    'dfw' => true,
+                                    'tinymce' => true,
+                                    'quicktags' => true,
+                                    'drag_drop_upload' => true
+                                );
+                            ?>
+
+                            <?php wp_editor('', 'shopper_email_body', $settings3); ?>
+                            <div class="allowedtag">
+                                <em>{Shopper's Name}</em> for auto generated shopper's name<br />
+                                <em>{Stylist's Name}</em> for auto generated stylist's name
+                            </div>
+                            </div>
+                        </div>
+                        <div class="section group">
+                            <div class="col span_12_of_12">
+                                <div class="alignright">
+                                    <input type="submit" name="shopper_email_template" value="Send Test E-mail" />
+                                    <input type="submit" name="shopper_email_template" value="Send E-mail" />
+                                </div>
+                            </div>
+                        </div>
+
+                      </form>
+                    </div>
+                    <div class="reportBox">
                         <h3>Thank You Text Template</h3>
-                        <?php 
+                        <?php
                             if (isset($_POST['thankyou_text_template'])) {
                                 $update_query = "UPDATE $table_name SET  body = '".$_POST['thankyou_text_body']."' WHERE message_type = 'thankyoutext' and store_id = $store_id";
                                 $update = $wpdb->query($update_query);
@@ -154,14 +199,14 @@
                                     <textarea form='thankyou_text_form' name="thankyou_text_body"><?php echo $result4->body; ?></textarea>
                                     <div class="allowedtag">
                                     <em>{Shopper's Name}</em> for auto generated shopper's name<br />
-                                    <em>{Stylist's Name}</em> for auto generated stylist's name 
+                                    <em>{Stylist's Name}</em> for auto generated stylist's name
                                 </div>
                                 </div>
                             </div>
                             <div class="section group">
                                 <div class="col span_12_of_12">
                                     <div class="alignright">
-                                        <input type="submit" name="thankyou_text_template" value="Update Template" /> 
+                                        <input type="submit" name="thankyou_text_template" value="Update Template" />
                                     </div>
                                 </div>
                             </div>
@@ -189,10 +234,10 @@
                                     <textarea form='promo_text_form' name='promo_text_body'><?php echo $result5->body; ?></textarea>
                                     <div class="allowedtag">
                                         <em>{Shopper's Name}</em> for auto generated shopper's name<br />
-                                        <em>{Stylist's Name}</em> for auto generated stylist's name 
+                                        <em>{Stylist's Name}</em> for auto generated stylist's name
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="section group">
                                 <div class="col span_12_of_12">
@@ -204,7 +249,7 @@
                         </form>
                     </div>
                 </div>
-                <?php get_footer(); ?>                          
+                <?php get_footer(); ?>
 	        </div>
 	    </div>
 	</div>

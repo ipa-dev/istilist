@@ -2,35 +2,6 @@
 global $options;
 
 
-add_action('admin_menu', 'add_textstats_page');
-
-function add_textstats_page() {
-    add_menu_page('Retailer Text Statistics', 'Retailer Text', 'manage_options', 'textstats', 'textstats_page');
-}
-
-function textstats_page() {
-?>
-<h1>Retailer Text Statistics</h1>
-<?php
-    if(!empty($_POST['submit'])){
-        $handle = fopen("retailer_text_stats.csv", "r");
-        header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="retailer_text_stats.csv"');
-        header("Content-Length: " . filesize("retailer_text_stats.csv"));
-        ob_clean();
-        flush();
-        fpassthru($handle);
-        fclose($handle);
-    }
-?>
-<p>Download report of last month's retailer text statistics for billing (New reports available on the 2nd of each month)</p>
-<form method="POST" action="">
-    <input class="button button-primary" type="submit" value="Export" name="submit">
-</form>
-<?php
-}
-
-
 add_option('cipher_key', 'l5qbZFEoKFn0Hau5q4fYatlq91T9c391');
 add_option('cipher_method', 'AES-256-CBC');
 
@@ -38,13 +9,13 @@ add_option('twilio_number', '+18652400405' );
 
 function add_istilist_promo_list_controller($controllers) {
        $controllers[] = 'istilist_promo_list';
-       return $controllers; 
+       return $controllers;
 }
 
 add_filter('json_api_controllers', 'add_istilist_promo_list_controller');
 
 function istilist_promo_list_controller_path($default_path) {
-    return '/home/istilist/public_html/wp-content/themes/standard-theme/istilist_promo_list_controller.php';
+    return '/home/istilist/public_html/wp-content/themes/istilist/istilist_promo_list_controller.php';
 }
 
 add_filter('json_api_istilist_promo_list_controller_path', 'istilist_promo_list_controller_path');
@@ -56,13 +27,13 @@ function add_authorize_controller($controllers) {
 }
 
 add_filter('json_api_controllers', 'add_authorize_controller');
-	   
+
 function authorize_controller_path($default_path) {
-	return '/home/istilist/public_html/wp-content/themes/standard-theme/authorize_controller.php';
+	return '/home/istilist/public_html/wp-content/themes/istilist/authorize_controller.php';
 }
 
-add_filter('json_api_authorize_controller_path', 'authorize_controller_path');	
-   
+add_filter('json_api_authorize_controller_path', 'authorize_controller_path');
+
 
 
 
@@ -71,7 +42,7 @@ function revslider_scripts_cleanup() {
 wp_deregister_script( 'jquery.themepunch.tools.min' );
 //DeRegister jquery.themepunch.revolution.min
 wp_deregister_script( 'jquery.themepunch.revolution.min' );
-	
+
 //Enqueue js files in footer
 wp_enqueue_script('jquery.themepunch.tools.min', plugin_dir_url( __FILE__ ) . 'revslider/rs-plugin/js/jquery.themepunch.tools.min.js', array(), '',  true);
 wp_enqueue_script('jquery.themepunch.revolution.min', plugin_dir_url( __FILE__ ) . 'revslider/rs-plugin/js/jquery.themepunch.revolution.min.js', array(), '',  true);
@@ -79,7 +50,7 @@ wp_enqueue_script('jquery.themepunch.revolution.min', plugin_dir_url( __FILE__ )
 
 //add_action( 'wp_enqueue_scripts', 'revslider_scripts_cleanup' );
 
-add_filter('wp_mail_from_name', 'new_mail_from_name'); 
+add_filter('wp_mail_from_name', 'new_mail_from_name');
 function new_mail_from_name($old) {
 	$site_title = get_bloginfo( 'name' );
 	return $site_title;
@@ -95,7 +66,7 @@ add_role('storeowner', 'Store Owner');
 add_role('storeemployee', 'Store Employee');
 add_role('storesupervisor', 'Store Supervisor');
 
-function get_user_role($userid){ 
+function get_user_role($userid){
 	$user_info = get_userdata($userid);
  	$role = implode(', ', $user_info->roles);
  	return $role;
@@ -129,7 +100,7 @@ add_image_size( 'img_982_379', 982, 379, array('center', 'center'), true );
 
 function content($limit, $postid) {
     $post = get_page($postid);
-    $fullContent = $post->post_content; 
+    $fullContent = $post->post_content;
     $content = explode(' ', $fullContent, $limit);
     if (count($content)>=$limit) {
     array_pop($content);
@@ -189,7 +160,7 @@ function get_profile_img($postid){
 }
 
 function get_store_img($userid){
-    if(get_user_meta($user_ID,'profile_pic_on_off', true) == 1){
+    if(get_user_meta($userid,'profile_pic_on_off', true) == 1){
         $attachment_id = get_user_meta($userid, 'profile_pic', true);
         $image_attributes = wp_get_attachment_image_src( $attachment_id, 'img_49_49' );
         if(!empty($image_attributes[0])){
@@ -238,9 +209,9 @@ function promotions_register() {
 function elapsedtime($time1, $time2){
     $first  = new DateTime( $time1 );
     $second = new DateTime( $time2 );
-    
+
     $diff = $first->diff( $second );
-    
+
     echo $diff->format( '%H:%I:%S' ); // -> 00:25:25
 }
 
@@ -279,7 +250,7 @@ function pippin_add_user_id_column($columns) {
     $columns['user_status'] = 'User Status';
     return $columns;
 }
- 
+
 add_action('manage_users_custom_column',  'pippin_show_user_id_column_content', 10, 3);
 function pippin_show_user_id_column_content($value, $column_name, $user_id) {
     $user = get_userdata( $user_id );
@@ -336,10 +307,10 @@ function smtpmailer($to, $from, $from_name, $subject, $body) {
 	$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
 	//$mail->Host = 'smtp.gmail.com';
         $mail->Host = 'mail.istilist.com';
-	$mail->Port = 465; 
-	//$mail->Username = 'bhulbhal1981@gmail.com';  
+	$mail->Port = 465;
+	//$mail->Username = 'bhulbhal1981@gmail.com';
 	//$mail->Password = 'bhulbhal098';
-        $mail->Username = 'info@istilist.com'; 
+        $mail->Username = 'info@istilist.com';
         $mail->Password = 'Formal!1468';
 	$mail->SetFrom($from, $from_name);
 	$mail->Subject = $subject;
@@ -361,9 +332,9 @@ function smtpmailer1($to, $from, $from_name, $subject, $body, $smtp_user, $smtp_
 	$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
 	//$mail->Host = 'smtp.gmail.com';
         $mail->Host = 'mail.istilist.com';
-	$mail->Port = 465; 
-	$mail->Username = $smtp_user;  
-	$mail->Password = $smtp_pass;           
+	$mail->Port = 465;
+	$mail->Username = $smtp_user;
+	$mail->Password = $smtp_pass;
 	$mail->SetFrom($from, $from_name);
 	$mail->Subject = $subject;
     $mail->IsHTML(true);
@@ -382,7 +353,7 @@ function pippin_add_user_id_column($columns) {
     $columns['user_status'] = 'User Status';
     return $columns;
 }
- 
+
 add_action('manage_users_custom_column',  'pippin_show_user_id_column_content', 10, 3);
 function pippin_show_user_id_column_content($value, $column_name, $user_id) {
     if($user_id >1){
@@ -418,8 +389,8 @@ function add_scripts() {
             $current_url .= $path[0]; // Only use the rest of URL - before any parameters
             //$current_url = urlencode( $current_url ); // Encode it for use
             ?>
-                <script>window.location="<?php echo $current_url; ?>";</script>            
-            <?php            
+                <script>window.location="<?php echo $current_url; ?>";</script>
+            <?php
         }
         if($_GET['up_user_status'] == 'Activate') {
             $uid = $_GET['uid'];
@@ -431,10 +402,27 @@ function add_scripts() {
             $current_url .= $path[0]; // Only use the rest of URL - before any parameters
             //$current_url = urlencode( $current_url ); // Encode it for use
             ?>
-                <script>window.location="<?php echo $current_url; ?>";</script>            
+                <script>window.location="<?php echo $current_url; ?>";</script>
             <?php
         }
     }
 }
 add_action( 'admin_head', 'add_scripts' );
+
+function get_unique_post_meta_values( $searchkey = '', $searchvalue = '', $status = 'publish', $type = 'post', $findkey = '') {
+    global $wpdb;
+    if( empty( $searchkey ) )
+        return;
+    $res = $wpdb->get_col( $wpdb->prepare( "
+          SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm WHERE pm.post_id IN
+          (SELECT pm.post_id FROM {$wpdb->postmeta} pm
+          LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+          WHERE pm.meta_key = '%s'
+          AND pm.meta_value = '%s'
+          AND p.post_status = '%s'
+          AND p.post_type = '%s')
+          AND pm.meta_key = '%s'
+    ", $searchkey, $searchvalue, $status, $type, $findkey) );
+    return $res;
+}
 ?>

@@ -8,10 +8,17 @@ $shopper_id = $_POST['shopper_id'];
 
 require ("twilio-php-master/Twilio/autoload.php");
 use Twilio\Rest\Client;
-//require_once(TEMPLATEPATH.'/smtp/class.phpmailer.php');
 
 update_post_meta($shopper_id, 'complete_purchase', 1);
 update_post_meta($shopper_id, 'dollar_button_clicked', 1);
+$purchase_array = get_post_meta($shopper_id, 'purchase_array', true);
+if (empty($purchase_array)) {
+  $purchase_array = array('true');
+  add_post_meta($shopper_id, 'purchase_array', $purchase_array, true);
+} else {
+  array_push($purchase_array, 'true');
+  update_post_meta($shopper_id, 'purchase_array', $purchase_array);
+}
 
 $shopper_email = get_post_meta($shopper_id, 'customer_email', true);
 
@@ -37,48 +44,39 @@ $headers .= "Reply-To: ". strip_tags($from) . "\r\n";
 $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 $subject = $result2->subject;
-$msg = $msg_body2; 
+$msg = $msg_body2;
 
-/*add_filter('wp_mail_from','yoursite_wp_mail_from');
-function yoursite_wp_mail_from($content_type) {
-  return $from;
-}
-add_filter('wp_mail_from_name','yoursite_wp_mail_from_name');
-function yoursite_wp_mail_from_name($name) {
-  return $shopper_name;
-}*/
+
 if(!empty($store_name)){
     if(!empty($from)){
-        //wp_mail( $shopper_email, $subject, $msg, $headers);
-        mail( $shopper_email, $subject, $msg, $headers);
-    }   
+        wp_mail( $shopper_email, $subject, $msg, $headers);
+    }
 }
 
 //wp_mail( $shopper_email, $subject, $msg, $headers );
-//mail( $shopper_email, $subject, $msg, 'From: jagsnnath<info@istilist.com>' );
 
 $shopper_phone = get_post_meta($shopper_id, 'customer_phone', TRUE);
 $sms_agreement = get_post_meta($shopper_id, 'sms_agreement', TRUE);
 if (!empty($shopper_phone) && $sms_agreement == 'yes') {
     $sql3 = "SELECT * FROM $table_name1 WHERE message_type = 'thankyoutext' and store_id = $store_id";
     $result3 = $wpdb->get_row($sql3);
-    
+
     if (!empty($result3->body)) {
         $msg_body1 = str_replace("{Shopper's Name}",$shopper_name1,$result3->body);
         $msg_body2 = str_replace("{Stylist's Name}",$stylist_name,$msg_body1);
-        
-    
+
+
         $sid = 'ACdb92d82faf7befbb1538a208224133a4';
         $token = '1859b70bd4b570f6c8ff702b1ffd005d';
         $client = new Client($sid, $token);
         $sms = $client->account->messages->create(
-    
+
             // the number we are sending to - Any phone number
             '+1'.$shopper_phone,
             array(
-                // Step 6: Change the 'From' number below to be a valid Twilio number 
+                // Step 6: Change the 'From' number below to be a valid Twilio number
                 // that you've purchased
-                'from' => get_option('twilio_number'), 
+                'from' => get_option('twilio_number'),
                 // the sms body
                 'body' => $msg_body2
             )

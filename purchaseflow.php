@@ -101,7 +101,11 @@ function customerpurchaseyear(){
             maxValue: 12
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
@@ -184,7 +188,11 @@ function customerpurchaselastmonth(){
             title: 'Days'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
@@ -267,7 +275,11 @@ function customerpurchasethismonth(){
             title: 'Days'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
@@ -351,7 +363,11 @@ function customerpurchase7days(){
             title: 'Days'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
@@ -453,7 +469,11 @@ function customerpurchasetoday(){
             title: 'Time'
         },
         vAxis: {
-            title: 'Number of Shoppers'
+            title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+              min: 0,
+            },
         },
         legend: {position: 'top', maxLines: 3},
         colors: ['#14b9d6', '#097138'],
@@ -565,6 +585,7 @@ function customerpurchasecustom(){
         },
         vAxis: {
             title: 'Number of Shoppers',
+            viewWindowMode: 'explicit',
             viewWindow: {
               min: 0,
             },

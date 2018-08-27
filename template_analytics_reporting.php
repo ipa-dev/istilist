@@ -191,10 +191,6 @@ if(isset($_POST['download_csv'])){
                         <h3 class="toggleHeading">Size Preferences</h3>
                         <div class="toggleSection"><?php get_template_part('size_preff'); ?></div>
                     </div>
-                    <div class="reportBox" id="toggleheading7">
-                        <h3 class="toggleHeading">Purchases</h3>
-                        <div class="toggleSection"><?php get_template_part('purchaseflow'); ?></div>
-                    </div>
                     <div class="reportBox">
                         <h3>Export all registered shoppers</h3>
                         <span class="h1inlinelink">

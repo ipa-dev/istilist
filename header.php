@@ -1,9 +1,17 @@
 <?php ob_start(); ?>
-<?php session_start(); ?>
+<?php
+    if(!isset($_SESSION))
+    {
+        session_start();
+    }
+?>
 <?php
 if(is_user_logged_in()){
     global $user_ID;
     $timezone = get_user_meta($user_ID, 'selecttimezone', true);
+    if (empty($timezone)) {
+      $timezone = 'US/Eastern';
+    }
     date_default_timezone_set($timezone);
 }
 ?>
@@ -101,9 +109,9 @@ wp_head();
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".fancybox").fancybox({
-            
+
 		});
-        
+
         jQuery(".assignStylist").fancybox({
             maxWidth	: 300,
        		maxHeight	: 220,
@@ -138,7 +146,7 @@ jQuery(document).ready(function(){
   jQuery('.bxslider').bxSlider({
       auto: false,
       controls: false,
-      pager: false, 
+      pager: false,
       nextText: '<img src="<?php bloginfo('template_directory'); ?>/images/prev.png" />',
       prevText: '<img src="<?php bloginfo('template_directory'); ?>/images/next.png" />'
   });
@@ -216,7 +224,7 @@ jQuery(document).ready(function(){
     jQuery("#school_event").autocomplete("<?php get_bloginfo('url'); ?>/autocomplete-school", {
     	selectFirst: true
     });
-    
+
     jQuery("#designer").autocomplete("<?php get_bloginfo('url'); ?>/autocomplete-designer", {
     	selectFirst: true
     });
@@ -251,7 +259,7 @@ jQuery(document).ready(function(){
         tabidentify: 'hor_1',
         activetab_bg: '#025597',
         inactive_bg: '#FFFFFF',
-    }); 
+    });
 });
 </script>
 
@@ -267,7 +275,7 @@ jQuery(document).ready(function(){
 	<div class="maincontent noPadding">
 	    <div class="section group">
 	        <div class="col span_6_of_12">
-                <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a> <span style="font-size: 20px;">Beta Test</span></h1>                          
+                <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a> <span style="font-size: 20px;">Beta Test</span></h1>
 	        </div>
 	        <div class="col span_6_of_12">
                 <?php if(is_user_logged_in()){ ?>
@@ -296,7 +304,7 @@ jQuery(document).ready(function(){
                         <li><a href="<?php bloginfo('url'); ?>/login">Login</a></li>
                     </ul>
                 </div>
-                <?php } ?>                          
+                <?php } ?>
 	        </div>
 	    </div>
 	</div>
