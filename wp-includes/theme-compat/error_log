@@ -1,0 +1,1 @@
+[11-Feb-2018 21:49:06 America/Denver] PHP Fatal error:  Call to undefined function post_class() in /home/istilist/public_html/wp-includes/theme-compat/embed-content.php on line 13
