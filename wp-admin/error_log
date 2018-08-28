@@ -244,3 +244,21 @@ Stack trace:
 #4 /home/istilist/public_html/staging/wp-settings.php(305): include_once('/home/istilist/...')
 #5 /home/istilist/public_html/staging/wp-config.php(82): require_once('/home/istilist/...')
 #6 /home/istilist/public_html/staging/wp-load.php(37): require_once('/home/istilist/. in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php on line 72
+[27-Aug-2018 18:59:56 UTC] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php:72
+Stack trace:
+#0 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(157): UniteBaseAdminClassRev::addMetaBox('Revolution Slid...', Object(UniteSettingsAdvancedRev), Array, NULL)
+#1 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(68): RevSliderAdmin->addSliderMetaBox()
+#2 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(40): RevSliderAdmin->init()
+#3 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider.php(146): RevSliderAdmin->__construct('/home/istilist/...')
+#4 /home/istilist/public_html/staging/wp-settings.php(305): include_once('/home/istilist/...')
+#5 /home/istilist/public_html/staging/wp-config.php(82): require_once('/home/istilist/...')
+#6 /home/istilist/public_html/staging/wp-load.php(37): require_once('/home/istilist/. in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php on line 72
+[27-Aug-2018 19:01:02 UTC] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php:72
+Stack trace:
+#0 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(157): UniteBaseAdminClassRev::addMetaBox('Revolution Slid...', Object(UniteSettingsAdvancedRev), Array, NULL)
+#1 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(68): RevSliderAdmin->addSliderMetaBox()
+#2 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider_admin.php(40): RevSliderAdmin->init()
+#3 /home/istilist/public_html/staging/wp-content/plugins/revslider/revslider.php(146): RevSliderAdmin->__construct('/home/istilist/...')
+#4 /home/istilist/public_html/staging/wp-settings.php(305): include_once('/home/istilist/...')
+#5 /home/istilist/public_html/staging/wp-config.php(82): require_once('/home/istilist/...')
+#6 /home/istilist/public_html/staging/wp-load.php(37): require_once('/home/istilist/. in /home/istilist/public_html/staging/wp-content/plugins/revslider/inc_php/framework/base_admin.class.php on line 72
