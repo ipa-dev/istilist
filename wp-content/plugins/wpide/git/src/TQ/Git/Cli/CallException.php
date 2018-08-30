@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\Cli;
+
 use TQ\Git\Exception;
 
 /**

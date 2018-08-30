@@ -10,7 +10,6 @@
  */
 
 if (!defined('__CLASS_HTML2PDF__')) {
-
     define('__CLASS_HTML2PDF__', '4.03');
     define('HTML2PDF_USED_TCPDF_VERSION', '5.0.002');
 
@@ -109,8 +108,8 @@ if (!defined('__CLASS_HTML2PDF__')) {
         protected $_debugStartTime   = 0;           // debug start time
         protected $_debugLastTime    = 0;           // debug stop time
 
-        static protected $_subobj    = null;        // object html2pdf prepared in order to accelerate the creation of sub html2pdf
-        static protected $_tables    = array();     // static table to prepare the nested html tables
+        protected static $_subobj    = null;        // object html2pdf prepared in order to accelerate the creation of sub html2pdf
+        protected static $_tables    = array();     // static table to prepare the nested html tables
 
         /**
          * class constructor
@@ -162,7 +161,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->_subPart = false;
 
             // init the marges of the page
-            if (!is_array($marges)) $marges = array($marges, $marges, $marges, $marges);
+            if (!is_array($marges)) {
+                $marges = array($marges, $marges, $marges, $marges);
+            }
             $this->_setDefaultMargins($marges[0], $marges[1], $marges[2], $marges[3]);
             $this->_setMargins();
             $this->_marges = array();
@@ -181,7 +182,6 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         public function __destruct()
         {
-
         }
 
         /**
@@ -310,7 +310,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
         {
             $oldPage = $this->_INDEX_NewPage($onPage);
             $this->pdf->createIndex($this, $titre, $sizeTitle, $sizeBookmark, $bookmarkTitle, $displayPage, $onPage, $fontName);
-            if ($oldPage) $this->pdf->setPage($oldPage);
+            if ($oldPage) {
+                $this->pdf->setPage($oldPage);
+            }
         }
 
         /**
@@ -356,14 +358,24 @@ if (!defined('__CLASS_HTML2PDF__')) {
             }
 
             // complete parameters
-            if ($dest===false) $dest = 'I';
-            if ($dest===true)  $dest = 'S';
-            if ($dest==='')    $dest = 'I';
-            if ($name=='')     $name='document.pdf';
+            if ($dest===false) {
+                $dest = 'I';
+            }
+            if ($dest===true) {
+                $dest = 'S';
+            }
+            if ($dest==='') {
+                $dest = 'I';
+            }
+            if ($name=='') {
+                $name='document.pdf';
+            }
 
             // clean up the destination
             $dest = strtoupper($dest);
-            if (!in_array($dest, array('I', 'D', 'F', 'S', 'FI','FD'))) $dest = 'I';
+            if (!in_array($dest, array('I', 'D', 'F', 'S', 'FI','FD'))) {
+                $dest = 'I';
+            }
 
             // the name must be a PDF name
             if (strtolower(substr($name, -4))!='.pdf') {
@@ -385,8 +397,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
         public function writeHTML($html, $debugVue = false)
         {
             // if it is a real html page, we have to convert it
-            if (preg_match('/<body/isU', $html))
+            if (preg_match('/<body/isU', $html)) {
                 $html = $this->getHtmlFromPage($html);
+            }
 
             $html = str_replace('[[date_y]]', date('Y'), $html);
             $html = str_replace('[[date_m]]', date('m'), $html);
@@ -422,20 +435,24 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             // extract the content
             $res = explode('<body', $html);
-            if (count($res)<2) return $html;
+            if (count($res)<2) {
+                return $html;
+            }
             $content = '<page'.$res[1];
             $content = explode('</body', $content);
             $content = $content[0].'</page>';
 
             // extract the link tags
             preg_match_all('/<link([^>]*)>/isU', $html, $match);
-            foreach ($match[0] as $src)
+            foreach ($match[0] as $src) {
                 $content = $src.'</link>'.$content;
+            }
 
             // extract the css style tags
             preg_match_all('/<style[^>]*>(.*)<\/style[^>]*>/isU', $html, $match);
-            foreach ($match[0] as $src)
+            foreach ($match[0] as $src) {
                 $content = $src.$content;
+            }
 
             return $content;
         }
@@ -513,8 +530,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _setDefaultMargins($left, $top, $right = null, $bottom = null)
         {
-            if ($right===null)  $right = $left;
-            if ($bottom===null) $bottom = 8;
+            if ($right===null) {
+                $right = $left;
+            }
+            if ($bottom===null) {
+                $bottom = 8;
+            }
 
             $this->_defaultLeft   = $this->parsingCss->ConvertToMM($left.'mm');
             $this->_defaultTop    = $this->parsingCss->ConvertToMM($top.'mm');
@@ -565,8 +586,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                         $this->pdf->Rect(0, 0, $this->pdf->getW(), $this->pdf->getH(), 'F');
                     }
 
-                    if (isset($this->_background['img']) && $this->_background['img'])
+                    if (isset($this->_background['img']) && $this->_background['img']) {
                         $this->pdf->Image($this->_background['img'], $this->_background['posX'], $this->_background['posY'], $this->_background['width']);
+                    }
                 }
 
                 $this->_setPageHeader();
@@ -617,7 +639,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
         protected function _DEBUG_add($name, $level=null)
         {
             // if true : UP
-            if ($level===true) $this->_debugLevel++;
+            if ($level===true) {
+                $this->_debugLevel++;
+            }
 
             $name   = str_repeat('  ', $this->_debugLevel). $name.($level===true ? ' Begin' : ($level===false ? ' End' : ''));
             $time  = microtime(true);
@@ -635,7 +659,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->_debugLastTime = $time;
 
             // it false : DOWN
-            if ($level===false) $this->_debugLevel--;
+            if ($level===false) {
+                $this->_debugLevel--;
+            }
 
             return $this;
         }
@@ -674,8 +700,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $y = floor($y*100);
             $x = array($this->pdf->getlMargin(), $this->pdf->getW()-$this->pdf->getrMargin());
 
-            foreach ($this->_pageMarges as $mY => $mX)
-                if ($mY<=$y) $x = $mX;
+            foreach ($this->_pageMarges as $mY => $mX) {
+                if ($mY<=$y) {
+                    $x = $mX;
+                }
+            }
 
             return $x;
         }
@@ -697,18 +726,30 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $oldBottom = $this->_getMargins($yBottom);
 
             // update the top float margin
-            if ($float=='left'  && $oldTop[0]<$xRight) $oldTop[0] = $xRight;
-            if ($float=='right' && $oldTop[1]>$xLeft)  $oldTop[1] = $xLeft;
+            if ($float=='left'  && $oldTop[0]<$xRight) {
+                $oldTop[0] = $xRight;
+            }
+            if ($float=='right' && $oldTop[1]>$xLeft) {
+                $oldTop[1] = $xLeft;
+            }
 
             $yTop = floor($yTop*100);
             $yBottom = floor($yBottom*100);
 
             // erase all the float margins that are smaller than the new one
             foreach ($this->_pageMarges as $mY => $mX) {
-                if ($mY<$yTop) continue;
-                if ($mY>$yBottom) break;
-                if ($float=='left' && $this->_pageMarges[$mY][0]<$xRight)  unset($this->_pageMarges[$mY]);
-                if ($float=='right' && $this->_pageMarges[$mY][1]>$xLeft) unset($this->_pageMarges[$mY]);
+                if ($mY<$yTop) {
+                    continue;
+                }
+                if ($mY>$yBottom) {
+                    break;
+                }
+                if ($float=='left' && $this->_pageMarges[$mY][0]<$xRight) {
+                    unset($this->_pageMarges[$mY]);
+                }
+                if ($float=='right' && $this->_pageMarges[$mY][1]>$xLeft) {
+                    unset($this->_pageMarges[$mY]);
+                }
             }
 
             // save the new Top and Bottom margins
@@ -806,7 +847,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _setPageHeader()
         {
-            if (!count($this->_subHEADER)) return false;
+            if (!count($this->_subHEADER)) {
+                return false;
+            }
 
             $oldParsePos = $this->_parsePos;
             $oldParseCode = $this->parsingHtml->code;
@@ -826,7 +869,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _setPageFooter()
         {
-            if (!count($this->_subFOOTER)) return false;
+            if (!count($this->_subFOOTER)) {
+                return false;
+            }
 
             $oldParsePos = $this->_parsePos;
             $oldParseCode = $this->parsingHtml->code;
@@ -887,15 +932,18 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $txt = $sub->parsingHtml->code[$this->_parsePos]['param']['txt'];
                 $txt = str_replace('[[page_cu]]', $sub->pdf->getMyNumPage($this->_page), $txt);
                 $sub->parsingHtml->code[$this->_parsePos]['param']['txt'] = substr($txt, $curr+1);
-            } else
+            } else {
                 $sub->_parsePos++;
+            }
 
             // for each element of the parsing => load the action
             $res = null;
             for ($sub->_parsePos; $sub->_parsePos<count($sub->parsingHtml->code); $sub->_parsePos++) {
                 $action = $sub->parsingHtml->code[$sub->_parsePos];
                 $res = $sub->_executeAction($action);
-                if (!$res) break;
+                if (!$res) {
+                    break;
+                }
             }
 
             $w = $sub->_maxX; // max width
@@ -906,12 +954,13 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->_destroySubHTML($sub);
 
             // adapt the start of the line, depending on the text-align
-            if ($this->parsingCss->value['text-align']=='center')
+            if ($this->parsingCss->value['text-align']=='center') {
                 $this->pdf->setX(($rx+$this->pdf->getX()-$w)*0.5-0.01);
-            else if ($this->parsingCss->value['text-align']=='right')
+            } elseif ($this->parsingCss->value['text-align']=='right') {
                 $this->pdf->setX($rx-$w-0.01);
-            else
+            } else {
                 $this->pdf->setX($lx);
+            }
 
             // set the height of the line
             $this->_currentH = $h;
@@ -1024,8 +1073,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $nbBaseFive    = array('V','L','D');
             $nbRoman    = '';
 
-            if ($nbArabic<1)    return $nbArabic;
-            if ($nbArabic>3999) return $nbArabic;
+            if ($nbArabic<1) {
+                return $nbArabic;
+            }
+            if ($nbArabic>3999) {
+                return $nbArabic;
+            }
 
             for ($i=3; $i>=0 ; $i--) {
                 $chiffre=floor($nbArabic/pow(10, $i));
@@ -1035,10 +1088,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
                         for ($j=$chiffre; $j>=1; $j--) {
                             $nbRoman=$nbRoman.$nbBaseTen[$i];
                         }
-                    } else if ($chiffre==9) {
+                    } elseif ($chiffre==9) {
                         $nbRoman=$nbRoman.$nbBaseTen[$i].$nbBaseTen[$i+1];
-                    } else if ($chiffre==4) {
-                    $nbRoman=$nbRoman.$nbBaseTen[$i].$nbBaseFive[$i];
+                    } elseif ($chiffre==4) {
+                        $nbRoman=$nbRoman.$nbBaseTen[$i].$nbBaseFive[$i];
                     } else {
                         $nbRoman=$nbRoman.$nbBaseFive[$i];
                         for ($j=$chiffre-5; $j>=1; $j--) {
@@ -1095,10 +1148,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $nb = $this->_defList[count($this->_defList)-1]['nb'];
             $up = (substr($st, 0, 6)=='upper-');
 
-            if ($im) return array(false, false, $im);
+            if ($im) {
+                return array(false, false, $im);
+            }
 
-            switch($st)
-            {
+            switch ($st) {
                 case 'none':
                     return array('helvetica', true, ' ');
 
@@ -1156,12 +1210,19 @@ if (!defined('__CLASS_HTML2PDF__')) {
             }
 
             // prepare the datas
-            if (!in_array($type, array('ul', 'ol'))) $type = 'ul';
-            if (!in_array($style, array('lower-alpha', 'upper-alpha', 'upper-roman', 'lower-roman', 'decimal', 'square', 'circle', 'disc', 'none'))) $style = '';
+            if (!in_array($type, array('ul', 'ol'))) {
+                $type = 'ul';
+            }
+            if (!in_array($style, array('lower-alpha', 'upper-alpha', 'upper-roman', 'lower-roman', 'decimal', 'square', 'circle', 'disc', 'none'))) {
+                $style = '';
+            }
 
             if (!$style) {
-                if ($type=='ul')    $style = 'disc';
-                else                $style = 'decimal';
+                if ($type=='ul') {
+                    $style = 'disc';
+                } else {
+                    $style = 'decimal';
+                }
             }
 
             // add the new level
@@ -1270,8 +1331,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _getElementY($h)
         {
-            if ($this->_subPart || $this->_isSubPart || !$this->_currentH || $this->_currentH<$h)
+            if ($this->_subPart || $this->_isSubPart || !$this->_currentH || $this->_currentH<$h) {
                 return 0;
+            }
 
             return ($this->_currentH-$h)*0.8;
         }
@@ -1286,10 +1348,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
         protected function _makeBreakLine($h, $curr = null)
         {
             if ($h) {
-                if (($this->pdf->getY()+$h<$this->pdf->getH() - $this->pdf->getbMargin()) || $this->_isInOverflow || $this->_isInFooter)
+                if (($this->pdf->getY()+$h<$this->pdf->getH() - $this->pdf->getbMargin()) || $this->_isInOverflow || $this->_isInFooter) {
                     $this->_setNewLine($h, $curr);
-                else
+                } else {
                     $this->_setNewPage(null, '', null, $curr);
+                }
             } else {
                 $this->_setNewPositionForNewLine($curr);
             }
@@ -1332,10 +1395,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
             if ($this->parsingCss->value['width'] && $this->parsingCss->value['height']) {
                 $w = $this->parsingCss->value['width'];
                 $h = $this->parsingCss->value['height'];
-            } else if ($this->parsingCss->value['width']) {
+            } elseif ($this->parsingCss->value['width']) {
                 $w = $this->parsingCss->value['width'];
                 $h = $imageHeight*$w/$imageWidth;
-            } else if ($this->parsingCss->value['height']) {
+            } elseif ($this->parsingCss->value['height']) {
                 $h = $this->parsingCss->value['height'];
                 $w = $imageWidth*$h/$imageHeight;
             } else {
@@ -1395,7 +1458,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             // get the width and the position of the parent
             $old = $this->parsingCss->getOldValues();
-            if ( $old['width']) {
+            if ($old['width']) {
                 $parentWidth = $old['width'];
                 $parentX = $x;
             } else {
@@ -1412,7 +1475,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             // calculate the position of the image, if align to the right
             if ($parentWidth>$w && $float!='left') {
-                if ($float=='right' || $this->parsingCss->value['text-align']=='li_right')    $x = $parentX + $parentWidth - $w-$this->parsingCss->value['margin']['r']-$this->parsingCss->value['margin']['l'];
+                if ($float=='right' || $this->parsingCss->value['text-align']=='li_right') {
+                    $x = $parentX + $parentWidth - $w-$this->parsingCss->value['margin']['r']-$this->parsingCss->value['margin']['l'];
+                }
             }
 
             // display the image
@@ -1443,7 +1508,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 // get the new position
                 list($lx, $rx) = $this->_getMargins($yc);
                 $this->pdf->setXY($lx, $yc);
-            } else if ($float=='right') {
+            } elseif ($float=='right') {
                 // save the current max. We don't save the X because it is not the real max of the line
                 $this->_maxY = max($this->_maxY, $y+$h);
 
@@ -1483,7 +1548,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
         protected function _drawRectangle($x, $y, $w, $h, $border, $padding, $margin, $background)
         {
             // if we are in a subpart or if height is null => return false
-            if ($this->_subPart || $this->_isSubPart || $h===null) return false;
+            if ($this->_subPart || $this->_isSubPart || $h===null) {
+                return false;
+            }
 
             // add the margin
             $x+= $margin;
@@ -1526,10 +1593,18 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $inBL[1]-= $border['b']['width'];
             }
 
-            if ($inTL[0]<=0 || $inTL[1]<=0) $inTL = null;
-            if ($inTR[0]<=0 || $inTR[1]<=0) $inTR = null;
-            if ($inBR[0]<=0 || $inBR[1]<=0) $inBR = null;
-            if ($inBL[0]<=0 || $inBL[1]<=0) $inBL = null;
+            if ($inTL[0]<=0 || $inTL[1]<=0) {
+                $inTL = null;
+            }
+            if ($inTR[0]<=0 || $inTR[1]<=0) {
+                $inTR = null;
+            }
+            if ($inBR[0]<=0 || $inBR[1]<=0) {
+                $inBR = null;
+            }
+            if ($inBL[0]<=0 || $inBL[1]<=0) {
+                $inBL = null;
+            }
 
             // prepare the background color
             $pdfStyle = '';
@@ -1587,13 +1662,21 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     $imageHeight    = 72./96.*$imageInfos[1]/$this->pdf->getK();
 
                     // prepare the position of the backgroung
-                    if ($iRepeat[0]) $iPosition[0] = $bX;
-                    else if (preg_match('/^([-]?[0-9\.]+)%/isU', $iPosition[0], $match)) $iPosition[0] = $bX + $match[1]*($bW-$imageWidth)/100;
-                    else $iPosition[0] = $bX+$iPosition[0];
+                    if ($iRepeat[0]) {
+                        $iPosition[0] = $bX;
+                    } elseif (preg_match('/^([-]?[0-9\.]+)%/isU', $iPosition[0], $match)) {
+                        $iPosition[0] = $bX + $match[1]*($bW-$imageWidth)/100;
+                    } else {
+                        $iPosition[0] = $bX+$iPosition[0];
+                    }
 
-                    if ($iRepeat[1]) $iPosition[1] = $bY;
-                    else if (preg_match('/^([-]?[0-9\.]+)%/isU', $iPosition[1], $match)) $iPosition[1] = $bY + $match[1]*($bH-$imageHeight)/100;
-                    else $iPosition[1] = $bY+$iPosition[1];
+                    if ($iRepeat[1]) {
+                        $iPosition[1] = $bY;
+                    } elseif (preg_match('/^([-]?[0-9\.]+)%/isU', $iPosition[1], $match)) {
+                        $iPosition[1] = $bY + $match[1]*($bH-$imageHeight)/100;
+                    } else {
+                        $iPosition[1] = $bY+$iPosition[1];
+                    }
 
                     $imageXmin = $bX;
                     $imageXmax = $bX+$bW;
@@ -1601,12 +1684,16 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     $imageYmax = $bY+$bH;
 
                     if (!$iRepeat[0] && !$iRepeat[1]) {
-                        $imageXmin =     $iPosition[0]; $imageXmax =     $iPosition[0]+$imageWidth;
-                        $imageYmin =     $iPosition[1]; $imageYmax =     $iPosition[1]+$imageHeight;
-                    } else if ($iRepeat[0] && !$iRepeat[1]) {
-                        $imageYmin =     $iPosition[1]; $imageYmax =     $iPosition[1]+$imageHeight;
-                    } else if (!$iRepeat[0] && $iRepeat[1]) {
-                        $imageXmin =     $iPosition[0]; $imageXmax =     $iPosition[0]+$imageWidth;
+                        $imageXmin =     $iPosition[0];
+                        $imageXmax =     $iPosition[0]+$imageWidth;
+                        $imageYmin =     $iPosition[1];
+                        $imageYmax =     $iPosition[1]+$imageHeight;
+                    } elseif ($iRepeat[0] && !$iRepeat[1]) {
+                        $imageYmin =     $iPosition[1];
+                        $imageYmax =     $iPosition[1]+$imageHeight;
+                    } elseif (!$iRepeat[0] && $iRepeat[1]) {
+                        $imageXmin =     $iPosition[0];
+                        $imageXmax =     $iPosition[0]+$imageWidth;
                     }
 
                     // build the path to display the image (because of radius)
@@ -1645,10 +1732,18 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $y-= $loose;
             $w+= 2.*$loose;
             $h+= 2.*$loose;
-            if ($border['l']['width']) $border['l']['width']+= 2.*$loose;
-            if ($border['t']['width']) $border['t']['width']+= 2.*$loose;
-            if ($border['r']['width']) $border['r']['width']+= 2.*$loose;
-            if ($border['b']['width']) $border['b']['width']+= 2.*$loose;
+            if ($border['l']['width']) {
+                $border['l']['width']+= 2.*$loose;
+            }
+            if ($border['t']['width']) {
+                $border['t']['width']+= 2.*$loose;
+            }
+            if ($border['r']['width']) {
+                $border['r']['width']+= 2.*$loose;
+            }
+            if ($border['b']['width']) {
+                $border['b']['width']+= 2.*$loose;
+            }
 
             // prepare the test on borders
             $testBl = ($border['l']['width'] && $border['l']['color'][0]!==null);
@@ -1660,17 +1755,26 @@ if (!defined('__CLASS_HTML2PDF__')) {
             if (is_array($outBL) && ($testBb || $testBl)) {
                 if ($inBL) {
                     $courbe = array();
-                    $courbe[] = $x+$outBL[0];              $courbe[] = $y+$h;
-                    $courbe[] = $x;                        $courbe[] = $y+$h-$outBL[1];
-                    $courbe[] = $x+$outBL[0];              $courbe[] = $y+$h-$border['b']['width'];
-                    $courbe[] = $x+$border['l']['width'];  $courbe[] = $y+$h-$outBL[1];
-                    $courbe[] = $x+$outBL[0];              $courbe[] = $y+$h-$outBL[1];
+                    $courbe[] = $x+$outBL[0];
+                    $courbe[] = $y+$h;
+                    $courbe[] = $x;
+                    $courbe[] = $y+$h-$outBL[1];
+                    $courbe[] = $x+$outBL[0];
+                    $courbe[] = $y+$h-$border['b']['width'];
+                    $courbe[] = $x+$border['l']['width'];
+                    $courbe[] = $y+$h-$outBL[1];
+                    $courbe[] = $x+$outBL[0];
+                    $courbe[] = $y+$h-$outBL[1];
                 } else {
                     $courbe = array();
-                    $courbe[] = $x+$outBL[0];              $courbe[] = $y+$h;
-                    $courbe[] = $x;                        $courbe[] = $y+$h-$outBL[1];
-                    $courbe[] = $x+$border['l']['width'];  $courbe[] = $y+$h-$border['b']['width'];
-                    $courbe[] = $x+$outBL[0];              $courbe[] = $y+$h-$outBL[1];
+                    $courbe[] = $x+$outBL[0];
+                    $courbe[] = $y+$h;
+                    $courbe[] = $x;
+                    $courbe[] = $y+$h-$outBL[1];
+                    $courbe[] = $x+$border['l']['width'];
+                    $courbe[] = $y+$h-$border['b']['width'];
+                    $courbe[] = $x+$outBL[0];
+                    $courbe[] = $y+$h-$outBL[1];
                 }
                 $this->_drawCurve($courbe, $border['l']['color']);
             }
@@ -1679,17 +1783,26 @@ if (!defined('__CLASS_HTML2PDF__')) {
             if (is_array($outTL) && ($testBt || $testBl)) {
                 if ($inTL) {
                     $courbe = array();
-                    $courbe[] = $x;                        $courbe[] = $y+$outTL[1];
-                    $courbe[] = $x+$outTL[0];              $courbe[] = $y;
-                    $courbe[] = $x+$border['l']['width'];  $courbe[] = $y+$outTL[1];
-                    $courbe[] = $x+$outTL[0];              $courbe[] = $y+$border['t']['width'];
-                    $courbe[] = $x+$outTL[0];              $courbe[] = $y+$outTL[1];
+                    $courbe[] = $x;
+                    $courbe[] = $y+$outTL[1];
+                    $courbe[] = $x+$outTL[0];
+                    $courbe[] = $y;
+                    $courbe[] = $x+$border['l']['width'];
+                    $courbe[] = $y+$outTL[1];
+                    $courbe[] = $x+$outTL[0];
+                    $courbe[] = $y+$border['t']['width'];
+                    $courbe[] = $x+$outTL[0];
+                    $courbe[] = $y+$outTL[1];
                 } else {
                     $courbe = array();
-                    $courbe[] = $x;                        $courbe[] = $y+$outTL[1];
-                    $courbe[] = $x+$outTL[0];              $courbe[] = $y;
-                    $courbe[] = $x+$border['l']['width'];  $courbe[] = $y+$border['t']['width'];
-                    $courbe[] = $x+$outTL[0];              $courbe[] = $y+$outTL[1];
+                    $courbe[] = $x;
+                    $courbe[] = $y+$outTL[1];
+                    $courbe[] = $x+$outTL[0];
+                    $courbe[] = $y;
+                    $courbe[] = $x+$border['l']['width'];
+                    $courbe[] = $y+$border['t']['width'];
+                    $courbe[] = $x+$outTL[0];
+                    $courbe[] = $y+$outTL[1];
                 }
                 $this->_drawCurve($courbe, $border['t']['color']);
             }
@@ -1698,17 +1811,26 @@ if (!defined('__CLASS_HTML2PDF__')) {
             if (is_array($outTR) && ($testBt || $testBr)) {
                 if ($inTR) {
                     $courbe = array();
-                    $courbe[] = $x+$w-$outTR[0];             $courbe[] = $y;
-                    $courbe[] = $x+$w;                       $courbe[] = $y+$outTR[1];
-                    $courbe[] = $x+$w-$outTR[0];             $courbe[] = $y+$border['t']['width'];
-                    $courbe[] = $x+$w-$border['r']['width']; $courbe[] = $y+$outTR[1];
-                    $courbe[] = $x+$w-$outTR[0];             $courbe[] = $y+$outTR[1];
+                    $courbe[] = $x+$w-$outTR[0];
+                    $courbe[] = $y;
+                    $courbe[] = $x+$w;
+                    $courbe[] = $y+$outTR[1];
+                    $courbe[] = $x+$w-$outTR[0];
+                    $courbe[] = $y+$border['t']['width'];
+                    $courbe[] = $x+$w-$border['r']['width'];
+                    $courbe[] = $y+$outTR[1];
+                    $courbe[] = $x+$w-$outTR[0];
+                    $courbe[] = $y+$outTR[1];
                 } else {
                     $courbe = array();
-                    $courbe[] = $x+$w-$outTR[0];             $courbe[] = $y;
-                    $courbe[] = $x+$w;                       $courbe[] = $y+$outTR[1];
-                    $courbe[] = $x+$w-$border['r']['width']; $courbe[] = $y+$border['t']['width'];
-                    $courbe[] = $x+$w-$outTR[0];             $courbe[] = $y+$outTR[1];
+                    $courbe[] = $x+$w-$outTR[0];
+                    $courbe[] = $y;
+                    $courbe[] = $x+$w;
+                    $courbe[] = $y+$outTR[1];
+                    $courbe[] = $x+$w-$border['r']['width'];
+                    $courbe[] = $y+$border['t']['width'];
+                    $courbe[] = $x+$w-$outTR[0];
+                    $courbe[] = $y+$outTR[1];
                 }
                 $this->_drawCurve($courbe, $border['r']['color']);
             }
@@ -1717,17 +1839,26 @@ if (!defined('__CLASS_HTML2PDF__')) {
             if (is_array($outBR) && ($testBb || $testBr)) {
                 if ($inBR) {
                     $courbe = array();
-                    $courbe[] = $x+$w;                       $courbe[] = $y+$h-$outBR[1];
-                    $courbe[] = $x+$w-$outBR[0];             $courbe[] = $y+$h;
-                    $courbe[] = $x+$w-$border['r']['width']; $courbe[] = $y+$h-$outBR[1];
-                    $courbe[] = $x+$w-$outBR[0];             $courbe[] = $y+$h-$border['b']['width'];
-                    $courbe[] = $x+$w-$outBR[0];             $courbe[] = $y+$h-$outBR[1];
+                    $courbe[] = $x+$w;
+                    $courbe[] = $y+$h-$outBR[1];
+                    $courbe[] = $x+$w-$outBR[0];
+                    $courbe[] = $y+$h;
+                    $courbe[] = $x+$w-$border['r']['width'];
+                    $courbe[] = $y+$h-$outBR[1];
+                    $courbe[] = $x+$w-$outBR[0];
+                    $courbe[] = $y+$h-$border['b']['width'];
+                    $courbe[] = $x+$w-$outBR[0];
+                    $courbe[] = $y+$h-$outBR[1];
                 } else {
                     $courbe = array();
-                    $courbe[] = $x+$w;                       $courbe[] = $y+$h-$outBR[1];
-                    $courbe[] = $x+$w-$outBR[0];             $courbe[] = $y+$h;
-                    $courbe[] = $x+$w-$border['r']['width']; $courbe[] = $y+$h-$border['b']['width'];
-                    $courbe[] = $x+$w-$outBR[0];             $courbe[] = $y+$h-$outBR[1];
+                    $courbe[] = $x+$w;
+                    $courbe[] = $y+$h-$outBR[1];
+                    $courbe[] = $x+$w-$outBR[0];
+                    $courbe[] = $y+$h;
+                    $courbe[] = $x+$w-$border['r']['width'];
+                    $courbe[] = $y+$h-$border['b']['width'];
+                    $courbe[] = $x+$w-$outBR[0];
+                    $courbe[] = $y+$h-$outBR[1];
                 }
                 $this->_drawCurve($courbe, $border['b']['color']);
             }
@@ -1735,25 +1866,37 @@ if (!defined('__CLASS_HTML2PDF__')) {
             // draw the left border
             if ($testBl) {
                 $pt = array();
-                $pt[] = $x;                       $pt[] = $y+$h;
-                $pt[] = $x;                       $pt[] = $y+$h-$border['b']['width'];
-                $pt[] = $x;                       $pt[] = $y+$border['t']['width'];
-                $pt[] = $x;                       $pt[] = $y;
-                $pt[] = $x+$border['l']['width']; $pt[] = $y+$border['t']['width'];
-                $pt[] = $x+$border['l']['width']; $pt[] = $y+$h-$border['b']['width'];
+                $pt[] = $x;
+                $pt[] = $y+$h;
+                $pt[] = $x;
+                $pt[] = $y+$h-$border['b']['width'];
+                $pt[] = $x;
+                $pt[] = $y+$border['t']['width'];
+                $pt[] = $x;
+                $pt[] = $y;
+                $pt[] = $x+$border['l']['width'];
+                $pt[] = $y+$border['t']['width'];
+                $pt[] = $x+$border['l']['width'];
+                $pt[] = $y+$h-$border['b']['width'];
 
                 $bord = 3;
                 if (is_array($outBL)) {
                     $bord-=1;
                     $pt[3] -= $outBL[1] - $border['b']['width'];
-                    if ($inBL) $pt[11]-= $inBL[1];
-                    unset($pt[0]);unset($pt[1]);
+                    if ($inBL) {
+                        $pt[11]-= $inBL[1];
+                    }
+                    unset($pt[0]);
+                    unset($pt[1]);
                 }
                 if (is_array($outTL)) {
                     $bord-=2;
                     $pt[5] += $outTL[1]-$border['t']['width'];
-                    if ($inTL) $pt[9] += $inTL[1];
-                    unset($pt[6]);unset($pt[7]);
+                    if ($inTL) {
+                        $pt[9] += $inTL[1];
+                    }
+                    unset($pt[6]);
+                    unset($pt[7]);
                 }
 
                 $pt = array_values($pt);
@@ -1763,25 +1906,37 @@ if (!defined('__CLASS_HTML2PDF__')) {
             // draw the top border
             if ($testBt) {
                 $pt = array();
-                $pt[] = $x;                          $pt[] = $y;
-                $pt[] = $x+$border['l']['width'];    $pt[] = $y;
-                $pt[] = $x+$w-$border['r']['width']; $pt[] = $y;
-                $pt[] = $x+$w;                       $pt[] = $y;
-                $pt[] = $x+$w-$border['r']['width']; $pt[] = $y+$border['t']['width'];
-                $pt[] = $x+$border['l']['width'];    $pt[] = $y+$border['t']['width'];
+                $pt[] = $x;
+                $pt[] = $y;
+                $pt[] = $x+$border['l']['width'];
+                $pt[] = $y;
+                $pt[] = $x+$w-$border['r']['width'];
+                $pt[] = $y;
+                $pt[] = $x+$w;
+                $pt[] = $y;
+                $pt[] = $x+$w-$border['r']['width'];
+                $pt[] = $y+$border['t']['width'];
+                $pt[] = $x+$border['l']['width'];
+                $pt[] = $y+$border['t']['width'];
 
                 $bord = 3;
                 if (is_array($outTL)) {
                     $bord-=1;
                     $pt[2] += $outTL[0] - $border['l']['width'];
-                    if ($inTL) $pt[10]+= $inTL[0];
-                    unset($pt[0]);unset($pt[1]);
+                    if ($inTL) {
+                        $pt[10]+= $inTL[0];
+                    }
+                    unset($pt[0]);
+                    unset($pt[1]);
                 }
                 if (is_array($outTR)) {
                     $bord-=2;
                     $pt[4] -= $outTR[0] - $border['r']['width'];
-                    if ($inTR) $pt[8] -= $inTR[0];
-                    unset($pt[6]);unset($pt[7]);
+                    if ($inTR) {
+                        $pt[8] -= $inTR[0];
+                    }
+                    unset($pt[6]);
+                    unset($pt[7]);
                 }
 
                 $pt = array_values($pt);
@@ -1791,25 +1946,37 @@ if (!defined('__CLASS_HTML2PDF__')) {
             // draw the right border
             if ($testBr) {
                 $pt = array();
-                $pt[] = $x+$w;                       $pt[] = $y;
-                $pt[] = $x+$w;                       $pt[] = $y+$border['t']['width'];
-                $pt[] = $x+$w;                       $pt[] = $y+$h-$border['b']['width'];
-                $pt[] = $x+$w;                       $pt[] = $y+$h;
-                $pt[] = $x+$w-$border['r']['width']; $pt[] = $y+$h-$border['b']['width'];
-                $pt[] = $x+$w-$border['r']['width']; $pt[] = $y+$border['t']['width'];
+                $pt[] = $x+$w;
+                $pt[] = $y;
+                $pt[] = $x+$w;
+                $pt[] = $y+$border['t']['width'];
+                $pt[] = $x+$w;
+                $pt[] = $y+$h-$border['b']['width'];
+                $pt[] = $x+$w;
+                $pt[] = $y+$h;
+                $pt[] = $x+$w-$border['r']['width'];
+                $pt[] = $y+$h-$border['b']['width'];
+                $pt[] = $x+$w-$border['r']['width'];
+                $pt[] = $y+$border['t']['width'];
 
                 $bord = 3;
                 if (is_array($outTR)) {
                     $bord-=1;
                     $pt[3] += $outTR[1] - $border['t']['width'];
-                    if ($inTR) $pt[11]+= $inTR[1];
-                    unset($pt[0]);unset($pt[1]);
+                    if ($inTR) {
+                        $pt[11]+= $inTR[1];
+                    }
+                    unset($pt[0]);
+                    unset($pt[1]);
                 }
                 if (is_array($outBR)) {
                     $bord-=2;
                     $pt[5] -= $outBR[1] - $border['b']['width'];
-                    if ($inBR) $pt[9] -= $inBR[1];
-                    unset($pt[6]);unset($pt[7]);
+                    if ($inBR) {
+                        $pt[9] -= $inBR[1];
+                    }
+                    unset($pt[6]);
+                    unset($pt[7]);
                 }
 
                 $pt = array_values($pt);
@@ -1819,26 +1986,37 @@ if (!defined('__CLASS_HTML2PDF__')) {
             // draw the bottom border
             if ($testBb) {
                 $pt = array();
-                $pt[] = $x+$w;                       $pt[] = $y+$h;
-                $pt[] = $x+$w-$border['r']['width']; $pt[] = $y+$h;
-                $pt[] = $x+$border['l']['width'];    $pt[] = $y+$h;
-                $pt[] = $x;                          $pt[] = $y+$h;
-                $pt[] = $x+$border['l']['width'];    $pt[] = $y+$h-$border['b']['width'];
-                $pt[] = $x+$w-$border['r']['width']; $pt[] = $y+$h-$border['b']['width'];
+                $pt[] = $x+$w;
+                $pt[] = $y+$h;
+                $pt[] = $x+$w-$border['r']['width'];
+                $pt[] = $y+$h;
+                $pt[] = $x+$border['l']['width'];
+                $pt[] = $y+$h;
+                $pt[] = $x;
+                $pt[] = $y+$h;
+                $pt[] = $x+$border['l']['width'];
+                $pt[] = $y+$h-$border['b']['width'];
+                $pt[] = $x+$w-$border['r']['width'];
+                $pt[] = $y+$h-$border['b']['width'];
 
                 $bord = 3;
                 if (is_array($outBL)) {
                     $bord-=2;
                     $pt[4] += $outBL[0] - $border['l']['width'];
-                    if ($inBL) $pt[8] += $inBL[0];
-                    unset($pt[6]);unset($pt[7]);
+                    if ($inBL) {
+                        $pt[8] += $inBL[0];
+                    }
+                    unset($pt[6]);
+                    unset($pt[7]);
                 }
                 if (is_array($outBR)) {
                     $bord-=1;
                     $pt[2] -= $outBR[0] - $border['r']['width'];
-                    if ($inBR) $pt[10]-= $inBR[0];
-                    unset($pt[0]);unset($pt[1]);
-
+                    if ($inBR) {
+                        $pt[10]-= $inBR[0];
+                    }
+                    unset($pt[0]);
+                    unset($pt[1]);
                 }
 
                 $pt = array_values($pt);
@@ -1863,10 +2041,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
         {
             $this->pdf->setFillColorArray($color);
 
-            if (count($pt)==10)
+            if (count($pt)==10) {
                 $this->pdf->drawCurve($pt[0], $pt[1], $pt[2], $pt[3], $pt[4], $pt[5], $pt[6], $pt[7], $pt[8], $pt[9]);
-            else
+            } else {
                 $this->pdf->drawCorner($pt[0], $pt[1], $pt[2], $pt[3], $pt[4], $pt[5], $pt[6], $pt[7]);
+            }
         }
 
         /**
@@ -1889,25 +2068,73 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
                 // clean the end of the line, if radius
                 if ($radius==1) {
-                    $tmp = array(); $tmp[]=$pt[0]; $tmp[]=$pt[1]; $tmp[]=$pt[2]; $tmp[]=$pt[3]; $tmp[]=$pt[8]; $tmp[]=$pt[9];
+                    $tmp = array();
+                    $tmp[]=$pt[0];
+                    $tmp[]=$pt[1];
+                    $tmp[]=$pt[2];
+                    $tmp[]=$pt[3];
+                    $tmp[]=$pt[8];
+                    $tmp[]=$pt[9];
                     $this->pdf->Polygon($tmp, 'F');
 
-                    $tmp = array(); $tmp[]=$pt[2]; $tmp[]=$pt[3]; $tmp[]=$pt[4]; $tmp[]=$pt[5]; $tmp[]=$pt[6]; $tmp[]=$pt[7]; $tmp[]=$pt[8]; $tmp[]=$pt[9];
+                    $tmp = array();
+                    $tmp[]=$pt[2];
+                    $tmp[]=$pt[3];
+                    $tmp[]=$pt[4];
+                    $tmp[]=$pt[5];
+                    $tmp[]=$pt[6];
+                    $tmp[]=$pt[7];
+                    $tmp[]=$pt[8];
+                    $tmp[]=$pt[9];
                     $pt = $tmp;
-                } else if ($radius==2) {
-                    $tmp = array(); $tmp[]=$pt[2]; $tmp[]=$pt[3]; $tmp[]=$pt[4]; $tmp[]=$pt[5]; $tmp[]=$pt[6]; $tmp[]=$pt[7];
+                } elseif ($radius==2) {
+                    $tmp = array();
+                    $tmp[]=$pt[2];
+                    $tmp[]=$pt[3];
+                    $tmp[]=$pt[4];
+                    $tmp[]=$pt[5];
+                    $tmp[]=$pt[6];
+                    $tmp[]=$pt[7];
                     $this->pdf->Polygon($tmp, 'F');
 
-                    $tmp = array(); $tmp[]=$pt[0]; $tmp[]=$pt[1]; $tmp[]=$pt[2]; $tmp[]=$pt[3]; $tmp[]=$pt[6]; $tmp[]=$pt[7]; $tmp[]=$pt[8]; $tmp[]=$pt[9];
+                    $tmp = array();
+                    $tmp[]=$pt[0];
+                    $tmp[]=$pt[1];
+                    $tmp[]=$pt[2];
+                    $tmp[]=$pt[3];
+                    $tmp[]=$pt[6];
+                    $tmp[]=$pt[7];
+                    $tmp[]=$pt[8];
+                    $tmp[]=$pt[9];
                     $pt = $tmp;
-                } else if ($radius==3) {
-                    $tmp = array(); $tmp[]=$pt[0]; $tmp[]=$pt[1]; $tmp[]=$pt[2]; $tmp[]=$pt[3]; $tmp[]=$pt[10]; $tmp[]=$pt[11];
+                } elseif ($radius==3) {
+                    $tmp = array();
+                    $tmp[]=$pt[0];
+                    $tmp[]=$pt[1];
+                    $tmp[]=$pt[2];
+                    $tmp[]=$pt[3];
+                    $tmp[]=$pt[10];
+                    $tmp[]=$pt[11];
                     $this->pdf->Polygon($tmp, 'F');
 
-                    $tmp = array(); $tmp[]=$pt[4]; $tmp[]=$pt[5]; $tmp[]=$pt[6]; $tmp[]=$pt[7]; $tmp[]=$pt[8]; $tmp[]=$pt[9];
+                    $tmp = array();
+                    $tmp[]=$pt[4];
+                    $tmp[]=$pt[5];
+                    $tmp[]=$pt[6];
+                    $tmp[]=$pt[7];
+                    $tmp[]=$pt[8];
+                    $tmp[]=$pt[9];
                     $this->pdf->Polygon($tmp, 'F');
 
-                    $tmp = array(); $tmp[]=$pt[2]; $tmp[]=$pt[3]; $tmp[]=$pt[4]; $tmp[]=$pt[5]; $tmp[]=$pt[8]; $tmp[]=$pt[9]; $tmp[]=$pt[10]; $tmp[]=$pt[11];
+                    $tmp = array();
+                    $tmp[]=$pt[2];
+                    $tmp[]=$pt[3];
+                    $tmp[]=$pt[4];
+                    $tmp[]=$pt[5];
+                    $tmp[]=$pt[8];
+                    $tmp[]=$pt[9];
+                    $tmp[]=$pt[10];
+                    $tmp[]=$pt[11];
                     $pt = $tmp;
                 }
 
@@ -1916,14 +2143,18 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     $l = abs(($pt[3]-$pt[1])*0.5);
                     $px = 0;
                     $py = $width;
-                    $x1 = $pt[0]; $y1 = ($pt[3]+$pt[1])*0.5;
-                    $x2 = $pt[6]; $y2 = ($pt[7]+$pt[5])*0.5;
+                    $x1 = $pt[0];
+                    $y1 = ($pt[3]+$pt[1])*0.5;
+                    $x2 = $pt[6];
+                    $y2 = ($pt[7]+$pt[5])*0.5;
                 } else {
                     $l = abs(($pt[2]-$pt[0])*0.5);
                     $px = $width;
                     $py = 0;
-                    $x1 = ($pt[2]+$pt[0])*0.5; $y1 = $pt[1];
-                    $x2 = ($pt[6]+$pt[4])*0.5; $y2 = $pt[7];
+                    $x1 = ($pt[2]+$pt[0])*0.5;
+                    $y1 = $pt[1];
+                    $x2 = ($pt[6]+$pt[4])*0.5;
+                    $y2 = $pt[7];
                 }
 
                 // if dashed : 3x bigger than dotted
@@ -1937,29 +2168,49 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 for ($i=0; $l-($px+$py)*($i-0.5)>0; $i++) {
                     if (($i%2)==$mode) {
                         $j = $i-0.5;
-                        $lx1 = $px*($j);   if ($lx1<-$l) $lx1 =-$l;
-                        $ly1 = $py*($j);   if ($ly1<-$l) $ly1 =-$l;
-                        $lx2 = $px*($j+1); if ($lx2>$l)  $lx2 = $l;
-                        $ly2 = $py*($j+1); if ($ly2>$l)  $ly2 = $l;
+                        $lx1 = $px*($j);
+                        if ($lx1<-$l) {
+                            $lx1 =-$l;
+                        }
+                        $ly1 = $py*($j);
+                        if ($ly1<-$l) {
+                            $ly1 =-$l;
+                        }
+                        $lx2 = $px*($j+1);
+                        if ($lx2>$l) {
+                            $lx2 = $l;
+                        }
+                        $ly2 = $py*($j+1);
+                        if ($ly2>$l) {
+                            $ly2 = $l;
+                        }
 
                         $tmp = array();
-                        $tmp[] = $x1+$lx1; $tmp[] = $y1+$ly1;
-                        $tmp[] = $x1+$lx2; $tmp[] = $y1+$ly2;
-                        $tmp[] = $x2+$lx2; $tmp[] = $y2+$ly2;
-                        $tmp[] = $x2+$lx1; $tmp[] = $y2+$ly1;
+                        $tmp[] = $x1+$lx1;
+                        $tmp[] = $y1+$ly1;
+                        $tmp[] = $x1+$lx2;
+                        $tmp[] = $y1+$ly2;
+                        $tmp[] = $x2+$lx2;
+                        $tmp[] = $y2+$ly2;
+                        $tmp[] = $x2+$lx1;
+                        $tmp[] = $y2+$ly1;
                         $this->pdf->Polygon($tmp, 'F');
 
                         if ($j>0) {
                             $tmp = array();
-                            $tmp[] = $x1-$lx1; $tmp[] = $y1-$ly1;
-                            $tmp[] = $x1-$lx2; $tmp[] = $y1-$ly2;
-                            $tmp[] = $x2-$lx2; $tmp[] = $y2-$ly2;
-                            $tmp[] = $x2-$lx1; $tmp[] = $y2-$ly1;
+                            $tmp[] = $x1-$lx1;
+                            $tmp[] = $y1-$ly1;
+                            $tmp[] = $x1-$lx2;
+                            $tmp[] = $y1-$ly2;
+                            $tmp[] = $x2-$lx2;
+                            $tmp[] = $y2-$ly2;
+                            $tmp[] = $x2-$lx1;
+                            $tmp[] = $y2-$ly1;
                             $this->pdf->Polygon($tmp, 'F');
                         }
                     }
                 }
-            } else if ($type=='double') {
+            } elseif ($type=='double') {
 
                 // if double, 2 lines : 0=>1/3 and 2/3=>1
                 $pt1 = $pt;
@@ -2000,7 +2251,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 }
                 $this->pdf->Polygon($pt1, 'F');
                 $this->pdf->Polygon($pt2, 'F');
-            } else if ($type=='solid') {
+            } elseif ($type=='solid') {
                 // solid line : draw directly the polygon
                 $this->pdf->Polygon($pt, 'F');
             }
@@ -2016,10 +2267,14 @@ if (!defined('__CLASS_HTML2PDF__')) {
         protected function _prepareTransform($transform)
         {
             // it can not be  empty
-            if (!$transform) return null;
+            if (!$transform) {
+                return null;
+            }
 
             // sctions must be like scale(...)
-            if (!preg_match_all('/([a-z]+)\(([^\)]*)\)/isU', $transform, $match)) return null;
+            if (!preg_match_all('/([a-z]+)\(([^\)]*)\)/isU', $transform, $match)) {
+                return null;
+            }
 
             // prepare the list of the actions
             $actions = array();
@@ -2037,55 +2292,121 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 }
 
                 // prepare the matrix, depending on the action
-                switch($name)
-                {
+                switch ($name) {
                     case 'scale':
-                        if (!isset($val[0])) $val[0] = 1.;      else $val[0] = 1.*$val[0];
-                        if (!isset($val[1])) $val[1] = $val[0]; else $val[1] = 1.*$val[1];
+                        if (!isset($val[0])) {
+                            $val[0] = 1.;
+                        } else {
+                            $val[0] = 1.*$val[0];
+                        }
+                        if (!isset($val[1])) {
+                            $val[1] = $val[0];
+                        } else {
+                            $val[1] = 1.*$val[1];
+                        }
                         $actions[] = array($val[0],0,0,$val[1],0,0);
                         break;
 
                     case 'translate':
-                        if (!isset($val[0])) $val[0] = 0.; else $val[0] = $this->parsingCss->ConvertToMM($val[0], $this->_isInDraw['w']);
-                        if (!isset($val[1])) $val[1] = 0.; else $val[1] = $this->parsingCss->ConvertToMM($val[1], $this->_isInDraw['h']);
+                        if (!isset($val[0])) {
+                            $val[0] = 0.;
+                        } else {
+                            $val[0] = $this->parsingCss->ConvertToMM($val[0], $this->_isInDraw['w']);
+                        }
+                        if (!isset($val[1])) {
+                            $val[1] = 0.;
+                        } else {
+                            $val[1] = $this->parsingCss->ConvertToMM($val[1], $this->_isInDraw['h']);
+                        }
                         $actions[] = array(1,0,0,1,$val[0],$val[1]);
                         break;
 
                     case 'rotate':
-                        if (!isset($val[0])) $val[0] = 0.; else $val[0] = $val[0]*M_PI/180.;
-                        if (!isset($val[1])) $val[1] = 0.; else $val[1] = $this->parsingCss->ConvertToMM($val[1], $this->_isInDraw['w']);
-                        if (!isset($val[2])) $val[2] = 0.; else $val[2] = $this->parsingCss->ConvertToMM($val[2], $this->_isInDraw['h']);
-                        if ($val[1] || $val[2]) $actions[] = array(1,0,0,1,-$val[1],-$val[2]);
+                        if (!isset($val[0])) {
+                            $val[0] = 0.;
+                        } else {
+                            $val[0] = $val[0]*M_PI/180.;
+                        }
+                        if (!isset($val[1])) {
+                            $val[1] = 0.;
+                        } else {
+                            $val[1] = $this->parsingCss->ConvertToMM($val[1], $this->_isInDraw['w']);
+                        }
+                        if (!isset($val[2])) {
+                            $val[2] = 0.;
+                        } else {
+                            $val[2] = $this->parsingCss->ConvertToMM($val[2], $this->_isInDraw['h']);
+                        }
+                        if ($val[1] || $val[2]) {
+                            $actions[] = array(1,0,0,1,-$val[1],-$val[2]);
+                        }
                         $actions[] = array(cos($val[0]),sin($val[0]),-sin($val[0]),cos($val[0]),0,0);
-                        if ($val[1] || $val[2]) $actions[] = array(1,0,0,1,$val[1],$val[2]);
+                        if ($val[1] || $val[2]) {
+                            $actions[] = array(1,0,0,1,$val[1],$val[2]);
+                        }
                         break;
 
                     case 'skewx':
-                        if (!isset($val[0])) $val[0] = 0.; else $val[0] = $val[0]*M_PI/180.;
+                        if (!isset($val[0])) {
+                            $val[0] = 0.;
+                        } else {
+                            $val[0] = $val[0]*M_PI/180.;
+                        }
                         $actions[] = array(1,0,tan($val[0]),1,0,0);
                         break;
 
                     case 'skewy':
-                        if (!isset($val[0])) $val[0] = 0.; else $val[0] = $val[0]*M_PI/180.;
+                        if (!isset($val[0])) {
+                            $val[0] = 0.;
+                        } else {
+                            $val[0] = $val[0]*M_PI/180.;
+                        }
                         $actions[] = array(1,tan($val[0]),0,1,0,0);
                         break;
                     case 'matrix':
-                        if (!isset($val[0])) $val[0] = 0.; else $val[0] = $val[0]*1.;
-                        if (!isset($val[1])) $val[1] = 0.; else $val[1] = $val[1]*1.;
-                        if (!isset($val[2])) $val[2] = 0.; else $val[2] = $val[2]*1.;
-                        if (!isset($val[3])) $val[3] = 0.; else $val[3] = $val[3]*1.;
-                        if (!isset($val[4])) $val[4] = 0.; else $val[4] = $this->parsingCss->ConvertToMM($val[4], $this->_isInDraw['w']);
-                        if (!isset($val[5])) $val[5] = 0.; else $val[5] = $this->parsingCss->ConvertToMM($val[5], $this->_isInDraw['h']);
+                        if (!isset($val[0])) {
+                            $val[0] = 0.;
+                        } else {
+                            $val[0] = $val[0]*1.;
+                        }
+                        if (!isset($val[1])) {
+                            $val[1] = 0.;
+                        } else {
+                            $val[1] = $val[1]*1.;
+                        }
+                        if (!isset($val[2])) {
+                            $val[2] = 0.;
+                        } else {
+                            $val[2] = $val[2]*1.;
+                        }
+                        if (!isset($val[3])) {
+                            $val[3] = 0.;
+                        } else {
+                            $val[3] = $val[3]*1.;
+                        }
+                        if (!isset($val[4])) {
+                            $val[4] = 0.;
+                        } else {
+                            $val[4] = $this->parsingCss->ConvertToMM($val[4], $this->_isInDraw['w']);
+                        }
+                        if (!isset($val[5])) {
+                            $val[5] = 0.;
+                        } else {
+                            $val[5] = $this->parsingCss->ConvertToMM($val[5], $this->_isInDraw['h']);
+                        }
                         $actions[] =$val;
                         break;
                 }
             }
 
             // if ther is no actions => return
-            if (!$actions) return null;
+            if (!$actions) {
+                return null;
+            }
 
             // get the first matrix
-            $m = $actions[0]; unset($actions[0]);
+            $m = $actions[0];
+            unset($actions[0]);
 
             // foreach matrix => multiply to the last matrix
             foreach ($actions as $n) {
@@ -2110,7 +2431,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _calculateTableCellSize(&$cases, &$corr)
         {
-            if (!isset($corr[0])) return true;
+            if (!isset($corr[0])) {
+                return true;
+            }
 
             // for each cell without colspan, we get the max width for each column
             $sw = array();
@@ -2130,7 +2453,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     if (isset($corr[$y][$x]) && is_array($corr[$y][$x]) && $corr[$y][$x][2]>1) {
 
                         // sum the max width of each column in colspan
-                        $s = 0; for ($i=0; $i<$corr[$y][$x][2]; $i++) $s+= $sw[$x+$i];
+                        $s = 0;
+                        for ($i=0; $i<$corr[$y][$x][2]; $i++) {
+                            $s+= $sw[$x+$i];
+                        }
 
                         // if the max width is < the width of the cell with colspan => we adapt the width of each max width
                         if ($s>0 && $s<$cases[$corr[$y][$x][1]][$corr[$y][$x][0]]['w']) {
@@ -2179,7 +2505,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     if (isset($corr[$y][$x]) && is_array($corr[$y][$x]) && $corr[$y][$x][3]>1) {
 
                         // sum the max height of each line in rowspan
-                        $s = 0; for ($i=0; $i<$corr[$y][$x][3]; $i++) $s+= $sh[$y+$i];
+                        $s = 0;
+                        for ($i=0; $i<$corr[$y][$x][3]; $i++) {
+                            $s+= $sh[$y+$i];
+                        }
 
                         // if the max height is < the height of the cell with rowspan => we adapt the height of each max height
                         if ($s>0 && $s<$cases[$corr[$y][$x][1]][$corr[$y][$x][0]]['h']) {
@@ -2229,8 +2558,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_PAGE($param)
         {
-            if ($this->_isForOneLine) return false;
-            if ($this->_debugActif) $this->_DEBUG_add('PAGE '.($this->_page+1), true);
+            if ($this->_isForOneLine) {
+                return false;
+            }
+            if ($this->_debugActif) {
+                $this->_DEBUG_add('PAGE '.($this->_page+1), true);
+            }
 
             $newPageSet= (!isset($param['pageset']) || $param['pageset']!='old');
 
@@ -2247,12 +2580,22 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $orientation = '';
                 if (isset($param['orientation'])) {
                     $param['orientation'] = strtolower($param['orientation']);
-                    if ($param['orientation']=='p')         $orientation = 'P';
-                    if ($param['orientation']=='portrait')  $orientation = 'P';
+                    if ($param['orientation']=='p') {
+                        $orientation = 'P';
+                    }
+                    if ($param['orientation']=='portrait') {
+                        $orientation = 'P';
+                    }
 
-                    if ($param['orientation']=='l')         $orientation = 'L';
-                    if ($param['orientation']=='paysage')   $orientation = 'L';
-                    if ($param['orientation']=='landscape') $orientation = 'L';
+                    if ($param['orientation']=='l') {
+                        $orientation = 'L';
+                    }
+                    if ($param['orientation']=='paysage') {
+                        $orientation = 'L';
+                    }
+                    if ($param['orientation']=='landscape') {
+                        $orientation = 'L';
+                    }
                 }
 
                 // format
@@ -2276,12 +2619,24 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     $background['img'] = str_replace('&amp;', '&', $background['img']);
 
                     // convert the positions
-                    if ($background['posX']=='left')    $background['posX'] = '0%';
-                    if ($background['posX']=='center')  $background['posX'] = '50%';
-                    if ($background['posX']=='right')   $background['posX'] = '100%';
-                    if ($background['posY']=='top')     $background['posY'] = '0%';
-                    if ($background['posY']=='middle')  $background['posY'] = '50%';
-                    if ($background['posY']=='bottom')  $background['posY'] = '100%';
+                    if ($background['posX']=='left') {
+                        $background['posX'] = '0%';
+                    }
+                    if ($background['posX']=='center') {
+                        $background['posX'] = '50%';
+                    }
+                    if ($background['posX']=='right') {
+                        $background['posX'] = '100%';
+                    }
+                    if ($background['posY']=='top') {
+                        $background['posY'] = '0%';
+                    }
+                    if ($background['posY']=='middle') {
+                        $background['posY'] = '50%';
+                    }
+                    if ($background['posY']=='bottom') {
+                        $background['posY'] = '100%';
+                    }
 
                     if ($background['img']) {
                         // get the size of the image
@@ -2309,10 +2664,18 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $background['right']  = isset($param['backright'])  ? $param['backright']  : '0';
 
                 // if no unit => mm
-                if (preg_match('/^([0-9]*)$/isU', $background['top']))    $background['top']    .= 'mm';
-                if (preg_match('/^([0-9]*)$/isU', $background['bottom'])) $background['bottom'] .= 'mm';
-                if (preg_match('/^([0-9]*)$/isU', $background['left']))   $background['left']   .= 'mm';
-                if (preg_match('/^([0-9]*)$/isU', $background['right']))  $background['right']  .= 'mm';
+                if (preg_match('/^([0-9]*)$/isU', $background['top'])) {
+                    $background['top']    .= 'mm';
+                }
+                if (preg_match('/^([0-9]*)$/isU', $background['bottom'])) {
+                    $background['bottom'] .= 'mm';
+                }
+                if (preg_match('/^([0-9]*)$/isU', $background['left'])) {
+                    $background['left']   .= 'mm';
+                }
+                if (preg_match('/^([0-9]*)$/isU', $background['right'])) {
+                    $background['right']  .= 'mm';
+                }
 
                 // convert to mm
                 $background['top']    = $this->parsingCss->ConvertToMM($background['top'], $this->pdf->getH());
@@ -2323,7 +2686,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 // get the background color
                 $res = false;
                 $background['color']    = isset($param['backcolor'])    ? $this->parsingCss->convertToColor($param['backcolor'], $res) : null;
-                if (!$res) $background['color'] = null;
+                if (!$res) {
+                    $background['color'] = null;
+                }
 
                 $this->parsingCss->save();
                 $this->parsingCss->analyse('PAGE', $param);
@@ -2336,7 +2701,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 // automatic footer
                 if (isset($param['footer'])) {
                     $lst = explode(';', $param['footer']);
-                    foreach ($lst as $key => $val) $lst[$key] = trim(strtolower($val));
+                    foreach ($lst as $key => $val) {
+                        $lst[$key] = trim(strtolower($val));
+                    }
                     $page    = in_array('page', $lst);
                     $date    = in_array('date', $lst);
                     $hour    = in_array('heure', $lst);
@@ -2370,14 +2737,18 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_PAGE($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH = 0;
 
             $this->parsingCss->load();
             $this->parsingCss->fontSet();
 
-            if ($this->_debugActif) $this->_DEBUG_add('PAGE '.$this->_page, false);
+            if ($this->_debugActif) {
+                $this->_DEBUG_add('PAGE '.$this->_page, false);
+            }
 
             return true;
         }
@@ -2391,14 +2762,20 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_PAGE_HEADER($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_subHEADER = array();
             for ($this->_parsePos; $this->_parsePos<count($this->parsingHtml->code); $this->_parsePos++) {
                 $action = $this->parsingHtml->code[$this->_parsePos];
-                if ($action['name']=='page_header') $action['name']='page_header_sub';
+                if ($action['name']=='page_header') {
+                    $action['name']='page_header_sub';
+                }
                 $this->_subHEADER[] = $action;
-                if (strtolower($action['name'])=='page_header_sub' && $action['close']) break;
+                if (strtolower($action['name'])=='page_header_sub' && $action['close']) {
+                    break;
+                }
             }
 
             $this->_setPageHeader();
@@ -2415,14 +2792,20 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_PAGE_FOOTER($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_subFOOTER = array();
             for ($this->_parsePos; $this->_parsePos<count($this->parsingHtml->code); $this->_parsePos++) {
                 $action = $this->parsingHtml->code[$this->_parsePos];
-                if ($action['name']=='page_footer') $action['name']='page_footer_sub';
+                if ($action['name']=='page_footer') {
+                    $action['name']='page_footer_sub';
+                }
                 $this->_subFOOTER[] = $action;
-                if (strtolower($action['name'])=='page_footer_sub' && $action['close']) break;
+                if (strtolower($action['name'])=='page_footer_sub' && $action['close']) {
+                    break;
+                }
             }
 
             $this->_setPageFooter();
@@ -2438,7 +2821,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_PAGE_HEADER_SUB($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             // save the current stat
             $this->_subSTATES = array();
@@ -2483,7 +2868,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_PAGE_HEADER_SUB($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->load();
 
@@ -2514,7 +2901,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_PAGE_FOOTER_SUB($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             // save the current stat
             $this->_subSTATES = array();
@@ -2568,7 +2957,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_PAGE_FOOTER_SUB($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->load();
 
@@ -2598,7 +2989,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_NOBREAK($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH = 0;
 
@@ -2633,7 +3026,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_NOBREAK($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH = 0;
 
@@ -2650,8 +3045,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_DIV($param, $other = 'div')
         {
-            if ($this->_isForOneLine) return false;
-            if ($this->_debugActif) $this->_DEBUG_add(strtoupper($other), true);
+            if ($this->_isForOneLine) {
+                return false;
+            }
+            if ($this->_debugActif) {
+                $this->_DEBUG_add(strtoupper($other), true);
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse($other, $param);
@@ -2659,13 +3058,21 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             // for fieldset and legend
             if (in_array($other, array('fieldset', 'legend'))) {
-                if (isset($param['moveTop']))  $this->parsingCss->value['margin']['t']    += $param['moveTop'];
-                if (isset($param['moveLeft'])) $this->parsingCss->value['margin']['l']    += $param['moveLeft'];
-                if (isset($param['moveDown'])) $this->parsingCss->value['margin']['b']    += $param['moveDown'];
+                if (isset($param['moveTop'])) {
+                    $this->parsingCss->value['margin']['t']    += $param['moveTop'];
+                }
+                if (isset($param['moveLeft'])) {
+                    $this->parsingCss->value['margin']['l']    += $param['moveLeft'];
+                }
+                if (isset($param['moveDown'])) {
+                    $this->parsingCss->value['margin']['b']    += $param['moveDown'];
+                }
             }
 
             $alignObject = null;
-            if ($this->parsingCss->value['margin-auto']) $alignObject = 'center';
+            if ($this->parsingCss->value['margin-auto']) {
+                $alignObject = 'center';
+            }
 
             $marge = array();
             $marge['l'] = $this->parsingCss->value['border']['l']['width'] + $this->parsingCss->value['padding']['l']+0.03;
@@ -2677,7 +3084,8 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $level = $this->parsingHtml->getLevel($this->_parsePos);
 
             // create a sub HTML2PDF to get the dimensions of the content of the div
-            $w = 0; $h = 0;
+            $w = 0;
+            $h = 0;
             if (count($level)) {
                 $sub = null;
                 $this->_createSubHTML($sub);
@@ -2710,8 +3118,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $this->parsingCss->value['height']    = max($h, $this->parsingCss->value['height']);
             }
 
-            switch($this->parsingCss->value['rotate'])
-            {
+            switch ($this->parsingCss->value['rotate']) {
                 case 90:
                     $tmp = $overH; $overH = $overW; $overW = $tmp;
                     $tmp = $hReel; $hReel = $wReel; $wReel = $tmp;
@@ -2751,22 +3158,27 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 if (
                     $w < ($this->pdf->getW() - $this->pdf->getlMargin()-$this->pdf->getrMargin()) &&
                     $this->pdf->getX() + $w>=($this->pdf->getW() - $this->pdf->getrMargin())
-                    )
+                    ) {
                     $this->_tag_open_BR(array());
+                }
 
                 if (
                         ($h < ($this->pdf->getH() - $this->pdf->gettMargin()-$this->pdf->getbMargin())) &&
                         ($this->pdf->getY() + $h>=($this->pdf->getH() - $this->pdf->getbMargin())) &&
                         !$this->_isInOverflow
-                    )
+                    ) {
                     $this->_setNewPage();
+                }
 
                 $old = $this->parsingCss->getOldValues();
                 $parentWidth = $old['width'] ? $old['width'] : $this->pdf->getW() - $this->pdf->getlMargin() - $this->pdf->getrMargin();
 
                 if ($parentWidth>$w) {
-                    if ($alignObject=='center')        $this->pdf->setX($this->pdf->getX() + ($parentWidth-$w)*0.5);
-                    else if ($alignObject=='right')    $this->pdf->setX($this->pdf->getX() + $parentWidth-$w);
+                    if ($alignObject=='center') {
+                        $this->pdf->setX($this->pdf->getX() + ($parentWidth-$w)*0.5);
+                    } elseif ($alignObject=='right') {
+                        $this->pdf->setX($this->pdf->getX() + $parentWidth-$w);
+                    }
                 }
 
                 $this->parsingCss->setPosition();
@@ -2775,8 +3187,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $parentWidth = $old['width'] ? $old['width'] : $this->pdf->getW() - $this->pdf->getlMargin() - $this->pdf->getrMargin();
 
                 if ($parentWidth>$w) {
-                    if ($alignObject=='center')        $this->pdf->setX($this->pdf->getX() + ($parentWidth-$w)*0.5);
-                    else if ($alignObject=='right')    $this->pdf->setX($this->pdf->getX() + $parentWidth-$w);
+                    if ($alignObject=='center') {
+                        $this->pdf->setX($this->pdf->getX() + ($parentWidth-$w)*0.5);
+                    } elseif ($alignObject=='right') {
+                        $this->pdf->setX($this->pdf->getX() + $parentWidth-$w);
+                    }
                 }
 
                 $this->parsingCss->setPosition();
@@ -2816,8 +3231,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $xCorr = 0;
             $yCorr = 0;
             if (!$this->_subPart && !$this->_isSubPart) {
-                switch($this->parsingCss->value['text-align'])
-                {
+                switch ($this->parsingCss->value['text-align']) {
                     case 'right':
                         $xCorr = ($this->parsingCss->value['width']-$wReel);
                         break;
@@ -2825,9 +3239,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
                         $xCorr = ($this->parsingCss->value['width']-$wReel)*0.5;
                         break;
                 }
-                if ($xCorr>0) $xCorr=0;
-                switch($this->parsingCss->value['vertical-align'])
-                {
+                if ($xCorr>0) {
+                    $xCorr=0;
+                }
+                switch ($this->parsingCss->value['vertical-align']) {
                     case 'bottom':
                         $yCorr = ($this->parsingCss->value['height']-$hReel);
                         break;
@@ -2902,14 +3317,15 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_FIELDSET($param)
         {
-
             $this->parsingCss->save();
             $this->parsingCss->analyse('fieldset', $param);
 
             // get height of LEGEND element and make fieldset corrections
             for ($tempPos = $this->_parsePos + 1; $tempPos<count($this->parsingHtml->code); $tempPos++) {
                 $action = $this->parsingHtml->code[$tempPos];
-                if ($action['name'] == 'fieldset') break;
+                if ($action['name'] == 'fieldset') {
+                    break;
+                }
                 if ($action['name'] == 'legend' && !$action['close']) {
                     $legendOpenPos = $tempPos;
 
@@ -2922,8 +3338,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                         $action = $sub->parsingHtml->code[$sub->_parsePos];
                         $sub->_executeAction($action);
 
-                        if ($action['name'] == 'legend' && $action['close'])
+                        if ($action['name'] == 'legend' && $action['close']) {
                             break;
+                        }
                     }
 
                     $legendH = $sub->_maxY;
@@ -2954,7 +3371,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_DIV($param, $other='div')
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             if ($this->parsingCss->value['overflow']=='hidden') {
                 $this->_maxX = $this->parsingCss->value['old_maxX'];
@@ -2964,8 +3383,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $this->pdf->clippingPathStop();
             }
 
-            if ($this->parsingCss->value['rotate'])
+            if ($this->parsingCss->value['rotate']) {
                 $this->pdf->stopTransform();
+            }
 
             $marge = array();
             $marge['l'] = $this->parsingCss->value['border']['l']['width'] + $this->parsingCss->value['padding']['l']+0.03;
@@ -2978,8 +3398,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $w = $this->parsingCss->value['width']+$marge['l']+$marge['r']+$this->parsingCss->value['margin']['r'];
             $h = $this->parsingCss->value['height']+$marge['t']+$marge['b']+$this->parsingCss->value['margin']['b'];
 
-            switch($this->parsingCss->value['rotate'])
-            {
+            switch ($this->parsingCss->value['rotate']) {
                 case 90:
                     $t = $w; $w = $h; $h = $t;
                     break;
@@ -3011,8 +3430,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->parsingCss->fontSet();
             $this->_loadMargin();
 
-            if ($block) $this->_tag_open_BR(array());
-            if ($this->_debugActif) $this->_DEBUG_add(strtoupper($other), false);
+            if ($block) {
+                $this->_tag_open_BR(array());
+            }
+            if ($this->_debugActif) {
+                $this->_DEBUG_add(strtoupper($other), false);
+            }
 
             return true;
         }
@@ -3067,16 +3490,27 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $lstBarcode['UPC_A']  =    'UPCA';
             $lstBarcode['CODE39'] =    'C39';
 
-            if (!isset($param['type']))     $param['type'] = 'C39';
-            if (!isset($param['value']))    $param['value']    = 0;
-            if (!isset($param['label']))    $param['label']    = 'label';
-            if (!isset($param['style']['color'])) $param['style']['color'] = '#000000';
+            if (!isset($param['type'])) {
+                $param['type'] = 'C39';
+            }
+            if (!isset($param['value'])) {
+                $param['value']    = 0;
+            }
+            if (!isset($param['label'])) {
+                $param['label']    = 'label';
+            }
+            if (!isset($param['style']['color'])) {
+                $param['style']['color'] = '#000000';
+            }
 
-            if ($this->_testIsDeprecated && (isset($param['bar_h']) || isset($param['bar_w'])))
+            if ($this->_testIsDeprecated && (isset($param['bar_h']) || isset($param['bar_w']))) {
                 throw new HTML2PDF_exception(9, array('BARCODE', 'bar_h, bar_w'));
+            }
 
             $param['type'] = strtoupper($param['type']);
-            if (isset($lstBarcode[$param['type']])) $param['type'] = $lstBarcode[$param['type']];
+            if (isset($lstBarcode[$param['type']])) {
+                $param['type'] = $lstBarcode[$param['type']];
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse('barcode', $param);
@@ -3085,8 +3519,14 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             $x = $this->pdf->getX();
             $y = $this->pdf->getY();
-            $w = $this->parsingCss->value['width'];    if (!$w) $w = $this->parsingCss->ConvertToMM('50mm');
-            $h = $this->parsingCss->value['height'];    if (!$h) $h = $this->parsingCss->ConvertToMM('10mm');
+            $w = $this->parsingCss->value['width'];
+            if (!$w) {
+                $w = $this->parsingCss->ConvertToMM('50mm');
+            }
+            $h = $this->parsingCss->value['height'];
+            if (!$h) {
+                $h = $this->parsingCss->ConvertToMM('10mm');
+            }
             $txt = ($param['label']!=='none' ? $this->parsingCss->value['font-size'] : false);
             $c = $this->parsingCss->value['color'];
             $infos = $this->pdf->myBarcode($param['value'], $param['type'], $x, $y, $w, $h, $txt, $c);
@@ -3127,15 +3567,26 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_QRCODE($param)
         {
-            if ($this->_testIsDeprecated && (isset($param['size']) || isset($param['noborder'])))
+            if ($this->_testIsDeprecated && (isset($param['size']) || isset($param['noborder']))) {
                 throw new HTML2PDF_exception(9, array('QRCODE', 'size, noborder'));
+            }
 
-            if ($this->_debugActif) $this->_DEBUG_add('QRCODE');
+            if ($this->_debugActif) {
+                $this->_DEBUG_add('QRCODE');
+            }
 
-            if (!isset($param['value']))                     $param['value'] = '';
-            if (!isset($param['ec']))                        $param['ec'] = 'H';
-            if (!isset($param['style']['color']))            $param['style']['color'] = '#000000';
-            if (!isset($param['style']['background-color'])) $param['style']['background-color'] = '#FFFFFF';
+            if (!isset($param['value'])) {
+                $param['value'] = '';
+            }
+            if (!isset($param['ec'])) {
+                $param['ec'] = 'H';
+            }
+            if (!isset($param['style']['color'])) {
+                $param['style']['color'] = '#000000';
+            }
+            if (!isset($param['style']['background-color'])) {
+                $param['style']['background-color'] = '#FFFFFF';
+            }
             if (isset($param['style']['border'])) {
                 $borders = $param['style']['border']!='none';
                 unset($param['style']['border']);
@@ -3143,8 +3594,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $borders = true;
             }
 
-            if ($param['value']==='') return true;
-            if (!in_array($param['ec'], array('L', 'M', 'Q', 'H'))) $param['ec'] = 'H';
+            if ($param['value']==='') {
+                return true;
+            }
+            if (!in_array($param['ec'], array('L', 'M', 'Q', 'H'))) {
+                $param['ec'] = 'H';
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse('qrcode', $param);
@@ -3155,7 +3610,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $y = $this->pdf->getY();
             $w = $this->parsingCss->value['width'];
             $h = $this->parsingCss->value['height'];
-            $size = max($w, $h); if (!$size) $size = $this->parsingCss->ConvertToMM('50mm');
+            $size = max($w, $h);
+            if (!$size) {
+                $size = $this->parsingCss->ConvertToMM('50mm');
+            }
 
             $style = array(
                     'fgcolor' => $this->parsingCss->value['color'],
@@ -3213,8 +3671,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $titre = isset($param['title']) ? trim($param['title']) : '';
             $level = isset($param['level']) ? floor($param['level']) : 0;
 
-            if ($level<0) $level = 0;
-            if ($titre) $this->pdf->Bookmark($titre, $level, -1);
+            if ($level<0) {
+                $level = 0;
+            }
+            if ($titre) {
+                $this->pdf->Bookmark($titre, $level, -1);
+            }
 
             return true;
         }
@@ -3258,12 +3720,13 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $txt = str_replace('[[page_cu]]', $this->pdf->getMyNumPage($this->_page), $txt);
 
             if ($this->parsingCss->value['text-transform']!='none') {
-                if ($this->parsingCss->value['text-transform']=='capitalize')
+                if ($this->parsingCss->value['text-transform']=='capitalize') {
                     $txt = ucwords($txt);
-                else if ($this->parsingCss->value['text-transform']=='uppercase')
+                } elseif ($this->parsingCss->value['text-transform']=='uppercase') {
                     $txt = strtoupper($txt);
-                else if ($this->parsingCss->value['text-transform']=='lowercase')
+                } elseif ($this->parsingCss->value['text-transform']=='lowercase') {
                     $txt = strtolower($txt);
+                }
             }
 
             // size of the text
@@ -3319,7 +3782,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     array_shift($words);
                     $old = $str;
 
-                    if (!count($words)) break;
+                    if (!count($words)) {
+                        break;
+                    }
                     $str[0].= ' '.$words[0][0];
                     $str[1]+= $space+$words[0][1];
                 }
@@ -3336,7 +3801,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
                 // write the extract sentence that fit on the page
                 $wc = ($align=='L' ? $str[1] : $this->parsingCss->value['width']);
-                if ($right - $left<$wc) $wc = $right - $left;
+                if ($right - $left<$wc) {
+                    $wc = $right - $left;
+                }
 
                 if (strlen($str[0])) {
                     $this->pdf->setXY($this->pdf->getX(), $y+$dh+$dy);
@@ -3357,7 +3824,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 // if we have again words to write
                 if (count($words)) {
                     // remove the space at the end
-                    if ($add) $w-= $space;
+                    if ($add) {
+                        $w-= $space;
+                    }
 
                     // if we don't add any word, and if the first word is empty => useless space to skip
                     if (!$add && $words[0][0]==='') {
@@ -3392,7 +3861,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     // if more than 10000 line => error
                     $nb++;
                     if ($nb>10000) {
-                        $txt = ''; foreach ($words as $k => $word) $txt.= ($k ? ' ' : '').$word[0];
+                        $txt = '';
+                        foreach ($words as $k => $word) {
+                            $txt.= ($k ? ' ' : '').$word[0];
+                        }
                         throw new HTML2PDF_exception(2, array($txt, $right-$left, $w));
                     }
 
@@ -3403,7 +3875,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             // if we have words after automatic cut, it is because they fit on the line => we write the text
             if (count($words)) {
-                $txt = ''; foreach ($words as $k => $word) $txt.= ($k ? ' ' : '').$word[0];
+                $txt = '';
+                foreach ($words as $k => $word) {
+                    $txt.= ($k ? ' ' : '').$word[0];
+                }
                 $w+= $this->pdf->getWordSpacing()*(count($words));
                 $this->pdf->setXY($this->pdf->getX(), $y+$dh+$dy);
                 $this->pdf->Cell(($align=='L' ? $w : $this->parsingCss->value['width']), $h, $txt, 0, 0, $align, $fill, $this->_isInLink);
@@ -3431,11 +3906,15 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_BR($param, $curr = null)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $h = max($this->_maxH, $this->parsingCss->getLineHeight());
 
-            if ($this->_maxH==0) $this->_maxY = max($this->_maxY, $this->pdf->getY()+$h);
+            if ($this->_maxH==0) {
+                $this->_maxY = max($this->_maxY, $this->pdf->getY()+$h);
+            }
 
             $this->_makeBreakLine($h, $curr);
 
@@ -3454,14 +3933,19 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_HR($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
             $oldAlign = $this->parsingCss->value['text-align'];
             $this->parsingCss->value['text-align'] = 'left';
 
-            if ($this->_maxH) $this->_tag_open_BR($param);
+            if ($this->_maxH) {
+                $this->_tag_open_BR($param);
+            }
 
             $fontSize = $this->parsingCss->value['font-size'];
-            $this->parsingCss->value['font-size']=$fontSize*0.5; $this->_tag_open_BR($param);
+            $this->parsingCss->value['font-size']=$fontSize*0.5;
+            $this->_tag_open_BR($param);
             $this->parsingCss->value['font-size']=0;
 
             $param['style']['width'] = '100%';
@@ -3474,8 +3958,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->parsingCss->fontSet();
 
             $h = $this->parsingCss->value['height'];
-            if ($h)    $h-= $this->parsingCss->value['border']['t']['width']+$this->parsingCss->value['border']['b']['width'];
-            if ($h<=0) $h = $this->parsingCss->value['border']['t']['width']+$this->parsingCss->value['border']['b']['width'];
+            if ($h) {
+                $h-= $this->parsingCss->value['border']['t']['width']+$this->parsingCss->value['border']['b']['width'];
+            }
+            if ($h<=0) {
+                $h = $this->parsingCss->value['border']['t']['width']+$this->parsingCss->value['border']['b']['width'];
+            }
 
             $this->_drawRectangle($this->pdf->getX(), $this->pdf->getY(), $this->parsingCss->value['width'], $h, $this->parsingCss->value['border'], 0, 0, $this->parsingCss->value['background']);
             $this->_maxH = $h;
@@ -3485,7 +3973,8 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             $this->_tag_open_BR($param);
 
-            $this->parsingCss->value['font-size']=$fontSize*0.5; $this->_tag_open_BR($param);
+            $this->parsingCss->value['font-size']=$fontSize*0.5;
+            $this->_tag_open_BR($param);
             $this->parsingCss->value['font-size']=$fontSize;
 
             $this->parsingCss->value['text-align'] = $oldAlign;
@@ -3811,7 +4300,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             if (isset($param['name'])) {
                 $name =     $param['name'];
-                if (!isset($this->_lstAnchor[$name])) $this->_lstAnchor[$name] = array($this->pdf->AddLink(), false);
+                if (!isset($this->_lstAnchor[$name])) {
+                    $this->_lstAnchor[$name] = array($this->pdf->AddLink(), false);
+                }
 
                 if (!$this->_lstAnchor[$name][1]) {
                     $this->_lstAnchor[$name][1] = true;
@@ -3821,7 +4312,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             if (preg_match('/^#([^#]+)$/isU', $this->_isInLink, $match)) {
                 $name = $match[1];
-                if (!isset($this->_lstAnchor[$name])) $this->_lstAnchor[$name] = array($this->pdf->AddLink(), false);
+                if (!isset($this->_lstAnchor[$name])) {
+                    $this->_lstAnchor[$name] = array($this->pdf->AddLink(), false);
+                }
 
                 $this->_isInLink = $this->_lstAnchor[$name][0];
             }
@@ -3862,9 +4355,13 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_H1($param, $other = 'h1')
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
-            if ($this->_maxH) $this->_tag_open_BR(array());
+            if ($this->_maxH) {
+                $this->_tag_open_BR(array());
+            }
             $this->parsingCss->save();
             $this->parsingCss->value['font-bold'] = true;
 
@@ -3952,7 +4449,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_H1($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH+= $this->parsingCss->value['margin']['b'];
             $h = max($this->_maxH, $this->parsingCss->getLineHeight());
@@ -4119,10 +4618,14 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_P($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             if (!in_array($this->_previousCall, array('_tag_close_P', '_tag_close_UL'))) {
-                if ($this->_maxH) $this->_tag_open_BR(array());
+                if ($this->_maxH) {
+                    $this->_tag_open_BR(array());
+                }
             }
 
             $this->parsingCss->save();
@@ -4130,7 +4633,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->parsingCss->setPosition();
             $this->parsingCss->fontSet();
 
-             // cancel the effects of the setPosition
+            // cancel the effects of the setPosition
             $this->pdf->setXY($this->pdf->getX()-$this->parsingCss->value['margin']['l'], $this->pdf->getY()-$this->parsingCss->value['margin']['t']);
 
             list($mL, $mR) = $this->_getMargins($this->pdf->getY());
@@ -4159,9 +4662,13 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_P($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
-            if ($this->_maxH) $this->_tag_open_BR(array());
+            if ($this->_maxH) {
+                $this->_tag_open_BR(array());
+            }
             $this->_isInParagraph = false;
             $this->_loadMargin();
             $h = $this->parsingCss->value['margin']['b']+$this->parsingCss->value['padding']['b'];
@@ -4183,7 +4690,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_PRE($param, $other = 'pre')
         {
-            if ($other=='pre' && $this->_maxH) $this->_tag_open_BR(array());
+            if ($other=='pre' && $this->_maxH) {
+                $this->_tag_open_BR(array());
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->value['font-family'] = 'courier';
@@ -4191,7 +4700,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->parsingCss->setPosition();
             $this->parsingCss->fontSet();
 
-            if ($other=='pre') return $this->_tag_open_DIV($param, $other);
+            if ($other=='pre') {
+                return $this->_tag_open_DIV($param, $other);
+            }
 
             return true;
         }
@@ -4220,7 +4731,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
         protected function _tag_close_PRE($param, $other = 'pre')
         {
             if ($other=='pre') {
-                if ($this->_isForOneLine) return false;
+                if ($this->_isForOneLine) {
+                    return false;
+                }
 
                 $this->_tag_close_DIV($param, $other);
                 $this->_tag_open_BR(array());
@@ -4386,14 +4899,22 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_UL($param, $other = 'ul')
         {
-            if ($this->_isForOneLine) return false;
-
-            if (!in_array($this->_previousCall, array('_tag_close_P', '_tag_close_UL'))) {
-                if ($this->_maxH) $this->_tag_open_BR(array());
-                if (!count($this->_defList)) $this->_tag_open_BR(array());
+            if ($this->_isForOneLine) {
+                return false;
             }
 
-            if (!isset($param['style']['width'])) $param['allwidth'] = true;
+            if (!in_array($this->_previousCall, array('_tag_close_P', '_tag_close_UL'))) {
+                if ($this->_maxH) {
+                    $this->_tag_open_BR(array());
+                }
+                if (!count($this->_defList)) {
+                    $this->_tag_open_BR(array());
+                }
+            }
+
+            if (!isset($param['style']['width'])) {
+                $param['allwidth'] = true;
+            }
             $param['cellspacing'] = 0;
 
             // a list is like a table
@@ -4426,14 +4947,18 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_UL($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_tag_close_TABLE($param);
 
             $this->_listeDelLevel();
 
             if (!$this->_subPart) {
-                if (!count($this->_defList)) $this->_tag_open_BR(array());
+                if (!count($this->_defList)) {
+                    $this->_tag_open_BR(array());
+                }
             }
 
             return true;
@@ -4460,11 +4985,15 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_LI($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_listeAddLi();
 
-            if (!isset($param['style']['width'])) $param['style']['width'] = '100%';
+            if (!isset($param['style']['width'])) {
+                $param['style']['width'] = '100%';
+            }
 
             $paramPUCE = $param;
 
@@ -4503,7 +5032,8 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $tmpLst2 = $this->parsingHtml->code[$tmpPos+2];
                 $this->parsingHtml->code[$tmpPos+1] = array();
                 $this->parsingHtml->code[$tmpPos+1]['name']    = (isset($paramPUCE['src'])) ? 'img' : 'write';
-                $this->parsingHtml->code[$tmpPos+1]['param']    = $paramPUCE; unset($this->parsingHtml->code[$tmpPos+1]['param']['style']['width']);
+                $this->parsingHtml->code[$tmpPos+1]['param']    = $paramPUCE;
+                unset($this->parsingHtml->code[$tmpPos+1]['param']['style']['width']);
                 $this->parsingHtml->code[$tmpPos+1]['close']    = 0;
                 $this->parsingHtml->code[$tmpPos+2] = array();
                 $this->parsingHtml->code[$tmpPos+2]['name']    = 'li';
@@ -4518,8 +5048,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 // TD for the puce
                 $this->_tag_open_TD($paramPUCE, 'li_sub');
                 unset($paramPUCE['style']['width']);
-                if (isset($paramPUCE['src']))    $this->_tag_open_IMG($paramPUCE);
-                else                            $this->_tag_open_WRITE($paramPUCE);
+                if (isset($paramPUCE['src'])) {
+                    $this->_tag_open_IMG($paramPUCE);
+                } else {
+                    $this->_tag_open_WRITE($paramPUCE);
+                }
                 $this->_tag_close_TD($paramPUCE);
             }
             $this->parsingCss->load();
@@ -4540,7 +5073,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_LI($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_tag_close_TD($param);
 
@@ -4558,7 +5093,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_TBODY($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse('tbody', $param);
@@ -4577,7 +5114,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_TBODY($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->load();
             $this->parsingCss->fontSet();
@@ -4594,7 +5133,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_THEAD($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse('thead', $param);
@@ -4607,9 +5148,13 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 HTML2PDF::$_tables[$param['num']]['thead']['code'] = array();
                 for ($pos=$this->_tempPos; $pos<count($this->parsingHtml->code); $pos++) {
                     $action = $this->parsingHtml->code[$pos];
-                    if (strtolower($action['name'])=='thead') $action['name'] = 'thead_sub';
+                    if (strtolower($action['name'])=='thead') {
+                        $action['name'] = 'thead_sub';
+                    }
                     HTML2PDF::$_tables[$param['num']]['thead']['code'][] = $action;
-                    if (strtolower($action['name'])=='thead_sub' && $action['close']) break;
+                    if (strtolower($action['name'])=='thead_sub' && $action['close']) {
+                        break;
+                    }
                 }
             } else {
                 $level = $this->parsingHtml->getLevel($this->_parsePos);
@@ -4629,7 +5174,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_THEAD($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->load();
             $this->parsingCss->fontSet();
@@ -4653,7 +5200,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_TFOOT($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse('tfoot', $param);
@@ -4666,9 +5215,13 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 HTML2PDF::$_tables[$param['num']]['tfoot']['code'] = array();
                 for ($pos=$this->_tempPos; $pos<count($this->parsingHtml->code); $pos++) {
                     $action = $this->parsingHtml->code[$pos];
-                    if (strtolower($action['name'])=='tfoot') $action['name'] = 'tfoot_sub';
+                    if (strtolower($action['name'])=='tfoot') {
+                        $action['name'] = 'tfoot_sub';
+                    }
                     HTML2PDF::$_tables[$param['num']]['tfoot']['code'][] = $action;
-                    if (strtolower($action['name'])=='tfoot_sub' && $action['close']) break;
+                    if (strtolower($action['name'])=='tfoot_sub' && $action['close']) {
+                        break;
+                    }
                 }
             } else {
                 $level = $this->parsingHtml->getLevel($this->_parsePos);
@@ -4688,7 +5241,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_TFOOT($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->load();
             $this->parsingCss->fontSet();
@@ -4711,7 +5266,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_THEAD_SUB($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse('thead', $param);
@@ -4729,7 +5286,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_THEAD_SUB($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->load();
             $this->parsingCss->fontSet();
@@ -4745,7 +5304,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_TFOOT_SUB($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse('tfoot', $param);
@@ -4763,7 +5324,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_TFOOT_SUB($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->load();
             $this->parsingCss->fontSet();
@@ -4825,7 +5388,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
         protected function _tag_open_TABLE($param, $other = 'table')
         {
             if ($this->_maxH) {
-                if ($this->_isForOneLine) return false;
+                if ($this->_isForOneLine) {
+                    return false;
+                }
                 $this->_tag_open_BR(array());
             }
 
@@ -4837,15 +5402,21 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->_maxH = 0;
 
             $alignObject = isset($param['align']) ? strtolower($param['align']) : 'left';
-            if (isset($param['align'])) unset($param['align']);
-            if (!in_array($alignObject, array('left', 'center', 'right'))) $alignObject = 'left';
+            if (isset($param['align'])) {
+                unset($param['align']);
+            }
+            if (!in_array($alignObject, array('left', 'center', 'right'))) {
+                $alignObject = 'left';
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse($other, $param);
             $this->parsingCss->setPosition();
             $this->parsingCss->fontSet();
 
-            if ($this->parsingCss->value['margin-auto']) $alignObject = 'center';
+            if ($this->parsingCss->value['margin-auto']) {
+                $alignObject = 'center';
+            }
 
             // collapse table ?
             $collapse = false;
@@ -4866,7 +5437,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             // if we are in a SUB html => prepare the properties of the table
             if ($this->_subPart) {
-                if ($this->_debugActif) $this->_DEBUG_add('Table n'.$param['num'], true);
+                if ($this->_debugActif) {
+                    $this->_DEBUG_add('Table n'.$param['num'], true);
+                }
                 HTML2PDF::$_tables[$param['num']] = array();
                 HTML2PDF::$_tables[$param['num']]['border']          = isset($param['border']) ? $this->parsingCss->readBorder($param['border']) : null;
                 HTML2PDF::$_tables[$param['num']]['cellpadding']     = $this->parsingCss->ConvertToMM(isset($param['cellpadding']) ? $param['cellpadding'] : '1px');
@@ -4938,7 +5511,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_TABLE($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH = 0;
 
@@ -4954,9 +5529,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     foreach (HTML2PDF::$_tables[$param['num']][$mode]['tr'] as $tr) {
                         // hauteur de la ligne tr
                         $h = 0;
-                        for ($i=0; $i<count(HTML2PDF::$_tables[$param['num']]['cases'][$tr]); $i++)
-                            if (HTML2PDF::$_tables[$param['num']]['cases'][$tr][$i]['rowspan']==1)
+                        for ($i=0; $i<count(HTML2PDF::$_tables[$param['num']]['cases'][$tr]); $i++) {
+                            if (HTML2PDF::$_tables[$param['num']]['cases'][$tr][$i]['rowspan']==1) {
                                 $h = max($h, HTML2PDF::$_tables[$param['num']]['cases'][$tr][$i]['h']);
+                            }
+                        }
                         HTML2PDF::$_tables[$param['num']][$mode]['height']+= $h;
                     }
                 }
@@ -4975,10 +5552,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $x = HTML2PDF::$_tables[$param['num']]['curr_x'];
                 $w = HTML2PDF::$_tables[$param['num']]['width'];
                 if ($parentWidth>$w) {
-                    if (HTML2PDF::$_tables[$param['num']]['align']=='center')
+                    if (HTML2PDF::$_tables[$param['num']]['align']=='center') {
                         $x = $x + ($parentWidth-$w)*0.5;
-                    else if (HTML2PDF::$_tables[$param['num']]['align']=='right')
+                    } elseif (HTML2PDF::$_tables[$param['num']]['align']=='right') {
                         $x = $x + $parentWidth-$w;
+                    }
 
                     HTML2PDF::$_tables[$param['num']]['curr_x'] = $x;
                 }
@@ -5001,8 +5579,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 for ($k=0; $k<count(HTML2PDF::$_tables[$param['num']]['cases']); $k++) {
 
                     // if it is a TR of the thead or of the tfoot => skip
-                    if (in_array($k, HTML2PDF::$_tables[$param['num']]['thead']['tr'])) continue;
-                    if (in_array($k, HTML2PDF::$_tables[$param['num']]['tfoot']['tr'])) continue;
+                    if (in_array($k, HTML2PDF::$_tables[$param['num']]['thead']['tr'])) {
+                        continue;
+                    }
+                    if (in_array($k, HTML2PDF::$_tables[$param['num']]['tfoot']['tr'])) {
+                        continue;
+                    }
 
                     // height of the line
                     $th = 0;
@@ -5010,13 +5592,16 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     for ($i=0; $i<count(HTML2PDF::$_tables[$param['num']]['cases'][$k]); $i++) {
                         $h = max($h, HTML2PDF::$_tables[$param['num']]['cases'][$k][$i]['h']);
 
-                        if (HTML2PDF::$_tables[$param['num']]['cases'][$k][$i]['rowspan']==1)
+                        if (HTML2PDF::$_tables[$param['num']]['cases'][$k][$i]['rowspan']==1) {
                             $th = max($th, HTML2PDF::$_tables[$param['num']]['cases'][$k][$i]['h']);
+                        }
                     }
 
                     // if the row does not fit on the page => new page
                     if ($y+$h+$height>$max) {
-                        if ($height==$h0) $height = null;
+                        if ($height==$h0) {
+                            $height = null;
+                        }
                         HTML2PDF::$_tables[$param['num']]['height'][] = $height;
                         $height = $h0;
                         $y = $this->_margeTop;
@@ -5025,7 +5610,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 }
 
                 // if ther is a height at the end, add it
-                if ($height!=$h0 || $k==0) HTML2PDF::$_tables[$param['num']]['height'][] = $height;
+                if ($height!=$h0 || $k==0) {
+                    HTML2PDF::$_tables[$param['num']]['height'][] = $height;
+                }
             } else {
                 // if we have tfoor, draw it
                 if (count(HTML2PDF::$_tables[$param['num']]['tfoot']['code'])) {
@@ -5050,12 +5637,13 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
                 // get the positions of the end of the table
                 $x = HTML2PDF::$_tables[$param['num']]['curr_x'] + HTML2PDF::$_tables[$param['num']]['width'];
-                if (count(HTML2PDF::$_tables[$param['num']]['height'])>1)
+                if (count(HTML2PDF::$_tables[$param['num']]['height'])>1) {
                     $y = $this->_margeTop+HTML2PDF::$_tables[$param['num']]['height'][count(HTML2PDF::$_tables[$param['num']]['height'])-1];
-                else if (count(HTML2PDF::$_tables[$param['num']]['height'])==1)
+                } elseif (count(HTML2PDF::$_tables[$param['num']]['height'])==1) {
                     $y = HTML2PDF::$_tables[$param['num']]['curr_y']+HTML2PDF::$_tables[$param['num']]['height'][count(HTML2PDF::$_tables[$param['num']]['height'])-1];
-                else
+                } else {
                     $y = HTML2PDF::$_tables[$param['num']]['curr_y'];
+                }
 
                 $this->_maxX = max($this->_maxX, $x);
                 $this->_maxY = max($this->_maxY, $y);
@@ -5064,7 +5652,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
                 $this->_loadMargin();
 
-                if ($this->_debugActif) $this->_DEBUG_add('Table '.$param['num'], false);
+                if ($this->_debugActif) {
+                    $this->_DEBUG_add('Table '.$param['num'], false);
+                }
             }
 
             $this->parsingCss->load();
@@ -5084,8 +5674,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
         protected function _tag_open_COL($param)
         {
             $span = isset($param['span']) ? $param['span'] : 1;
-            for ($k=0; $k<$span; $k++)
+            for ($k=0; $k<$span; $k++) {
                 HTML2PDF::$_tables[$param['num']]['cols'][] = $param;
+            }
         }
 
         /**
@@ -5111,7 +5702,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_TR($param, $other = 'tr')
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH = 0;
 
@@ -5211,16 +5804,18 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     HTML2PDF::$_tables[$param['num']]['td_curr'] = $tmpTD;
                     HTML2PDF::$_tables[$param['num']]['new_page'] = true;
                 }
-            // else (in a sub HTML)
+                // else (in a sub HTML)
             } else {
                 // prepare it
                 HTML2PDF::$_tables[$param['num']]['cases'][HTML2PDF::$_tables[$param['num']]['tr_curr']-1] = array();
-                if (!isset(HTML2PDF::$_tables[$param['num']]['corr'][HTML2PDF::$_tables[$param['num']]['corr_y']]))
+                if (!isset(HTML2PDF::$_tables[$param['num']]['corr'][HTML2PDF::$_tables[$param['num']]['corr_y']])) {
                     HTML2PDF::$_tables[$param['num']]['corr'][HTML2PDF::$_tables[$param['num']]['corr_y']] = array();
+                }
 
                 HTML2PDF::$_tables[$param['num']]['corr_x']=0;
-                while(isset(HTML2PDF::$_tables[$param['num']]['corr'][HTML2PDF::$_tables[$param['num']]['corr_y']][HTML2PDF::$_tables[$param['num']]['corr_x']]))
+                while (isset(HTML2PDF::$_tables[$param['num']]['corr'][HTML2PDF::$_tables[$param['num']]['corr_y']][HTML2PDF::$_tables[$param['num']]['corr_x']])) {
                     HTML2PDF::$_tables[$param['num']]['corr_x']++;
+                }
             }
 
             return true;
@@ -5235,7 +5830,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_TR($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH = 0;
 
@@ -5273,7 +5870,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_TD($param, $other = 'td')
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH = 0;
 
@@ -5311,7 +5910,6 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
                 // we get the properties of the COL tag, if exist
                 if (isset(HTML2PDF::$_tables[$param['num']]['cols'][$numCol])) {
-
                     $colParam = HTML2PDF::$_tables[$param['num']]['cols'][$numCol];
 
                     // for colspans => we get all the neede widths
@@ -5326,12 +5924,14 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     $total = '';
                     $last = $this->parsingCss->getLastWidth();
                     if (count($colParam['style']['width'])) {
-                        $total = $colParam['style']['width'][0]; unset($colParam['style']['width'][0]);
+                        $total = $colParam['style']['width'][0];
+                        unset($colParam['style']['width'][0]);
                         foreach ($colParam['style']['width'] as $width) {
-                            if (substr($total, -1)=='%' && substr($width, -1)=='%')
+                            if (substr($total, -1)=='%' && substr($width, -1)=='%') {
                                 $total = (str_replace('%', '', $total)+str_replace('%', '', $width)).'%';
-                            else
+                            } else {
                                 $total = ($this->parsingCss->ConvertToMM($total, $last) + $this->parsingCss->ConvertToMM($width, $last)).'mm';
+                            }
                         }
                     }
 
@@ -5363,8 +5963,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $legacy = array();
 
                 $old = $this->parsingCss->getLastValue('background');
-                if ($old && ($old['color'] || $old['image']))
+                if ($old && ($old['color'] || $old['image'])) {
                     $legacy['background'] = $old;
+                }
 
                 if (HTML2PDF::$_tables[$param['num']]['border']) {
                     $legacy['border'] = array();
@@ -5395,7 +5996,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 }
 
                 if (HTML2PDF::$_tables[$param['num']]['td_curr']>0) {
-                    if (!$return) $this->parsingCss->value['width']+= $this->parsingCss->value['border']['l']['width'];
+                    if (!$return) {
+                        $this->parsingCss->value['width']+= $this->parsingCss->value['border']['l']['width'];
+                    }
                     $this->parsingCss->value['border']['l'] = $this->parsingCss->readBorder('none');
                 }
             }
@@ -5466,8 +6069,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 // position of the content, from vertical-align
                 $hCorr = HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['h'];
                 $hReel = HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['real_h'];
-                switch($this->parsingCss->value['vertical-align'])
-                {
+                switch ($this->parsingCss->value['vertical-align']) {
                     case 'bottom':
                         $yCorr = $hCorr-$hReel;
                         break;
@@ -5501,7 +6103,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_TD($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_maxH = 0;
 
@@ -5564,7 +6168,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_TH($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->value['font-bold'] = true;
@@ -5583,7 +6189,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_TH($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->_tag_close_TD($param);
 
@@ -5613,7 +6221,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->parsingCss->fontSet();
 
             $res = $this->_drawImage($src, isset($param['sub_li']));
-            if (!$res) return $res;
+            if (!$res) {
+                return $res;
+            }
 
             $this->parsingCss->load();
             $this->parsingCss->fontSet();
@@ -5654,7 +6264,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->_lstSelect['size']    = isset($param['size']) ? $param['size'] : 1;
             $this->_lstSelect['options']    = array();
 
-            if ($this->_lstSelect['multi'] && $this->_lstSelect['size']<3) $this->_lstSelect['size'] = 3;
+            if ($this->_lstSelect['multi'] && $this->_lstSelect['size']<3) {
+                $this->_lstSelect['size'] = 3;
+            }
 
             return true;
         }
@@ -5707,7 +6319,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $f = 1.08*$this->parsingCss->value['font-size'];
 
             // width
-            $w = $this->parsingCss->value['width']; if (!$w) $w = 50;
+            $w = $this->parsingCss->value['width'];
+            if (!$w) {
+                $w = 50;
+            }
 
             // height (automatic)
             $h = ($f*1.07*$this->_lstSelect['size'] + 1);
@@ -5820,9 +6435,15 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_INPUT($param)
         {
-            if (!isset($param['name']))  $param['name']  = 'champs_pdf_'.(count($this->_lstField)+1);
-            if (!isset($param['value'])) $param['value'] = '';
-            if (!isset($param['type']))  $param['type']  = 'text';
+            if (!isset($param['name'])) {
+                $param['name']  = 'champs_pdf_'.(count($this->_lstField)+1);
+            }
+            if (!isset($param['value'])) {
+                $param['value'] = '';
+            }
+            if (!isset($param['type'])) {
+                $param['type']  = 'text';
+            }
 
             $param['name'] = strtolower($param['name']);
             $param['type'] = strtolower($param['type']);
@@ -5851,12 +6472,13 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             $prop = $this->parsingCss->getFormStyle();
 
-            switch($param['type'])
-            {
+            switch ($param['type']) {
                 case 'checkbox':
                     $w = 3;
                     $h = $w;
-                    if ($h<$f) $y+= ($f-$h)*0.5;
+                    if ($h<$f) {
+                        $y+= ($f-$h)*0.5;
+                    }
                     $checked = (isset($param['checked']) && $param['checked']=='checked');
                     $this->pdf->CheckBox($name, $w, $checked, $prop, array(), ($param['value'] ? $param['value'] : 'Yes'), $x, $y);
                     break;
@@ -5864,7 +6486,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 case 'radio':
                     $w = 3;
                     $h = $w;
-                    if ($h<$f) $y+= ($f-$h)*0.5;
+                    if ($h<$f) {
+                        $y+= ($f-$h)*0.5;
+                    }
                     $checked = (isset($param['checked']) && $param['checked']=='checked');
                     $this->pdf->RadioButton($name, $w, $prop, array(), ($param['value'] ? $param['value'] : 'On'), $checked, $x, $y);
                     break;
@@ -5877,29 +6501,43 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     break;
 
                 case 'text':
-                    $w = $this->parsingCss->value['width']; if (!$w) $w = 40;
+                    $w = $this->parsingCss->value['width']; if (!$w) {
+                        $w = 40;
+                    }
                     $h = $f*1.3;
                     $prop['value'] = $param['value'];
                     $this->pdf->TextField($name, $w, $h, $prop, array(), $x, $y);
                     break;
 
                 case 'submit':
-                    $w = $this->parsingCss->value['width'];    if (!$w) $w = 40;
-                    $h = $this->parsingCss->value['height'];    if (!$h) $h = $f*1.3;
+                    $w = $this->parsingCss->value['width'];    if (!$w) {
+                        $w = 40;
+                    }
+                    $h = $this->parsingCss->value['height'];    if (!$h) {
+                        $h = $f*1.3;
+                    }
                     $action = array('S'=>'SubmitForm', 'F'=>$this->_isInForm, 'Flags'=>array('ExportFormat'));
                     $this->pdf->Button($name, $w, $h, $param['value'], $action, $prop, array(), $x, $y);
                     break;
 
                 case 'reset':
-                    $w = $this->parsingCss->value['width'];    if (!$w) $w = 40;
-                    $h = $this->parsingCss->value['height'];    if (!$h) $h = $f*1.3;
+                    $w = $this->parsingCss->value['width'];    if (!$w) {
+                        $w = 40;
+                    }
+                    $h = $this->parsingCss->value['height'];    if (!$h) {
+                        $h = $f*1.3;
+                    }
                     $action = array('S'=>'ResetForm');
                     $this->pdf->Button($name, $w, $h, $param['value'], $action, $prop, array(), $x, $y);
                     break;
 
                 case 'button':
-                    $w = $this->parsingCss->value['width'];    if (!$w) $w = 40;
-                    $h = $this->parsingCss->value['height'];    if (!$h) $h = $f*1.3;
+                    $w = $this->parsingCss->value['width'];    if (!$w) {
+                        $w = 40;
+                    }
+                    $h = $this->parsingCss->value['height'];    if (!$h) {
+                        $h = $f*1.3;
+                    }
                     $action = isset($param['onclick']) ? $param['onclick'] : '';
                     $this->pdf->Button($name, $w, $h, $param['value'], $action, $prop, array(), $x, $y);
                     break;
@@ -5931,15 +6569,21 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_DRAW($param)
         {
-            if ($this->_isForOneLine) return false;
-            if ($this->_debugActif) $this->_DEBUG_add('DRAW', true);
+            if ($this->_isForOneLine) {
+                return false;
+            }
+            if ($this->_debugActif) {
+                $this->_DEBUG_add('DRAW', true);
+            }
 
             $this->parsingCss->save();
             $this->parsingCss->analyse('draw', $param);
             $this->parsingCss->fontSet();
 
             $alignObject = null;
-            if ($this->parsingCss->value['margin-auto']) $alignObject = 'center';
+            if ($this->parsingCss->value['margin-auto']) {
+                $alignObject = 'center';
+            }
 
             $overW = $this->parsingCss->value['width'];
             $overH = $this->parsingCss->value['height'];
@@ -5954,22 +6598,27 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 if (
                     $w < ($this->pdf->getW() - $this->pdf->getlMargin()-$this->pdf->getrMargin()) &&
                     $this->pdf->getX() + $w>=($this->pdf->getW() - $this->pdf->getrMargin())
-                    )
+                    ) {
                     $this->_tag_open_BR(array());
+                }
 
                 if (
                         ($h < ($this->pdf->getH() - $this->pdf->gettMargin()-$this->pdf->getbMargin())) &&
                         ($this->pdf->getY() + $h>=($this->pdf->getH() - $this->pdf->getbMargin())) &&
                         !$this->_isInOverflow
-                    )
+                    ) {
                     $this->_setNewPage();
+                }
 
                 $old = $this->parsingCss->getOldValues();
                 $parentWidth = $old['width'] ? $old['width'] : $this->pdf->getW() - $this->pdf->getlMargin() - $this->pdf->getrMargin();
 
                 if ($parentWidth>$w) {
-                    if ($alignObject=='center')        $this->pdf->setX($this->pdf->getX() + ($parentWidth-$w)*0.5);
-                    else if ($alignObject=='right')    $this->pdf->setX($this->pdf->getX() + $parentWidth-$w);
+                    if ($alignObject=='center') {
+                        $this->pdf->setX($this->pdf->getX() + ($parentWidth-$w)*0.5);
+                    } elseif ($alignObject=='right') {
+                        $this->pdf->setX($this->pdf->getX() + $parentWidth-$w);
+                    }
                 }
 
                 $this->parsingCss->setPosition();
@@ -5978,8 +6627,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $parentWidth = $old['width'] ? $old['width'] : $this->pdf->getW() - $this->pdf->getlMargin() - $this->pdf->getrMargin();
 
                 if ($parentWidth>$w) {
-                    if ($alignObject=='center')        $this->pdf->setX($this->pdf->getX() + ($parentWidth-$w)*0.5);
-                    else if ($alignObject=='right')    $this->pdf->setX($this->pdf->getX() + $parentWidth-$w);
+                    if ($alignObject=='center') {
+                        $this->pdf->setX($this->pdf->getX() + ($parentWidth-$w)*0.5);
+                    } elseif ($alignObject=='right') {
+                        $this->pdf->setX($this->pdf->getX() + $parentWidth-$w);
+                    }
                 }
 
                 $this->parsingCss->setPosition();
@@ -6056,7 +6708,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_DRAW($param)
         {
-            if ($this->_isForOneLine) return false;
+            if ($this->_isForOneLine) {
+                return false;
+            }
 
             $this->pdf->SetAlpha(1.);
             $this->pdf->undoTransform();
@@ -6097,8 +6751,12 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->parsingCss->fontSet();
             $this->_loadMargin();
 
-            if ($block) $this->_tag_open_BR(array());
-            if ($this->_debugActif) $this->_DEBUG_add('DRAW', false);
+            if ($block) {
+                $this->_tag_open_BR(array());
+            }
+            if ($this->_debugActif) {
+                $this->_DEBUG_add('DRAW', false);
+            }
 
             $this->_isInDraw = null;
 
@@ -6114,7 +6772,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_LINE($param)
         {
-            if (!$this->_isInDraw) throw new HTML2PDF_exception(8, 'LINE');
+            if (!$this->_isInDraw) {
+                throw new HTML2PDF_exception(8, 'LINE');
+            }
 
             $this->pdf->doTransform(isset($param['transform']) ? $this->_prepareTransform($param['transform']) : null);
             $this->parsingCss->save();
@@ -6141,7 +6801,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_RECT($param)
         {
-            if (!$this->_isInDraw) throw new HTML2PDF_exception(8, 'RECT');
+            if (!$this->_isInDraw) {
+                throw new HTML2PDF_exception(8, 'RECT');
+            }
 
             $this->pdf->doTransform(isset($param['transform']) ? $this->_prepareTransform($param['transform']) : null);
             $this->parsingCss->save();
@@ -6168,7 +6830,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_CIRCLE($param)
         {
-            if (!$this->_isInDraw) throw new HTML2PDF_exception(8, 'CIRCLE');
+            if (!$this->_isInDraw) {
+                throw new HTML2PDF_exception(8, 'CIRCLE');
+            }
 
             $this->pdf->doTransform(isset($param['transform']) ? $this->_prepareTransform($param['transform']) : null);
             $this->parsingCss->save();
@@ -6193,7 +6857,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_ELLIPSE($param)
         {
-            if (!$this->_isInDraw) throw new HTML2PDF_exception(8, 'ELLIPSE');
+            if (!$this->_isInDraw) {
+                throw new HTML2PDF_exception(8, 'ELLIPSE');
+            }
 
             $this->pdf->doTransform(isset($param['transform']) ? $this->_prepareTransform($param['transform']) : null);
             $this->parsingCss->save();
@@ -6220,7 +6886,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_POLYLINE($param)
         {
-            if (!$this->_isInDraw) throw new HTML2PDF_exception(8, 'POLYGON');
+            if (!$this->_isInDraw) {
+                throw new HTML2PDF_exception(8, 'POLYGON');
+            }
 
             $this->pdf->doTransform(isset($param['transform']) ? $this->_prepareTransform($param['transform']) : null);
             $this->parsingCss->save();
@@ -6236,7 +6904,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $path = explode(' ', $path);
                 foreach ($path as $k => $v) {
                     $path[$k] = trim($v);
-                    if ($path[$k]==='') unset($path[$k]);
+                    if ($path[$k]==='') {
+                        unset($path[$k]);
+                    }
                 }
                 $path = array_values($path);
 
@@ -6266,7 +6936,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_POLYGON($param)
         {
-            if (!$this->_isInDraw) throw new HTML2PDF_exception(8, 'POLYGON');
+            if (!$this->_isInDraw) {
+                throw new HTML2PDF_exception(8, 'POLYGON');
+            }
 
             $this->pdf->doTransform(isset($param['transform']) ? $this->_prepareTransform($param['transform']) : null);
             $this->parsingCss->save();
@@ -6282,7 +6954,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $path = explode(' ', $path);
                 foreach ($path as $k => $v) {
                     $path[$k] = trim($v);
-                    if ($path[$k]==='') unset($path[$k]);
+                    if ($path[$k]==='') {
+                        unset($path[$k]);
+                    }
                 }
                 $path = array_values($path);
 
@@ -6313,7 +6987,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_PATH($param)
         {
-            if (!$this->_isInDraw) throw new HTML2PDF_exception(8, 'PATH');
+            if (!$this->_isInDraw) {
+                throw new HTML2PDF_exception(8, 'PATH');
+            }
 
             $this->pdf->doTransform(isset($param['transform']) ? $this->_prepareTransform($param['transform']) : null);
             $this->parsingCss->save();
@@ -6333,7 +7009,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $path = explode(' ', $path);
                 foreach ($path as $k => $v) {
                     $path[$k] = trim($v);
-                    if ($path[$k]==='') unset($path[$k]);
+                    if ($path[$k]==='') {
+                        unset($path[$k]);
+                    }
                 }
                 $path = array_values($path);
 
@@ -6357,8 +7035,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
                     // current action
                     $action = array();
                     $action[] = $lastAction;
-                    switch($lastAction)
-                    {
+                    switch ($lastAction) {
                         case 'C':
                         case 'c':
                             $action[] = $this->parsingCss->ConvertToMM($path[$k+0], $this->_isInDraw['w']);    // x1
@@ -6442,7 +7119,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_open_G($param)
         {
-            if (!$this->_isInDraw) throw new HTML2PDF_exception(8, 'G');
+            if (!$this->_isInDraw) {
+                throw new HTML2PDF_exception(8, 'G');
+            }
 
             $this->pdf->doTransform(isset($param['transform']) ? $this->_prepareTransform($param['transform']) : null);
             $this->parsingCss->save();
@@ -6483,6 +7162,5 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 return null;
             }
         }
-
     }
 }

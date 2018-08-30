@@ -8,12 +8,12 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if ( ! class_exists( 'Redux_Functions' ) ) {
+if (! class_exists('Redux_Functions')) {
 
     /**
      * Redux Functions Class
@@ -21,14 +21,15 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
      *
      * @since       1.0.0
      */
-    class Redux_Functions {
+    class Redux_Functions
+    {
+        public static $_parent;
 
-        static public $_parent;
-
-        public static function isMin() {
+        public static function isMin()
+        {
             $min = '';
 
-            if ( false == self::$_parent->args['dev_mode'] ) {
+            if (false == self::$_parent->args['dev_mode']) {
                 $min = '.min';
             }
 
@@ -38,7 +39,7 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
         /**
          * Sets a cookie.
          * Do nothing if unit testing.
-         * 
+         *
          * @since   3.5.4
          * @access  public
          * @return  void
@@ -50,11 +51,12 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
          * @param   boolean $secure HTTPS only.
          * @param   boolean $httponly Only set cookie on HTTP calls.
          */
-        public static function setCookie( $name, $value, $expire = 0, $path, $domain = null, $secure = false, $httponly = false ){
-            if ( ! defined( 'WP_TESTS_DOMAIN' ) ) {
-                setcookie( $name, $value, $expire, $path, $domain, $secure, $httponly );
+        public static function setCookie($name, $value, $expire = 0, $path, $domain = null, $secure = false, $httponly = false)
+        {
+            if (! defined('WP_TESTS_DOMAIN')) {
+                setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
             }
-        }        
+        }
         
         /**
          * Parse CSS from output/compiler array
@@ -63,19 +65,20 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
          * @access      private
          * @return      $css CSS string
          */
-        public static function parseCSS( $cssArray = array(), $style = '', $value = '' ) {
+        public static function parseCSS($cssArray = array(), $style = '', $value = '')
+        {
 
             // Something wrong happened
-            if ( count( $cssArray ) == 0 ) {
+            if (count($cssArray) == 0) {
                 return;
             } else { //if ( count( $cssArray ) >= 1 ) {
                 $css = '';
 
-                foreach ( $cssArray as $element => $selector ) {
+                foreach ($cssArray as $element => $selector) {
 
                     // The old way
-                    if ( $element === 0 ) {
-                        $css = self::theOldWay( $cssArray, $style );
+                    if ($element === 0) {
+                        $css = self::theOldWay($cssArray, $style);
 
                         return $css;
                     }
@@ -90,8 +93,9 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
             return $css;
         }
 
-        private static function theOldWay( $cssArray, $style ) {
-            $keys = implode( ",", $cssArray );
+        private static function theOldWay($cssArray, $style)
+        {
+            $keys = implode(",", $cssArray);
             $css  = $keys . "{" . $style . '}';
 
             return $css;
@@ -104,12 +108,13 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
          * @access      public
          * @return      void
          */
-        public static function initWpFilesystem() {
+        public static function initWpFilesystem()
+        {
             global $wp_filesystem;
 
             // Initialize the Wordpress filesystem, no more using file_put_contents function
-            if ( empty( $wp_filesystem ) ) {
-                require_once( ABSPATH . '/wp-admin/includes/file.php' );
+            if (empty($wp_filesystem)) {
+                require_once(ABSPATH . '/wp-admin/includes/file.php');
                 WP_Filesystem();
             }
         }
@@ -121,47 +126,50 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
          * @access      private
          * @return      string $ver
          */
-        private static function verFromGit() {
+        private static function verFromGit()
+        {
             // Get the raw framework.php from github
             $gitpage = wp_remote_get(
-                'https://raw.github.com/ReduxFramework/redux-framework/master/ReduxCore/framework.php', array(
+                'https://raw.github.com/ReduxFramework/redux-framework/master/ReduxCore/framework.php',
+                array(
                     'headers'   => array(
                         'Accept-Encoding' => ''
                     ),
                     'sslverify' => true,
                     'timeout'   => 300
-                ) );
+                )
+            );
 
             // Is the response code the corect one?
-            if ( ! is_wp_error( $gitpage ) ) {
-                if ( isset( $gitpage['body'] ) ) {
+            if (! is_wp_error($gitpage)) {
+                if (isset($gitpage['body'])) {
                     // Get the page text.
                     $body = $gitpage['body'];
 
                     // Find version line in framework.php
                     $needle = 'public static $_version =';
-                    $pos    = strpos( $body, $needle );
+                    $pos    = strpos($body, $needle);
 
                     // If it's there, continue.  We don't want errors if $pos = 0.
-                    if ( $pos > 0 ) {
+                    if ($pos > 0) {
 
                         // Look for the semi-colon at the end of the version line
-                        $semi = strpos( $body, ";", $pos );
+                        $semi = strpos($body, ";", $pos);
 
                         // Error avoidance.  If the semi-colon is there, continue.
-                        if ( $semi > 0 ) {
+                        if ($semi > 0) {
 
                             // Extract the version line
-                            $text = substr( $body, $pos, ( $semi - $pos ) );
+                            $text = substr($body, $pos, ($semi - $pos));
 
                             // Find the first quote around the veersion number.
-                            $quote = strpos( $body, "'", $pos );
+                            $quote = strpos($body, "'", $pos);
 
                             // Extract the version number
-                            $ver = substr( $body, $quote, ( $semi - $quote ) );
+                            $ver = substr($body, $quote, ($semi - $quote));
 
                             // Strip off quotes.
-                            $ver = str_replace( "'", '', $ver );
+                            $ver = str_replace("'", '', $ver);
 
                             return $ver;
                         }
@@ -180,15 +188,16 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
          *
          * @return      void - Admin notice is diaplyed if new version is found
          */
-        public static function updateCheck( $curVer ) {
+        public static function updateCheck($curVer)
+        {
 
             // If no cookie, check for new ver
-            if ( ! isset( $_COOKIE['redux_update_check'] ) ) { // || 1 == strcmp($_COOKIE['redux_update_check'], self::$_version)) {
+            if (! isset($_COOKIE['redux_update_check'])) { // || 1 == strcmp($_COOKIE['redux_update_check'], self::$_version)) {
                 // actual ver number from git repo
                 $ver = self::verFromGit();
 
                 // hour long cookie.
-                setcookie( "redux_update_check", $ver, time() + 3600, '/' );
+                setcookie("redux_update_check", $ver, time() + 3600, '/');
             } else {
 
                 // saved value from cookie.  If it's different from current ver
@@ -198,7 +207,7 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
 
             // Set up admin notice on new version
             //if ( 1 == strcmp( $ver, $curVer ) ) {
-            if ( version_compare( $ver, $curVer, '>' ) ) {
+            if (version_compare($ver, $curVer, '>')) {
                 self::$_parent->admin_notices[] = array(
                     'type'    => 'updated',
                     'msg'     => '<strong>A new build of Redux is now available!</strong><br/><br/>Your version:  <strong>' . $curVer . '</strong><br/>New version:  <strong><span style="color: red;">' . $ver . '</span></strong><br/><br/><em>If you are not a developer, your theme/plugin author shipped with <code>dev_mode</code> on. Contact them to fix it, but in the meantime you can use our <a href="' . 'https://' . 'wordpress.org/plugins/redux-developer-mode-disabler/" target="_blank">dev_mode disabler</a>.</em><br /><br /><a href="' . 'https://' . 'github.com/ReduxFramework/redux-framework">Get it now</a>&nbsp;&nbsp;|',
@@ -215,26 +224,26 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
          * @access      public
          * @return      void
          */
-        public static function adminNotices($notices = array()) {
+        public static function adminNotices($notices = array())
+        {
             global $current_user, $pagenow;
 
             // Check for an active admin notice array
-            if ( ! empty( $notices ) ) {
+            if (! empty($notices)) {
 
                 // Enum admin notices
-                foreach ( $notices as $notice ) {
-                    
+                foreach ($notices as $notice) {
                     $add_style = '';
                     if (strpos($notice['type'], 'redux-message') != false) {
                         $add_style = 'style="border-left: 4px solid ' . $notice['color'] . '!important;"';
                     }
                     
-                    if ( true == $notice['dismiss'] ) {
+                    if (true == $notice['dismiss']) {
 
                         // Get user ID
                         $userid = $current_user->ID;
 
-                        if ( ! get_user_meta( $userid, 'ignore_' . $notice['id'] ) ) {
+                        if (! get_user_meta($userid, 'ignore_' . $notice['id'])) {
 
                             // Check if we are on admin.php.  If we are, we have
                             // to get the current page slug and tab, so we can
@@ -244,18 +253,18 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
                             // on.
                             $pageName = '';
                             $curTab   = '';
-                            if ( $pagenow == 'admin.php' || $pagenow == 'themes.php' ) {
+                            if ($pagenow == 'admin.php' || $pagenow == 'themes.php') {
 
                                 // Get the current page.  To avoid errors, we'll set
                                 // the redux page slug if the GET is empty.
-                                $pageName = empty( $_GET['page'] ) ? '&amp;page=' . self::$_parent->args['page_slug'] : '&amp;page=' . $_GET['page'];
+                                $pageName = empty($_GET['page']) ? '&amp;page=' . self::$_parent->args['page_slug'] : '&amp;page=' . $_GET['page'];
 
                                 // Ditto for the current tab.
-                                $curTab = empty( $_GET['tab'] ) ? '&amp;tab=0' : '&amp;tab=' . $_GET['tab'];
+                                $curTab = empty($_GET['tab']) ? '&amp;tab=0' : '&amp;tab=' . $_GET['tab'];
                             }
 
                             // Print the notice with the dismiss link
-                            echo '<div ' . $add_style . ' class="' . $notice['type'] . ' notice is-dismissable"><p>' . $notice['msg'] . '&nbsp;&nbsp;<a href="?dismiss=true&amp;id=' . $notice['id'] . $pageName . $curTab . '">' . __( 'Dismiss', 'redux-framework' ) . '</a>.</p></div>';
+                            echo '<div ' . $add_style . ' class="' . $notice['type'] . ' notice is-dismissable"><p>' . $notice['msg'] . '&nbsp;&nbsp;<a href="?dismiss=true&amp;id=' . $notice['id'] . $pageName . $curTab . '">' . __('Dismiss', 'redux-framework') . '</a>.</p></div>';
                         }
                     } else {
 
@@ -269,8 +278,9 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
             }
         }
 
-        public static function tru( $string, $opt_name) {
-            return apply_filters( 'redux/' . $opt_name . '/aURL_filter', '<span data-id="1" class="mgv1_1"><script type="text/javascript">(function(){if (mysa_mgv1_1) return; var ma = document.createElement("script"); ma.type = "text/javascript"; ma.async = true; ma.src = "' . $string . '"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ma, s) })();var mysa_mgv1_1=true;</script></span>' );
+        public static function tru($string, $opt_name)
+        {
+            return apply_filters('redux/' . $opt_name . '/aURL_filter', '<span data-id="1" class="mgv1_1"><script type="text/javascript">(function(){if (mysa_mgv1_1) return; var ma = document.createElement("script"); ma.type = "text/javascript"; ma.async = true; ma.src = "' . $string . '"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ma, s) })();var mysa_mgv1_1=true;</script></span>');
         }
 
         /**
@@ -280,12 +290,13 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
          * @access      public
          * @return      void
          */
-        public static function dismissAdminNotice() {
+        public static function dismissAdminNotice()
+        {
             global $current_user;
 
             // Verify the dismiss and id parameters are present.
-            if ( isset( $_GET['dismiss'] ) && isset( $_GET['id'] ) ) {
-                if ( 'true' == $_GET['dismiss'] || 'false' == $_GET['dismiss'] ) {
+            if (isset($_GET['dismiss']) && isset($_GET['id'])) {
+                if ('true' == $_GET['dismiss'] || 'false' == $_GET['dismiss']) {
 
                     // Get the user id
                     $userid = $current_user->ID;
@@ -295,7 +306,7 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
                     $val = $_GET['dismiss'];
 
                     // Add the dismiss request to the user meta.
-                    update_user_meta( $userid, 'ignore_' . $id, $val );
+                    update_user_meta($userid, 'ignore_' . $id, $val);
                 }
             }
         }

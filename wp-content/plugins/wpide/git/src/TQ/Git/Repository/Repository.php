@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\Repository;
+
 use TQ\Git\Cli\Binary;
 use TQ\Git\Cli\CallResult;
 use TQ\Git\Cli\CallException;
@@ -111,7 +112,8 @@ class Repository
 
         if (!is_string($repositoryPath)) {
             throw new \InvalidArgumentException(sprintf(
-                '"%s" is not a valid path', $repositoryPath
+                '"%s" is not a valid path',
+                $repositoryPath
             ));
         }
 
@@ -120,16 +122,19 @@ class Repository
         if ($repositoryRoot === null) {
             if (!$createIfNotExists) {
                 throw new \InvalidArgumentException(sprintf(
-                    '"%s" is not a valid path', $repositoryPath
+                    '"%s" is not a valid path',
+                    $repositoryPath
                 ));
             } else {
                 if (!file_exists($repositoryPath) && !mkdir($repositoryPath, $createIfNotExists, true)) {
                     throw new \RuntimeException(sprintf(
-                        '"%s" cannot be created', $repositoryPath
+                        '"%s" cannot be created',
+                        $repositoryPath
                     ));
-                } else if (!is_dir($repositoryPath)) {
+                } elseif (!is_dir($repositoryPath)) {
                     throw new \InvalidArgumentException(sprintf(
-                        '"%s" is not a valid path', $repositoryPath
+                        '"%s" is not a valid path',
+                        $repositoryPath
                     ));
                 }
                 self::initRepository($binary, $repositoryPath);
@@ -139,7 +144,8 @@ class Repository
 
         if ($repositoryRoot === null) {
             throw new \InvalidArgumentException(sprintf(
-                '"%s" is not a valid Git repository', $repositoryPath
+                '"%s" is not a valid Git repository',
+                $repositoryPath
             ));
         }
 
@@ -431,8 +437,10 @@ class Repository
         }
 
         $result = $this->getBinary()->add($this->getRepositoryPath(), $args);
-        self::throwIfError($result, sprintf('Cannot add "%s" to "%s"',
-            ($file !== null) ? implode(', ', $file) : '*', $this->getRepositoryPath()
+        self::throwIfError($result, sprintf(
+            'Cannot add "%s" to "%s"',
+            ($file !== null) ? implode(', ', $file) : '*',
+            $this->getRepositoryPath()
         ));
     }
 
@@ -456,8 +464,10 @@ class Repository
         $args   = array_merge($args, $this->resolveLocalPath($file));
 
         $result = $this->getBinary()->rm($this->getRepositoryPath(), $args);
-        self::throwIfError($result, sprintf('Cannot remove "%s" from "%s"',
-            implode(', ', $file), $this->getRepositoryPath()
+        self::throwIfError($result, sprintf(
+            'Cannot remove "%s" from "%s"',
+            implode(', ', $file),
+            $this->getRepositoryPath()
         ));
     }
 
@@ -478,8 +488,11 @@ class Repository
         $args[] = $this->resolveLocalPath($toPath);
 
         $result = $this->getBinary()->mv($this->getRepositoryPath(), $args);
-        self::throwIfError($result, sprintf('Cannot move "%s" to "%s" in "%s"',
-            $fromPath, $toPath, $this->getRepositoryPath()
+        self::throwIfError($result, sprintf(
+            'Cannot move "%s" to "%s" in "%s"',
+            $fromPath,
+            $toPath,
+            $this->getRepositoryPath()
         ));
     }
 
@@ -495,8 +508,14 @@ class Repository
      * @param   string|null     $author         The author
      * @return  string                          The current commit hash
      */
-    public function writeFile($path, $data, $commitMsg = null, $fileMode = null,
-        $dirMode = null, $recursive = true, $author = null
+    public function writeFile(
+        $path,
+        $data,
+        $commitMsg = null,
+        $fileMode = null,
+        $dirMode = null,
+        $recursive = true,
+        $author = null
     ) {
         $file       = $this->resolveFullPath($path);
 
@@ -506,7 +525,7 @@ class Repository
         $directory  = dirname($file);
         if (!file_exists($directory) && !mkdir($directory, (int)$dirMode, $recursive)) {
             throw new \RuntimeException(sprintf('Cannot create "%s"', $directory));
-        } else if (!file_exists($file)) {
+        } elseif (!file_exists($file)) {
             if (!touch($file)) {
                 throw new \RuntimeException(sprintf('Cannot create "%s"', $file));
             }
@@ -599,12 +618,13 @@ class Repository
         }
 
         $result = $this->getBinary()->log($this->getRepositoryPath(), $arguments);
-        self::throwIfError($result, sprintf('Cannot retrieve log from "%s"',
+        self::throwIfError($result, sprintf(
+            'Cannot retrieve log from "%s"',
             $this->getRepositoryPath()
         ));
 
         $output     = $result->getStdOut();
-        $log        = array_map(function($f) {
+        $log        = array_map(function ($f) {
             return trim($f);
         }, explode("\x0", $output));
 
@@ -623,8 +643,10 @@ class Repository
             '--format' => 'fuller',
             $hash
         ));
-        self::throwIfError($result, sprintf('Cannot retrieve commit "%s" from "%s"',
-            $hash, $this->getRepositoryPath()
+        self::throwIfError($result, sprintf(
+            'Cannot retrieve commit "%s" from "%s"',
+            $hash,
+            $this->getRepositoryPath()
         ));
 
         return $result->getStdOut();
@@ -642,8 +664,11 @@ class Repository
         $result = $this->getBinary()->show($this->getRepositoryPath(), array(
             sprintf('%s:%s', $ref, $file)
         ));
-        self::throwIfError($result, sprintf('Cannot show "%s" at "%s" from "%s"',
-            $file, $ref, $this->getRepositoryPath()
+        self::throwIfError($result, sprintf(
+            'Cannot show "%s" at "%s" from "%s"',
+            $file,
+            $ref,
+            $this->getRepositoryPath()
         ));
 
 
@@ -675,8 +700,11 @@ class Repository
         $result = $this->getBinary()->{'cat-file'}($this->getRepositoryPath(), array(
             '--batch-check'
         ), sprintf('%s:%s', $ref, $path));
-        self::throwIfError($result, sprintf('Cannot cat-file "%s" at "%s" from "%s"',
-            $path, $ref, $this->getRepositoryPath()
+        self::throwIfError($result, sprintf(
+            'Cannot cat-file "%s" at "%s" from "%s"',
+            $path,
+            $ref,
+            $this->getRepositoryPath()
         ));
         $output = trim($result->getStdOut());
 
@@ -716,12 +744,15 @@ class Repository
             '-z',
             $ref
         ));
-        self::throwIfError($result, sprintf('Cannot list directory "%s" at "%s" from "%s"',
-            $directory, $ref, $this->getRepositoryPath()
+        self::throwIfError($result, sprintf(
+            'Cannot list directory "%s" at "%s" from "%s"',
+            $directory,
+            $ref,
+            $this->getRepositoryPath()
         ));
 
         $output     = $result->getStdOut();
-        $listing    = array_map(function($f) {
+        $listing    = array_map(function ($f) {
             return trim($f);
         }, explode("\x0", $output));
         return $listing;
@@ -745,7 +776,8 @@ class Repository
         $result = $this->getBinary()->status($this->getRepositoryPath(), array(
             '--short'
         ));
-        self::throwIfError($result,
+        self::throwIfError(
+            $result,
             sprintf('Cannot retrieve status from "%s"', $this->getRepositoryPath())
         );
 
@@ -754,7 +786,7 @@ class Repository
             return array();
         }
 
-        $status = array_map(function($f) {
+        $status = array_map(function ($f) {
             $line   = rtrim($f);
             $parts  = array();
             preg_match('/^(?<x>.)(?<y>.)\s(?<f>.+?)(?:\s->\s(?<f2>.+))?$/', $line, $parts);
@@ -792,7 +824,8 @@ class Repository
             '--name-only',
             'HEAD'
         ));
-        self::throwIfError($result,
+        self::throwIfError(
+            $result,
             sprintf('Cannot retrieve current branch from "%s"', $this->getRepositoryPath())
         );
 
@@ -810,7 +843,8 @@ class Repository
             'origin',
             'master'
         ));
-        self::throwIfError($result,
+        self::throwIfError(
+            $result,
             sprintf('Cannot push')
         );
 
@@ -836,12 +870,13 @@ class Repository
 
         if ($local && $remote) {
             $arguments[] = '-a';
-        } else if ($remote) {
+        } elseif ($remote) {
             $arguments[] = '-r';
         }
 
         $result = $this->getBinary()->branch($this->getRepositoryPath(), $arguments);
-        self::throwIfError($result,
+        self::throwIfError(
+            $result,
             sprintf('Cannot retrieve branche from "%s"', $this->getRepositoryPath())
         );
 
@@ -850,7 +885,7 @@ class Repository
             return array();
         }
 
-        $branches = array_map(function($b) {
+        $branches = array_map(function ($b) {
             $line   = rtrim($b);
             if (strpos($line, '* ') === 0) {
                 $line   = substr($line, 2);
@@ -910,4 +945,3 @@ class Repository
         }
     }
 }
-

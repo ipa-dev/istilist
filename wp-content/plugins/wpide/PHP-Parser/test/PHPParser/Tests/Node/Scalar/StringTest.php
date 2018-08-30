@@ -5,7 +5,8 @@ class PHPParser_Tests_Node_Scalar_StringTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTestParseEscapeSequences
      */
-    public function testParseEscapeSequences($expected, $string, $quote) {
+    public function testParseEscapeSequences($expected, $string, $quote)
+    {
         $this->assertEquals(
             $expected,
             PHPParser_Node_Scalar_String::parseEscapeSequences($string, $quote)
@@ -15,14 +16,16 @@ class PHPParser_Tests_Node_Scalar_StringTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTestParse
      */
-    public function testCreate($expected, $string) {
+    public function testCreate($expected, $string)
+    {
         $this->assertEquals(
             $expected,
             PHPParser_Node_Scalar_String::parse($string)
         );
     }
 
-    public function provideTestParseEscapeSequences() {
+    public function provideTestParseEscapeSequences()
+    {
         return array(
             array('"',              '\\"',              '"'),
             array('\\"',            '\\"',              '`'),
@@ -37,7 +40,8 @@ class PHPParser_Tests_Node_Scalar_StringTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function provideTestParse() {
+    public function provideTestParse()
+    {
         $tests = array(
             array('A', '\'A\''),
             array('A', 'b\'A\''),

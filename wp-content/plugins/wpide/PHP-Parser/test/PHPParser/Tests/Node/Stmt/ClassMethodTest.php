@@ -5,7 +5,8 @@ class PHPParser_Tests_Node_Stmt_ClassMethodTest extends PHPUnit_Framework_TestCa
     /**
      * @dataProvider provideModifiers
      */
-    public function testModifiers($modifier) {
+    public function testModifiers($modifier)
+    {
         $node = new PHPParser_Node_Stmt_ClassMethod('foo', array(
             'type' => constant('PHPParser_Node_Stmt_Class::MODIFIER_' . strtoupper($modifier))
         ));
@@ -16,13 +17,15 @@ class PHPParser_Tests_Node_Stmt_ClassMethodTest extends PHPUnit_Framework_TestCa
     /**
      * @dataProvider provideModifiers
      */
-    public function testNoModifiers($modifier) {
+    public function testNoModifiers($modifier)
+    {
         $node = new PHPParser_Node_Stmt_ClassMethod('foo', array('type' => 0));
 
         $this->assertFalse($node->{'is' . $modifier}());
     }
 
-    public function provideModifiers() {
+    public function provideModifiers()
+    {
         return array(
             array('public'),
             array('protected'),

@@ -1,4 +1,6 @@
-<?php if( !defined( 'ABSPATH') ) exit(); ?>
+<?php if (!defined('ABSPATH')) {
+    exit();
+} ?>
 <input type="hidden" id="sliderid" value="<?php echo $sliderID; ?>"></input>
 
 <?php

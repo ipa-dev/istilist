@@ -1,4 +1,6 @@
-<?php if( !defined( 'ABSPATH') ) exit(); ?>
+<?php if (!defined('ABSPATH')) {
+    exit();
+} ?>
 
 <!-- //Youtube dialog: -->
 <div id="dialog_video" class="dialog-video" title="<?php _e('Add Video Layer', 'revslider'); ?>" style="display:none">
@@ -81,14 +83,14 @@
 				<span class="vidsrcchanger-div" style="margin-left:20px;">
 					<a href="javascript:void(0)" data-inptarget="html5_url_mp4" class="button_change_video button-primary revblue" ><?php _e('Choose from Library', 'revslider'); ?></a>
 				</span>
-				<span class="video_example"><?php _e("example",'revslider'); ?>: http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4</span>
+				<span class="video_example"><?php _e("example", 'revslider'); ?>: http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4</span>
 		
 				<label><?php _e('Video WEBM Url', 'revslider'); ?></label>
 				<input style="width:330px" type="text" id="html5_url_webm" name="html5_url_webm" value="">
 				<span class="vidsrcchanger-div" style="margin-left:20px;">
 					<a href="javascript:void(0)" data-inptarget="html5_url_webm" class="button_change_video button-primary revblue" ><?php _e('Choose from Library', 'revslider'); ?></a>
 				</span>
-				<span class="video_example"><?php _e('example','revslider'); ?>: http://clips.vorwaerts-gmbh.de/big_buck_bunny.webm</span>
+				<span class="video_example"><?php _e('example', 'revslider'); ?>: http://clips.vorwaerts-gmbh.de/big_buck_bunny.webm</span>
 		
 				<label><?php _e('Video OGV Url', 'revslider'); ?></label>
 				<input style="width:330px" type="text" id="html5_url_ogv" name="html5_url_ogv" value="">
@@ -125,19 +127,19 @@
 					<?php _e('Dotted Overlay:', 'revslider'); ?>
 				</label>				
 				<select id="input_video_dotted_overlay" style="width:100px">
-					<option value="none"><?php _e('none','revslider'); ?></option>
-					<option value="twoxtwo"><?php _e('2 x 2 Black','revslider'); ?></option>
-					<option value="twoxtwowhite"><?php _e('2 x 2 White','revslider'); ?></option>
-					<option value="threexthree"><?php _e('3 x 3 Black','revslider'); ?></option>
-					<option value="threexthreewhite"><?php _e('3 x 3 White','revslider'); ?></option>
+					<option value="none"><?php _e('none', 'revslider'); ?></option>
+					<option value="twoxtwo"><?php _e('2 x 2 Black', 'revslider'); ?></option>
+					<option value="twoxtwowhite"><?php _e('2 x 2 White', 'revslider'); ?></option>
+					<option value="threexthree"><?php _e('3 x 3 Black', 'revslider'); ?></option>
+					<option value="threexthreewhite"><?php _e('3 x 3 White', 'revslider'); ?></option>
 				</select>
 				<div class="clearfix mb10"></div>
 				<label for="input_video_ratio" class="video-label" id="input_video_ratio_lbl">
 					<?php _e('Aspect Ratio:', 'revslider'); ?>
 				</label>				
 				<select id="input_video_ratio" style="width:100px">
-					<option value="16:9"><?php _e('16:9','revslider'); ?></option>
-					<option value="4:3"><?php _e('4:3','revslider'); ?></option>
+					<option value="16:9"><?php _e('16:9', 'revslider'); ?></option>
+					<option value="4:3"><?php _e('4:3', 'revslider'); ?></option>
 				</select>
 			</div>
 			<div id="video_full_screen_settings" class="video-settings-line">
@@ -150,7 +152,7 @@
 		
 		<div id="rs-video-settings" style="display:none">
 			<div class="mb10">
-				<label for="input_video_loop"><?php _e("Loop:",'revslider'); ?></label>
+				<label for="input_video_loop"><?php _e("Loop:", 'revslider'); ?></label>
 				<?php /* <input type="checkbox" class="checkbox_video_dialog  mtop_13" id="input_video_loop" > */ ?>
 				<select id="input_video_loop" style="width: 200px;">
 					<option value="none"><?php _e('Disable', 'revslider'); ?></option>
@@ -261,7 +263,7 @@
 			<div class="mb10 rs-show-on-audio" style="display: none">
 				<div class="mb10">
 					<label for="input_audio_preload" class="video-label">
-						<?php _e("Audio Preload:",'revslider')?>
+						<?php _e("Audio Preload:", 'revslider')?>
 					</label>
 					<select id="input_audio_preload" style="width:200px">
 						<option value="none"><?php _e('Disable', 'revslider'); ?></option>
@@ -273,7 +275,7 @@
 				</div>
 				<div class="mb10">
 					<label for="input_audio_preload" class="video-label">
-						<?php _e("Ignore Preload after ",'revslider'); ?>
+						<?php _e("Ignore Preload after ", 'revslider'); ?>
 					</label>
 					<select id="input_video_preload_wait">
 						<option value="0"><?php _e('0', 'revslider'); ?></option>
@@ -287,7 +289,7 @@
 						<option value="8"><?php _e('8', 'revslider'); ?></option>
 						<option value="9"><?php _e('9', 'revslider'); ?></option>
 						<option value="10"><?php _e('10', 'revslider'); ?></option>
-					</select><?php _e(" seconds",'revslider'); ?>
+					</select><?php _e(" seconds", 'revslider'); ?>
 				</div>
 			</div>
 			
@@ -295,7 +297,7 @@
 			
 				<div class="mb10">
 					<label for="input_video_preload" class="video-label">
-						<?php _e("Video Preload:",'revslider')?>
+						<?php _e("Video Preload:", 'revslider')?>
 					</label>
 					<select id="input_video_preload" style="width:200px">
 						<option value="auto"><?php _e('Auto', 'revslider'); ?></option>

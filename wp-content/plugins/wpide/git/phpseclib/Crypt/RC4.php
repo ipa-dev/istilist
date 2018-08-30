@@ -41,10 +41,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -92,7 +92,8 @@ define('CRYPT_RC4_DECRYPT', 1);
  * @access  public
  * @package Crypt_RC4
  */
-class Crypt_RC4 {
+class Crypt_RC4
+{
     /**
      * The Key
      *
@@ -100,7 +101,7 @@ class Crypt_RC4 {
      * @var String
      * @access private
      */
-    var $key = "\0";
+    public $key = "\0";
 
     /**
      * The Key Stream for encryption
@@ -111,7 +112,7 @@ class Crypt_RC4 {
      * @var Array
      * @access private
      */
-    var $encryptStream = false;
+    public $encryptStream = false;
 
     /**
      * The Key Stream for decryption
@@ -122,7 +123,7 @@ class Crypt_RC4 {
      * @var Array
      * @access private
      */
-    var $decryptStream = false;
+    public $decryptStream = false;
 
     /**
      * The $i and $j indexes for encryption
@@ -131,7 +132,7 @@ class Crypt_RC4 {
      * @var Integer
      * @access private
      */
-    var $encryptIndex = 0;
+    public $encryptIndex = 0;
 
     /**
      * The $i and $j indexes for decryption
@@ -140,7 +141,7 @@ class Crypt_RC4 {
      * @var Integer
      * @access private
      */
-    var $decryptIndex = 0;
+    public $decryptIndex = 0;
 
     /**
      * The Encryption Algorithm
@@ -151,7 +152,7 @@ class Crypt_RC4 {
      * @var Integer
      * @access private
      */
-    var $mode;
+    public $mode;
 
     /**
      * Continuous Buffer status
@@ -160,7 +161,7 @@ class Crypt_RC4 {
      * @var Boolean
      * @access private
      */
-    var $continuousBuffer = false;
+    public $continuousBuffer = false;
 
     /**
      * Default Constructor.
@@ -171,9 +172,9 @@ class Crypt_RC4 {
      * @return Crypt_RC4
      * @access public
      */
-    function Crypt_RC4()
+    public function Crypt_RC4()
     {
-        if ( !defined('CRYPT_RC4_MODE') ) {
+        if (!defined('CRYPT_RC4_MODE')) {
             switch (true) {
                 case extension_loaded('mcrypt') && (defined('MCRYPT_ARCFOUR') || defined('MCRYPT_RC4')) && in_array('arcfour', mcrypt_list_algorithms()):
                     define('CRYPT_RC4_MODE', CRYPT_RC4_MODE_MCRYPT);
@@ -183,13 +184,13 @@ class Crypt_RC4 {
             }
         }
 
-        switch ( CRYPT_RC4_MODE ) {
+        switch (CRYPT_RC4_MODE) {
             case CRYPT_RC4_MODE_MCRYPT:
                 switch (true) {
                     case defined('MCRYPT_ARCFOUR'):
                         $this->mode = MCRYPT_ARCFOUR;
                         break;
-                    case defined('MCRYPT_RC4');
+                    case defined('MCRYPT_RC4'):
                         $this->mode = MCRYPT_RC4;
                 }
         }
@@ -204,11 +205,11 @@ class Crypt_RC4 {
      * @access public
      * @param String $key
      */
-    function setKey($key)
+    public function setKey($key)
     {
         $this->key = $key;
 
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT ) {
+        if (CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT) {
             return;
         }
 
@@ -240,7 +241,7 @@ class Crypt_RC4 {
      * @param optional String $method
      * @access public
      */
-    function setPassword($password, $method = 'pbkdf2')
+    public function setPassword($password, $method = 'pbkdf2')
     {
         $key = '';
 
@@ -304,7 +305,7 @@ class Crypt_RC4 {
      * @see Crypt_RC4::setKey()
      * @access public
      */
-    function setIV($iv)
+    public function setIV($iv)
     {
     }
 
@@ -315,7 +316,7 @@ class Crypt_RC4 {
      * @access public
      * @param String $plaintext
      */
-    function encrypt($plaintext)
+    public function encrypt($plaintext)
     {
         return $this->_crypt($plaintext, CRYPT_RC4_ENCRYPT);
     }
@@ -330,7 +331,7 @@ class Crypt_RC4 {
      * @access public
      * @param String $ciphertext
      */
-    function decrypt($ciphertext)
+    public function decrypt($ciphertext)
     {
         return $this->_crypt($ciphertext, CRYPT_RC4_DECRYPT);
     }
@@ -344,15 +345,15 @@ class Crypt_RC4 {
      * @param String $text
      * @param Integer $mode
      */
-    function _crypt($text, $mode)
+    public function _crypt($text, $mode)
     {
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT ) {
+        if (CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT) {
             $keyStream = $mode == CRYPT_RC4_ENCRYPT ? 'encryptStream' : 'decryptStream';
 
             if ($this->$keyStream === false) {
                 $this->$keyStream = mcrypt_module_open($this->mode, '', MCRYPT_MODE_STREAM, '');
                 mcrypt_generic_init($this->$keyStream, $this->key, '');
-            } else if (!$this->continuousBuffer) {
+            } elseif (!$this->continuousBuffer) {
                 mcrypt_generic_init($this->$keyStream, $this->key, '');
             }
             $newText = mcrypt_generic($this->$keyStream, $text);
@@ -440,7 +441,7 @@ class Crypt_RC4 {
      * @see Crypt_RC4::disableContinuousBuffer()
      * @access public
      */
-    function enableContinuousBuffer()
+    public function enableContinuousBuffer()
     {
         $this->continuousBuffer = true;
     }
@@ -453,9 +454,9 @@ class Crypt_RC4 {
      * @see Crypt_RC4::enableContinuousBuffer()
      * @access public
      */
-    function disableContinuousBuffer()
+    public function disableContinuousBuffer()
     {
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_INTERNAL ) {
+        if (CRYPT_RC4_MODE == CRYPT_RC4_MODE_INTERNAL) {
             $this->encryptIndex = $this->decryptIndex = array(0, 0);
             $this->setKey($this->key);
         }
@@ -472,7 +473,7 @@ class Crypt_RC4 {
      * @see Crypt_RC4::disablePadding()
      * @access public
      */
-    function enablePadding()
+    public function enablePadding()
     {
     }
 
@@ -482,7 +483,7 @@ class Crypt_RC4 {
      * @see Crypt_RC4::enablePadding()
      * @access public
      */
-    function disablePadding()
+    public function disablePadding()
     {
     }
 
@@ -494,9 +495,9 @@ class Crypt_RC4 {
      *
      * @access public
      */
-    function __destruct()
+    public function __destruct()
     {
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT ) {
+        if (CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT) {
             $this->_closeMCrypt();
         }
     }
@@ -506,10 +507,10 @@ class Crypt_RC4 {
      *
      * @access prviate
      */
-    function _closeMCrypt()
+    public function _closeMCrypt()
     {
-        if ( $this->encryptStream !== false ) {
-            if ( $this->continuousBuffer ) {
+        if ($this->encryptStream !== false) {
+            if ($this->continuousBuffer) {
                 mcrypt_generic_deinit($this->encryptStream);
             }
 
@@ -518,8 +519,8 @@ class Crypt_RC4 {
             $this->encryptStream = false;
         }
 
-        if ( $this->decryptStream !== false ) {
-            if ( $this->continuousBuffer ) {
+        if ($this->decryptStream !== false) {
+            if ($this->continuousBuffer) {
                 mcrypt_generic_deinit($this->decryptStream);
             }
 

@@ -42,10 +42,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -131,7 +131,8 @@ define('CRYPT_AES_MODE_MCRYPT', 2);
  * @access  public
  * @package Crypt_AES
  */
-class Crypt_AES extends Crypt_Rijndael {
+class Crypt_AES extends Crypt_Rijndael
+{
     /**
      * mcrypt resource for encryption
      *
@@ -142,7 +143,7 @@ class Crypt_AES extends Crypt_Rijndael {
      * @var String
      * @access private
      */
-    var $enmcrypt;
+    public $enmcrypt;
 
     /**
      * mcrypt resource for decryption
@@ -154,7 +155,7 @@ class Crypt_AES extends Crypt_Rijndael {
      * @var String
      * @access private
      */
-    var $demcrypt;
+    public $demcrypt;
 
     /**
      * mcrypt resource for CFB mode
@@ -164,7 +165,7 @@ class Crypt_AES extends Crypt_Rijndael {
      * @var String
      * @access private
      */
-    var $ecb;
+    public $ecb;
 
     /**
      * Default Constructor.
@@ -176,9 +177,9 @@ class Crypt_AES extends Crypt_Rijndael {
      * @return Crypt_AES
      * @access public
      */
-    function Crypt_AES($mode = CRYPT_AES_MODE_CBC)
+    public function Crypt_AES($mode = CRYPT_AES_MODE_CBC)
     {
-        if ( !defined('CRYPT_AES_MODE') ) {
+        if (!defined('CRYPT_AES_MODE')) {
             switch (true) {
                 case extension_loaded('mcrypt') && in_array('rijndael-128', mcrypt_list_algorithms()):
                     define('CRYPT_AES_MODE', CRYPT_AES_MODE_MCRYPT);
@@ -188,7 +189,7 @@ class Crypt_AES extends Crypt_Rijndael {
             }
         }
 
-        switch ( CRYPT_AES_MODE ) {
+        switch (CRYPT_AES_MODE) {
             case CRYPT_AES_MODE_MCRYPT:
                 switch ($mode) {
                     case CRYPT_AES_MODE_ECB:
@@ -252,7 +253,7 @@ class Crypt_AES extends Crypt_Rijndael {
      * @access public
      * @param Integer $length
      */
-    function setBlockLength($length)
+    public function setBlockLength($length)
     {
         return;
     }
@@ -267,10 +268,10 @@ class Crypt_AES extends Crypt_Rijndael {
      * @access public
      * @param String $iv
      */
-    function setIV($iv)
+    public function setIV($iv)
     {
         parent::setIV($iv);
-        if ( CRYPT_AES_MODE == CRYPT_AES_MODE_MCRYPT ) {
+        if (CRYPT_AES_MODE == CRYPT_AES_MODE_MCRYPT) {
             $this->changed = true;
         }
     }
@@ -292,9 +293,9 @@ class Crypt_AES extends Crypt_Rijndael {
      * @access public
      * @param String $plaintext
      */
-    function encrypt($plaintext)
+    public function encrypt($plaintext)
     {
-        if ( CRYPT_AES_MODE == CRYPT_AES_MODE_MCRYPT ) {
+        if (CRYPT_AES_MODE == CRYPT_AES_MODE_MCRYPT) {
             $changed = $this->changed;
             $this->_mcryptSetup();
             /*
@@ -370,9 +371,9 @@ class Crypt_AES extends Crypt_Rijndael {
      * @access public
      * @param String $ciphertext
      */
-    function decrypt($ciphertext)
+    public function decrypt($ciphertext)
     {
-        if ( CRYPT_AES_MODE == CRYPT_AES_MODE_MCRYPT ) {
+        if (CRYPT_AES_MODE == CRYPT_AES_MODE_MCRYPT) {
             $changed = $this->changed;
             $this->_mcryptSetup();
             /*
@@ -446,7 +447,7 @@ class Crypt_AES extends Crypt_Rijndael {
      *
      * @access private
      */
-    function _mcryptSetup()
+    public function _mcryptSetup()
     {
         if (!$this->changed) {
             return;
@@ -457,7 +458,7 @@ class Crypt_AES extends Crypt_Rijndael {
             $length = strlen($this->key) >> 2;
             if ($length > 8) {
                 $length = 8;
-            } else if ($length < 4) {
+            } elseif ($length < 4) {
                 $length = 4;
             }
             $this->Nk = $length;
@@ -504,7 +505,7 @@ class Crypt_AES extends Crypt_Rijndael {
      * @param String $in
      * @return String
      */
-    function _encryptBlock($in)
+    public function _encryptBlock($in)
     {
         $state = unpack('N*word', $in);
 
@@ -533,7 +534,6 @@ class Crypt_AES extends Crypt_Rijndael {
                 $t0[$state[2] & 0xFF000000] ^ $t1[$state[3] & 0x00FF0000] ^ $t2[$state[0] & 0x0000FF00] ^ $t3[$state[1] & 0x000000FF] ^ $w[$round][2],
                 $t0[$state[3] & 0xFF000000] ^ $t1[$state[0] & 0x00FF0000] ^ $t2[$state[1] & 0x0000FF00] ^ $t3[$state[2] & 0x000000FF] ^ $w[$round][3]
             );
-
         }
 
         // subWord
@@ -565,7 +565,7 @@ class Crypt_AES extends Crypt_Rijndael {
      * @param String $in
      * @return String
      */
-    function _decryptBlock($in)
+    public function _decryptBlock($in)
     {
         $state = unpack('N*word', $in);
 

@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\StreamWrapper;
+
 use TQ\Git\Cli\Binary;
 use TQ\Git\Repository\Repository;
 use TQ\Git\StreamWrapper\FileBuffer\FileBuffer;
@@ -131,7 +132,8 @@ class StreamWrapper
             $binary  = new Binary($binary);
         }
         if (!($binary instanceof Binary)) {
-            throw new \InvalidArgumentException(sprintf('The $binary argument must either
+            throw new \InvalidArgumentException(sprintf(
+                'The $binary argument must either
                 be a TQ\Git\Binary instance or a path to the Git binary (%s given)',
                 (is_object($binary)) ? get_class($binary) : gettype($binary)
             ));
@@ -178,7 +180,7 @@ class StreamWrapper
 
         if (!$all && array_key_exists(self::$protocol, $this->contextOptions)) {
             return $this->contextOptions[self::$protocol];
-        } else if ($all) {
+        } elseif ($all) {
             return $this->contextOptions;
         } else {
             return array();
@@ -312,7 +314,9 @@ class StreamWrapper
             $path   = $this->getPath($path);
             if ($path->getRef() != 'HEAD') {
                 throw new \Exception(sprintf(
-                    'Cannot create a non-HEAD directory [%s#%s]', $path->getFullPath(), $path->getRef()
+                    'Cannot create a non-HEAD directory [%s#%s]',
+                    $path->getFullPath(),
+                    $path->getRef()
                 ));
             }
             if (file_exists($path->getFullPath())) {
@@ -347,7 +351,9 @@ class StreamWrapper
             $pathFrom   = $this->getPath($path_from);
             if ($pathFrom->getRef() != 'HEAD') {
                 throw new \Exception(sprintf(
-                    'Cannot rename a non-HEAD file [%s#%s]', $pathFrom->getFullPath(), $pathFrom->getRef()
+                    'Cannot rename a non-HEAD file [%s#%s]',
+                    $pathFrom->getFullPath(),
+                    $pathFrom->getRef()
                 ));
             }
             if (!file_exists($pathFrom->getFullPath())) {
@@ -362,8 +368,11 @@ class StreamWrapper
             $pathTo = $pathTo['path'];
 
             if (strpos($pathTo, $pathFrom->getRepositoryPath()) !== 0) {
-                throw new \Exception(sprintf('Cannot rename across repositories [%s -> %s]',
-                    $pathFrom->getFullPath(), $pathTo));
+                throw new \Exception(sprintf(
+                    'Cannot rename across repositories [%s -> %s]',
+                    $pathFrom->getFullPath(),
+                    $pathTo
+                ));
             }
 
             $repo   = $pathFrom->getRepository();
@@ -392,7 +401,9 @@ class StreamWrapper
             $path   = $this->getPath($path);
             if ($path->getRef() != 'HEAD') {
                 throw new \Exception(sprintf(
-                    'Cannot remove a non-HEAD directory [%s#%s]', $path->getFullPath(), $path->getRef()
+                    'Cannot remove a non-HEAD directory [%s#%s]',
+                    $path->getFullPath(),
+                    $path->getRef()
                 ));
             }
             if (!file_exists($path->getFullPath())) {
@@ -425,11 +436,11 @@ class StreamWrapper
      *                              or STREAM_CAST_AS_STREAM when stream_cast() is called for other uses.
      * @return  resource            Should return the underlying stream resource used by the wrapper, or FALSE.
      */
-/*
-    public function stream_cast($cast_as)
-    {
-    }
-*/
+    /*
+        public function stream_cast($cast_as)
+        {
+        }
+    */
 
     /**
      * streamWrapper::stream_close — Close an resource
@@ -482,11 +493,11 @@ class StreamWrapper
      *                                      LOCK_NB if you don't want flock() to block while locking. (not supported on Windows)
      * @return  boolean                 Returns TRUE on success or FALSE on failure.
      */
-/*
-    public function stream_lock($operation)
-    {
-    }
-*/
+    /*
+        public function stream_lock($operation)
+        {
+        }
+    */
 
     /**
      * streamWrapper::stream_metadata — Change stream options
@@ -508,11 +519,11 @@ class StreamWrapper
      *                                  PHP_STREAM_META_ACCESS: The argument of the chmod() as integer.
      * @return  boolean             Returns TRUE on success or FALSE on failure. If option is not implemented, FALSE should be returned.
      */
-/*
-    public function stream_metadata($path, $option, $var)
-    {
-    }
-*/
+    /*
+        public function stream_metadata($path, $option, $var)
+        {
+        }
+    */
 
     /**
      * streamWrapper::stream_open — Opens file or URL
@@ -618,11 +629,11 @@ class StreamWrapper
      * @return  boolean             Returns TRUE on success or FALSE on failure. If option is not implemented,
      *                              FALSE should be returned.
      */
-/*
-    public function stream_set_option($option, $arg1, $arg2)
-    {
-    }
-*/
+    /*
+        public function stream_set_option($option, $arg1, $arg2)
+        {
+        }
+    */
 
     /**
      * streamWrapper::stream_stat — Retrieve information about a file resource
@@ -683,7 +694,9 @@ class StreamWrapper
             $path   = $this->getPath($path);
             if ($path->getRef() != 'HEAD') {
                 throw new \Exception(sprintf(
-                    'Cannot unlink a non-HEAD file [%s#%s]', $path->getFullPath(), $path->getRef()
+                    'Cannot unlink a non-HEAD file [%s#%s]',
+                    $path->getFullPath(),
+                    $path->getRef()
                 ));
             }
             if (!file_exists($path->getFullPath())) {

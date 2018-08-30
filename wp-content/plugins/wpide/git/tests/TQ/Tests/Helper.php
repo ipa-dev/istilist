@@ -36,19 +36,21 @@ class Helper
             throw new \InvalidArgumentException(sprintf('"%s" is not a directory', $path));
         }
 
-        $dirIt  = new \RecursiveDirectoryIterator($path,
+        $dirIt  = new \RecursiveDirectoryIterator(
+            $path,
               \RecursiveDirectoryIterator::SKIP_DOTS
             | \RecursiveDirectoryIterator::KEY_AS_PATHNAME
             | \RecursiveDirectoryIterator::CURRENT_AS_FILEINFO
         );
-        $it = new \RecursiveIteratorIterator($dirIt,
+        $it = new \RecursiveIteratorIterator(
+            $dirIt,
             \RecursiveIteratorIterator::CHILD_FIRST
         );
 
         foreach ($it as $p => $f) {
             if ($f->isDir()) {
                 rmdir($p);
-            } else if ($f->isFile()) {
+            } elseif ($f->isFile()) {
                 chmod($p, 0777);
                 unlink($p);
             }

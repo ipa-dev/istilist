@@ -122,4 +122,3 @@ class CallCreationTest extends \PHPUnit_Framework_TestCase
         $this->assertCliCommandEquals("/usr/bin/git 'command' 'option' '/path/to/file' -- 'path/to/file'", $call->getCmd());
     }
 }
-

@@ -18,13 +18,14 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if ( ! class_exists( 'ReduxFramework_ace_editor' ) ) {
-    class ReduxFramework_ace_editor {
+if (! class_exists('ReduxFramework_ace_editor')) {
+    class ReduxFramework_ace_editor
+    {
 
         /**
          * Field Constructor.
@@ -32,22 +33,22 @@ if ( ! class_exists( 'ReduxFramework_ace_editor' ) ) {
          *
          * @since ReduxFramework 1.0.0
          */
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
 
-            if ( is_array( $this->value ) ) {
+            if (is_array($this->value)) {
                 $this->value = '';
             } else {
-                $this->value = trim( $this->value );
+                $this->value = trim($this->value);
             }
 
-            if ( ! empty( $this->field['options'] ) ) {
+            if (! empty($this->field['options'])) {
                 $this->field['args'] = $this->field['options'];
-                unset( $this->field['options'] );
+                unset($this->field['options']);
             }
-
         }
 
         /**
@@ -56,12 +57,12 @@ if ( ! class_exists( 'ReduxFramework_ace_editor' ) ) {
          *
          * @since ReduxFramework 1.0.0
          */
-        function render() {
-
-            if ( ! isset( $this->field['mode'] ) ) {
+        public function render()
+        {
+            if (! isset($this->field['mode'])) {
                 $this->field['mode'] = 'javascript';
             }
-            if ( ! isset( $this->field['theme'] ) ) {
+            if (! isset($this->field['theme'])) {
                 $this->field['theme'] = 'monokai';
             }
 
@@ -70,14 +71,12 @@ if ( ! class_exists( 'ReduxFramework_ace_editor' ) ) {
                 'maxLines' => 30,
             );
 
-            if ( isset( $this->field['args'] ) && ! empty( $this->field['args'] ) && is_array( $this->field['args'] ) ) {
-                $params = wp_parse_args( $this->field['args'], $params );
-            }
-
-            ?>
+            if (isset($this->field['args']) && ! empty($this->field['args']) && is_array($this->field['args'])) {
+                $params = wp_parse_args($this->field['args'], $params);
+            } ?>
             <div class="ace-wrapper">
                 <input type="hidden" class="localize_data"
-                       value="<?php echo htmlspecialchars( json_encode( $params ) ); ?>"/>
+                       value="<?php echo htmlspecialchars(json_encode($params)); ?>"/>
                 <textarea name="<?php echo $this->field['name'] . $this->field['name_suffix']; ?>"
                           id="<?php echo $this->field['id']; ?>-textarea"
                           class="ace-editor hide <?php echo $this->field['class']; ?>"
@@ -87,7 +86,7 @@ if ( ! class_exists( 'ReduxFramework_ace_editor' ) ) {
                     <?php echo $this->value; ?>
                 </textarea>
                 <pre id="<?php echo $this->field['id']; ?>-editor"
-                     class="ace-editor-area"><?php echo htmlspecialchars( $this->value ); ?></pre>
+                     class="ace-editor-area"><?php echo htmlspecialchars($this->value); ?></pre>
             </div>
         <?php
         }
@@ -100,8 +99,8 @@ if ( ! class_exists( 'ReduxFramework_ace_editor' ) ) {
          * @access      public
          * @return      void
          */
-        public function enqueue() {
-
+        public function enqueue()
+        {
             if ($this->parent->args['dev_mode']) {
                 if (!wp_style_is('redux-field-ace-editor-css')) {
                     wp_enqueue_style(
@@ -114,17 +113,17 @@ if ( ! class_exists( 'ReduxFramework_ace_editor' ) ) {
                 }
             }
             
-            if (!wp_script_is ( 'ace-editor-js' )) {
+            if (!wp_script_is('ace-editor-js')) {
                 Redux_CDN::enqueue_script(
                     'ace-editor-js',
                     'https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js',
                     array( 'jquery' ),
                     '1.1.9',
                     true
-                );            
+                );
             }
             
-            if (!wp_script_is ( 'redux-field-ace-editor-js' )) {
+            if (!wp_script_is('redux-field-ace-editor-js')) {
                 wp_enqueue_script(
                     'redux-field-ace-editor-js',
                     ReduxFramework::$_url . 'inc/fields/ace_editor/field_ace_editor' . Redux_Functions::isMin() . '.js',

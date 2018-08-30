@@ -1,6 +1,7 @@
 <?php /* Template Name: Stylist / Employee */ ?>
 <?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
+<?php if (is_user_logged_in()) {
+    ?>
 <?php global $user_ID; ?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
@@ -12,22 +13,20 @@
                     <div class="box">
                         <div class="buttonLink"><a href="<?php bloginfo('url'); ?>/add-employee"><i class="fa fa-user-plus"></i> Add Employee</a></div>
                         <?php
-                            if($_POST['save_changes'] == 'Save Changes') {
-                                foreach($_POST['user_id'] as $userid) {
+                            if ($_POST['save_changes'] == 'Save Changes') {
+                                foreach ($_POST['user_id'] as $userid) {
                                     global $wpdb;
                                     $user_status = 0;
                                     $wpdb->update($wpdb->users, array('user_status' => $user_status), array('ID' => $userid));
                                 }
-                                foreach($_POST['user_element_status'] as $userid) {
+                                foreach ($_POST['user_element_status'] as $userid) {
                                     global $wpdb;
                                     $user_status = 2;
                                     $wpdb->update($wpdb->users, array('user_status' => $user_status), array('ID' => $userid));
-                                }
-                                ?>
+                                } ?>
                                 <p class="successMsg">User Status Updated.</p>
                                 <?php
-                            }
-                        ?>
+                            } ?>
                         <form method="post" action="">
                         <table class="footable stylist_employee" data-sort="false" data-page-size="10">
                             <thead>
@@ -40,10 +39,10 @@
                             </thead>
                             <tbody>
                             <?php
-                            $user_query = new WP_User_Query( array( 'role__in' => array('storeemployee', 'storesupervisor'), 'meta_key' => 'store_id', 'meta_value' => $user_ID, 'orderby' => 'display_name', 'order' => 'ASC' ) );
-                            if ( ! empty( $user_query->results ) ) {
-                            	foreach ( $user_query->results as $user ) {
-                            ?>
+                            $user_query = new WP_User_Query(array( 'role__in' => array('storeemployee', 'storesupervisor'), 'meta_key' => 'store_id', 'meta_value' => $user_ID, 'orderby' => 'display_name', 'order' => 'ASC' ));
+    if (! empty($user_query->results)) {
+        foreach ($user_query->results as $user) {
+            ?>
                                 <tr>
                                     <td class="profilePic"><a href="<?php bloginfo('url'); ?>/edit-employee/?eid=<?php echo encripted($user->ID); ?>" class="<?php echo $user->ID; ?>"><?php echo get_profile_img($user->ID); ?><?php echo $user->display_name; ?></a></td>
                                     <td><?php echo get_the_author_meta('user_email', $user->ID); ?></td>
@@ -51,22 +50,22 @@
                                     <td>
                                         <?php $user_status = get_the_author_meta('user_status', $user->ID); ?>
                                         <?php
-                                            if($user_status == 2){
+                                            if ($user_status == 2) {
                                                 $user_status = 1;
                                             } else {
                                                 $user_status = 0;
-                                            }
-                                        ?>
-                                        <input type="checkbox" name="user_element_status[]" value="<?php echo $user->ID; ?>" <?php if($user_status == 1){ echo 'checked="checked"'; } ?> />
+                                            } ?>
+                                        <input type="checkbox" name="user_element_status[]" value="<?php echo $user->ID; ?>" <?php if ($user_status == 1) {
+                                                echo 'checked="checked"';
+                                            } ?> />
                                         
-                                        <?php //echo is_user_active($user->ID); ?>
+                                        <?php //echo is_user_active($user->ID);?>
                                         <input type="hidden" name="user_id[]" value="<?php echo $user->ID; ?>" />
                                     </td>
                                 </tr>
                             <?php
-                            	}
-                            }
-                            ?>
+        }
+    } ?>
                             </tbody>
                             <tfoot>
                         		<tr>
@@ -91,4 +90,7 @@
 	    </div>
 	</div>
 </div>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+} else {
+        header('Location: '.get_bloginfo('url').'/login');
+    } ?>

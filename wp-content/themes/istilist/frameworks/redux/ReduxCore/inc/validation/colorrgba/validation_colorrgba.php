@@ -1,7 +1,8 @@
 <?php
 
-    if ( ! class_exists( 'Redux_Validation_colorrgba' ) ) {
-        class Redux_Validation_colorrgba {
+    if (! class_exists('Redux_Validation_colorrgba')) {
+        class Redux_Validation_colorrgba
+        {
 
             /**
              * Field Constructor.
@@ -9,11 +10,11 @@
              *
              * @since ReduxFramework 3.0.4
              */
-            function __construct( $parent, $field, $value, $current ) {
-
+            public function __construct($parent, $field, $value, $current)
+            {
                 $this->parent       = $parent;
                 $this->field        = $field;
-                $this->field['msg'] = ( isset( $this->field['msg'] ) ) ? $this->field['msg'] : __( 'This field must be a valid color value.', 'redux-framework' );
+                $this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('This field must be a valid color value.', 'redux-framework');
                 $this->value        = $value;
                 $this->current      = $current;
                 //$this->validate();
@@ -27,12 +28,13 @@
              *
              * @since ReduxFramework 3.0.3
              */
-            function validate_colorrgba( $color ) {
+            public function validate_colorrgba($color)
+            {
                 return $color;
                 //$color = $value['color'];
                 //$alpha = $value['alpha'];
                 $alpha = '1.0';
-                if ( $color == "transparent" ) {
+                if ($color == "transparent") {
                     return $hidden;
                 }
 
@@ -58,8 +60,9 @@
              *
              * @since ReduxFramework 3.0.0
              */
-            function validate() {
-                $this->value = $this->validate_colorrgba( $this->value );
+            public function validate()
+            {
+                $this->value = $this->validate_colorrgba($this->value);
                 /*
                   if(is_array($this->value)) { // If array
                   foreach($this->value as $k => $value){

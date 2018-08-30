@@ -13,7 +13,8 @@ class PHPParser_Node_Expr_Yield extends PHPParser_Node_Expr
      * @param null|PHPParser_Node_Expr $key        Key expression
      * @param array                    $attributes Additional attributes
      */
-    public function __construct(PHPParser_Node_Expr $value = null, PHPParser_Node_Expr $key = null, array $attributes = array()) {
+    public function __construct(PHPParser_Node_Expr $value = null, PHPParser_Node_Expr $key = null, array $attributes = array())
+    {
         parent::__construct(
             array(
                 'key'   => $key,

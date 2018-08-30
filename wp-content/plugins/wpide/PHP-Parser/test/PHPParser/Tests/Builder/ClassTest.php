@@ -2,11 +2,13 @@
 
 class PHPParser_Tests_Builder_ClassTest extends PHPUnit_Framework_TestCase
 {
-    protected function createClassBuilder($class) {
+    protected function createClassBuilder($class)
+    {
         return new PHPParser_Builder_Class($class);
     }
 
-    public function testExtendsImplements() {
+    public function testExtendsImplements()
+    {
         $node = $this->createClassBuilder('SomeLogger')
             ->extend('BaseLogger')
             ->implement('Namespaced\Logger', new PHPParser_Node_Name('SomeInterface'))
@@ -25,7 +27,8 @@ class PHPParser_Tests_Builder_ClassTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testAbstract() {
+    public function testAbstract()
+    {
         $node = $this->createClassBuilder('Test')
             ->makeAbstract()
             ->getNode()
@@ -39,7 +42,8 @@ class PHPParser_Tests_Builder_ClassTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFinal() {
+    public function testFinal()
+    {
         $node = $this->createClassBuilder('Test')
             ->makeFinal()
             ->getNode()
@@ -53,7 +57,8 @@ class PHPParser_Tests_Builder_ClassTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testStatementOrder() {
+    public function testStatementOrder()
+    {
         $method = new PHPParser_Node_Stmt_ClassMethod('testMethod');
         $property = new PHPParser_Node_Stmt_Property(
             PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC,
@@ -83,7 +88,8 @@ class PHPParser_Tests_Builder_ClassTest extends PHPUnit_Framework_TestCase
      * @expectedException LogicException
      * @expectedExceptionMessage Unexpected node of type "Stmt_Echo"
      */
-    public function testInvalidStmtError() {
+    public function testInvalidStmtError()
+    {
         $this->createClassBuilder('Test')
             ->addStmt(new PHPParser_Node_Stmt_Echo(array()))
         ;

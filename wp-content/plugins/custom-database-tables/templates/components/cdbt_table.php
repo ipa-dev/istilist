@@ -39,203 +39,202 @@
  */
 
 // `id` section
-if ( isset( $this->component_options['id'] ) && ! empty( $this->component_options['id'] ) ) {
-  $rand_hash = $this->create_hash( $this->component_options['id'] . mt_rand() );
-  $table_id = esc_attr__( $this->component_options['id'] .'-'. $rand_hash );
+if (isset($this->component_options['id']) && ! empty($this->component_options['id'])) {
+    $rand_hash = $this->create_hash($this->component_options['id'] . mt_rand());
+    $table_id = esc_attr__($this->component_options['id'] .'-'. $rand_hash);
 } else {
-  $table_id = 'cdbtTable';
+    $table_id = 'cdbtTable';
 }
 
 // `search` section
-$enable_search = isset( $this->component_options['enableSearch'] ) ? $this->strtobool( $this->component_options['enableSearch'] ) : false;
+$enable_search = isset($this->component_options['enableSearch']) ? $this->strtobool($this->component_options['enableSearch']) : false;
 
 // `filter` section
-$enable_filter = isset( $this->component_options['enableFilter'] ) ? $this->strtobool( $this->component_options['enableFilter'] ) : false;
+$enable_filter = isset($this->component_options['enableFilter']) ? $this->strtobool($this->component_options['enableFilter']) : false;
 
-if ( empty( $this->component_options['filter_column'] ) || empty( $this->component_options['filters'] ) ) {
-  $enable_filter = false;
+if (empty($this->component_options['filter_column']) || empty($this->component_options['filters'])) {
+    $enable_filter = false;
 } else {
-  $filter_column = $this->component_options['filter_column'];
-  $filters_list = [];
-  if ( $this->is_assoc( $this->component_options['filters'] ) ) {
-    foreach ( $this->component_options['filters'] as $_list_value => $_label ) {
-      $filters_list[] = sprintf( '<li data-value="%s"><a href="#">%s</a></li>', $_list_value, $_label );
+    $filter_column = $this->component_options['filter_column'];
+    $filters_list = [];
+    if ($this->is_assoc($this->component_options['filters'])) {
+        foreach ($this->component_options['filters'] as $_list_value => $_label) {
+            $filters_list[] = sprintf('<li data-value="%s"><a href="#">%s</a></li>', $_list_value, $_label);
+        }
+    } else {
+        foreach ($this->component_options['filters'] as $val) {
+            $_value = $this->strtohash($val);
+            $_list_value = esc_attr(mb_decode_numericentity(key($_value), array( 0x0, 0x10ffff, 0, 0xffffff ), 'UTF-8'));
+            $_list_value = $_list_value === '0' ? $_value[0] : $_list_value;
+            $_label = ! empty($_value[key($_value)]) ? mb_decode_numericentity($_value[key($_value)], array( 0x0, 0x10ffff, 0, 0xffffff ), 'UTF-8') : $_list_value;
+            $filters_list[] = sprintf('<li data-value="%s"><a href="#">%s</a></li>', $_list_value, $_label);
+        }
     }
-  } else {
-    foreach ( $this->component_options['filters'] as $val ) {
-      $_value = $this->strtohash( $val );
-      $_list_value = esc_attr( mb_decode_numericentity( key( $_value ), array( 0x0, 0x10ffff, 0, 0xffffff ), 'UTF-8' ) );
-      $_list_value = $_list_value === '0' ? $_value[0] : $_list_value;
-      $_label = ! empty( $_value[key( $_value )] ) ? mb_decode_numericentity( $_value[key( $_value )], array( 0x0, 0x10ffff, 0, 0xffffff ), 'UTF-8' ) : $_list_value;
-      $filters_list[] = sprintf( '<li data-value="%s"><a href="#">%s</a></li>', $_list_value, $_label );
-    }
-  }
 }
 
 // `view` section
-$enable_view = isset( $this->component_options['enableView'] ) ? $this->strtobool( $this->component_options['enableView'] ) : false;
+$enable_view = isset($this->component_options['enableView']) ? $this->strtobool($this->component_options['enableView']) : false;
 
-if ( isset( $this->component_options['defaultView'] ) && in_array( $this->component_options['defaultView'], [ 'list', 'thumbnail' ] ) ) {
-  $default_view = $this->component_options['defaultView'];
+if (isset($this->component_options['defaultView']) && in_array($this->component_options['defaultView'], [ 'list', 'thumbnail' ])) {
+    $default_view = $this->component_options['defaultView'];
 } else {
-  $default_view = 'list';
+    $default_view = 'list';
 }
 
 // `displayIndexRow` section
-if ( isset( $this->component_options['displayIndexRow'] ) && ! empty( $this->component_options['displayIndexRow'] ) ) {
-  $display_index_row = strval( $this->component_options['displayIndexRow'] );
-  if ( ! in_array( $display_index_row, [ 'false', 'true', 'head-only' ] ) ) {
-    $display_index_row = 'true';
-  }
+if (isset($this->component_options['displayIndexRow']) && ! empty($this->component_options['displayIndexRow'])) {
+    $display_index_row = strval($this->component_options['displayIndexRow']);
+    if (! in_array($display_index_row, [ 'false', 'true', 'head-only' ])) {
+        $display_index_row = 'true';
+    }
 } else {
-  $display_index_row = 'false';
+    $display_index_row = 'false';
 }
 
 // `enableEditor` section
-$enable_editor = isset($this->component_options['enableEditor']) ? $this->strtobool( $this->component_options['enableEditor'] ) : false;
+$enable_editor = isset($this->component_options['enableEditor']) ? $this->strtobool($this->component_options['enableEditor']) : false;
 
 // For filter hooks
 $shortcode_name = $enable_editor ? 'cdbt-edit' : 'cdbt-view';
-$table_name = str_replace( $enable_editor ? 'cdbt-table-edit-' : 'cdbt-table-view-', '', $this->component_options['id'] );
-$table_options = $this->get_table_option( $table_name );
+$table_name = str_replace($enable_editor ? 'cdbt-table-edit-' : 'cdbt-table-view-', '', $this->component_options['id']);
+$table_options = $this->get_table_option($table_name);
 
 // `disableEdit` section
-$disable_edit = isset($this->component_options['disableEdit']) ? $this->strtobool( $this->component_options['disableEdit'] ) : false;
+$disable_edit = isset($this->component_options['disableEdit']) ? $this->strtobool($this->component_options['disableEdit']) : false;
 
 // Additional classes section
 foreach ($this->component_options as $_optkey => $_optval) {
-  if (in_array($_optkey, [ 'tableClass', 'theadClass', 'tbodyClass', 'tfootClass' ] )) {
-    $var_name = str_replace('Class', '_class', $_optkey);
-    ${$var_name} = !isset($_optval) || empty($_optval) ? [] : explode(' ', $_optval);
-    // filter
-    // 
-    // @since 2.1.0
-    ${$var_name} = apply_filters( 'cdbt_table_class_additions', ${$var_name}, $table_id );
+    if (in_array($_optkey, [ 'tableClass', 'theadClass', 'tbodyClass', 'tfootClass' ])) {
+        $var_name = str_replace('Class', '_class', $_optkey);
+        ${$var_name} = !isset($_optval) || empty($_optval) ? [] : explode(' ', $_optval);
+        // filter
+        //
+        // @since 2.1.0
+        ${$var_name} = apply_filters('cdbt_table_class_additions', ${$var_name}, $table_id);
     
-    ${$var_name} = empty(${$var_name}) ? '' : ' ' . implode(' ', ${$var_name});
-  }
+        ${$var_name} = empty(${$var_name}) ? '' : ' ' . implode(' ', ${$var_name});
+    }
 }
 
 // `thumbnail` section
-if ( isset( $this->component_options['thumbnailOptions'] ) ) {
-  $_thumb_title = isset( $this->component_options['thumbnailOptions']['title'] ) ? $this->component_options['thumbnailOptions']['title'] : ''; // Note: column name to be used as a title
-  $_thumb_title = empty( $_thumb_title ) && is_admin() ? 'auto' : $_thumb_title;
-  $_thumb_column = isset( $this->component_options['thumbnailOptions']['column'] ) ? $this->component_options['thumbnailOptions']['column'] : '';
-  $_thumb_width = isset( $this->component_options['thumbnailOptions']['width'] ) ? intval( $this->component_options['thumbnailOptions']['width'] ) : 0;
-  $_thumb_width = $_thumb_width < 1 ? 102 : $_thumb_width + 2; // Note: increment a border size
+if (isset($this->component_options['thumbnailOptions'])) {
+    $_thumb_title = isset($this->component_options['thumbnailOptions']['title']) ? $this->component_options['thumbnailOptions']['title'] : ''; // Note: column name to be used as a title
+    $_thumb_title = empty($_thumb_title) && is_admin() ? 'auto' : $_thumb_title;
+    $_thumb_column = isset($this->component_options['thumbnailOptions']['column']) ? $this->component_options['thumbnailOptions']['column'] : '';
+    $_thumb_width = isset($this->component_options['thumbnailOptions']['width']) ? intval($this->component_options['thumbnailOptions']['width']) : 0;
+    $_thumb_width = $_thumb_width < 1 ? 102 : $_thumb_width + 2; // Note: increment a border size
 } else {
-  $_thumb_title = 'auto';
-  $_thumb_width = 102;
+    $_thumb_title = 'auto';
+    $_thumb_width = 102;
 }
 $_thumb_template = '<figure class="cdbt-thumbnail"><div class="crop-image" style="width:'. $_thumb_width .'px;height:'. $_thumb_width .'px"><a href="javascript:;" class="binary-data modal-preview"><img src="<%= src %>"></a></div><figcaption style="width:'. $_thumb_width .'px"><span><%= title %></span></figcaption></figure>';
 
 // `columns` section
-if ( ! isset( $this->component_options['columns'] ) || empty( $this->component_options['columns'] ) ) {
-  return;
+if (! isset($this->component_options['columns']) || empty($this->component_options['columns'])) {
+    return;
 } else {
-  $columns = $this->component_options['columns'];
-  $_row_line = $enable_editor ? '<tr class="selectable">%s</tr>' : '<tr>%s</tr>';
-  $_index_cols = $_tmpl_data_cols = $_custom_column_renders = [];
-  $_sortable_cols = 0;
-  foreach ( $columns as $_col_atts ) {
-    $_cell_width = isset( $_col_atts['width'] ) && intval($_col_atts['width']) > 0 ? ' style="width: '. $_col_atts['width'] .'px;"' : '';
-    $_add_class = isset( $_col_atts['className'] ) && ! empty( $_col_atts['className'] ) ? ' ' . esc_attr( $_col_atts['className'] ) : '';
-    if ( $_col_atts['sortable'] && $_thumb_column !== $_col_atts['property'] ) {
-      $_index_cols[] = sprintf( '<th data-property="%s" class="sortable sortdir-%s%s"%s><label>%s</label></th>', $_col_atts['property'], $_col_atts['sortDirection'], $_add_class, $_cell_width, $_col_atts['label'] );
-      $_sortable_cols++;
-    } else {
-      $_index_cols[] = sprintf( '<th data-property="%s" class="%s"%s><label>%s</label></th>', $_col_atts['property'], $_add_class, $_cell_width, $_col_atts['label'] );
-    }
-    if ( isset( $_col_atts['dataNumric'] ) && $_col_atts['dataNumric'] ) {
-      $_data_wrapper = '<span class="data-numric"><% "'. $_col_atts['property'] .'" %></span>';
-    } else
-    if ( isset( $_col_atts['dataType'] ) && strpos( $_col_atts['dataType'], 'text' ) !== false ) {
-      if ( $_col_atts['isTruncate'] && $_col_atts['truncateStrings'] > 0 ) {
-        $_data_wrapper = '<textarea class="data-'. $_col_atts['dataType'] .' truncation" data-truncate-length="'. $_col_atts['truncateStrings'] .'" readonly><% "'. $_col_atts['property'] .'" %></textarea>';
-      } else {
-        $_data_wrapper = '<span class="data-'. $_col_atts['dataType'] .'"><% "'. $_col_atts['property'] .'" %></span>';
-      }
-    } else {
-      $_data_wrapper = '<span class="data-'. $_col_atts['dataType'] .'"><% "'. $_col_atts['property'] .'" %></span>';
-    }
-    // Note: Replaced with underscore if the property value contains except alphanumeric and the hyphen and underscore.
+    $columns = $this->component_options['columns'];
+    $_row_line = $enable_editor ? '<tr class="selectable">%s</tr>' : '<tr>%s</tr>';
+    $_index_cols = $_tmpl_data_cols = $_custom_column_renders = [];
+    $_sortable_cols = 0;
+    foreach ($columns as $_col_atts) {
+        $_cell_width = isset($_col_atts['width']) && intval($_col_atts['width']) > 0 ? ' style="width: '. $_col_atts['width'] .'px;"' : '';
+        $_add_class = isset($_col_atts['className']) && ! empty($_col_atts['className']) ? ' ' . esc_attr($_col_atts['className']) : '';
+        if ($_col_atts['sortable'] && $_thumb_column !== $_col_atts['property']) {
+            $_index_cols[] = sprintf('<th data-property="%s" class="sortable sortdir-%s%s"%s><label>%s</label></th>', $_col_atts['property'], $_col_atts['sortDirection'], $_add_class, $_cell_width, $_col_atts['label']);
+            $_sortable_cols++;
+        } else {
+            $_index_cols[] = sprintf('<th data-property="%s" class="%s"%s><label>%s</label></th>', $_col_atts['property'], $_add_class, $_cell_width, $_col_atts['label']);
+        }
+        if (isset($_col_atts['dataNumric']) && $_col_atts['dataNumric']) {
+            $_data_wrapper = '<span class="data-numric"><% "'. $_col_atts['property'] .'" %></span>';
+        } elseif (isset($_col_atts['dataType']) && strpos($_col_atts['dataType'], 'text') !== false) {
+            if ($_col_atts['isTruncate'] && $_col_atts['truncateStrings'] > 0) {
+                $_data_wrapper = '<textarea class="data-'. $_col_atts['dataType'] .' truncation" data-truncate-length="'. $_col_atts['truncateStrings'] .'" readonly><% "'. $_col_atts['property'] .'" %></textarea>';
+            } else {
+                $_data_wrapper = '<span class="data-'. $_col_atts['dataType'] .'"><% "'. $_col_atts['property'] .'" %></span>';
+            }
+        } else {
+            $_data_wrapper = '<span class="data-'. $_col_atts['dataType'] .'"><% "'. $_col_atts['property'] .'" %></span>';
+        }
+        // Note: Replaced with underscore if the property value contains except alphanumeric and the hyphen and underscore.
     
-    $_tmpl_data_cols[] = sprintf( '<td class="property-%s%s"%s>%s</td>', preg_replace( '/[^a-zA-Z0-9_-]/', '_', $_col_atts['property'] ), $_add_class, $_cell_width, $_data_wrapper );
-    if ( isset( $_col_atts['customColumnRenderer'] ) && ! empty( $_col_atts['customColumnRenderer'] ) ) {
-      if ( ! empty( $_thumb_column ) && $_thumb_column === $_col_atts['property'] ) {
-        $_render_script_base = 'rowData[\'%s\'] !== false ? \'<a href="javascript:;" class="binary-data modal-preview" data-column-name="%s" data-where-conditions=""><input type="hidden" data="\' + rowData[\'%s\'] + \'" data-class="img-responsive"></a>\' : \'\'';
-      	$_custom_column_renders[$_col_atts['property']] = sprintf( $_render_script_base, $_col_atts['property'], $_col_atts['property'], $_col_atts['property'] );
-      } else {
-        $_custom_column_renders[$_col_atts['property']] = $_col_atts['customColumnRenderer'];
-      }
+        $_tmpl_data_cols[] = sprintf('<td class="property-%s%s"%s>%s</td>', preg_replace('/[^a-zA-Z0-9_-]/', '_', $_col_atts['property']), $_add_class, $_cell_width, $_data_wrapper);
+        if (isset($_col_atts['customColumnRenderer']) && ! empty($_col_atts['customColumnRenderer'])) {
+            if (! empty($_thumb_column) && $_thumb_column === $_col_atts['property']) {
+                $_render_script_base = 'rowData[\'%s\'] !== false ? \'<a href="javascript:;" class="binary-data modal-preview" data-column-name="%s" data-where-conditions=""><input type="hidden" data="\' + rowData[\'%s\'] + \'" data-class="img-responsive"></a>\' : \'\'';
+                $_custom_column_renders[$_col_atts['property']] = sprintf($_render_script_base, $_col_atts['property'], $_col_atts['property'], $_col_atts['property']);
+            } else {
+                $_custom_column_renders[$_col_atts['property']] = $_col_atts['customColumnRenderer'];
+            }
+        }
     }
-  }
-  if ( $enable_editor ) {
-    array_unshift( $_index_cols, '<th class="editable-checkbox"><div class="checkbox table-header-checkbox"><label class="checkbox-custom table-select-checkbox" data-initialize="checkbox"><input class="sr-only" type="checkbox" value=""></label></div></th>' );
-    array_unshift( $_tmpl_data_cols, '<td class="editable-checkbox"><div class="checkbox table-body-checkbox"><label data-row="{%RowIndexNumber}" class="checkbox-custom table-select-checkbox" data-initialize="checkbox"><input class="sr-only" type="checkbox" value=""></label></div></td>' );
-  }
-  $index_row = sprintf( $_row_line, implode( "\n", $_index_cols ) );
-  $template_row = sprintf( $_row_line, implode( '', $_tmpl_data_cols ) );
+    if ($enable_editor) {
+        array_unshift($_index_cols, '<th class="editable-checkbox"><div class="checkbox table-header-checkbox"><label class="checkbox-custom table-select-checkbox" data-initialize="checkbox"><input class="sr-only" type="checkbox" value=""></label></div></th>');
+        array_unshift($_tmpl_data_cols, '<td class="editable-checkbox"><div class="checkbox table-body-checkbox"><label data-row="{%RowIndexNumber}" class="checkbox-custom table-select-checkbox" data-initialize="checkbox"><input class="sr-only" type="checkbox" value=""></label></div></td>');
+    }
+    $index_row = sprintf($_row_line, implode("\n", $_index_cols));
+    $template_row = sprintf($_row_line, implode('', $_tmpl_data_cols));
 }
 
 // `data` section
-if ( ! isset( $this->component_options['data'] ) || empty( $this->component_options['data'] ) ) {
-  return;
+if (! isset($this->component_options['data']) || empty($this->component_options['data'])) {
+    return;
 } else {
-  $items = $this->component_options['data'];
+    $items = $this->component_options['data'];
 }
 
 // `draggable` section
-$draggable = isset( $this->component_options['draggable'] ) ? $this->strtobool( $this->component_options['draggable'] ) : true;
+$draggable = isset($this->component_options['draggable']) ? $this->strtobool($this->component_options['draggable']) : true;
 
 // `footerUI` section
-$footer_ui = isset( $this->component_options['footerUI'] ) ? $this->component_options['footerUI'] : 'pagination';
+$footer_ui = isset($this->component_options['footerUI']) ? $this->component_options['footerUI'] : 'pagination';
 
 // `pageIndex` section
-if ( isset( $this->component_options['pageIndex'] ) && intval( $this->component_options['pageIndex'] ) >= 0 ) {
-  $page_index = intval( $this->component_options['pageIndex'] );
+if (isset($this->component_options['pageIndex']) && intval($this->component_options['pageIndex']) >= 0) {
+    $page_index = intval($this->component_options['pageIndex']);
 } else {
-  $page_index = 0;
+    $page_index = 0;
 }
 
 // `pageSize` section
-if ( isset( $this->component_options['pageSize'] ) && intval( $this->component_options['pageSize'] ) > 0 ) {
-  $page_size = intval( $this->component_options['pageSize'] );
+if (isset($this->component_options['pageSize']) && intval($this->component_options['pageSize']) > 0) {
+    $page_size = intval($this->component_options['pageSize']);
 } else {
-  $page_size = intval( $table_options['show_max_records'] );
+    $page_size = intval($table_options['show_max_records']);
 }
 
 // `Paging` section
-$_must_paging = ( $page_size !== 0 ? ceil( count( $items ) / $page_size ) : 1 ) > 1;
+$_must_paging = ($page_size !== 0 ? ceil(count($items) / $page_size) : 1) > 1;
 
 // `ajaxLoad` section
-$ajax_load = isset( $this->component_options['ajaxLoad'] ) ? $this->strtobool( $this->component_options['ajaxLoad'] ) : false;
-if ( $ajax_load ) {
-  $query_assets = serialize( $this->component_options['queryAssets'] );
-  $total_data = $this->component_options['totalData'];
-  $_must_paging = ( $page_size !== 0 ? ceil( $total_data / $page_size ) : 1 ) > 1;
-//var_dump( $total_data, $page_index, $page_size, $_must_paging, $query_assets );
+$ajax_load = isset($this->component_options['ajaxLoad']) ? $this->strtobool($this->component_options['ajaxLoad']) : false;
+if ($ajax_load) {
+    $query_assets = serialize($this->component_options['queryAssets']);
+    $total_data = $this->component_options['totalData'];
+    $_must_paging = ($page_size !== 0 ? ceil($total_data / $page_size) : 1) > 1;
+    //var_dump( $total_data, $page_index, $page_size, $_must_paging, $query_assets );
 }
 
 // `customRowScripts` section
-if ( isset( $this->component_options['customRowScripts'] ) && ! empty( $this->component_options['customRowScripts'] ) ) {
-  $custom_rows = $this->component_options['customRowScripts'];
+if (isset($this->component_options['customRowScripts']) && ! empty($this->component_options['customRowScripts'])) {
+    $custom_rows = $this->component_options['customRowScripts'];
 }
 
 // `customBeforeRender` section
-if ( isset( $this->component_options['customBeforeRender'] ) && ! empty( $this->component_options['customBeforeRender'] ) ) {
-  $before_render_scripts = $this->component_options['customBeforeRender'];
+if (isset($this->component_options['customBeforeRender']) && ! empty($this->component_options['customBeforeRender'])) {
+    $before_render_scripts = $this->component_options['customBeforeRender'];
 }
 
 // `customAfterRender` section
-if ( isset( $this->component_options['customAfterRender'] ) && ! empty( $this->component_options['customAfterRender'] ) ) {
-  $after_render_scripts = $this->component_options['customAfterRender'];
+if (isset($this->component_options['customAfterRender']) && ! empty($this->component_options['customAfterRender'])) {
+    $after_render_scripts = $this->component_options['customAfterRender'];
 }
 
 // Filter to crop position of thumbnail image
 //
 // @since 2.1.0
-$adjust_thumbnail = apply_filters( 'cdbt_crop_thumbnail_position', [ 'landscape'=>'auto', 'portrait'=>'auto' ], $table_name, $shortcode_name );
+$adjust_thumbnail = apply_filters('cdbt_crop_thumbnail_position', [ 'landscape'=>'auto', 'portrait'=>'auto' ], $table_name, $shortcode_name);
 
 /**
  * Render the Repeater
@@ -243,60 +242,60 @@ $adjust_thumbnail = apply_filters( 'cdbt_crop_thumbnail_position', [ 'landscape'
  */
 ?>
 <div class="panel panel-default cdbt-table-wrapper" for="<?php echo $table_id; ?>">
-<?php if ( $enable_search || $enable_filter || $enable_view || $enable_editor ) : ?>
+<?php if ($enable_search || $enable_filter || $enable_view || $enable_editor) : ?>
   <div class="panel-heading" for="<?php echo $table_id; ?>">
     <div class="row">
       <div class="col-xs-6 col-md-4 align-left">
-<?php if ( $enable_search ) : ?>
+<?php if ($enable_search) : ?>
         <div class="input-group" role="search" id="<?php echo $table_id; ?>-search">
-          <input type="search" class="form-control" placeholder="<?php _e( 'Search', CDBT ); ?>">
+          <input type="search" class="form-control" placeholder="<?php _e('Search', CDBT); ?>">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only"><?php _e( 'Search', CDBT ); ?></span></button>
+            <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only"><?php _e('Search', CDBT); ?></span></button>
           </span>
         </div><!-- /.input-group[role=search] -->
-<?php elseif ( $enable_filter ) : ?>
+<?php elseif ($enable_filter) : ?>
         <div class="btn-group selectlist cdbt-table-filters" data-resize="auto" id="<?php echo $table_id; ?>-filters">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <span class="selected-label">&nbsp;</span>
             <span class="caret"></span>
-            <span class="sr-only"><?php _e( 'Toggle Filters', CDBT ); ?></span>
+            <span class="sr-only"><?php _e('Toggle Filters', CDBT); ?></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li data-value="" data-selected="true"><a href="#"><?php _e( 'all', CDBT ); ?></a></li>
-            <?php echo implode( "\n", $filters_list ); ?>
+            <li data-value="" data-selected="true"><a href="#"><?php _e('all', CDBT); ?></a></li>
+            <?php echo implode("\n", $filters_list); ?>
           </ul>
           <input class="hidden hidden-field" name="filterSelection" readonly="readonly" aria-hidden="true" type="text"/>
         </div><!-- /.cdbt-table-filters -->
 <?php endif; ?>
       </div><!-- /.col-md-4 -->
       <div class="col-xs-6 col-sm-6 col-md-8 align-right">
-<?php if ( $enable_editor && ! $disable_edit ) : ?>
+<?php if ($enable_editor && ! $disable_edit) : ?>
         <div class="cdbt-table-editor pull-right" for="<?php echo $table_id; ?>">
-          <button type="button" class="btn btn-default" id="table-editor-edit" title="<?php _e( 'Edit Data', CDBT ); ?>" disabled><i class="fa fa-pencil-square-o"></i><span class="sr-only"><?php _e( 'Edit Data', CDBT ); ?></span></button>
-          <button type="button" class="btn btn-default" id="table-editor-refresh" title="<?php _e( 'Refresh List', CDBT ); ?>"><i class="fa fa-refresh"></i><span class="sr-only"><?php _e( 'Refresh List', CDBT ); ?></span></button>
-          <button type="button" class="btn btn-default" id="table-editor-delete" title="<?php _e( 'Delete Data', CDBT ); ?>" disabled><i class="fa fa-trash-o"></i><span class="sr-only"><?php _e( 'Delete Data', CDBT ); ?></span></button>
+          <button type="button" class="btn btn-default" id="table-editor-edit" title="<?php _e('Edit Data', CDBT); ?>" disabled><i class="fa fa-pencil-square-o"></i><span class="sr-only"><?php _e('Edit Data', CDBT); ?></span></button>
+          <button type="button" class="btn btn-default" id="table-editor-refresh" title="<?php _e('Refresh List', CDBT); ?>"><i class="fa fa-refresh"></i><span class="sr-only"><?php _e('Refresh List', CDBT); ?></span></button>
+          <button type="button" class="btn btn-default" id="table-editor-delete" title="<?php _e('Delete Data', CDBT); ?>" disabled><i class="fa fa-trash-o"></i><span class="sr-only"><?php _e('Delete Data', CDBT); ?></span></button>
         </div><!-- /.cdbt-table-editor -->
 <?php endif; ?>
-<?php if ( $enable_view ) : ?>
+<?php if ($enable_view) : ?>
         <div class="btn-group cdbt-table-views pull-right" data-toggle="buttons" data-current-view="<?php echo $default_view; ?>" for="<?php echo $table_id; ?>">
-          <label class="btn btn-default<?php if ( 'list' === $default_view ) : ?> active<?php endif; ?>">
+          <label class="btn btn-default<?php if ('list' === $default_view) : ?> active<?php endif; ?>">
             <input name="tableViews" type="radio" value="list"><i class="fa fa-th-list"></i>
           </label>
-          <label class="btn btn-default<?php if ( 'thumbnail' === $default_view ) : ?> active<?php endif; ?>">
+          <label class="btn btn-default<?php if ('thumbnail' === $default_view) : ?> active<?php endif; ?>">
             <input name="tableViews" type="radio" value="thumbnail"><i class="fa fa-th"></i>
           </label>
         </div><!-- /.cdbt-table-views -->
 <?php endif; ?>
-<?php if ( $enable_search && $enable_filter ) : ?>
+<?php if ($enable_search && $enable_filter) : ?>
         <div class="btn-group selectlist cdbt-table-filters pull-right" data-resize="auto" id="<?php echo $table_id; ?>-filters">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <span class="selected-label">&nbsp;</span>
             <span class="caret"></span>
-            <span class="sr-only"><?php _e( 'Toggle Filters', CDBT ); ?></span>
+            <span class="sr-only"><?php _e('Toggle Filters', CDBT); ?></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li data-value="" data-selected="true"><a href="#"><?php _e( 'all', CDBT ); ?></a></li>
-            <?php echo implode( "\n", $filters_list ); ?>
+            <li data-value="" data-selected="true"><a href="#"><?php _e('all', CDBT); ?></a></li>
+            <?php echo implode("\n", $filters_list); ?>
           </ul>
           <input class="hidden hidden-field" name="filterSelection" readonly="readonly" aria-hidden="true" type="text"/>
         </div><!-- /.cdbt-table-filters -->
@@ -306,8 +305,8 @@ $adjust_thumbnail = apply_filters( 'cdbt_crop_thumbnail_position', [ 'landscape'
   </div><!-- /.panel-heading -->
 <?php endif; ?>
   <div class="panel-body" for="<?php echo $table_id; ?>">
-  <?php if ( $disable_edit ) : ?>
-    <p class="text-danger" style="margin-top: 6px;"><?php _e( 'Disable the data editing because it can not identify a single data.', CDBT ); ?></p>
+  <?php if ($disable_edit) : ?>
+    <p class="text-danger" style="margin-top: 6px;"><?php _e('Disable the data editing because it can not identify a single data.', CDBT); ?></p>
   <?php else : ?>
     <div class="loading">
       <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom text-muted"></i><span class="sr-only"><?php _e('Loading...', CDBT); ?></span>
@@ -325,7 +324,7 @@ $adjust_thumbnail = apply_filters( 'cdbt_crop_thumbnail_position', [ 'landscape'
         <?php echo $index_row; ?>
       </tfoot>
     </table>
-<?php if ( $enable_view ) : ?>
+<?php if ($enable_view) : ?>
     <div class="thumbnail-view hide" id="<?php echo $table_id; ?>-view">
       <div class="loading">
         <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom text-muted"></i><span class="sr-only"><?php _e('Loading...', CDBT); ?></span>
@@ -333,7 +332,7 @@ $adjust_thumbnail = apply_filters( 'cdbt_crop_thumbnail_position', [ 'landscape'
     </div>
 <?php endif; ?>
   </div><!-- /.panel-table-wrapper-->
-<?php if ( $_must_paging ) : ?>
+<?php if ($_must_paging) : ?>
   <div class="panel-footer" for="<?php echo $table_id; ?>">
     <nav class="cdbt-<?php echo $footer_ui; ?> text-center" for="<?php echo $table_id; ?>"></nav>
   </div><!-- /.panel-footer -->
@@ -354,15 +353,15 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
 <?php $json_code = json_encode($items); ?>
   items: new Array(<?php echo substr($json_code, 1, -1); ?>),
   filteredItems: new Array(),
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
   baseQuery: '<?php echo $query_assets; ?>',
 <?php endif; ?>
   init: function() {
     var items = this.items;
     
     var templateRow = '<?php echo $template_row; ?>';
-    var perPageLimit = <?php echo intval( $page_size ); ?>;
-    var currentPage = <?php echo intval( $page_index ); ?>;
+    var perPageLimit = <?php echo intval($page_size); ?>;
+    var currentPage = <?php echo intval($page_index); ?>;
     
     var optCookie = docCookies.getItem('<?php echo $table_name; ?>');
     if ( ! _.isNull(optCookie) ) {
@@ -379,7 +378,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       templateRow: templateRow, 
       perPageLimit: perPageLimit, 
       currentPage: currentPage, 
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
       totalItems: <?php echo $total_data; ?>, 
       totalPages: Math.ceil(<?php echo $total_data; ?> / perPageLimit), 
       startIndex: startIndex, 
@@ -403,25 +402,25 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     
     // Add Event Listener
     var _self = this;
-<?php if ( $_sortable_cols > 0 ) : ?>
+<?php if ($_sortable_cols > 0) : ?>
     $('#<?php echo $table_id; ?> thead th.sortable').on('click', function(e){ _self.sortBy(e,$(this)); }); // sort
     if ( ! _.isNull(optCookie) && '' !== optCookie.sortedProperty ) {
       $('#<?php echo $table_id; ?> thead th.sortable[data-property="'+optCookie.sortedProperty+'"]').addClass('sortdir-'+optCookie.currentSortDir).trigger('click');
       //_self.sortBy();
     }
 <?php endif; ?>
-<?php if ( $_must_paging && 'pagination' === $footer_ui ) : ?>
+<?php if ($_must_paging && 'pagination' === $footer_ui) : ?>
     $(document).on('click', 'nav.cdbt-pagination[for="<?php echo $table_id; ?>"] a', function(e){ _self.pageFeed(e,$(this)); }); // paging
 <?php endif; ?>
-<?php if ( $_must_paging && 'pager' === $footer_ui ) : ?>
+<?php if ($_must_paging && 'pager' === $footer_ui) : ?>
     $(document).on('click', 'nav.cdbt-pager[for="<?php echo $table_id; ?>"] button', function(e){ _self.pageFeed(e,$(this)); }); // paging by clicking
     $(document).on('keypress', 'nav.cdbt-pager[for="<?php echo $table_id; ?>"] .cdbt-pager-combobox>input', function(e){ if (e.which === 13) { _self.pageFeed(e,$(this)); } }); // paging by inputting
     $(document).on('changed.fu.combobox', 'nav.cdbt-pager[for="<?php echo $table_id; ?>"] .cdbt-pager-combobox', function(e){ _self.pageFeed(e,$(this)); }); // paging by changing
 <?php endif; ?>
-<?php if ( $enable_view ) : ?>
+<?php if ($enable_view) : ?>
     $(document).on('click', '.cdbt-table-views[for="<?php echo $table_id; ?>"]', function(e){ _self.changeView(e,$(this)); }); // view
 <?php endif; ?>
-<?php if ( $enable_filter ) : ?>
+<?php if ($enable_filter) : ?>
 	$('#<?php echo $table_id; ?>-filters').on('changed.fu.selectlist', function(e){ _self.filterAt(e,$(this)); }); // filter
 	if ( ! _.isNull(optCookie) && '' !== optCookie.filterKeyword ) {
       var _value = optCookie.filterKeyword.split(':');
@@ -431,7 +430,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       }
     }
 <?php endif; ?>
-<?php if ( $enable_search ) : ?>
+<?php if ($enable_search) : ?>
     $('#<?php echo $table_id; ?>-search button').on('click', function(e){ _self.searchFor(e,$(this)); }); // search button
     $('#<?php echo $table_id; ?>-search input').on('keypress', function(e){ if (e.which === 13) { _self.searchFor(e,$(this)); } }); // search enter key
     if ( ! _.isNull(optCookie) && '' !== optCookie.searchKeyword ) {
@@ -439,7 +438,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       $('#<?php echo $table_id; ?>-search button').trigger('click');
     }
 <?php endif; ?>
-<?php if ( $enable_editor ) : ?>
+<?php if ($enable_editor) : ?>
     $(document).on('click', '.cdbt-table-editor[for="<?php echo $table_id; ?>"] button#table-editor-edit, .cdbt-table-editor[for="<?php echo $table_id; ?>"] button#table-editor-delete', function(e){ _self.cacheOpt(e,$(this)); }); // cache
 <?php endif; ?>
     $(window).on('resize', function(e){ _self.render(); });
@@ -448,7 +447,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
   deepCopy: function(object) {
     return JSON.parse(JSON.stringify(Array.prototype.slice.call(object,0)));
   },
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
   render: function(now_data) {
     var options = this.options;
     if (typeof now_data === 'object') {
@@ -471,14 +470,14 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     if (options.endIndex > options.totalItems) {
       options.endIndex = options.totalItems;
     }
-<?php if ( ! $ajax_load ) : ?>
+<?php if (! $ajax_load) : ?>
     data = data.slice(options.startIndex-1, options.endIndex);
 <?php endif; ?>
     
     // customBeforeRenderer
     this.beforeRender();
     
-<?php if ( $enable_filter ) : ?>
+<?php if ($enable_filter) : ?>
     $('#'+options.tableId+'-filters').selectlist();
 <?php endif; ?>
     
@@ -500,7 +499,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
         helpers.item = val;
         
         switch(column) {
-<?php if ( ! empty( $_custom_column_renders ) ) : foreach ( $_custom_column_renders as $_col => $_val ) : ?>
+<?php if (! empty($_custom_column_renders)) : foreach ($_custom_column_renders as $_col => $_val) : ?>
           case '<?php echo $_col; ?>':
             customMarkup = <?php echo $_val; ?>;
             break;
@@ -520,8 +519,8 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       var customRowMarkup = $('<div/>').html(rowMarkup);
       // customRowRenderer
       var item = customRowMarkup.find('tr'); // For compatibility with repeater
-<?php if ( isset( $custom_rows ) && ! empty( $custom_rows ) ) : ?>
-      <?php echo implode( "\n", $custom_rows ) . "\n"; ?>
+<?php if (isset($custom_rows) && ! empty($custom_rows)) : ?>
+      <?php echo implode("\n", $custom_rows) . "\n"; ?>
 <?php endif; ?>
         customRowMarkup.find('.binary-data input[type=hidden]').each(function(){
           if ('data:image' === $(this).attr('data').substr(0, 10)) {
@@ -550,7 +549,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     var cols = $('#'+options.tableId+' thead').find('th').size() > 0 ? $('#'+options.tableId+' thead').find('th').size() : 1;
     if ('' === $('#'+options.tableId+' tbody').text()) {
       // If no data
-      $('#'+options.tableId+' tbody').html('<tr><td colspan="'+cols+'" class="no-item"><div class="abs-text"><?php _e( "No result.", CDBT); ?></div></td></tr>');
+      $('#'+options.tableId+' tbody').html('<tr><td colspan="'+cols+'" class="no-item"><div class="abs-text"><?php _e("No result.", CDBT); ?></div></td></tr>');
       var __left = ($('#'+options.tableId).parent('.panel-table-wrapper').width() - $('#'+options.tableId+' .abs-text').outerWidth()) / 2;
       var __scrollX = $.fn['kinetic'] !== undefined ? $('#'+options.tableId).parent('.panel-table-wrapper').kinetic().get(0).scrollLeft : 0;
       $('#'+options.tableId+' .abs-text').css({ left: __left + __scrollX +'px' });
@@ -610,7 +609,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     
     // Adjust table size
     var draggableTable = false;
-<?php if ( $draggable ) : ?>
+<?php if ($draggable) : ?>
     //if (table_width > $.em2pxl(4) * cols && table_width > wrapper_width) {
     if (table_width > $.em2pxl(6) * cols) {
       draggableTable = true;
@@ -690,7 +689,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       });
     }
     
-<?php if ( $_must_paging ) : ?>
+<?php if ($_must_paging) : ?>
     // Render <?php echo $footer_ui; ?> 
     if (options.totalPages > <?php echo 'pager' === $footer_ui ? 0 : 1; ?>) {
       this.<?php echo $footer_ui; ?>();
@@ -706,15 +705,15 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     $(window).scrollTop(componentPos.top - topMargin - adminBar);
     
     // customAfterRenderer
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
     this.afterRender(method);
 <?php else : ?>
     this.afterRender(method);
 <?php endif; ?>
     
   }, 
-<?php if ( $_sortable_cols > 0 ) : ?>
-<?php if ( ! $ajax_load ) : ?>
+<?php if ($_sortable_cols > 0) : ?>
+<?php if (! $ajax_load) : ?>
   objArraySort: function(data,prop,order){
     data.sort(function(a,b){
       if (_.isNumber(a[prop]) && _.isNumber(b[prop])) {
@@ -745,7 +744,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
 <?php endif; ?>
   sortBy: function(e,target) {
     var options = this.options;
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
     if ( options.totalItems <= 1 ) {
       return false;
     }
@@ -771,7 +770,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     }
     var currentSortDir = target.hasClass('sortdir-desc') ? 'desc' : 'asc';
     options.currentSortDir = currentSortDir;
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
 	var new_query = {
       sortColumn: options.sortedProperty,
       sortOrder: options.currentSortDir,
@@ -797,10 +796,10 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     
   }, 
 <?php endif; ?>
-<?php if ( $enable_search ) : ?>
+<?php if ($enable_search) : ?>
   searchFor: function(e,target) {
     var options = this.options;
-<?php if ( ! $ajax_load ) : ?>
+<?php if (! $ajax_load) : ?>
     var data = ! options.isFiltering ? this.deepCopy(this.items) : this.deepCopy(this.filteredItems);
 <?php endif; ?>
     var keyword = $('#'+options.tableId+'-search input').val().toLowerCase();
@@ -812,12 +811,12 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     if (target.find('i').hasClass('fa-close')) {
       $('#'+options.tableId+'-search').find('input').val('').prop('disabled', false);
       $('#'+options.tableId+'-search').find('i').attr('class', 'fa fa-search');
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
       options.currentPage = 1;
       options.isFiltering = options.filterKeyword === undefined || options.filterKeyword === '' ? false : true;
       options.searchKeyword = '';
       //options.filterType = '';
-    <?php if ( $enable_filter ) : ?>
+    <?php if ($enable_filter) : ?>
       var __selectlist = $('#'+options.tableId+'-filters');
       __selectlist.selectlist('enable');
     <?php endif; ?>
@@ -835,7 +834,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       this.reload( new_query, this );
 <?php else : ?>
       options.isFiltering = false;
-    <?php if ( $enable_filter ) : ?>
+    <?php if ($enable_filter) : ?>
       var __selectlist = $('#'+options.tableId+'-filters');
       __selectlist.selectlist('enable');
       if ('' !== __selectlist.selectlist('selectedItem').value) {
@@ -845,7 +844,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       return this.render();
 <?php endif; ?>
     } else {
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
       options.currentPage = 1;
       options.isFiltering = true;
       options.searchKeyword = keyword;
@@ -860,7 +859,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       }
       $('#'+options.tableId+'-search').find('i').attr('class', 'fa fa-close');
       $('#'+options.tableId+'-search').find('input').prop('disabled', true);
-    <?php if ( $enable_filter ) : ?>
+    <?php if ($enable_filter) : ?>
       $('#'+options.tableId+'-filters').selectlist('disable');
       if ( options.filterKeyword !== '' ) {
         new_query.narrowFilterKey = options.filterKeyword;
@@ -891,7 +890,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       options.searchKeyword = $('#'+options.tableId+'-search input').val();
     }
     this.filteredItems = searchedData;
-  <?php if ( $enable_filter ) : ?>
+  <?php if ($enable_filter) : ?>
     $('#'+options.tableId+'-filters').selectlist('disable');
   <?php endif; ?>
     options.isFiltering = true;
@@ -900,10 +899,10 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     
   }, 
 <?php endif; ?>
-<?php if ( $enable_filter ) : ?>
+<?php if ($enable_filter) : ?>
   filterAt: function(e,target) {
     var options = this.options;
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
     var keyword = $('#'+options.tableId+'-filters').selectlist('selectedItem').value;
     var new_query = {};
     if (keyword !== '') {
@@ -951,8 +950,8 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     
   },
 <?php endif; ?>
-<?php if ( $_must_paging ) : ?>
-<?php   if ( 'pagination' === $footer_ui ) : ?>
+<?php if ($_must_paging) : ?>
+<?php   if ('pagination' === $footer_ui) : ?>
   pageFeed: function(e,target) {
     var options = this.options;
     var ariaLabel = target.attr('aria-label');
@@ -968,7 +967,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
         return false;
       }
     }
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
 	var new_query = {
       offset: (options.currentPage - 1) * options.perPageLimit
     };
@@ -1020,7 +1019,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     
   }, 
 <?php   endif; ?>
-<?php   if ( 'pager' === $footer_ui ) : ?>
+<?php   if ('pager' === $footer_ui) : ?>
   pageFeed: function(e,target) {
     var options = this.options;
     var mustRender = true;
@@ -1048,7 +1047,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       }
     }
     
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
 	var new_query = {
       offset: (options.currentPage - 1) * options.perPageLimit
     };
@@ -1079,7 +1078,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     var pagerContainer = $('.panel-footer[for="'+options.tableId+'"]>nav.cdbt-pager');
     
     var pager = '<div class="cdbt-table-pager row" data-curentpage="'+options.currentPage+'">';
-    pager += '<div class="cdbt-table-itemization pull-left"><?php printf( esc_html__('%1$s - %2$s of %3$s items', CDBT), '<span class="item-start"></span>', '<span class="item-end"></span>', '<span class="item-count"></span>'); ?></div>'; // .cdbt-table-itemization
+    pager += '<div class="cdbt-table-itemization pull-left"><?php printf(esc_html__('%1$s - %2$s of %3$s items', CDBT), '<span class="item-start"></span>', '<span class="item-end"></span>', '<span class="item-count"></span>'); ?></div>'; // .cdbt-table-itemization
     pager += '<div class="cdbt-pager-body pull-right"><div class="pager-row">';
     pager += '<div class="pager-prev"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left" aria-hidden="true"></i></button></div>'; // .pager-prev
     pager += '<div class="pager-control"><label class="pager-label"><?php _e('Page', CDBT); ?></label>';
@@ -1125,26 +1124,26 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
 <?php endif; ?>
   beforeRender: function() {
     var options = this.options;
-<?php if ( ! $ajax_load ) : ?>
+<?php if (! $ajax_load) : ?>
     var data = ! options.isFiltering ? this.deepCopy(this.items) : this.deepCopy(this.filteredItems);
 <?php endif; ?>
     
-  <?php if ( isset($before_render_scripts) ) : ?>
+  <?php if (isset($before_render_scripts)) : ?>
     <?php echo $before_render_scripts; ?>
   <?php endif; ?>
     
   },
   afterRender: function(method) {
     var options = this.options;
-<?php if ( ! $ajax_load ) : ?>
+<?php if (! $ajax_load) : ?>
     var data = ! options.isFiltering ? this.deepCopy(this.items) : this.deepCopy(this.filteredItems);
 <?php endif; ?>
     
-<?php if ( $enable_editor ) : ?>
+<?php if ($enable_editor) : ?>
     $('.cdbt-table-editor[for="'+options.tableId+'"] button#table-editor-edit').removeClass('btn-primary').addClass('btn-default').prop('disabled', true);
     $('.cdbt-table-editor[for="'+options.tableId+'"] button#table-editor-delete').removeClass('btn-primary').addClass('btn-default').prop('disabled', true);
 <?php endif; ?>
-<?php if ( $enable_view ) : ?>
+<?php if ($enable_view) : ?>
     var toView = $('.cdbt-table-views[for="'+options.tableId+'"]>label.active>input').val();
     if ('thumbnail' === toView) {
       $('.panel-body[for="'+options.tableId+'"]').fadeOut(300, function(){
@@ -1182,7 +1181,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
         }
       });
     });
-<?php if ( $enable_view ) : ?>}<?php endif; ?>
+<?php if ($enable_view) : ?>}<?php endif; ?>
     $('#'+options.tableId).find('img').error(function(){
       $(this).attr('src', '<?php echo $this->plugin_url; ?>assets/images/cdbt-noimage.png').parent('a').prop('disabled', true);
     });
@@ -1190,15 +1189,15 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       return this.disabled();
     }
     
-  <?php if ( isset($after_render_scripts) ) : ?>
+  <?php if (isset($after_render_scripts)) : ?>
     <?php echo $after_render_scripts; ?>
   <?php endif; ?>
     
   },
-<?php if ( $enable_view ) : ?>
+<?php if ($enable_view) : ?>
   changeView: function(e,target) {
     var options = this.options;
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
     var data = this.deepCopy(this.items);
 <?php else : ?>
     var data = ! options.isFiltering ? this.deepCopy(this.items) : this.deepCopy(this.filteredItems);
@@ -1225,12 +1224,12 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
       var thumbnails = [];
       var thumbnail_template = _.template('<?php echo $_thumb_template; ?>');
       _.each(data, function(row,i){
-<?php if ( ! $ajax_load ) : ?>
+<?php if (! $ajax_load) : ?>
         if ( i + 1 >= options.startIndex && i + 1 < options.startIndex + options.perPageLimit ) {
 <?php endif; ?>
           var thumb_data = {};
-          thumb_data['title'] = <?php if ( empty( $_thumb_title ) || 'auto' === strtolower( $_thumb_title ) ) : ?>''<?php else: ?>row['<?php echo $_thumb_title; ?>']<?php endif; ?>;
-          var titled = <?php echo 'auto' === strtolower( $_thumb_title ) ? 'false' : 'true'; ?>;
+          thumb_data['title'] = <?php if (empty($_thumb_title) || 'auto' === strtolower($_thumb_title)) : ?>''<?php else: ?>row['<?php echo $_thumb_title; ?>']<?php endif; ?>;
+          var titled = <?php echo 'auto' === strtolower($_thumb_title) ? 'false' : 'true'; ?>;
           _.each(_.values(row), function(col){
             if ( ! _.isNull(col) && _.isString(col) && 'data:image' === col.substr(0, 10)) {
               thumb_data['src'] = col;
@@ -1244,13 +1243,13 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
           if ( ! titled ) {
             thumb_data['title'] = i + 1;
           }
-        <?php if ( ! empty( $_thumb_column ) ) : ?>
+        <?php if (! empty($_thumb_column)) : ?>
           if ( thumb_data.src === undefined ) {
             thumb_data['src'] = row['<?php echo $_thumb_column; ?>'];
           }
         <?php endif; ?>
           thumbnails.push(thumb_data);
-<?php if ( ! $ajax_load ) : ?>
+<?php if (! $ajax_load) : ?>
         }
 <?php endif; ?>
       });
@@ -1259,7 +1258,7 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
           $('#'+options.tableId+'-view').append(thumbnail_template(val));
         });
       } else {
-        $('#'+options.tableId+'-view').append('<div class="text-center text-muted" style="margin-top:2.5em;margin-bottom:4em;cpacity:0.5;"><?php _e( "No result.", CDBT); ?></div>');
+        $('#'+options.tableId+'-view').append('<div class="text-center text-muted" style="margin-top:2.5em;margin-bottom:4em;cpacity:0.5;"><?php _e("No result.", CDBT); ?></div>');
       }
       
       $('#'+options.tableId+'-view').find('img').each(function(){
@@ -1271,12 +1270,12 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
         var adjust, longBoundary;
         if (imgSize.w > imgSize.h) { // landscape
           longBoundary = Math.ceil((imgSize.w * cropSize) / imgSize.h);
-          adjust = <?php if ( 'auto' === $adjust_thumbnail['landscape'] ) : ?>(-1 * ((longBoundary - cropSize) / 2))<?php else: echo intval( $adjust_thumbnail['landscape'] ); endif; ?>;
+          adjust = <?php if ('auto' === $adjust_thumbnail['landscape']) : ?>(-1 * ((longBoundary - cropSize) / 2))<?php else: echo intval($adjust_thumbnail['landscape']); endif; ?>;
           $(this).attr('width',longBoundary).attr('height',cropSize).css({left: adjust + 'px', maxWidth: 'none', maxHeight: 'none' });
         } else
         if (imgSize.h > imgSize.w) { // portrait
           longBoundary = Math.ceil((imgSize.h * cropSize) / imgSize.w);
-          adjust = <?php if ( 'auto' === $adjust_thumbnail['portrait'] ) : ?>(-1 * ((longBoundary - cropSize) / 2))<?php else: echo intval( $adjust_thumbnail['portrait'] ); endif; ?>;
+          adjust = <?php if ('auto' === $adjust_thumbnail['portrait']) : ?>(-1 * ((longBoundary - cropSize) / 2))<?php else: echo intval($adjust_thumbnail['portrait']); endif; ?>;
           $(this).attr('width',cropSize).attr('height',longBoundary).css({top: adjust + 'px', maxWidth: 'none', maxHeight: 'none' });
         } else { // square
           $(this).attr('width',cropSize);
@@ -1287,13 +1286,13 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     
   },
 <?php endif; ?>
-<?php if ( $enable_editor ) : ?>
+<?php if ($enable_editor) : ?>
   cacheOpt: function(e,target){
     var options = this.options;
     var saveOpt = {};
     saveOpt['currentPage'] = options.currentPage;
     saveOpt['searchKeyword'] = options.searchKeyword;
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
     saveOpt['filterKeyword'] = options.filterKeyword;
     saveOpt['cachePage'] = options.currentPage;
 <?php endif; ?>
@@ -1303,10 +1302,10 @@ DynamicTables['<?php echo $table_id; ?>'].prototype = {
     return;
   },
 <?php endif; ?>
-<?php if ( $ajax_load ) : ?>
+<?php if ($ajax_load) : ?>
   reload: function( args, callback ){
     //var options = this.options;
-    var ajaxUrl = cdbt_<?php if ( is_admin() ) : ?>admin<?php else : ?>main<?php endif; ?>_vars.ajax_url;
+    var ajaxUrl = cdbt_<?php if (is_admin()) : ?>admin<?php else : ?>main<?php endif; ?>_vars.ajax_url;
     var post_data = {
       tableName: '<?php echo $table_name; ?>',
       queryAssets: this.baseQuery, 

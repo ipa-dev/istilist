@@ -1,6 +1,7 @@
 <?php /* Template Name: Add Size */ ?>
 <?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
+<?php if (is_user_logged_in()) {
+    ?>
 <?php global $user_ID; ?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
@@ -11,17 +12,16 @@
                     <h1><?php the_title(); ?></h1>
                     <div class="box">
                         <?php
-                            if(isset($_POST['add_pref'])){
+                            if (isset($_POST['add_pref'])) {
                                 $args = array(
                                     'post_title' => $_POST['preference_title'],
                                     'post_status' => 'publish',
                                     'post_type' => 'size_pref'
                                 );
-                                $pref_id = wp_insert_post( $args );
+                                $pref_id = wp_insert_post($args);
                                 add_post_meta($pref_id, 'store_id', $_POST['store_id']);
                                 header('Location: '.get_bloginfo('url').'/store-preferences');
-                            }
-                        ?>
+                            } ?>
                         <form id="forms" method="post" action="">
                             <div class="commonForm">
                                 <div>
@@ -52,4 +52,7 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+} else {
+                                header('Location: '.get_bloginfo('url').'/login');
+                            } ?>

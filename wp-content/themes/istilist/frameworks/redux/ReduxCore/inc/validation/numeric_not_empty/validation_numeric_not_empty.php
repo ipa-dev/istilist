@@ -1,7 +1,8 @@
 <?php
 
-if ( ! class_exists( 'Redux_Validation_numeric_not_empty' ) ) {
-    class Redux_Validation_numeric_not_empty {
+if (! class_exists('Redux_Validation_numeric_not_empty')) {
+    class Redux_Validation_numeric_not_empty
+    {
 
         /**
          * Field Constructor.
@@ -9,11 +10,11 @@ if ( ! class_exists( 'Redux_Validation_numeric_not_empty' ) ) {
          *
          * @since ReduxFramework 1.0.0
          */
-        function __construct( $parent, $field, $value, $current ) {
-
+        public function __construct($parent, $field, $value, $current)
+        {
             $this->parent       = $parent;
             $this->field        = $field;
-            $this->field['msg'] = ( isset( $this->field['msg'] ) ) ? $this->field['msg'] : __( 'You must provide a numerical value for this option.', 'redux-framework' );
+            $this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('You must provide a numerical value for this option.', 'redux-framework');
             $this->value        = $value;
             $this->current      = $current;
 
@@ -26,9 +27,10 @@ if ( ! class_exists( 'Redux_Validation_numeric_not_empty' ) ) {
          *
          * @since ReduxFramework 1.0.0
          */
-        function validate() {
-            if ( ! is_numeric( $this->value ) || ! isset( $this->value ) || empty( $this->value ) ) {
-                $this->value = ( isset( $this->current ) ) ? $this->current : '';
+        public function validate()
+        {
+            if (! is_numeric($this->value) || ! isset($this->value) || empty($this->value)) {
+                $this->value = (isset($this->current)) ? $this->current : '';
                 $this->error = $this->field;
             }
         } //function

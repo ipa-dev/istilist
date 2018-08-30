@@ -197,7 +197,7 @@ class StringBuffer implements FileBuffer
         if ($this->position < 0) {
             $this->position    = 0;
             return false;
-        } else if ($this->position > $this->length) {
+        } elseif ($this->position > $this->length) {
             $this->position    = $this->length;
             return false;
         } else {

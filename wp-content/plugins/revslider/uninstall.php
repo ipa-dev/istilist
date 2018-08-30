@@ -1,11 +1,12 @@
 <?php 
-if( !defined( 'ABSPATH') && !defined('WP_UNINSTALL_PLUGIN') )
-	exit();
+if (!defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN')) {
+    exit();
+}
 
 /**
- * disable deletion of anything 
+ * disable deletion of anything
  * @since 5.0
- 
+
 $currentFile = __FILE__;
 $currentFolder = dirname($currentFile);
 require_once $currentFolder . '/inc_php/globals.class.php';
@@ -40,4 +41,3 @@ delete_option('revslider-valid-notice');
 delete_option('revslider_table_version');
 delete_option('revslider_checktables');
 delete_option('rs_public_version');
-?>

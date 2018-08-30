@@ -1,131 +1,122 @@
 <?php /* Template Name: History */ ?>
 <?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
+<?php if (is_user_logged_in()) {
+    ?>
 <?php global $user_ID; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
-<?php if(isset($_POST['plusbtn'])){
-    update_post_meta($_POST['shopper_id'], 'dollar_button_clicked', 0);
-    update_post_meta($_POST['shopper_id'], 'complete_purchase', 0);
-    update_post_meta($_POST['shopper_id'], 'reason_not_purchased', '');
-    $my_post = array(
+<?php if (isset($_POST['plusbtn'])) {
+        update_post_meta($_POST['shopper_id'], 'dollar_button_clicked', 0);
+        update_post_meta($_POST['shopper_id'], 'complete_purchase', 0);
+        update_post_meta($_POST['shopper_id'], 'reason_not_purchased', '');
+        $my_post = array(
         'ID' => $_POST['shopper_id'],
         'post_modified' => date('Y-m-d H:i:s')
     );
-    wp_update_post($my_post);
+        wp_update_post($my_post);
     
-    $timestamp_array = get_post_meta($_POST['shopper_id'], 'timestamps', true);
-    if (!empty($timestamp_array)) {
-    	array_push($timestamp_array, date('Y-m-d H:i:s'));
-    	update_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
+        $timestamp_array = get_post_meta($_POST['shopper_id'], 'timestamps', true);
+        if (!empty($timestamp_array)) {
+            array_push($timestamp_array, date('Y-m-d H:i:s'));
+            update_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
+        } else {
+            $timestamp_array = array();
+            array_push($timestamp_array, date('Y-m-d H:i:s'));
+            add_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
+        }
+        header('Location: '.get_bloginfo('url').'/dashboard');
     }
-    else {
-    	$timestamp_array = array();
-    	array_push($timestamp_array, date('Y-m-d H:i:s'));
-    	add_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
-    }
-     header('Location: '.get_bloginfo('url').'/dashboard');
-}
-if (isset($_POST['bulk_select'])) {
-
-	if ($_POST['bulk_select'] == 'purchased') {
-		foreach ($_POST as $key=>$value) {
-			if ($value == "yes") {
-					update_post_meta($key, 'complete_purchase', 1);
-					update_post_meta($key, 'dollar_button_clicked', 1);
-					
-					$shopper_email = get_post_meta($key, 'customer_email', true);
-					
-					$table_name1 = $wpdb->prefix.'folloup_messages';
-					$sql2 = "SELECT * FROM $table_name1 WHERE message_type = 'thankyou' and store_id = $store_id";
-					$result2 = $wpdb->get_row($sql2);
-					
-					$shopper_name1 = get_post_meta($key, 'customer_fname', true).' '.get_post_meta($key, 'customer_lname', true);
-					$msg_body1 = str_replace("{Shopper's Name}",$shopper_name1,$result2->body);
-					
-					$styist_id = get_post_meta($key, 'stylist_id', true);
-					
-					$stylist_name = get_the_author_meta('display_name', $styist_id);
-					$msg_body2 = str_replace("{Stylist's Name}",$stylist_name,$msg_body1);
-					
-					
-					$store_name = get_the_author_meta('display_name', $store_id);
-					$from = get_user_meta($store_id, 'email_to_shopper', true);
-					
-					$shopper_name  = $shopper_name1;
-					$headers = 'From: '.$store_name.'<'.$from.'>'."\r\n";
-					$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
-					$headers .= "MIME-Version: 1.0\r\n";
-					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-					$subject = $result2->subject;
-					$msg = $msg_body2; 
-					
-					
-					if(!empty($store_name)){
-					    if(!empty($from)){
-					        //wp_mail( $shopper_email, $subject, $msg, $headers);
-					        mail( $shopper_email, $subject, $msg, $headers);
-					    }   
-					}
-	
-				
-			}
-			
-		}
-	}
-	if ($_POST['bulk_select'] == 'not-purchased') {
-		foreach ($_POST as $key=>$value) {
-			if ($value == "yes") {
-
-					$reason = ".";
-					$table_name1 = $wpdb->prefix.'folloup_messages';
-	
-					update_post_meta($key, 'reason_not_purchased', $reason);
-					update_post_meta($key, 'dollar_button_clicked', 1);
-					
-					$shopper_email = get_post_meta($key, 'customer_email', true);
-					
-					$sql2 = "SELECT * FROM $table_name1 WHERE message_type = 'promo' and store_id = $store_id";
-					$result2 = $wpdb->get_row($sql2);
-					
-					$shopper_name1 = get_post_meta($key, 'customer_fname', true).' '.get_post_meta($key, 'customer_lname', true);
-					$msg_body1 = str_replace("{Shopper's Name}",$shopper_name1,$result2->body);
-					
-					$styist_id = get_post_meta($key, 'stylist_id', true);
-					
-					$stylist_name = get_the_author_meta('display_name', $styist_id);
-					$msg_body2 = str_replace("{Stylist's Name}",$stylist_name,$msg_body1);
-					
-					if($options['smtp-active'] == 1){
-					    $from = get_user_meta($user_ID, 'email_to_shopper', true); //get_the_author_meta('user_email', $store_id);
-					} else {
-					    $from = get_user_meta($user_ID, 'email_to_shopper', true); //get_the_author_meta('user_email', $store_id);
-					}
-					
-					$store_name = get_the_author_meta('display_name', $store_id);
-					$from = get_user_meta($store_id, 'email_to_shopper', true);
-					
-					$shopper_name  = $shopper_name1;
-					$headers = 'From: '.$store_name.'<'.$from.'>'."\r\n";
-					$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
-					$headers .= "MIME-Version: 1.0\r\n";
-					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-					$subject = $result2->subject;
-					$msg = $msg_body2;
-					
-					if(!empty($store_name)){
-					    if(!empty($from)){
-					        //wp_mail( $shopper_email, $subject, $msg, $headers );
-					        mail( $shopper_email, $subject, $msg, $headers);
-					    }   
-					}
-				
-			}
-
-		}
-	}   
-	
-}                   
-?>
+    if (isset($_POST['bulk_select'])) {
+        if ($_POST['bulk_select'] == 'purchased') {
+            foreach ($_POST as $key=>$value) {
+                if ($value == "yes") {
+                    update_post_meta($key, 'complete_purchase', 1);
+                    update_post_meta($key, 'dollar_button_clicked', 1);
+                    
+                    $shopper_email = get_post_meta($key, 'customer_email', true);
+                    
+                    $table_name1 = $wpdb->prefix.'folloup_messages';
+                    $sql2 = "SELECT * FROM $table_name1 WHERE message_type = 'thankyou' and store_id = $store_id";
+                    $result2 = $wpdb->get_row($sql2);
+                    
+                    $shopper_name1 = get_post_meta($key, 'customer_fname', true).' '.get_post_meta($key, 'customer_lname', true);
+                    $msg_body1 = str_replace("{Shopper's Name}", $shopper_name1, $result2->body);
+                    
+                    $styist_id = get_post_meta($key, 'stylist_id', true);
+                    
+                    $stylist_name = get_the_author_meta('display_name', $styist_id);
+                    $msg_body2 = str_replace("{Stylist's Name}", $stylist_name, $msg_body1);
+                    
+                    
+                    $store_name = get_the_author_meta('display_name', $store_id);
+                    $from = get_user_meta($store_id, 'email_to_shopper', true);
+                    
+                    $shopper_name  = $shopper_name1;
+                    $headers = 'From: '.$store_name.'<'.$from.'>'."\r\n";
+                    $headers .= "Reply-To: ". strip_tags($from) . "\r\n";
+                    $headers .= "MIME-Version: 1.0\r\n";
+                    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                    $subject = $result2->subject;
+                    $msg = $msg_body2;
+                    
+                    
+                    if (!empty($store_name)) {
+                        if (!empty($from)) {
+                            //wp_mail( $shopper_email, $subject, $msg, $headers);
+                            mail($shopper_email, $subject, $msg, $headers);
+                        }
+                    }
+                }
+            }
+        }
+        if ($_POST['bulk_select'] == 'not-purchased') {
+            foreach ($_POST as $key=>$value) {
+                if ($value == "yes") {
+                    $reason = ".";
+                    $table_name1 = $wpdb->prefix.'folloup_messages';
+    
+                    update_post_meta($key, 'reason_not_purchased', $reason);
+                    update_post_meta($key, 'dollar_button_clicked', 1);
+                    
+                    $shopper_email = get_post_meta($key, 'customer_email', true);
+                    
+                    $sql2 = "SELECT * FROM $table_name1 WHERE message_type = 'promo' and store_id = $store_id";
+                    $result2 = $wpdb->get_row($sql2);
+                    
+                    $shopper_name1 = get_post_meta($key, 'customer_fname', true).' '.get_post_meta($key, 'customer_lname', true);
+                    $msg_body1 = str_replace("{Shopper's Name}", $shopper_name1, $result2->body);
+                    
+                    $styist_id = get_post_meta($key, 'stylist_id', true);
+                    
+                    $stylist_name = get_the_author_meta('display_name', $styist_id);
+                    $msg_body2 = str_replace("{Stylist's Name}", $stylist_name, $msg_body1);
+                    
+                    if ($options['smtp-active'] == 1) {
+                        $from = get_user_meta($user_ID, 'email_to_shopper', true); //get_the_author_meta('user_email', $store_id);
+                    } else {
+                        $from = get_user_meta($user_ID, 'email_to_shopper', true); //get_the_author_meta('user_email', $store_id);
+                    }
+                    
+                    $store_name = get_the_author_meta('display_name', $store_id);
+                    $from = get_user_meta($store_id, 'email_to_shopper', true);
+                    
+                    $shopper_name  = $shopper_name1;
+                    $headers = 'From: '.$store_name.'<'.$from.'>'."\r\n";
+                    $headers .= "Reply-To: ". strip_tags($from) . "\r\n";
+                    $headers .= "MIME-Version: 1.0\r\n";
+                    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                    $subject = $result2->subject;
+                    $msg = $msg_body2;
+                    
+                    if (!empty($store_name)) {
+                        if (!empty($from)) {
+                            //wp_mail( $shopper_email, $subject, $msg, $headers );
+                            mail($shopper_email, $subject, $msg, $headers);
+                        }
+                    }
+                }
+            }
+        }
+    } ?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
 	    <div class="section group">
@@ -159,46 +150,48 @@ if (isset($_POST['bulk_select'])) {
                    		 });
                     	</script>
                     	<?php
-                    		if ($_POST["shoppersfromdate"]) {
-                        		$post_args = array(
-                        		'post_type' => 'shopper',
-                            		'post_status' => 'publish',
-                           		'meta_key' => 'store_id',
-                           		'meta_value' => $store_id,
-                            		'meta_query' => array(
-                            			array(
-                            				array("key" => "entry_date", "value" => $_POST["shoppersfromdate"]." ", "compare" => "LIKE"),
-                            			)
-                            		),
-                            		'paged' => $paged,
-                            		'posts_per_page' => -1,
-                            		'orderby'=> 'modified',
-                            		'order' => 'DESC',
-                        		);
-                    		} else {
-                            		$post_args = array(
-                            		'post_type' => 'shopper',
-                            		'post_status' => 'publish',
-                            		'meta_key' => 'store_id',
-                            		'meta_value' => $store_id,
-                            		'paged' => $paged,
-                            		'posts_per_page' => 15,
-                            		'orderby'=> 'modified',
-                            		'order' => 'DESC',
-                             		);
-                        	}
-                        	$the_query = new WP_Query( $post_args );
+                            if ($_POST["shoppersfromdate"]) {
+                                $post_args = array(
+                                'post_type' => 'shopper',
+                                    'post_status' => 'publish',
+                                   'meta_key' => 'store_id',
+                                   'meta_value' => $store_id,
+                                    'meta_query' => array(
+                                        array(
+                                            array("key" => "entry_date", "value" => $_POST["shoppersfromdate"]." ", "compare" => "LIKE"),
+                                        )
+                                    ),
+                                    'paged' => $paged,
+                                    'posts_per_page' => -1,
+                                    'orderby'=> 'modified',
+                                    'order' => 'DESC',
+                                );
+                            } else {
+                                $post_args = array(
+                                    'post_type' => 'shopper',
+                                    'post_status' => 'publish',
+                                    'meta_key' => 'store_id',
+                                    'meta_value' => $store_id,
+                                    'paged' => $paged,
+                                    'posts_per_page' => 15,
+                                    'orderby'=> 'modified',
+                                    'order' => 'DESC',
+                                     );
+                            }
+    $the_query = new WP_Query($post_args);
                         
-				if ( $the_query->have_posts() ){
-                            		while ( $the_query->have_posts() ) : $the_query->the_post();
-                            			$shopper_id = get_the_ID();
-                        	
-                    ?>
-                    				<?php if(get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1){ ?>
+    if ($the_query->have_posts()) {
+        while ($the_query->have_posts()) : $the_query->the_post();
+        $shopper_id = get_the_ID(); ?>
+                    				<?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
+            ?>
                             				<div class="box active">
-                        			<?php } else { ?>
+                        			<?php
+        } else {
+            ?>
                             				<div class="box">
-                        			<?php } ?>
+                        			<?php
+        } ?>
                     					<div class="box_pic">
                             					<?php echo get_profile_img($shopper_id); ?>
                             				</div>
@@ -209,18 +202,17 @@ if (isset($_POST['bulk_select'])) {
                                 					<br />
                                 					<?php
 
-                                						$timestamps = get_post_meta($shopper_id, 'timestamps', true);
-                                						if (!empty($timestamps)) {
-                                							$index = count($timestamps);
-											while($index) {
-  												echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]))."</span><br />";
-											}
-											
-                                						}
-                                					?>
+                                                        $timestamps = get_post_meta($shopper_id, 'timestamps', true);
+        if (!empty($timestamps)) {
+            $index = count($timestamps);
+            while ($index) {
+                echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]))."</span><br />";
+            }
+        } ?>
                                 					<span>on <?php echo date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?> at <?php echo date('h:i a', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?></span></h2>
                                 			<?php $assign_stylist = get_post_meta($shopper_id, 'assign_stylist', true); ?>
-                                			<?php if(!empty($assign_stylist)){ ?>
+                                			<?php if (!empty($assign_stylist)) {
+            ?>
                                 				
                                 				<div class="section group">
                                     					<div class="col span_6_of_12">
@@ -233,11 +225,11 @@ if (isset($_POST['bulk_select'])) {
                                     					</div>
                                 				</div>
                                 				<?php
-                                					$prev_stylist_array = get_post_meta($shopper_id, 'prev_stylists', true);
-                                					if (!empty($prev_stylist_array)) {
-                                						$index = count($prev_stylist_array) - 2;
-                                						while ($index >= 0) {
-                                				?>
+                                                    $prev_stylist_array = get_post_meta($shopper_id, 'prev_stylists', true);
+            if (!empty($prev_stylist_array)) {
+                $index = count($prev_stylist_array) - 2;
+                while ($index >= 0) {
+                    ?>
                                 							<div class="section group">
                                 								<div class="col span_6_of_12">
 			                                        					<p class="assignStylistClass" style="padding-bottom: 6px;"><strong>Stylist Name </strong>: <span ><?php echo get_the_author_meta('display_name', $prev_stylist_array[$index]['stylist_id']); ?></span></p>
@@ -249,11 +241,11 @@ if (isset($_POST['bulk_select'])) {
 			                                    					</div>
                                 							</div>
                                 				<?php
-                                							$index--;
-                                						}
-                                					} 
-                                				?>
-                                			<?php } ?>
+                                                            $index--;
+                }
+            } ?>
+                                			<?php
+        } ?>
                                 			<p><?php echo excerpt(40); ?></p>
                            				 </div>
                            				 <div class="box_actions">
@@ -274,8 +266,8 @@ if (isset($_POST['bulk_select'])) {
                             				<div style="clear: both;"></div>
 
                     				</div>
-                    		<?php endwhile; 
-                    		}?>
+                    		<?php endwhile;
+    } ?>
                     </div>
 
                             
@@ -383,4 +375,7 @@ jQuery('.dollar').click(function(){
         });
     });
 </script>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+} else {
+        header('Location: '.get_bloginfo('url').'/login');
+    } ?>

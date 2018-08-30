@@ -107,7 +107,7 @@ class Binary
      */
     public function createGitCall($path, $command, array $arguments)
     {
-        $handleArg  = function($key, $value) {
+        $handleArg  = function ($key, $value) {
             $key  = ltrim($key, '-');
             if (strlen($key) == 1 || is_numeric($key)) {
                 $arg = sprintf('-%s', escapeshellarg($key));
@@ -142,7 +142,7 @@ class Binary
             if (is_int($k)) {
                 if (strpos($v, '-') === 0) {
                     $args[]  = $handleArg($v, null);
-                } else if ($fileMode) {
+                } elseif ($fileMode) {
                     $files[] = escapeshellarg($v);
                 } else {
                     $args[]  = escapeshellarg($v);
@@ -175,7 +175,8 @@ class Binary
     {
         if (count($arguments) < 1) {
             throw new \InvalidArgumentException(sprintf(
-                '"%s" must be called with at least one argument denoting the path', $method
+                '"%s" must be called with at least one argument denoting the path',
+                $method
             ));
         }
         $path   = array_shift($arguments);
@@ -200,4 +201,3 @@ class Binary
         return $call->execute($stdIn);
     }
 }
-

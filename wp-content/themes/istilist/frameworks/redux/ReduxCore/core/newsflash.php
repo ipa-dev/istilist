@@ -2,23 +2,25 @@
 
     // Added by KP on March 31, 2015.  So, if something is buggered, it's probably my bad!  ;-)
 
-    if ( ! defined( 'ABSPATH' ) ) {
+    if (! defined('ABSPATH')) {
         exit;
     }
 
     if (!class_exists('reduxNewsflash')) {
-        class reduxNewsflash {
+        class reduxNewsflash
+        {
             private $parent         = null;
             private $notice_json    = '';
             private $server_file    = '';
             private $interval       = 3;
             private $cookie_id      = '';
 
-            public function __construct ($parent, $params) {
+            public function __construct($parent, $params)
+            {
                 // set parent object
                 $this->parent = $parent;
 
-                if ( !is_admin() ) {
+                if (!is_admin()) {
                     return;
                 }
 
@@ -32,7 +34,7 @@
                 $this->notice_json  = $notice_dir . '/notice.json';
 
                 // verify notice dir exists
-                if (!is_dir ( $notice_dir )) {
+                if (!is_dir($notice_dir)) {
                     // create notice dir
                     $parent->filesystem->execute('mkdir', $notice_dir);
                 }
@@ -43,7 +45,7 @@
                     $this->get_notice_json();
                 } else {
                     // check expiry time
-                    if ( ! isset( $_COOKIE[$this->cookie_id] ) ) {
+                    if (! isset($_COOKIE[$this->cookie_id])) {
                         // expired!  get notice data from server
                         $this->get_notice_json();
                     }
@@ -53,14 +55,15 @@
                 $this->display_message();
             }
 
-            private function get_notice_json() {
+            private function get_notice_json()
+            {
                 // filesystem object
                 $filesystem = $this->parent->filesystem;
 
                 // get notice data from server
                 
                 $data = wp_remote_get($this->server_file, array('sslverify'=>false));
-                if ( ! is_wp_error( $data ) && $data['response']['code'] == 200 ) {
+                if (! is_wp_error($data) && $data['response']['code'] == 200) {
                     $data = $data['body'];
                     // if some data exists
                     if ($data != '' || !empty($data)) {
@@ -72,9 +75,9 @@
                             $cache_data = $filesystem->execute('get_contents', $this->notice_json);
 
                             // if local and server data are same, then return
-                            if (  strcmp ( $data, $cache_data ) == 0) {
+                            if (strcmp($data, $cache_data) == 0) {
                                 // set new cookie for interval value
-                                Redux_Functions::setCookie( $this->cookie_id, time(), time() + (86400 * $this->interval), '/' );
+                                Redux_Functions::setCookie($this->cookie_id, time(), time() + (86400 * $this->interval), '/');
 
                                 // bail out
                                 return;
@@ -90,7 +93,7 @@
                         $filesystem->execute('put_contents', $this->notice_json, $params);
 
                         // set cookie for three day expiry
-                        setcookie( $this->cookie_id, time(), time() + (86400 * $this->interval), '/' );
+                        setcookie($this->cookie_id, time(), time() + (86400 * $this->interval), '/');
 
                         // set unique key for dismiss meta key
                         update_option($this->cookie_id, time());
@@ -98,7 +101,8 @@
                 }
             }
 
-            private function display_message(){
+            private function display_message()
+            {
                 // notice file exists?
                 if (file_exists($this->notice_json)) {
                     // get cached data

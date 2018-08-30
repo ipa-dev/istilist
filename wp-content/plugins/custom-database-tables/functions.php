@@ -2,7 +2,7 @@
 /**
  * Including libraries for this plugin
  */
-defined('CDBT') OR die();
+defined('CDBT') or die();
 
 $library_dir_name = 'lib';
 $library_dir = plugin_dir_path(__FILE__) . $library_dir_name;
@@ -28,15 +28,15 @@ $files = [
   'init.php'          // Instance factory & plugin activater
 ];
 foreach ($files as $file) {
-  $lib_includes[] = $library_dir . '/' . $file;
+    $lib_includes[] = $library_dir . '/' . $file;
 }
 unset($library_dir_name, $library_dir, $files, $file);
 
 foreach ($lib_includes as $file) {
-  if (!file_exists($file)) {
-    trigger_error(sprintf(__('Include path error "%s"', CDBT), $file), E_USER_ERROR);
-  }
+    if (!file_exists($file)) {
+        trigger_error(sprintf(__('Include path error "%s"', CDBT), $file), E_USER_ERROR);
+    }
 
-  require_once $file;
+    require_once $file;
 }
 unset($file);

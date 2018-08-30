@@ -1,6 +1,7 @@
 <?php /* Template Name: Edit Employee */ ?>
 <?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
+<?php if (is_user_logged_in()) {
+    ?>
 <?php global $user_ID; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <?php $employee_id = decripted($_GET['eid']); ?>
@@ -13,9 +14,9 @@
                     <h1><?php the_title(); ?></h1>
                     <div class="box">
                         <?php
-                        if(isset($_POST['update_employee'])){
+                        if (isset($_POST['update_employee'])) {
                             global $wpdb;
-                                wp_update_user(
+                            wp_update_user(
                                     array(
                                         'ID' => $employee_id,
                                         'user_login'		=> $_POST['email_address'],
@@ -25,20 +26,20 @@
                                     )
                                 );
                                 
-                                $wpdb->update($wpdb->users, array('user_status' => $_POST['user_status']), array('ID' => $employee_id));
-                                //$wpdb->query('UPDATE wp_users SET user_status = 1 WHERE ID = '.$employee_id);
-                                update_user_meta($employee_id,'phone_number', $_POST['phone_number']);
+                            $wpdb->update($wpdb->users, array('user_status' => $_POST['user_status']), array('ID' => $employee_id));
+                            //$wpdb->query('UPDATE wp_users SET user_status = 1 WHERE ID = '.$employee_id);
+                            update_user_meta($employee_id, 'phone_number', $_POST['phone_number']);
                                 
-                                require_once(ABSPATH . "wp-admin" . '/includes/image.php'); 
-                                require_once(ABSPATH . "wp-admin" . '/includes/file.php'); 
-                                require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+                            require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+                            require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+                            require_once(ABSPATH . "wp-admin" . '/includes/media.php');
                                 
-                                foreach ( $_FILES as $image ) {
-                                    if ($image['size']) {     // if it is an image     
-                                        if ( preg_match('/(jpg|jpeg|png|gif)$/', $image['type']) ) {       
-                                            $override = array('test_form' => false);       // save the file, and store an array, containing its location in $file       
-                                            $file = wp_handle_upload( $image, $override );
-                                            $attachment = array(
+                            foreach ($_FILES as $image) {
+                                if ($image['size']) {     // if it is an image
+                                    if (preg_match('/(jpg|jpeg|png|gif)$/', $image['type'])) {
+                                        $override = array('test_form' => false);       // save the file, and store an array, containing its location in $file
+                                        $file = wp_handle_upload($image, $override);
+                                        $attachment = array(
                                                 'post_title' => $image['name'],
                                                 'post_content' => '',
                                                 'post_type' => 'attachment',
@@ -46,17 +47,18 @@
                                                 'guid' => $file['url']
                                             );
                                             
-                                            $attach_id = wp_insert_attachment( $attachment, $file[ 'file' ], $employee_id);
-                                            $attach_data = wp_generate_attachment_metadata( $attach_id, $file['file'] );
-                                            wp_update_attachment_metadata( $attach_id, $attach_data );
-                                            update_user_meta($employee_id, 'profile_pic', $attach_id, true);    
-                                        } else { wp_die('No image was uploaded.'); }   
+                                        $attach_id = wp_insert_attachment($attachment, $file[ 'file' ], $employee_id);
+                                        $attach_data = wp_generate_attachment_metadata($attach_id, $file['file']);
+                                        wp_update_attachment_metadata($attach_id, $attach_data);
+                                        update_user_meta($employee_id, 'profile_pic', $attach_id, true);
+                                    } else {
+                                        wp_die('No image was uploaded.');
                                     }
                                 }
+                            }
                                 
-                                header("Location: ".get_bloginfo('home')."/stylist-employee");
-                        }
-                        ?>
+                            header("Location: ".get_bloginfo('home')."/stylist-employee");
+                        } ?>
                         <form method="post" action="" enctype="multipart/form-data">
                             <div class="section group">
                                 <div class="col span_6_of_12">
@@ -82,16 +84,24 @@
                                 <div class="col span_6_of_12">
                                     <label>Role</label>
                                     <select name="employeerole">
-                                        <option value="storeemployee" <?php if(get_user_role($employee_id) == 'storeemployee'){ echo 'selected="selected"'; } ?>>Employee</option>
-                                        <option value="storesupervisor" <?php if(get_user_role($employee_id) == 'storesupervisor'){ echo 'selected="selected"'; } ?>>Supervisor</option>
+                                        <option value="storeemployee" <?php if (get_user_role($employee_id) == 'storeemployee') {
+                            echo 'selected="selected"';
+                        } ?>>Employee</option>
+                                        <option value="storesupervisor" <?php if (get_user_role($employee_id) == 'storesupervisor') {
+                            echo 'selected="selected"';
+                        } ?>>Supervisor</option>
                                     </select>
                                 </div>
                                 <div class="col span_6_of_12">
                                     <label>Status</label>
                                     <?php $user_status = get_the_author_meta('user_status', $employee_id); ?>
                                     <select name="user_status">
-                                        <option value="2" <?php if($user_status == 2){ echo 'selected="selected"'; } ?>>Active</option>
-                                        <option value="0" <?php if($user_status == 0){ echo 'selected="selected"'; } ?>>Inactive</option>
+                                        <option value="2" <?php if ($user_status == 2) {
+                            echo 'selected="selected"';
+                        } ?>>Active</option>
+                                        <option value="0" <?php if ($user_status == 0) {
+                            echo 'selected="selected"';
+                        } ?>>Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -208,4 +218,7 @@ jQuery(document).ready(function () {
      });
 });
 </script>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+} else {
+                            header('Location: '.get_bloginfo('url').'/login');
+                        } ?>

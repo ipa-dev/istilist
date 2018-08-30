@@ -1,6 +1,7 @@
 <?php
-    if ( ! class_exists( 'Redux_Validation_color_rgba' ) ) {
-        class Redux_Validation_color_rgba {
+    if (! class_exists('Redux_Validation_color_rgba')) {
+        class Redux_Validation_color_rgba
+        {
 
             /**
              * Field Constructor.
@@ -8,10 +9,11 @@
              *
              * @since ReduxFramework 3.0.4
              */
-            function __construct( $parent, $field, $value, $current ) {
+            public function __construct($parent, $field, $value, $current)
+            {
                 $this->parent       = $parent;
                 $this->field        = $field;
-                $this->field['msg'] = ( isset( $this->field['msg'] ) ) ? $this->field['msg'] : __( 'This field must be a valid color value.', 'redux-framework' );
+                $this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('This field must be a valid color value.', 'redux-framework');
                 $this->value        = $value;
                 $this->current      = $current;
 
@@ -24,21 +26,21 @@
              *
              * @since ReduxFramework 3.0.3
              */
-            function validate_color_rgba( $color ) {
-
-                if ( $color == "transparent" ) {
+            public function validate_color_rgba($color)
+            {
+                if ($color == "transparent") {
                     return $color;
                 }
 
-                $color = str_replace( '#', '', $color );
-                if ( strlen( $color ) == 3 ) {
+                $color = str_replace('#', '', $color);
+                if (strlen($color) == 3) {
                     $color = $color . $color;
                 }
-                if ( preg_match( '/^[a-f0-9]{6}$/i', $color ) ) {
+                if (preg_match('/^[a-f0-9]{6}$/i', $color)) {
                     $color = '#' . $color;
                 }
 
-                return array( 'hex' => $color, 'rgba' => Redux_Helpers::hex2rgba( $color ) );
+                return array( 'hex' => $color, 'rgba' => Redux_Helpers::hex2rgba($color) );
             } //function
 
             /**
@@ -47,15 +49,15 @@
              *
              * @since ReduxFramework 3.0.0
              */
-            function validate() {
-
-                if ( is_array( $this->value ) ) { // If array
-                    foreach ( $this->value as $k => $value ) {
-                        $this->value[ $k ] = $this->validate_color_rgba( $value );
+            public function validate()
+            {
+                if (is_array($this->value)) { // If array
+                    foreach ($this->value as $k => $value) {
+                        $this->value[ $k ] = $this->validate_color_rgba($value);
                     }
                     //foreach
                 } else { // not array
-                    $this->value = $this->validate_color_rgba( $this->value );
+                    $this->value = $this->validate_color_rgba($this->value);
                 } // END array check
             } //function
         } //class

@@ -4,7 +4,7 @@
      * For full documentation, please visit: http://docs.reduxframework.com/
      */
 
-    if ( ! class_exists( 'Redux' ) ) {
+    if (! class_exists('Redux')) {
         return;
     }
 
@@ -13,7 +13,7 @@
     $opt_name = "redux_demo";
 
     // This line is only for altering the demo. Can be easily removed.
-    $opt_name = apply_filters( 'redux_demo/opt_name', $opt_name );
+    $opt_name = apply_filters('redux_demo/opt_name', $opt_name);
 
     /*
      *
@@ -22,12 +22,12 @@
      */
 
     $sampleHTML = '';
-    if ( file_exists( dirname( __FILE__ ) . '/info-html.html' ) ) {
+    if (file_exists(dirname(__FILE__) . '/info-html.html')) {
         Redux_Functions::initWpFilesystem();
 
         global $wp_filesystem;
 
-        $sampleHTML = $wp_filesystem->get_contents( dirname( __FILE__ ) . '/info-html.html' );
+        $sampleHTML = $wp_filesystem->get_contents(dirname(__FILE__) . '/info-html.html');
     }
 
     // Background Patterns Reader
@@ -35,16 +35,14 @@
     $sample_patterns_url  = ReduxFramework::$_url . '../sample/patterns/';
     $sample_patterns      = array();
 
-    if ( is_dir( $sample_patterns_path ) ) {
-
-        if ( $sample_patterns_dir = opendir( $sample_patterns_path ) ) {
+    if (is_dir($sample_patterns_path)) {
+        if ($sample_patterns_dir = opendir($sample_patterns_path)) {
             $sample_patterns = array();
 
-            while ( ( $sample_patterns_file = readdir( $sample_patterns_dir ) ) !== false ) {
-
-                if ( stristr( $sample_patterns_file, '.png' ) !== false || stristr( $sample_patterns_file, '.jpg' ) !== false ) {
-                    $name              = explode( '.', $sample_patterns_file );
-                    $name              = str_replace( '.' . end( $name ), '', $sample_patterns_file );
+            while (($sample_patterns_file = readdir($sample_patterns_dir)) !== false) {
+                if (stristr($sample_patterns_file, '.png') !== false || stristr($sample_patterns_file, '.jpg') !== false) {
+                    $name              = explode('.', $sample_patterns_file);
+                    $name              = str_replace('.' . end($name), '', $sample_patterns_file);
                     $sample_patterns[] = array(
                         'alt' => $name,
                         'img' => $sample_patterns_url . $sample_patterns_file
@@ -89,16 +87,16 @@
         // TYPICAL -> Change these values as you need/desire
         'opt_name'             => $opt_name,
         // This is where your data is stored in the database and also becomes your global variable name.
-        'display_name'         => $theme->get( 'Name' ),
+        'display_name'         => $theme->get('Name'),
         // Name that appears at the top of your panel
-        'display_version'      => $theme->get( 'Version' ),
+        'display_version'      => $theme->get('Version'),
         // Version that appears at the top of your panel
         'menu_type'            => 'menu',
         //Specify if the admin menu should appear or not. Options: menu or submenu (Under appearance only)
         'allow_sub_menu'       => true,
         // Show the sections below the admin menu item or not
-        'menu_title'           => __( 'Theme Options', 'redux-framework-demo' ),
-        'page_title'           => __( 'Theme Options', 'redux-framework-demo' ),
+        'menu_title'           => __('Theme Options', 'redux-framework-demo'),
+        'page_title'           => __('Theme Options', 'redux-framework-demo'),
         // You will need to generate a Google API key to use this feature.
         // Please visit: https://developers.google.com/fonts/docs/developer_api#Auth
         'google_api_key'       => '',
@@ -195,33 +193,33 @@
     
     
     // Panel Intro text -> before the form
-    if ( ! isset( $args['global_variable'] ) || $args['global_variable'] !== false ) {
-        if ( ! empty( $args['global_variable'] ) ) {
+    if (! isset($args['global_variable']) || $args['global_variable'] !== false) {
+        if (! empty($args['global_variable'])) {
             $v = $args['global_variable'];
         } else {
-            $v = str_replace( '-', '_', $args['opt_name'] );
+            $v = str_replace('-', '_', $args['opt_name']);
         }
         //$args['intro_text'] = sprintf( __( '<p>Did you know that Redux sets a global variable for you? To access any of your saved options from within your code you can use your global variable: <strong>$%1$s</strong></p>', 'redux-framework-demo' ), $v );
     } else {
-       // $args['intro_text'] = __( '<p>This text is displayed above the options panel. It isn\'t required, but more info is always better! The intro_text field accepts all HTML.</p>', 'redux-framework-demo' );
+        // $args['intro_text'] = __( '<p>This text is displayed above the options panel. It isn\'t required, but more info is always better! The intro_text field accepts all HTML.</p>', 'redux-framework-demo' );
     }
 
     // Add content after the form.
     //$args['footer_text'] = __( '<p>This text is displayed below the options panel. It isn\'t required, but more info is always better! The footer_text field accepts all HTML.</p>', 'redux-framework-demo' );
 
-    Redux::setArgs( $opt_name, $args );
+    Redux::setArgs($opt_name, $args);
     
-    Redux::setSection( $opt_name, array(
-        'title' => __( 'Shoppers Theme', 'redux-framework-demo' ),
+    Redux::setSection($opt_name, array(
+        'title' => __('Shoppers Theme', 'redux-framework-demo'),
         'id'    => 'basic',
-        'desc'  => __( '', 'redux-framework-demo' ),
+        'desc'  => __('', 'redux-framework-demo'),
         'customizer_width' => '400px',
         'icon'  => 'el el-home'
-    ) );
+    ));
     
-    Redux::setSection( $opt_name, array(
-        'title'      => __( 'General', 'redux-framework-demo' ),
-        'desc'       => __( '', 'redux-framework-demo' ),
+    Redux::setSection($opt_name, array(
+        'title'      => __('General', 'redux-framework-demo'),
+        'desc'       => __('', 'redux-framework-demo'),
         'id'         => 'basic-general',
         'subsection' => true,
         'customizer_width' => '900px',
@@ -229,27 +227,27 @@
             array(
                 'id'       => 'general-logo',
                 'type'     => 'text',
-                'title'    => __( 'Logo', 'redux-framework-demo' ),
+                'title'    => __('Logo', 'redux-framework-demo'),
                 'default'  => '',
             ),
             array(
                 'id'       => 'general-background',
                 'type'     => 'media',
-                'title'    => __( 'Login or Register Background', 'redux-framework-demo' ),
+                'title'    => __('Login or Register Background', 'redux-framework-demo'),
                 'default'  => '',
             ),
             array(
                 'id'       => 'general-copyright',
                 'type'     => 'text',
-                'title'    => __( 'Copyright Text', 'redux-framework-demo' ),
+                'title'    => __('Copyright Text', 'redux-framework-demo'),
                 'default'  => '',
             )
         )
-    ) );
+    ));
     
-Redux::setSection( $opt_name, array(
-    'title'      => __( 'SMTP Settings', 'redux-framework-demo' ),
-    'desc'       => __( '', 'redux-framework-demo' ),
+Redux::setSection($opt_name, array(
+    'title'      => __('SMTP Settings', 'redux-framework-demo'),
+    'desc'       => __('', 'redux-framework-demo'),
     'id'         => 'smtp-settings',
     'subsection' => true,
     'customizer_width' => '900px',
@@ -257,37 +255,37 @@ Redux::setSection( $opt_name, array(
         array(
             'id'       => 'smtp-active',
             'type'     => 'checkbox',
-            'title'    => __( 'Enable SMTP', 'redux-framework-demo' ),
+            'title'    => __('Enable SMTP', 'redux-framework-demo'),
             'default'  => '0',
         ),
         array(
             'id'       => 'smtp-from-email',
             'type'     => 'text',
-            'title'    => __( 'From Email', 'redux-framework-demo' ),
+            'title'    => __('From Email', 'redux-framework-demo'),
             'default'  => '',
         ),
         array(
             'id'       => 'smtp-from-name',
             'type'     => 'text',
-            'title'    => __( 'From Name', 'redux-framework-demo' ),
+            'title'    => __('From Name', 'redux-framework-demo'),
             'default'  => '',
         ),
         array(
             'id'       => 'smtp-host',
             'type'     => 'text',
-            'title'    => __( 'SMTP Host', 'redux-framework-demo' ),
+            'title'    => __('SMTP Host', 'redux-framework-demo'),
             'default'  => '',
         ),
         array(
             'id'       => 'smtp-port',
             'type'     => 'text',
-            'title'    => __( 'SMTP Port', 'redux-framework-demo' ),
+            'title'    => __('SMTP Port', 'redux-framework-demo'),
             'default'  => '',
         ),
         array(
             'id'       => 'smtp-authentication-type',
             'type'     => 'select',
-            'title'    => __( 'Encryption', 'redux-framework-demo' ),
+            'title'    => __('Encryption', 'redux-framework-demo'),
             'options'  => array(
                 '1' => 'SSL',
                 '2' => 'TLS',
@@ -297,15 +295,15 @@ Redux::setSection( $opt_name, array(
         array(
             'id'       => 'smtp-username',
             'type'     => 'text',
-            'title'    => __( 'Username', 'redux-framework-demo' ),
+            'title'    => __('Username', 'redux-framework-demo'),
             'default'  => '',
         )
         ,
         array(
             'id'       => 'smtp-password',
             'type'     => 'password',
-            'title'    => __( 'Password', 'redux-framework-demo' ),
+            'title'    => __('Password', 'redux-framework-demo'),
             'default'  => '',
         )
     )
-) );
+));

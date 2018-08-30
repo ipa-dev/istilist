@@ -17,7 +17,7 @@
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
-	published by the Free Software Foundation.
+    published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,13 +37,13 @@ define('CDBT', 'custom-database-tables'); // This plugin domain name
 // Check environment
 $current_php_version = phpversion();
 $required_php_version = '5.4';
-if (version_compare( $required_php_version, $current_php_version, '>=' )) {
-  $message = sprintf( 'Your server is running PHP version %s but this plugin requires at least PHP %s. Please run an upgrade.', $current_php_version, $required_php_version);
-  $notification_html = '<div id="message" class="%s"><p>%s</p></div>';
-  printf( $notification_html, 'error', $message );
-  return false;
+if (version_compare($required_php_version, $current_php_version, '>=')) {
+    $message = sprintf('Your server is running PHP version %s but this plugin requires at least PHP %s. Please run an upgrade.', $current_php_version, $required_php_version);
+    $notification_html = '<div id="message" class="%s"><p>%s</p></div>';
+    printf($notification_html, 'error', $message);
+    return false;
 } else {
-  require_once plugin_dir_path(__FILE__) . 'functions.php';
+    require_once plugin_dir_path(__FILE__) . 'functions.php';
   
-  CustomDataBaseTables\Lib\factory( 'set_global' );
+    CustomDataBaseTables\Lib\factory('set_global');
 }

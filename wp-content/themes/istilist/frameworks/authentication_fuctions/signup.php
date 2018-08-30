@@ -1,8 +1,8 @@
 <?php ob_start(); ?>
 <?php
-if(isset($_POST['register'])){
+if (isset($_POST['register'])) {
     global $wpdb;
-    if(email_exists($_POST['email_address'])){
+    if (email_exists($_POST['email_address'])) {
         $errorCode = 1;
     } else {
         $new_user_id = wp_insert_user(
@@ -16,76 +16,76 @@ if(isset($_POST['register'])){
                 'user_registered'	=> date('Y-m-d H:i:s')
             )
         );
-        add_user_meta($new_user_id,'phone', $_POST['phone']);
-        add_user_meta($new_user_id,'city', $_POST['city']);
-        add_user_meta($new_user_id,'state', $_POST['state']);
-        add_user_meta($new_user_id,'zipcode', $_POST['zipcode']);
-        add_user_meta($new_user_id,'country', $_POST['country']);
+        add_user_meta($new_user_id, 'phone', $_POST['phone']);
+        add_user_meta($new_user_id, 'city', $_POST['city']);
+        add_user_meta($new_user_id, 'state', $_POST['state']);
+        add_user_meta($new_user_id, 'zipcode', $_POST['zipcode']);
+        add_user_meta($new_user_id, 'country', $_POST['country']);
         
-        if(!empty($_SESSION)){
-            foreach ($_SESSION as $key=>$val){
-                if(!update_user_meta( $new_user_id, $key, $val )){
-                	add_user_meta( $new_user_id, $key, $val, true );
+        if (!empty($_SESSION)) {
+            foreach ($_SESSION as $key=>$val) {
+                if (!update_user_meta($new_user_id, $key, $val)) {
+                    add_user_meta($new_user_id, $key, $val, true);
                 }
             }
         }
         
         $use_woocommerce = 1;
         
-        if($use_woocommerce == 1){
+        if ($use_woocommerce == 1) {
             // for billing
-            add_user_meta( $new_user_id, 'billing_first_name', $_POST['fname'] );
-			add_user_meta( $new_user_id, 'billing_last_name', $_POST['lname'] );
-            add_user_meta( $new_user_id, 'billing_company', '' );
-			add_user_meta( $new_user_id, 'billing_address_1', '' );
-			add_user_meta( $new_user_id, 'billing_address_2', '' );
-            add_user_meta( $new_user_id, 'billing_phone', $_POST['phone'] );
-			add_user_meta( $new_user_id, 'billing_city', $_POST['city'] );
-			add_user_meta( $new_user_id, 'billing_state', $_POST['state'] );
-			add_user_meta( $new_user_id, 'billing_postcode', $_POST['zipcode'] );
-			add_user_meta( $new_user_id, 'billing_country', $_POST['country'] );
+            add_user_meta($new_user_id, 'billing_first_name', $_POST['fname']);
+            add_user_meta($new_user_id, 'billing_last_name', $_POST['lname']);
+            add_user_meta($new_user_id, 'billing_company', '');
+            add_user_meta($new_user_id, 'billing_address_1', '');
+            add_user_meta($new_user_id, 'billing_address_2', '');
+            add_user_meta($new_user_id, 'billing_phone', $_POST['phone']);
+            add_user_meta($new_user_id, 'billing_city', $_POST['city']);
+            add_user_meta($new_user_id, 'billing_state', $_POST['state']);
+            add_user_meta($new_user_id, 'billing_postcode', $_POST['zipcode']);
+            add_user_meta($new_user_id, 'billing_country', $_POST['country']);
             
             // for Shipping
-            add_user_meta( $new_user_id, 'shipping_first_name', $_POST['fname'] );
-			add_user_meta( $new_user_id, 'shipping_last_name', $_POST['lname'] );
-            add_user_meta( $new_user_id, 'shipping_company', '' );
-			add_user_meta( $new_user_id, 'shipping_address_1', '' );
-			add_user_meta( $new_user_id, 'shipping_address_2', '' );
-            add_user_meta( $new_user_id, 'shipping_phone', $_POST['phone'] );
-			add_user_meta( $new_user_id, 'shipping_city', $_POST['city'] );
-			add_user_meta( $new_user_id, 'shipping_state', $_POST['state'] );
-			add_user_meta( $new_user_id, 'shipping_postcode', $_POST['zipcode'] );
-			add_user_meta( $new_user_id, 'shipping_country', $_POST['country'] );
-        } 
+            add_user_meta($new_user_id, 'shipping_first_name', $_POST['fname']);
+            add_user_meta($new_user_id, 'shipping_last_name', $_POST['lname']);
+            add_user_meta($new_user_id, 'shipping_company', '');
+            add_user_meta($new_user_id, 'shipping_address_1', '');
+            add_user_meta($new_user_id, 'shipping_address_2', '');
+            add_user_meta($new_user_id, 'shipping_phone', $_POST['phone']);
+            add_user_meta($new_user_id, 'shipping_city', $_POST['city']);
+            add_user_meta($new_user_id, 'shipping_state', $_POST['state']);
+            add_user_meta($new_user_id, 'shipping_postcode', $_POST['zipcode']);
+            add_user_meta($new_user_id, 'shipping_country', $_POST['country']);
+        }
         
         $key = $wpdb->get_var($wpdb->prepare("SELECT user_activation_key FROM $wpdb->users WHERE user_login = %s", $_POST['email_address']));
-        if(empty($key)) {
-    	    $key = wp_generate_password(20, false);
-    		$wpdb->update($wpdb->users, array('user_activation_key' => $key), array('user_login' => $_POST['email_address']));
+        if (empty($key)) {
+            $key = wp_generate_password(20, false);
+            $wpdb->update($wpdb->users, array('user_activation_key' => $key), array('user_login' => $_POST['email_address']));
         }
         // mail to user
         $to1 = $_POST['email_address'];
-    	$from1 = "no-reply@".$_SERVER['HTTP_HOST'];
-    	$headers1 = 'From: '.$from1. "\r\n";
+        $from1 = "no-reply@".$_SERVER['HTTP_HOST'];
+        $headers1 = 'From: '.$from1. "\r\n";
         $headers1 .= "Reply-To: ".get_option('admin_email')."\r\n";
-        $headers1 .= "MIME-Version: 1.0\n"; 
+        $headers1 .= "MIME-Version: 1.0\n";
         $headers1 .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-    	$subject1 = "Activate your account"; 
-        if($_POST['fromcheckout'] == 1){
+        $subject1 = "Activate your account";
+        if ($_POST['fromcheckout'] == 1) {
             $msg1 = 'Welcome to Tuxedo. Please click on the link to complete the registration process<br><br>Activation Link :<a href="'.get_site_url().'/activation?key='.$key.'&fc=1" target="_blank">'.get_site_url().'/activation?key='.$key.'</a><br><br>Regards,<br>'.$admin_name;
         } else {
             $msg1 = 'Welcome to Tuxedo. Please click on the link to complete the registration process<br><br>Activation Link :<a href="'.get_site_url().'/activation?key='.$key.'" target="_blank">'.get_site_url().'/activation?key='.$key.'</a><br><br>Regards,<br>'.$admin_name;
         }
-    	wp_mail( $to1, $subject1, $msg1, $headers1 );
+        wp_mail($to1, $subject1, $msg1, $headers1);
         // Mail to admin
         $admin_name = get_bloginfo('name');
         $to = get_option('admin_email');
-    	$from = "no-reply@".$_SERVER['HTTP_HOST'];
-    	$headers = 'From: '.$from . "\r\n";
+        $from = "no-reply@".$_SERVER['HTTP_HOST'];
+        $headers = 'From: '.$from . "\r\n";
         $headers .= "Reply-To: ".get_option('admin_email')."\r\n";
-        $headers .= "MIME-Version: 1.0\n"; 
+        $headers .= "MIME-Version: 1.0\n";
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-    	$subject = "New User registered"; 
+        $subject = "New User registered";
         $msg ='<strong>New User registered</strong><br><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="45%"><strong>Name : </strong></td>
@@ -116,16 +116,18 @@ if(isset($_POST['register'])){
                     <td>'.$_POST['country'].'</td>
                   </tr>
                 </table><br><br>Regards,<br>'.$admin_name;
-    	wp_mail( $to, $subject, $msg, $headers );
+        wp_mail($to, $subject, $msg, $headers);
         header("Location: ".get_bloginfo('home')."/thank-you/?action=".encripted('registration'));
     }
 }
 ?>
 <div class="commonForm">
     <h2 style="text-align: center;">Signup</h2>
-    <?php if($errorCode == 1){ ?>
+    <?php if ($errorCode == 1) {
+    ?>
         <div class="errorMsg">Email address already exists. Please select different valid email address.</div>
-    <?php }?>
+    <?php
+}?>
     <form id="forms" action="" method="post">
         <div>
             <label>First Name <span>*</span></label>
@@ -157,10 +159,11 @@ if(isset($_POST['register'])){
                 <option>Select Country</option>
                 <?php 
                     $country_arr = WC()->countries->get_allowed_countries();
-                    foreach($country_arr as $key=>$data) {
-                ?>
+                    foreach ($country_arr as $key=>$data) {
+                        ?>
                 <option value="<?php echo $key; ?>"><?php echo $data; ?></option>
-                <?php } ?>
+                <?php
+                    } ?>
             </select>
         </div>
         <div id="response"></div>
@@ -177,10 +180,10 @@ if(isset($_POST['register'])){
             <label>Country <span>*</span></label>
             <select name="country">
                 <option value="">Select Country</option>
-                <?php //$xml=simplexml_load_file(get_template_directory()."/theme-framework-lib/authentication_fuctions/country.xml") or die("Error: Cannot create object"); ?>
-                <?php //foreach($xml->children() as $country) { ?>
-                <option value="<?php //echo $country->iso_code; ?>"><?php //echo $country->name; ?></option>
-                <?php // } ?>
+                <?php //$xml=simplexml_load_file(get_template_directory()."/theme-framework-lib/authentication_fuctions/country.xml") or die("Error: Cannot create object");?>
+                <?php //foreach($xml->children() as $country) {?>
+                <option value="<?php //echo $country->iso_code;?>"><?php //echo $country->name;?></option>
+                <?php // }?>
             </select>
         </div>
          -->

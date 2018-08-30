@@ -8,8 +8,8 @@
  * @author Jon Gales http://www.jongales.com/blog/2009/09/24/php-class-to-write-csv-files/
  */
 
-class CSV_Writer {
-
+class CSV_Writer
+{
     public $data = array();
     public $deliminator;
 
@@ -20,10 +20,9 @@ class CSV_Writer {
      * @param array $data
      * @param string $deliminator
      */
-    function __construct($data, $deliminator = ",")
+    public function __construct($data, $deliminator = ",")
     {
-        if (!is_array($data))
-        {
+        if (!is_array($data)) {
             throw new Exception('CSV_Writer only accepts data as arrays');
         }
 
@@ -44,8 +43,7 @@ class CSV_Writer {
      */
     public function output()
     {
-        foreach ($this->data as $row)
-        {
+        foreach ($this->data as $row) {
             $quoted_data = array_map(array('CSV_Writer', 'wrap_with_quotes'), $row);
             echo sprintf("%s\n", implode($this->deliminator, $quoted_data));
         }
@@ -63,5 +61,3 @@ class CSV_Writer {
         header("Content-disposition: attachment; filename={$name}.csv");
     }
 }
-
-?>

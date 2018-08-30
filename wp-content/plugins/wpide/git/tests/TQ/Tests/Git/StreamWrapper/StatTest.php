@@ -40,20 +40,23 @@ class FileStatTest extends \PHPUnit_Framework_TestCase
         mkdir(TESTS_TMP_PATH, 0777, true);
         mkdir(TESTS_REPO_PATH_1, 0777, true);
 
-        exec(sprintf('cd %s && %s init',
+        exec(sprintf(
+            'cd %s && %s init',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY
         ));
 
         $path   = TESTS_REPO_PATH_1.'/test.txt';
         file_put_contents($path, 'File 1');
-        exec(sprintf('cd %s && %s add %s',
+        exec(sprintf(
+            'cd %s && %s add %s',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY,
             escapeshellarg($path)
         ));
 
-        exec(sprintf('cd %s && %s commit --message=%s',
+        exec(sprintf(
+            'cd %s && %s commit --message=%s',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY,
             escapeshellarg('Commit 1')
@@ -62,13 +65,15 @@ class FileStatTest extends \PHPUnit_Framework_TestCase
         $path   = TESTS_REPO_PATH_1.'/directory';
         mkdir($path, 0777);
         file_put_contents($path.'/test.txt', 'Directory File 1');
-        exec(sprintf('cd %s && %s add %s',
+        exec(sprintf(
+            'cd %s && %s add %s',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY,
             escapeshellarg($path)
         ));
 
-        exec(sprintf('cd %s && %s commit --message=%s',
+        exec(sprintf(
+            'cd %s && %s commit --message=%s',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY,
             escapeshellarg('Commit 2')
@@ -76,13 +81,15 @@ class FileStatTest extends \PHPUnit_Framework_TestCase
 
         $path   = TESTS_REPO_PATH_1.'/test.txt';
         file_put_contents($path, 'File 1 New');
-        exec(sprintf('cd %s && %s add %s',
+        exec(sprintf(
+            'cd %s && %s add %s',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY,
             escapeshellarg($path)
         ));
 
-        exec(sprintf('cd %s && %s commit --message=%s',
+        exec(sprintf(
+            'cd %s && %s commit --message=%s',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY,
             escapeshellarg('Commit 3')
@@ -120,7 +127,6 @@ class FileStatTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(26, count($stat));
         $this->assertEquals(0100000, $stat['mode'] & 0100000);
         $this->assertEquals(10, $stat['size']);
-
     }
 
     public function testUrlStatDirWorkingDirectory()
@@ -138,7 +144,6 @@ class FileStatTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(26, count($stat));
         $this->assertEquals(0100000, $stat['mode'] & 0100000);
         $this->assertEquals(6, $stat['size']);
-
     }
 
     public function testUrlStatDirHistory()
@@ -149,4 +154,3 @@ class FileStatTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0040000, $stat['mode'] & 0040000);
     }
 }
-

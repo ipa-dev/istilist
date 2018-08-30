@@ -20,19 +20,20 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if ( ! class_exists( 'ReduxFramework_color' ) ) {
+if (! class_exists('ReduxFramework_color')) {
 
     /**
      * Main ReduxFramework_color class
      *
      * @since       1.0.0
      */
-    class ReduxFramework_color {
+    class ReduxFramework_color
+    {
 
         /**
          * Field Constructor.
@@ -42,8 +43,8 @@ if ( ! class_exists( 'ReduxFramework_color' ) ) {
          * @access        public
          * @return        void
          */
-        function __construct( $field = array(), $value = '', $parent ) {
-
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
@@ -57,20 +58,19 @@ if ( ! class_exists( 'ReduxFramework_color' ) ) {
          * @access        public
          * @return        void
          */
-        public function render() {
-
-            echo '<input data-id="' . $this->field['id'] . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" id="' . $this->field['id'] . '-color" class="redux-color redux-color-init ' . $this->field['class'] . '"  type="text" value="' . $this->value . '" data-oldcolor=""  data-default-color="' . ( isset( $this->field['default'] ) ? $this->field['default'] : "" ) . '" />';
+        public function render()
+        {
+            echo '<input data-id="' . $this->field['id'] . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" id="' . $this->field['id'] . '-color" class="redux-color redux-color-init ' . $this->field['class'] . '"  type="text" value="' . $this->value . '" data-oldcolor=""  data-default-color="' . (isset($this->field['default']) ? $this->field['default'] : "") . '" />';
             echo '<input type="hidden" class="redux-saved-color" id="' . $this->field['id'] . '-saved-color' . '" value="">';
 
-            if ( ! isset( $this->field['transparent'] ) || $this->field['transparent'] !== false ) {
-
+            if (! isset($this->field['transparent']) || $this->field['transparent'] !== false) {
                 $tChecked = "";
 
-                if ( $this->value == "transparent" ) {
+                if ($this->value == "transparent") {
                     $tChecked = ' checked="checked"';
                 }
 
-                echo '<label for="' . $this->field['id'] . '-transparency" class="color-transparency-check"><input type="checkbox" class="checkbox color-transparency ' . $this->field['class'] . '" id="' . $this->field['id'] . '-transparency" data-id="' . $this->field['id'] . '-color" value="1"' . $tChecked . '> ' . __( 'Transparent', 'redux-framework' ) . '</label>';
+                echo '<label for="' . $this->field['id'] . '-transparency" class="color-transparency-check"><input type="checkbox" class="checkbox color-transparency ' . $this->field['class'] . '" id="' . $this->field['id'] . '-transparency" data-id="' . $this->field['id'] . '-color" value="1"' . $tChecked . '> ' . __('Transparent', 'redux-framework') . '</label>';
             }
         }
 
@@ -82,12 +82,13 @@ if ( ! class_exists( 'ReduxFramework_color' ) ) {
          * @access        public
          * @return        void
          */
-        public function enqueue() {
+        public function enqueue()
+        {
             if ($this->parent->args['dev_mode']) {
-                wp_enqueue_style( 'redux-color-picker-css' );
+                wp_enqueue_style('redux-color-picker-css');
             }
             
-            wp_enqueue_style( 'wp-color-picker' );
+            wp_enqueue_style('wp-color-picker');
             
             wp_enqueue_script(
                 'redux-field-color-js',
@@ -98,23 +99,23 @@ if ( ! class_exists( 'ReduxFramework_color' ) ) {
             );
         }
 
-        public function output() {
+        public function output()
+        {
             $style = '';
 
-            if ( ! empty( $this->value ) ) {
-                $mode = ( isset( $this->field['mode'] ) && ! empty( $this->field['mode'] ) ? $this->field['mode'] : 'color' );
+            if (! empty($this->value)) {
+                $mode = (isset($this->field['mode']) && ! empty($this->field['mode']) ? $this->field['mode'] : 'color');
 
                 $style .= $mode . ':' . $this->value . ';';
 
-                if ( ! empty( $this->field['output'] ) && is_array( $this->field['output'] ) ) {
-                    $css = Redux_Functions::parseCSS( $this->field['output'], $style, $this->value );
+                if (! empty($this->field['output']) && is_array($this->field['output'])) {
+                    $css = Redux_Functions::parseCSS($this->field['output'], $style, $this->value);
                     $this->parent->outputCSS .= $css;
                 }
 
-                if ( ! empty( $this->field['compiler'] ) && is_array( $this->field['compiler'] ) ) {
-                    $css = Redux_Functions::parseCSS( $this->field['compiler'], $style, $this->value );
+                if (! empty($this->field['compiler']) && is_array($this->field['compiler'])) {
+                    $css = Redux_Functions::parseCSS($this->field['compiler'], $style, $this->value);
                     $this->parent->compilerCSS .= $css;
-
                 }
             }
         }

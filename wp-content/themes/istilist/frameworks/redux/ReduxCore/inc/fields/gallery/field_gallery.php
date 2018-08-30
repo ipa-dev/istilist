@@ -19,19 +19,20 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if ( ! class_exists( 'ReduxFramework_gallery' ) ) {
+if (! class_exists('ReduxFramework_gallery')) {
 
     /**
      * Main ReduxFramework_gallery class
      *
      * @since       3.0.0
      */
-    class ReduxFramework_gallery {
+    class ReduxFramework_gallery
+    {
 
         /**
          * Field Constructor.
@@ -41,7 +42,8 @@ if ( ! class_exists( 'ReduxFramework_gallery' ) ) {
          * @access      public
          * @return      void
          */
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
@@ -55,14 +57,15 @@ if ( ! class_exists( 'ReduxFramework_gallery' ) ) {
          * @access      public
          * @return      void
          */
-        public function render() {
+        public function render()
+        {
             echo '<div class="screenshot">';
 
-            if ( ! empty( $this->value ) ) {
-                $ids = explode( ',', $this->value );
+            if (! empty($this->value)) {
+                $ids = explode(',', $this->value);
 
-                foreach ( $ids as $attachment_id ) {
-                    $img = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+                foreach ($ids as $attachment_id) {
+                    $img = wp_get_attachment_image_src($attachment_id, 'thumbnail');
                     echo '<a class="of-uploaded-image" href="' . $img[0] . '">';
                     echo '<img class="redux-option-image" id="image_' . $this->field['id'] . '_' . $attachment_id . '" src="' . $img[0] . '" alt="" target="_blank" rel="external" />';
                     echo '</a>';
@@ -70,9 +73,9 @@ if ( ! class_exists( 'ReduxFramework_gallery' ) ) {
             }
 
             echo '</div>';
-            echo '<a href="#" onclick="return false;" id="edit-gallery" class="gallery-attachments button button-primary">' . __( 'Add/Edit Gallery', 'redux-framework' ) . '</a> ';
-            echo '<a href="#" onclick="return false;" id="clear-gallery" class="gallery-attachments button">' . __( 'Clear Gallery', 'redux-framework' ) . '</a>';
-            echo '<input type="hidden" class="gallery_values ' . $this->field['class'] . '" value="' . esc_attr( $this->value ) . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" />';
+            echo '<a href="#" onclick="return false;" id="edit-gallery" class="gallery-attachments button button-primary">' . __('Add/Edit Gallery', 'redux-framework') . '</a> ';
+            echo '<a href="#" onclick="return false;" id="clear-gallery" class="gallery-attachments button">' . __('Clear Gallery', 'redux-framework') . '</a>';
+            echo '<input type="hidden" class="gallery_values ' . $this->field['class'] . '" value="' . esc_attr($this->value) . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" />';
         }
 
         /**
@@ -83,14 +86,14 @@ if ( ! class_exists( 'ReduxFramework_gallery' ) ) {
          * @access      public
          * @return      void
          */
-        public function enqueue() {
-
-            if ( function_exists( 'wp_enqueue_media' ) ) {
+        public function enqueue()
+        {
+            if (function_exists('wp_enqueue_media')) {
                 wp_enqueue_media();
             } else {
-                wp_enqueue_script( 'media-upload' );
-                wp_enqueue_script( 'thickbox' );
-                wp_enqueue_style( 'thickbox' );
+                wp_enqueue_script('media-upload');
+                wp_enqueue_script('thickbox');
+                wp_enqueue_style('thickbox');
             }
 
             wp_enqueue_script(

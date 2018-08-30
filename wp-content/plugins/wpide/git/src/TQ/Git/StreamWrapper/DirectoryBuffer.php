@@ -48,7 +48,7 @@ class DirectoryBuffer implements \Iterator
 {
     /**
      * The directory listing
-     * 
+     *
      * @var array
      */
     protected $listing;

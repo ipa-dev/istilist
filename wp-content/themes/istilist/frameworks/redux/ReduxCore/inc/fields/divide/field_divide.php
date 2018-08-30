@@ -20,19 +20,20 @@
  */
 
 // Exit if accessed directly
-if ( !defined ( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if ( !class_exists ( 'ReduxFramework_divide' ) ) {
+if (!class_exists('ReduxFramework_divide')) {
 
     /**
      * Main ReduxFramework_divide class
      *
      * @since       1.0.0
      */
-    class ReduxFramework_divide {
+    class ReduxFramework_divide
+    {
 
         /**
          * Field Constructor.
@@ -42,7 +43,8 @@ if ( !class_exists ( 'ReduxFramework_divide' ) ) {
          * @access        public
          * @return        void
          */
-        function __construct ( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field = $field;
             $this->value = $value;
@@ -56,7 +58,8 @@ if ( !class_exists ( 'ReduxFramework_divide' ) ) {
          * @access        public
          * @return        void
          */
-        public function render () {
+        public function render()
+        {
             echo '</td></tr></table>';
             echo '<div data-id="' . $this->field[ 'id' ] . '" id="divide-' . $this->field[ 'id' ] . '" class="divide ' . $this->field[ 'class' ] . '"><div class="inner"><span>&nbsp;</span></div></div>';
             echo '<table class="form-table no-border"><tbody><tr><th></th><td>';
@@ -70,7 +73,8 @@ if ( !class_exists ( 'ReduxFramework_divide' ) ) {
          * @access      public
          * @return      void
          */
-        public function enqueue() {
+        public function enqueue()
+        {
             if ($this->parent->args['dev_mode']) {
                 wp_enqueue_style(
                     'redux-field-divide',

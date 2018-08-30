@@ -6,352 +6,358 @@
  */
  
  
-if( !defined( 'ABSPATH') ) exit();
+if (!defined('ABSPATH')) {
+    exit();
+}
 
-class RevSliderObjectLibrary {
-	
-	private $library_list		= 'library.php';
-	private $library_download	= 'download.php';
-	
-	private $object_thumb_path	= '/revslider/objects/thumbs/';
-	private $object_orig_path	= '/revslider/objects/';
-	
-	private $curl_check	= null;
-	
-	const LIBRARY_VERSION		= '1.0.0';
-	
-	
-	/**
-	 * get list of objects
-	 * @since: 5.3.0
-	 */
-	public function _get_list($force = false){
-		global $wp_version, $rslb;
-		
-		$last_check	= get_option('revslider-library-check');
-		
-		if($last_check == false){ //first time called
-			$last_check = 1296001;
-			update_option('revslider-library-check',  time());
-		}
-		
-		// Get latest object list
-		if(time() - $last_check > 1296000 || $force == true){ //30 days
-			
-			update_option('revslider-library-check',  time());
-			
-			$code = get_option('revslider-code', '');
-			$library_version = self::LIBRARY_VERSION;
-			
-			$validated = get_option('revslider-valid', 'false');
-			if($validated == 'false'){
-				$code = '';
-			}
-			
-			$rattr = array(
-				'code' => urlencode($code),
-				'library_version' => urlencode($library_version),
-				'version' => urlencode(RevSliderGlobals::SLIDER_REVISION),
-				'product' => urlencode(RS_PLUGIN_SLUG)
-			);
-			
-			$done	= false;
-			$count	= 0;
-			do{	
-				$url		= $rslb->get_url('library');
-				$request	= wp_remote_post($url.'/'.$this->library_list, array(
-					'user-agent' => 'WordPress/'.$wp_version.'; '.get_bloginfo('url'),
-					'body' => $rattr
-				));
-				$response_code = wp_remote_retrieve_response_code( $request );
-				if($response_code == 200){
-					$done = true;
-				}else{
-					$rslb->move_server_list();
-				}
-				$count++;
-			}while($done == false && $count < 5);
-				
-			if(!is_wp_error($request)) {
-				if($response = maybe_unserialize($request['body'])) {
-					
-					$library = json_decode($response, true);
-					
-					if(is_array($library)) {
-						update_option('rs-library', $library, false);
-					}
-				}
-			}
-		}
-	}
-	
-	
-	public function _get_object_data($object_handle){
-		$data = array('thumb' => $object_handle, 'orig' => $object_handle);
-		
-		$upload_dir = wp_upload_dir(); // Set upload folder
-		$file = $upload_dir['basedir'] . $this->object_thumb_path . $object_handle;
-		if(file_exists($file)){
-			$url_file = $upload_dir['baseurl'] . $this->object_thumb_path . $object_handle;
-			$data['thumb'] = $url_file;
-		}
-		
-		$file = $upload_dir['basedir'] . $this->object_orig_path . $object_handle;
-		if(file_exists($file)){
-			$url_file = $upload_dir['baseurl'] . $this->object_orig_path . $object_handle;
-			$data['orig'] = $url_file;
-			//check 
-		}
-		
-		return $data;
-	}
-	
-	
-	/**
-	 * check if given URL is an object from object library
-	 * @since: 5.3.0
-	 */
-	public function _is_object($url){
-		$is_object = false;
-		
-		$upload_dir				  = wp_upload_dir(); // Set upload folder
-		//$upload_directory         = $upload_dir['basedir'] . $this->object_orig_path;
-		$upload_url         	  = $upload_dir['baseurl'] . $this->object_orig_path;
-		$file_name = explode('/', $url);
-		$file_name = $file_name[count($file_name) - 1];
-		
-		if(strpos($url, $upload_url) !== false){
-			//check now if handle is inside of the array of objects
-			$obj = $this->load_objects();
-			$online = $obj['online']['objects'];
-			
-			foreach($online as $object){
-				if($object['handle'] == $file_name){
-					$is_object = true;
-					break;
-				}
-			}
-		}
-		
-		return $is_object;
-	}
-	
-	
-	/**
-	 * check if given URL is existing in the object library
-	 * @since: 5.3.0
-	 */
-	public function _does_exist($url){
-		$does_exist = false;
-		
-		$upload_dir				  = wp_upload_dir(); // Set upload folder
-		$upload_directory         = $upload_dir['basedir'] . $this->object_orig_path;
-		$upload_url         	  = $upload_dir['baseurl'] . $this->object_orig_path;
-		
-		$url = str_replace($upload_url, '', $url);
-		
-		if(file_exists($upload_directory.$url)){
-			$does_exist = true;
-		}
-		
-		return $does_exist;
-	}
-	
-	
-	/**
-	 * check if certain object needs to be redownloaded
-	 * @since: 5.3.0
-	 */
-	public function _check_object_exist($object_url){
-		
-		//first check if it is an object
-		$is_obj = $this->_is_object($object_url);
-		
-		//then check if it is existing
-		if($is_obj){
-			if($this->_does_exist($object_url)){
-				//all cool
-			}else{ //if not, redownload if allowed
-				//need to redownload
-				
-				$file_name_with_ending    = explode("/", $object_url);
-				$file_name_with_ending    = $file_name_with_ending[count($file_name_with_ending) - 1];
-				$this->_get_object_thumb($file_name_with_ending, 'orig');
-			}
-		}
-	}
-	
-	
-	/**
-	 * get certain objects thumbnail, download if needed and if not, simply return path
-	 * @since: 5.3.0
-	 */
-	public function _get_object_thumb($object_handle, $type){
-		global $wp_version, $rslb;
-		
-		$error		= '';
-		$path		= ($type == 'thumb') ? $this->object_thumb_path : $path = $this->object_orig_path;
-		$download	= false;
-		$upload_dir	= wp_upload_dir(); // Set upload folder
-		$file		= $upload_dir['basedir'] . $path . $object_handle;
-		$url_file	= $upload_dir['baseurl'] . $path . $object_handle;
-	
-		//check if object thumb is already downloaded
-		$download	= (!file_exists($file)) ? true : false;
-		
-		//check if new version of object thumb is available
-		
-		// Check folder permission and define file location
-		if($download && wp_mkdir_p( $upload_dir['basedir'].$path ) ) {
-			
-			$curl = ($this->check_curl_connection()) ? new WP_Http_Curl() : false;
-			
-			$file = $upload_dir['basedir'] . $path . $object_handle;
-			
-			if(!file_exists($file) || isset($temp['push_image'])){
-				$image_data = false;
-				if($curl !== false){
-					$validated = get_option('revslider-valid', 'false');
-					
-					if($validated == 'false' && $type != 'thumb'){
-						$error = __('Plugin not activated', 'revslider');
-					}else{
-						$code = ($validated == 'false') ? '' : get_option('revslider-code', '');
-						
-						$done	= false;
-						$count	= 0;
-						do{	
-							$url		= $rslb->get_url('library');
-							$image_data = wp_remote_post($url.'/'.$this->library_download, array(
-								'user-agent' => 'WordPress/'.$wp_version.'; '.get_bloginfo('url'),
-								'body' => array(
-									'code' => urlencode($code),
-									'library_version' => urlencode(self::LIBRARY_VERSION),
-									'version' => urlencode(RevSliderGlobals::SLIDER_REVISION),
-									'handle' => urlencode($object_handle),
-									'download' => urlencode($type),
-									'product' => urlencode(RS_PLUGIN_SLUG)
-								),
-								'timeout' => 45 
-							));
-							$response_code = wp_remote_retrieve_response_code( $image_data );
-							if($response_code == 200){
-								$done = true;
-							}else{
-								$rslb->move_server_list();
-							}
-							
-							$count++;
-						}while($done == false && $count < 5);
-						
-						if(!is_wp_error($image_data) && isset($image_data['body']) && isset($image_data['response']) && isset($image_data['response']['code']) && $image_data['response']['code'] == '200'){
-							$image_data = $image_data['body'];
-							//check body for errors in here
-							$check = json_decode($image_data, true);
-							if(!empty($check)){
-								if(isset($check['error'])){
-									$image_data = false;
-									$error = $check['error'];
-								}
-							}elseif(trim($image_data) == ''){
-								$error = __('No data received', 'revslider');
-							}
-						}else{
-							$image_data = false;
-							$error = __('Error downloading object', 'revslider');
-						}
-					}
-				}else{
-					//cant download file
-				}
-				if($image_data !== false){
-					@mkdir(dirname($file));
-					@file_put_contents( $file, $image_data );
-					
-					$this->create_image_dimensions($object_handle);
-					
-				}else{//could not connect to server
-					$error = __('Error downloading object', 'revslider');
-				}
-			}else{//use default image
-				$error = __('Error downloading object', 'revslider');
-			}
-		}else{//use default images
-			$error = __('Error downloading object', 'revslider');
-		}
-		
-		if($error !== ''){
-			return array('error' => true);
-		}
-		
-		$width = false;
-		$height = false;
-		//get dimensions of image
-		$imgsize = getimagesize( $file );
-		if($imgsize !== false){
-			$width = $imgsize['0'];
-			$height = $imgsize['1'];
-		}
-		
-		return array('error' => false, 'url' => $url_file, 'width' => $width, 'height' => $height);
-		
-	}
-	
-	
-	/**
-	 * import object to media library
-	 * @since: 5.3.0
-	 */
-	public function _import_object($file_path){
-		$curl = ($this->check_curl_connection()) ? new WP_Http_Curl() : false;
-		
-		$upload_dir = wp_upload_dir(); // Set upload folder
-		$path = $this->object_orig_path;
-		$object_handle = basename($file_path);
-		$file = $upload_dir['basedir'] . $path . $object_handle;
-		$url_file = $upload_dir['baseurl'] . $path . $object_handle;
-		
-		$image_handle = @fopen($file_path, "r");
-		
-		if($image_handle != false){
-			$image_data = stream_get_contents($image_handle);
-			if($image_data !== false){
-				@mkdir(dirname($file));
-				@file_put_contents( $file, $image_data );
-				
-				$this->create_image_dimensions($object_handle);
-				
-				return array('path' => $url_file);
-			}
-		}
-		
-		return false;
-	}
-	
-	
-	public function write_markup(){
-		?>
+class RevSliderObjectLibrary
+{
+    private $library_list		= 'library.php';
+    private $library_download	= 'download.php';
+    
+    private $object_thumb_path	= '/revslider/objects/thumbs/';
+    private $object_orig_path	= '/revslider/objects/';
+    
+    private $curl_check	= null;
+    
+    const LIBRARY_VERSION		= '1.0.0';
+    
+    
+    /**
+     * get list of objects
+     * @since: 5.3.0
+     */
+    public function _get_list($force = false)
+    {
+        global $wp_version, $rslb;
+        
+        $last_check	= get_option('revslider-library-check');
+        
+        if ($last_check == false) { //first time called
+            $last_check = 1296001;
+            update_option('revslider-library-check', time());
+        }
+        
+        // Get latest object list
+        if (time() - $last_check > 1296000 || $force == true) { //30 days
+            
+            update_option('revslider-library-check', time());
+            
+            $code = get_option('revslider-code', '');
+            $library_version = self::LIBRARY_VERSION;
+            
+            $validated = get_option('revslider-valid', 'false');
+            if ($validated == 'false') {
+                $code = '';
+            }
+            
+            $rattr = array(
+                'code' => urlencode($code),
+                'library_version' => urlencode($library_version),
+                'version' => urlencode(RevSliderGlobals::SLIDER_REVISION),
+                'product' => urlencode(RS_PLUGIN_SLUG)
+            );
+            
+            $done	= false;
+            $count	= 0;
+            do {
+                $url		= $rslb->get_url('library');
+                $request	= wp_remote_post($url.'/'.$this->library_list, array(
+                    'user-agent' => 'WordPress/'.$wp_version.'; '.get_bloginfo('url'),
+                    'body' => $rattr
+                ));
+                $response_code = wp_remote_retrieve_response_code($request);
+                if ($response_code == 200) {
+                    $done = true;
+                } else {
+                    $rslb->move_server_list();
+                }
+                $count++;
+            } while ($done == false && $count < 5);
+                
+            if (!is_wp_error($request)) {
+                if ($response = maybe_unserialize($request['body'])) {
+                    $library = json_decode($response, true);
+                    
+                    if (is_array($library)) {
+                        update_option('rs-library', $library, false);
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    public function _get_object_data($object_handle)
+    {
+        $data = array('thumb' => $object_handle, 'orig' => $object_handle);
+        
+        $upload_dir = wp_upload_dir(); // Set upload folder
+        $file = $upload_dir['basedir'] . $this->object_thumb_path . $object_handle;
+        if (file_exists($file)) {
+            $url_file = $upload_dir['baseurl'] . $this->object_thumb_path . $object_handle;
+            $data['thumb'] = $url_file;
+        }
+        
+        $file = $upload_dir['basedir'] . $this->object_orig_path . $object_handle;
+        if (file_exists($file)) {
+            $url_file = $upload_dir['baseurl'] . $this->object_orig_path . $object_handle;
+            $data['orig'] = $url_file;
+            //check
+        }
+        
+        return $data;
+    }
+    
+    
+    /**
+     * check if given URL is an object from object library
+     * @since: 5.3.0
+     */
+    public function _is_object($url)
+    {
+        $is_object = false;
+        
+        $upload_dir				  = wp_upload_dir(); // Set upload folder
+        //$upload_directory         = $upload_dir['basedir'] . $this->object_orig_path;
+        $upload_url         	  = $upload_dir['baseurl'] . $this->object_orig_path;
+        $file_name = explode('/', $url);
+        $file_name = $file_name[count($file_name) - 1];
+        
+        if (strpos($url, $upload_url) !== false) {
+            //check now if handle is inside of the array of objects
+            $obj = $this->load_objects();
+            $online = $obj['online']['objects'];
+            
+            foreach ($online as $object) {
+                if ($object['handle'] == $file_name) {
+                    $is_object = true;
+                    break;
+                }
+            }
+        }
+        
+        return $is_object;
+    }
+    
+    
+    /**
+     * check if given URL is existing in the object library
+     * @since: 5.3.0
+     */
+    public function _does_exist($url)
+    {
+        $does_exist = false;
+        
+        $upload_dir				  = wp_upload_dir(); // Set upload folder
+        $upload_directory         = $upload_dir['basedir'] . $this->object_orig_path;
+        $upload_url         	  = $upload_dir['baseurl'] . $this->object_orig_path;
+        
+        $url = str_replace($upload_url, '', $url);
+        
+        if (file_exists($upload_directory.$url)) {
+            $does_exist = true;
+        }
+        
+        return $does_exist;
+    }
+    
+    
+    /**
+     * check if certain object needs to be redownloaded
+     * @since: 5.3.0
+     */
+    public function _check_object_exist($object_url)
+    {
+        
+        //first check if it is an object
+        $is_obj = $this->_is_object($object_url);
+        
+        //then check if it is existing
+        if ($is_obj) {
+            if ($this->_does_exist($object_url)) {
+                //all cool
+            } else { //if not, redownload if allowed
+                //need to redownload
+                
+                $file_name_with_ending    = explode("/", $object_url);
+                $file_name_with_ending    = $file_name_with_ending[count($file_name_with_ending) - 1];
+                $this->_get_object_thumb($file_name_with_ending, 'orig');
+            }
+        }
+    }
+    
+    
+    /**
+     * get certain objects thumbnail, download if needed and if not, simply return path
+     * @since: 5.3.0
+     */
+    public function _get_object_thumb($object_handle, $type)
+    {
+        global $wp_version, $rslb;
+        
+        $error		= '';
+        $path		= ($type == 'thumb') ? $this->object_thumb_path : $path = $this->object_orig_path;
+        $download	= false;
+        $upload_dir	= wp_upload_dir(); // Set upload folder
+        $file		= $upload_dir['basedir'] . $path . $object_handle;
+        $url_file	= $upload_dir['baseurl'] . $path . $object_handle;
+    
+        //check if object thumb is already downloaded
+        $download	= (!file_exists($file)) ? true : false;
+        
+        //check if new version of object thumb is available
+        
+        // Check folder permission and define file location
+        if ($download && wp_mkdir_p($upload_dir['basedir'].$path)) {
+            $curl = ($this->check_curl_connection()) ? new WP_Http_Curl() : false;
+            
+            $file = $upload_dir['basedir'] . $path . $object_handle;
+            
+            if (!file_exists($file) || isset($temp['push_image'])) {
+                $image_data = false;
+                if ($curl !== false) {
+                    $validated = get_option('revslider-valid', 'false');
+                    
+                    if ($validated == 'false' && $type != 'thumb') {
+                        $error = __('Plugin not activated', 'revslider');
+                    } else {
+                        $code = ($validated == 'false') ? '' : get_option('revslider-code', '');
+                        
+                        $done	= false;
+                        $count	= 0;
+                        do {
+                            $url		= $rslb->get_url('library');
+                            $image_data = wp_remote_post($url.'/'.$this->library_download, array(
+                                'user-agent' => 'WordPress/'.$wp_version.'; '.get_bloginfo('url'),
+                                'body' => array(
+                                    'code' => urlencode($code),
+                                    'library_version' => urlencode(self::LIBRARY_VERSION),
+                                    'version' => urlencode(RevSliderGlobals::SLIDER_REVISION),
+                                    'handle' => urlencode($object_handle),
+                                    'download' => urlencode($type),
+                                    'product' => urlencode(RS_PLUGIN_SLUG)
+                                ),
+                                'timeout' => 45
+                            ));
+                            $response_code = wp_remote_retrieve_response_code($image_data);
+                            if ($response_code == 200) {
+                                $done = true;
+                            } else {
+                                $rslb->move_server_list();
+                            }
+                            
+                            $count++;
+                        } while ($done == false && $count < 5);
+                        
+                        if (!is_wp_error($image_data) && isset($image_data['body']) && isset($image_data['response']) && isset($image_data['response']['code']) && $image_data['response']['code'] == '200') {
+                            $image_data = $image_data['body'];
+                            //check body for errors in here
+                            $check = json_decode($image_data, true);
+                            if (!empty($check)) {
+                                if (isset($check['error'])) {
+                                    $image_data = false;
+                                    $error = $check['error'];
+                                }
+                            } elseif (trim($image_data) == '') {
+                                $error = __('No data received', 'revslider');
+                            }
+                        } else {
+                            $image_data = false;
+                            $error = __('Error downloading object', 'revslider');
+                        }
+                    }
+                } else {
+                    //cant download file
+                }
+                if ($image_data !== false) {
+                    @mkdir(dirname($file));
+                    @file_put_contents($file, $image_data);
+                    
+                    $this->create_image_dimensions($object_handle);
+                } else {//could not connect to server
+                    $error = __('Error downloading object', 'revslider');
+                }
+            } else {//use default image
+                $error = __('Error downloading object', 'revslider');
+            }
+        } else {//use default images
+            $error = __('Error downloading object', 'revslider');
+        }
+        
+        if ($error !== '') {
+            return array('error' => true);
+        }
+        
+        $width = false;
+        $height = false;
+        //get dimensions of image
+        $imgsize = getimagesize($file);
+        if ($imgsize !== false) {
+            $width = $imgsize['0'];
+            $height = $imgsize['1'];
+        }
+        
+        return array('error' => false, 'url' => $url_file, 'width' => $width, 'height' => $height);
+    }
+    
+    
+    /**
+     * import object to media library
+     * @since: 5.3.0
+     */
+    public function _import_object($file_path)
+    {
+        $curl = ($this->check_curl_connection()) ? new WP_Http_Curl() : false;
+        
+        $upload_dir = wp_upload_dir(); // Set upload folder
+        $path = $this->object_orig_path;
+        $object_handle = basename($file_path);
+        $file = $upload_dir['basedir'] . $path . $object_handle;
+        $url_file = $upload_dir['baseurl'] . $path . $object_handle;
+        
+        $image_handle = @fopen($file_path, "r");
+        
+        if ($image_handle != false) {
+            $image_data = stream_get_contents($image_handle);
+            if ($image_data !== false) {
+                @mkdir(dirname($file));
+                @file_put_contents($file, $image_data);
+                
+                $this->create_image_dimensions($object_handle);
+                
+                return array('path' => $url_file);
+            }
+        }
+        
+        return false;
+    }
+    
+    
+    public function write_markup()
+    {
+        ?>
 		<!-- THE OBJECT LIBRARY DIALOG WINDOW -->
-		<div id="dialog_addobj" class="dialog-addobj" title="<?php _e("Add Object Layer",'revslider'); ?>" style="display:none">
+		<div id="dialog_addobj" class="dialog-addobj" title="<?php _e("Add Object Layer", 'revslider'); ?>" style="display:none">
 			<div class="addobj-dialog-inner">
 				<div id="addobj-list-of-items">
 					<div id="addobj-dialog-header">
 						<div class="object_library_search_wrapper">
-							<input type="text" id="obj_library_search" placeholder="<?php _e("Search for Objects...",'revslider'); ?>" /><span id="obj_library_search_trigger"><i class="eg-icon-search"></i></span>
+							<input type="text" id="obj_library_search" placeholder="<?php _e("Search for Objects...", 'revslider'); ?>" /><span id="obj_library_search_trigger"><i class="eg-icon-search"></i></span>
 						</div>												
 						<div id="object_library_type_list_new">
-							<span id="obj_lib_main_cat_filt_all" data-value="all" class="obj_library_cats_filter"><?php _e("ALL",'revslider'); ?></span>
-							<span id="obj_lib_main_cat_filt_allimages" data-value="allimages" class="obj_library_cats_filter all_img_cat"><?php _e("ALL IMAGES",'revslider'); ?></span>
-							<span id="obj_lib_main_cat_filt_svg" data-value="svg" class="obj_library_cats_filter svg_cat"><?php _e("SVG",'revslider'); ?></span>
-							<span id="obj_lib_main_cat_filt_icon" data-value="icon" class="obj_library_cats_filter fonticon_cat"><?php _e("ICON",'revslider'); ?></span>							
-							<span id="obj_lib_main_cat_filt_image" data-value="image" class="obj_library_cats_filter png_cat"><?php _e("PNG",'revslider'); ?></span>
-							<span id="obj_lib_main_cat_filt_bgimage" data-value="bgimage" class="obj_library_cats_filter jpg_cat"><?php _e("JPG",'revslider'); ?></span>
+							<span id="obj_lib_main_cat_filt_all" data-value="all" class="obj_library_cats_filter"><?php _e("ALL", 'revslider'); ?></span>
+							<span id="obj_lib_main_cat_filt_allimages" data-value="allimages" class="obj_library_cats_filter all_img_cat"><?php _e("ALL IMAGES", 'revslider'); ?></span>
+							<span id="obj_lib_main_cat_filt_svg" data-value="svg" class="obj_library_cats_filter svg_cat"><?php _e("SVG", 'revslider'); ?></span>
+							<span id="obj_lib_main_cat_filt_icon" data-value="icon" class="obj_library_cats_filter fonticon_cat"><?php _e("ICON", 'revslider'); ?></span>							
+							<span id="obj_lib_main_cat_filt_image" data-value="image" class="obj_library_cats_filter png_cat"><?php _e("PNG", 'revslider'); ?></span>
+							<span id="obj_lib_main_cat_filt_bgimage" data-value="bgimage" class="obj_library_cats_filter jpg_cat"><?php _e("JPG", 'revslider'); ?></span>
 						</div>			
 						<div id="up-lic-ob-lib">																
-							<div id="licence_obect_library"><i class="fa-icon-copyright"></i><?php _e("License Info",'revslider'); ?></div>
-							<div id="update_obect_library"><i class="eg-icon-arrows-ccw"></i><?php _e("Update Object Library",'revslider'); ?></div>
+							<div id="licence_obect_library"><i class="fa-icon-copyright"></i><?php _e("License Info", 'revslider'); ?></div>
+							<div id="update_obect_library"><i class="eg-icon-arrows-ccw"></i><?php _e("Update Object Library", 'revslider'); ?></div>
 						</div>
-						<div id="object-tag-list" class="object-tag-list"><span id="obj_library_cats_favorite" class="obj_library_cats" data-tag="favorite" data-image="true" data-bgimages="true" data-svg="true"><i class="fa-icon-star-o" style="margin-right: 5px;"></i><?php _e("Favorite",'revslider'); ?></span><span id="obj_library_cats_allico" class="obj_library_cats" data-tag="allicon" data-icon="true" data-bgimages="false" data-svg="false"><i class="fa-icon-folder-o" style="margin-right: 5px;"></i><?php _e("All Icons",'revslider'); ?></span><span id="obj_library_cats_allpng" class="obj_library_cats" data-tag="allpng" data-image="true" data-bgimages="false" data-svg="false"><i class="fa-icon-folder-o" style="margin-right: 5px;"></i><?php _e("All PNG",'revslider'); ?></span><span id="obj_library_cats_alljpg" class="obj_library_cats" data-tag="alljpg" data-image="false" data-bgimages="true" data-svg="false"><i class="fa-icon-folder-o" style="margin-right: 5px;"></i><?php _e("All JPG",'revslider'); ?></span><span id="obj_library_cats_allsvg" class="obj_library_cats" data-tag="allsvg" data-image="false" data-bgimages="false" data-svg="true"><i class="fa-icon-folder-o" style="margin-right: 5px;"></i><?php _e("All SVG",'revslider'); ?></span></div>
+						<div id="object-tag-list" class="object-tag-list"><span id="obj_library_cats_favorite" class="obj_library_cats" data-tag="favorite" data-image="true" data-bgimages="true" data-svg="true"><i class="fa-icon-star-o" style="margin-right: 5px;"></i><?php _e("Favorite", 'revslider'); ?></span><span id="obj_library_cats_allico" class="obj_library_cats" data-tag="allicon" data-icon="true" data-bgimages="false" data-svg="false"><i class="fa-icon-folder-o" style="margin-right: 5px;"></i><?php _e("All Icons", 'revslider'); ?></span><span id="obj_library_cats_allpng" class="obj_library_cats" data-tag="allpng" data-image="true" data-bgimages="false" data-svg="false"><i class="fa-icon-folder-o" style="margin-right: 5px;"></i><?php _e("All PNG", 'revslider'); ?></span><span id="obj_library_cats_alljpg" class="obj_library_cats" data-tag="alljpg" data-image="false" data-bgimages="true" data-svg="false"><i class="fa-icon-folder-o" style="margin-right: 5px;"></i><?php _e("All JPG", 'revslider'); ?></span><span id="obj_library_cats_allsvg" class="obj_library_cats" data-tag="allsvg" data-image="false" data-bgimages="false" data-svg="true"><i class="fa-icon-folder-o" style="margin-right: 5px;"></i><?php _e("All SVG", 'revslider'); ?></span></div>
 					</div>
 					<div id="object_library_results">
 						<div id="object_library_results-inner">
@@ -360,21 +366,21 @@ class RevSliderObjectLibrary {
 				</div>
 			</div>
 			<div id="bg-vs-layer-wrapper">
-				<span id="add_objimage_as_layer"><?php _e("As Layer",'revslider'); ?></span><span class="addthisasbg" id="obj-layer-bg-switcher"></span><span id="add_objimage_as_slidebg"><?php _e("As Slide BG",'revslider'); ?></span>
+				<span id="add_objimage_as_layer"><?php _e("As Layer", 'revslider'); ?></span><span class="addthisasbg" id="obj-layer-bg-switcher"></span><span id="add_objimage_as_slidebg"><?php _e("As Slide BG", 'revslider'); ?></span>
 			</div>
 			
 			<?php
-			$this->write_scripts();
-			?>
+            $this->write_scripts(); ?>
 		</div>
 		<?php
-	}
-	
+    }
+    
 
-	
-	
-	public function write_scripts(){
-		?>
+    
+    
+    public function write_scripts()
+    {
+        ?>
 		<script>
 			var obj_libraries = [];
 
@@ -911,248 +917,256 @@ class RevSliderObjectLibrary {
 			
 			var favoriteObjectsList = [];
 			<?php
-			$obj_favs = $this->get_favorites();
-			if(!empty($obj_favs)){
-				foreach($obj_favs as $fav){
-					?>favoriteObjectsList.push("<?php echo $fav; ?>");
+            $obj_favs = $this->get_favorites();
+        if (!empty($obj_favs)) {
+            foreach ($obj_favs as $fav) {
+                ?>favoriteObjectsList.push("<?php echo $fav; ?>");
 			<?php
-				}
-			}
-			?>
+            }
+        } ?>
 		</script>
 		<?php
-	}
-	
-	
-	public function load_objects(){
-		$obj = array();
-		
-		$svgs = RevSliderBase::get_svg_sets_full();
-		
-		$obj['svg'] = $svgs;
-		
-		$online = get_option('rs-library', array());
-		if(!empty($online)){
-			$obj['online'] = $online;
-		}
-		
-		return $obj;
-	}
-	
-	
-	public function create_image_dimensions($handle, $force = false){
-		$img_editor_test = wp_image_editor_supports(array('methods' => array('resize', 'save')));
-		if($img_editor_test !== true){
-			return false;
-		}
-		
-		$upload_dir				  = wp_upload_dir(); // Set upload folder
-		$upload_directory         = $upload_dir['basedir'] . $this->object_orig_path;
-		$upload_url         	  = $upload_dir['baseurl'] . $this->object_orig_path;
+    }
+    
+    
+    public function load_objects()
+    {
+        $obj = array();
+        
+        $svgs = RevSliderBase::get_svg_sets_full();
+        
+        $obj['svg'] = $svgs;
+        
+        $online = get_option('rs-library', array());
+        if (!empty($online)) {
+            $obj['online'] = $online;
+        }
+        
+        return $obj;
+    }
+    
+    
+    public function create_image_dimensions($handle, $force = false)
+    {
+        $img_editor_test = wp_image_editor_supports(array('methods' => array('resize', 'save')));
+        if ($img_editor_test !== true) {
+            return false;
+        }
+        
+        $upload_dir				  = wp_upload_dir(); // Set upload folder
+        $upload_directory         = $upload_dir['basedir'] . $this->object_orig_path;
+        $upload_url         	  = $upload_dir['baseurl'] . $this->object_orig_path;
 
-		$image_path               = $upload_directory.$handle;
+        $image_path               = $upload_directory.$handle;
 
-		$file_name_with_ending    = explode("/", $image_path);
-		$file_name_with_ending    = $file_name_with_ending[count($file_name_with_ending) - 1];
-		$file_name_without_ending = explode(".", $file_name_with_ending);
-		$file_ending              = $file_name_without_ending[count($file_name_without_ending) - 1];
-		$file_name_without_ending = $file_name_without_ending[count($file_name_without_ending) - 2];
+        $file_name_with_ending    = explode("/", $image_path);
+        $file_name_with_ending    = $file_name_with_ending[count($file_name_with_ending) - 1];
+        $file_name_without_ending = explode(".", $file_name_with_ending);
+        $file_ending              = $file_name_without_ending[count($file_name_without_ending) - 1];
+        $file_name_without_ending = $file_name_without_ending[count($file_name_without_ending) - 2];
 
-		$sizes = array('75', '50', '25', '10');
+        $sizes = array('75', '50', '25', '10');
 
-		$image = wp_get_image_editor($image_path);
-		$imgsize = getimagesize($image_path);
-		
-		if(!is_wp_error($image) && $imgsize !== false) {
-			$orig_width = $imgsize['0'];
-			$orig_height = $imgsize['1'];
-			
-			foreach($sizes as $size){
-				$modified_file_name_without_ending = $file_name_without_ending . '-' . $size;
-				if(!file_exists($upload_directory.$modified_file_name_without_ending.'.'.$file_ending) || $force) {
-					
-					$width = round($orig_width / 100 * $size, 0);
-					$height = round($orig_height / 100 * $size, 0);
-					
-					$image->resize($width, $height);
-					$image->save($upload_directory.$modified_file_name_without_ending.'.'.$file_ending);
-				}
-			}
-		}else{ //cant create images
-			return false;
-		}
-		
-		return true;
-	}
-	
-	/**
-	 * Check if Curl can be used
-	 */
-	public function check_curl_connection(){
-		
-		if($this->curl_check !== null) return $this->curl_check;
-		
-		$curl = new WP_Http_Curl();
-		
-		$this->curl_check = $curl->test();
-		
-		return $this->curl_check;
-	}
-	
-	
-	/**
-	 * Returns an URL if it is an object library image, depending on the choosen width/height or the chosen image size
-	 */
-	public function get_correct_size_url($image_path, $imgres, $library_size = array()){
-		
-		if(!is_array($imgres)){
-			//wordpress full, medium ect
-			//or check current device and change depending on device
-			$img_sizes = get_intermediate_image_sizes();
-			if(isset($img_sizes[$imgres]) && isset($img_sizes[$imgres]['width']) && isset($img_sizes[$imgres]['height'])){
-				$imgres = array($img_sizes[$imgres]['width'], $img_sizes[$imgres]['height']);
-			}
-		}else{
-			/**
-			 * check if we have a % and if yes, turn the image back to what was selected in the beginning instead of how it was scaled
-			 * as it is already an array, it can be the following:
-			 * px
-			 * %
-			 * empty, then this means auto
-			 * if %, then always get the image that was selected
-			 **/
-			if(isset($library_size['width']) && isset($library_size['height'])){
-				foreach($imgres as $res){
-					if(strpos($res, '%') !== false || $res == 'SET'){
-						$imgres = array($library_size['width'], $library_size['height']);
-						break;
-					}
-				}
-			}
-		}
-		
-		if(is_array($imgres)){
-			//check if file exists
-			if(!file_exists($image_path)) return $image_path;
-			
-			$upload_dir				  = wp_upload_dir(); // Set upload folder
-			$upload_directory         = $upload_dir['basedir'] . $this->object_orig_path;
-			$upload_url         	  = $upload_dir['baseurl'] . $this->object_orig_path;
-			
-			//we got width and high, lets check which one to use
-			$file_name_with_ending    = explode("/", $image_path);
-			$file_name_with_ending    = $file_name_with_ending[count($file_name_with_ending) - 1];
-			$file_name_without_ending = explode(".", $file_name_with_ending);
-			$file_ending              = $file_name_without_ending[count($file_name_without_ending) - 1];
-			$file_name_without_ending = $file_name_without_ending[count($file_name_without_ending) - 2];
-			
-			$sizes = array('75', '50', '25', '10');
-			$imgsize = getimagesize($image_path);
-			
-			if($imgsize !== false) {
-				$orig_width = $imgsize['0'];
-				$orig_height = $imgsize['1'];
-				
-				foreach($sizes as $size){
-					$width = round($orig_width / 100 * $size, 0);
-					$height = round($orig_height / 100 * $size, 0);
-					
-					if($width >= $imgres[0] && $height >= $imgres[1]){
-						$modified_file_name_without_ending = $file_name_without_ending . '-' . $size;
-						if(file_exists($upload_directory.$modified_file_name_without_ending.'.'.$file_ending)) {
-							$image_path = $upload_url.$modified_file_name_without_ending.'.'.$file_ending;
-						}
-					}
-				}
-			}
-		}
-		
-		return $image_path;
-	}
-	
-	
-	public function retrieve_all_object_data(){
-		$obj = $this->load_objects();
-		
-		$data = array('html' => array(), 'list' => array());
-		$svgs = $obj['svg'];
-		if(!empty($svgs) && is_array($svgs)){
-			foreach($svgs as $svghandle => $svgfiles){
-				$data['html'][] = array('type' => 'tag', 'handle' => $svghandle, 'name' => $svghandle);
-				$data['html'][] = array('type' => 'inner');
-				
-				$data['list'][$svghandle] = array();
-				foreach($svgfiles as $svgfile => $svgpath){
-					$data['list'][$svghandle][] = array(
-						'src' => $svgpath,
-						'origsrc' => '',
-						'type' => 'svg',
-						'group' => 'svg',
-						'tags' => $svghandle,
-					);
-				}
-			}
-		}
-		
-		if(isset($obj['online']) && isset($obj['online']['objects'])){
-			$online = $obj['online']['objects'];
-			if(!empty($online) && is_array($online)){
-				if(isset($obj['online']['tags'])){
-					foreach($obj['online']['tags'] as $t){
-						$data['html'][] = array('type' => 'tag', 'handle' => $t['handle'], 'name' => $t['name']);
-					}
-				}
-				$data['html'][] = array('type' => 'inner');
-				
-				$data['list']['png'] = array();
+        $image = wp_get_image_editor($image_path);
+        $imgsize = getimagesize($image_path);
+        
+        if (!is_wp_error($image) && $imgsize !== false) {
+            $orig_width = $imgsize['0'];
+            $orig_height = $imgsize['1'];
+            
+            foreach ($sizes as $size) {
+                $modified_file_name_without_ending = $file_name_without_ending . '-' . $size;
+                if (!file_exists($upload_directory.$modified_file_name_without_ending.'.'.$file_ending) || $force) {
+                    $width = round($orig_width / 100 * $size, 0);
+                    $height = round($orig_height / 100 * $size, 0);
+                    
+                    $image->resize($width, $height);
+                    $image->save($upload_directory.$modified_file_name_without_ending.'.'.$file_ending);
+                }
+            }
+        } else { //cant create images
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Check if Curl can be used
+     */
+    public function check_curl_connection()
+    {
+        if ($this->curl_check !== null) {
+            return $this->curl_check;
+        }
+        
+        $curl = new WP_Http_Curl();
+        
+        $this->curl_check = $curl->test();
+        
+        return $this->curl_check;
+    }
+    
+    
+    /**
+     * Returns an URL if it is an object library image, depending on the choosen width/height or the chosen image size
+     */
+    public function get_correct_size_url($image_path, $imgres, $library_size = array())
+    {
+        if (!is_array($imgres)) {
+            //wordpress full, medium ect
+            //or check current device and change depending on device
+            $img_sizes = get_intermediate_image_sizes();
+            if (isset($img_sizes[$imgres]) && isset($img_sizes[$imgres]['width']) && isset($img_sizes[$imgres]['height'])) {
+                $imgres = array($img_sizes[$imgres]['width'], $img_sizes[$imgres]['height']);
+            }
+        } else {
+            /**
+             * check if we have a % and if yes, turn the image back to what was selected in the beginning instead of how it was scaled
+             * as it is already an array, it can be the following:
+             * px
+             * %
+             * empty, then this means auto
+             * if %, then always get the image that was selected
+             **/
+            if (isset($library_size['width']) && isset($library_size['height'])) {
+                foreach ($imgres as $res) {
+                    if (strpos($res, '%') !== false || $res == 'SET') {
+                        $imgres = array($library_size['width'], $library_size['height']);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        if (is_array($imgres)) {
+            //check if file exists
+            if (!file_exists($image_path)) {
+                return $image_path;
+            }
+            
+            $upload_dir				  = wp_upload_dir(); // Set upload folder
+            $upload_directory         = $upload_dir['basedir'] . $this->object_orig_path;
+            $upload_url         	  = $upload_dir['baseurl'] . $this->object_orig_path;
+            
+            //we got width and high, lets check which one to use
+            $file_name_with_ending    = explode("/", $image_path);
+            $file_name_with_ending    = $file_name_with_ending[count($file_name_with_ending) - 1];
+            $file_name_without_ending = explode(".", $file_name_with_ending);
+            $file_ending              = $file_name_without_ending[count($file_name_without_ending) - 1];
+            $file_name_without_ending = $file_name_without_ending[count($file_name_without_ending) - 2];
+            
+            $sizes = array('75', '50', '25', '10');
+            $imgsize = getimagesize($image_path);
+            
+            if ($imgsize !== false) {
+                $orig_width = $imgsize['0'];
+                $orig_height = $imgsize['1'];
+                
+                foreach ($sizes as $size) {
+                    $width = round($orig_width / 100 * $size, 0);
+                    $height = round($orig_height / 100 * $size, 0);
+                    
+                    if ($width >= $imgres[0] && $height >= $imgres[1]) {
+                        $modified_file_name_without_ending = $file_name_without_ending . '-' . $size;
+                        if (file_exists($upload_directory.$modified_file_name_without_ending.'.'.$file_ending)) {
+                            $image_path = $upload_url.$modified_file_name_without_ending.'.'.$file_ending;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $image_path;
+    }
+    
+    
+    public function retrieve_all_object_data()
+    {
+        $obj = $this->load_objects();
+        
+        $data = array('html' => array(), 'list' => array());
+        $svgs = $obj['svg'];
+        if (!empty($svgs) && is_array($svgs)) {
+            foreach ($svgs as $svghandle => $svgfiles) {
+                $data['html'][] = array('type' => 'tag', 'handle' => $svghandle, 'name' => $svghandle);
+                $data['html'][] = array('type' => 'inner');
+                
+                $data['list'][$svghandle] = array();
+                foreach ($svgfiles as $svgfile => $svgpath) {
+                    $data['list'][$svghandle][] = array(
+                        'src' => $svgpath,
+                        'origsrc' => '',
+                        'type' => 'svg',
+                        'group' => 'svg',
+                        'tags' => $svghandle,
+                    );
+                }
+            }
+        }
+        
+        if (isset($obj['online']) && isset($obj['online']['objects'])) {
+            $online = $obj['online']['objects'];
+            if (!empty($online) && is_array($online)) {
+                if (isset($obj['online']['tags'])) {
+                    foreach ($obj['online']['tags'] as $t) {
+                        $data['html'][] = array('type' => 'tag', 'handle' => $t['handle'], 'name' => $t['name']);
+                    }
+                }
+                $data['html'][] = array('type' => 'inner');
+                
+                $data['list']['png'] = array();
 
-				foreach($online as $online_file){
-					$my_data = $this->_get_object_data($online_file['handle']);
-					$my_tags = array();
-					$group = "image";
-					if ($online_file['type']==='2') $group="bgimage";
-					if(isset($online_file['tags']) && !empty($online_file['tags'])){
-						foreach($online_file['tags'] as $t){
-							if(is_array($t) && array_key_exists('handle', $t)){
-								$my_tags[] = $t['handle'];
-							}
-						}
-					}
-					$data['list']['png'][] = array(
-						'src' => $my_data['thumb'],
-						'origsrc' => $my_data['orig'],
-						'type' => $online_file['type'],
-						'group' => $group,
-						'width' => $online_file['width'],
-						'height' => $online_file['height'],
-						'tags' => implode(',', $my_tags),
-						'name' => $online_file['name']
-					);
-				}
-			}
-		}
-		
-		return $data;
-	}
-	
-	
-	/**
-	 * get list of favorites
-	 * @since: 5.3.0
-	 */
-	public function get_favorites(){
-		return get_option('rs_obj_favorites', array());
-	}
-	
-	
-	/**
-	 * save list of favorites
-	 * @since: 5.3.0
-	 */
-	public function save_favorites($favourites){
-		update_option('rs_obj_favorites', $favourites);
-	}
-	
+                foreach ($online as $online_file) {
+                    $my_data = $this->_get_object_data($online_file['handle']);
+                    $my_tags = array();
+                    $group = "image";
+                    if ($online_file['type']==='2') {
+                        $group="bgimage";
+                    }
+                    if (isset($online_file['tags']) && !empty($online_file['tags'])) {
+                        foreach ($online_file['tags'] as $t) {
+                            if (is_array($t) && array_key_exists('handle', $t)) {
+                                $my_tags[] = $t['handle'];
+                            }
+                        }
+                    }
+                    $data['list']['png'][] = array(
+                        'src' => $my_data['thumb'],
+                        'origsrc' => $my_data['orig'],
+                        'type' => $online_file['type'],
+                        'group' => $group,
+                        'width' => $online_file['width'],
+                        'height' => $online_file['height'],
+                        'tags' => implode(',', $my_tags),
+                        'name' => $online_file['name']
+                    );
+                }
+            }
+        }
+        
+        return $data;
+    }
+    
+    
+    /**
+     * get list of favorites
+     * @since: 5.3.0
+     */
+    public function get_favorites()
+    {
+        return get_option('rs_obj_favorites', array());
+    }
+    
+    
+    /**
+     * save list of favorites
+     * @since: 5.3.0
+     */
+    public function save_favorites($favourites)
+    {
+        update_option('rs_obj_favorites', $favourites);
+    }
 }
 
 ?>

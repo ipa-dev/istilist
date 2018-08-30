@@ -7,7 +7,8 @@ if ('cli' !== php_sapi_name()) {
     die('This script is designed for running on the command line.');
 }
 
-function showHelp($error) {
+function showHelp($error)
+{
     die($error . "\n\n" .
 <<<OUTPUT
 This script has to be called with the following signature:
@@ -54,11 +55,13 @@ $TEST_TYPE = $arguments[0];
 $DIR       = $arguments[1];
 
 if ('Symfony' === $TEST_TYPE) {
-    function filter_func($path) {
+    function filter_func($path)
+    {
         return preg_match('~\.php(?:\.cache)?$~', $path) && false === strpos($path, 'skeleton');
     };
 } elseif ('PHP' === $TEST_TYPE) {
-    function filter_func($path) {
+    function filter_func($path)
+    {
         return preg_match('~\.phpt$~', $path);
     };
 } else {
@@ -79,7 +82,8 @@ $totalStartTime = microtime(true);
 
 foreach (new RecursiveIteratorIterator(
              new RecursiveDirectoryIterator($DIR),
-             RecursiveIteratorIterator::LEAVES_ONLY)
+             RecursiveIteratorIterator::LEAVES_ONLY
+)
          as $file) {
     if (!filter_func($file)) {
         continue;

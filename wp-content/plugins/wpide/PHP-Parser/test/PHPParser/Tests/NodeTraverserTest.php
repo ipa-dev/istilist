@@ -2,7 +2,8 @@
 
 class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase
 {
-    public function testNonModifying() {
+    public function testNonModifying()
+    {
         $str1Node = new PHPParser_Node_Scalar_String('Foo');
         $str2Node = new PHPParser_Node_Scalar_String('Bar');
         $echoNode = new PHPParser_Node_Stmt_Echo(array($str1Node, $str2Node));
@@ -25,7 +26,8 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($stmts, $traverser->traverse($stmts));
     }
 
-    public function testModifying() {
+    public function testModifying()
+    {
         $str1Node  = new PHPParser_Node_Scalar_String('Foo');
         $str2Node  = new PHPParser_Node_Scalar_String('Bar');
         $printNode = new PHPParser_Node_Expr_Print($str1Node);
@@ -72,7 +74,8 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(), $traverser->traverse(array()));
     }
 
-    public function testRemove() {
+    public function testRemove()
+    {
         $str1Node = new PHPParser_Node_Scalar_String('Foo');
         $str2Node = new PHPParser_Node_Scalar_String('Bar');
 
@@ -88,7 +91,8 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array($str2Node), $traverser->traverse(array($str1Node, $str2Node)));
     }
 
-    public function testMerge() {
+    public function testMerge()
+    {
         $strStart  = new PHPParser_Node_Scalar_String('Start');
         $strMiddle = new PHPParser_Node_Scalar_String('End');
         $strEnd    = new PHPParser_Node_Scalar_String('Middle');
@@ -110,7 +114,8 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testDeepArray() {
+    public function testDeepArray()
+    {
         $strNode = new PHPParser_Node_Scalar_String('Foo');
         $stmts = array(array(array($strNode)));
 

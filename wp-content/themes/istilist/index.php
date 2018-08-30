@@ -1,1 +1,1 @@
-<?php require_once('template_dashboard.php'); ?>
+<?php require_once 'template-dashboard.php';

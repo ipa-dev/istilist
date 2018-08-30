@@ -21,19 +21,20 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if ( ! class_exists( 'ReduxFramework_editor' ) ) {
+if (! class_exists('ReduxFramework_editor')) {
 
     /**
      * Main ReduxFramework_editor class
      *
      * @since       1.0.0
      */
-    class ReduxFramework_editor {
+    class ReduxFramework_editor
+    {
 
         /**
          * Field Constructor.
@@ -43,7 +44,8 @@ if ( ! class_exists( 'ReduxFramework_editor' ) ) {
          * @access      public
          * @return      void
          */
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
@@ -57,9 +59,9 @@ if ( ! class_exists( 'ReduxFramework_editor' ) ) {
          * @access      public
          * @return      void
          */
-        public function render() {
-
-            if ( ! isset( $this->field['args'] ) ) {
+        public function render()
+        {
+            if (! isset($this->field['args'])) {
                 $this->field['args'] = array();
             }
 
@@ -73,14 +75,14 @@ if ( ! class_exists( 'ReduxFramework_editor' ) ) {
                 'teeny'         => true,
             );
 
-            if ( isset( $this->field['editor_options'] ) && empty( $this->field['args'] ) ) {
+            if (isset($this->field['editor_options']) && empty($this->field['args'])) {
                 $this->field['args'] = $this->field['editor_options'];
-                unset( $this->field['editor_options'] );
+                unset($this->field['editor_options']);
             }
 
-            $this->field['args'] = wp_parse_args( $this->field['args'], $defaults );
+            $this->field['args'] = wp_parse_args($this->field['args'], $defaults);
 
-            wp_editor( $this->value, $this->field['id'], $this->field['args'] );
+            wp_editor($this->value, $this->field['id'], $this->field['args']);
         }
 
 
@@ -92,7 +94,8 @@ if ( ! class_exists( 'ReduxFramework_editor' ) ) {
          * @access      public
          * @return      void
          */
-        public function enqueue() {
+        public function enqueue()
+        {
             if ($this->parent->args['dev_mode']) {
                 wp_enqueue_style(
                     'redux-field-editor-css',

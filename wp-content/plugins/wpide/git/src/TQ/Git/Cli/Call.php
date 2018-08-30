@@ -75,7 +75,8 @@ class Call
      * @param   array|null  $env    Environment variables - defaults to the current environment
      * @return  Call
      */
-    public static function create($cmd, $cwd = null, array $env = null) {
+    public static function create($cmd, $cwd = null, array $env = null)
+    {
         return new static($cmd, $cwd, $env);
     }
 
@@ -203,4 +204,3 @@ class Call
         }
     }
 }
-

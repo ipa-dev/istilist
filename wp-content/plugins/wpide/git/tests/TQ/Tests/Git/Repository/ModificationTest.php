@@ -40,7 +40,8 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
         mkdir(TESTS_TMP_PATH, 0777, true);
         mkdir(TESTS_REPO_PATH_1, 0777, true);
 
-        exec(sprintf('cd %s && %s init',
+        exec(sprintf(
+            'cd %s && %s init',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY
         ));
@@ -49,13 +50,15 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
             $file   = sprintf('file_%d.txt', $i);
             $path   = TESTS_REPO_PATH_1.'/'.$file;
             file_put_contents($path, sprintf('File %d', $i));
-            exec(sprintf('cd %s && %s add %s',
+            exec(sprintf(
+                'cd %s && %s add %s',
                 escapeshellarg(TESTS_REPO_PATH_1),
                 GIT_BINARY,
                 escapeshellarg($file)
             ));
         }
-        exec(sprintf('cd %s && %s commit --message=%s',
+        exec(sprintf(
+            'cd %s && %s commit --message=%s',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY,
             escapeshellarg('Initial commit')
@@ -236,7 +239,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     {
         $c  = $this->getRepository();
 
-        $result = $c->transactional(function(Transaction $t) {
+        $result = $c->transactional(function (Transaction $t) {
             for ($i = 0; $i < 5; $i++) {
                 $file   = $t->getRepositoryPath().'/'.sprintf('test_%s.txt', $i);
                 file_put_contents($file, 'Test');
@@ -276,7 +279,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
 
 
         try {
-            $result = $c->transactional(function(Transaction $t) {
+            $result = $c->transactional(function (Transaction $t) {
                 for ($i = 0; $i < 5; $i++) {
                     $file   = $t->getRepositoryPath().'/'.sprintf('test_%s.txt', $i);
                     file_put_contents($file, 'Test');
@@ -294,7 +297,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     {
         $c  = $this->getRepository();
 
-        $result = $c->transactional(function(Transaction $t) {
+        $result = $c->transactional(function (Transaction $t) {
             unlink($t->resolvePath('file_0.txt'));
             rename($t->resolvePath('file_1.txt'), $t->resolvePath('test.txt'));
             $t->setCommitMsg('Hello World');
@@ -325,7 +328,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
         $c              = $this->getRepository();
         $currentCommit  = $c->getCurrentCommit();
 
-        $result = $c->transactional(function(Transaction $t) {
+        $result = $c->transactional(function (Transaction $t) {
             $t->setCommitMsg('Hello World');
             return 'This is the return value';
         });
@@ -335,4 +338,3 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($currentCommit, $c->getCurrentCommit());
     }
 }
-

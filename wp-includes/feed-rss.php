@@ -15,20 +15,20 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<link><?php bloginfo_rss('url') ?></link>
 	<description><?php bloginfo_rss('description') ?></description>
 	<lastBuildDate><?php
-		$date = get_lastpostmodified( 'GMT' );
-		echo $date ? mysql2date( 'D, d M Y H:i:s +0000', $date ) : date( 'D, d M Y H:i:s +0000' );
-	?></lastBuildDate>
+        $date = get_lastpostmodified('GMT');
+        echo $date ? mysql2date('D, d M Y H:i:s +0000', $date) : date('D, d M Y H:i:s +0000');
+    ?></lastBuildDate>
 	<docs>http://backend.userland.com/rss092</docs>
-	<language><?php bloginfo_rss( 'language' ); ?></language>
+	<language><?php bloginfo_rss('language'); ?></language>
 
 	<?php
-	/**
-	 * Fires at the end of the RSS Feed Header.
-	 *
-	 * @since 2.0.0
-	 */
-	do_action( 'rss_head' );
-	?>
+    /**
+     * Fires at the end of the RSS Feed Header.
+     *
+     * @since 2.0.0
+     */
+    do_action('rss_head');
+    ?>
 
 <?php while (have_posts()) : the_post(); ?>
 	<item>
@@ -36,13 +36,13 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		<description><![CDATA[<?php the_excerpt_rss() ?>]]></description>
 		<link><?php the_permalink_rss() ?></link>
 		<?php
-		/**
-		 * Fires at the end of each RSS feed item.
-		 *
-		 * @since 2.0.0
-		 */
-		do_action( 'rss_item' );
-		?>
+        /**
+         * Fires at the end of each RSS feed item.
+         *
+         * @since 2.0.0
+         */
+        do_action('rss_item');
+        ?>
 	</item>
 <?php endwhile; ?>
 </channel>

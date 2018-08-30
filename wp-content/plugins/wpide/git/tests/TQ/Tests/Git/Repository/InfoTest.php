@@ -39,7 +39,8 @@ class InfoTest extends \PHPUnit_Framework_TestCase
         mkdir(TESTS_TMP_PATH, 0777, true);
         mkdir(TESTS_REPO_PATH_1, 0777, true);
 
-        exec(sprintf('cd %s && %s init',
+        exec(sprintf(
+            'cd %s && %s init',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY
         ));
@@ -48,13 +49,15 @@ class InfoTest extends \PHPUnit_Framework_TestCase
             $file   = sprintf('file_%d.txt', $i);
             $path   = TESTS_REPO_PATH_1.'/'.$file;
             file_put_contents($path, sprintf('File %d', $i));
-            exec(sprintf('cd %s && %s add %s',
+            exec(sprintf(
+                'cd %s && %s add %s',
                 escapeshellarg(TESTS_REPO_PATH_1),
                 GIT_BINARY,
                 escapeshellarg($file)
             ));
         }
-        exec(sprintf('cd %s && %s commit --message=%s',
+        exec(sprintf(
+            'cd %s && %s commit --message=%s',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY,
             escapeshellarg('Initial commit')
@@ -144,7 +147,7 @@ class InfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($log));
         $this->assertContains('Initial commit', $log[0]);
 
-        $log    = $c->getLog(10,0);
+        $log    = $c->getLog(10, 0);
         $this->assertEquals(2, count($log));
         $this->assertContains('Initial commit', $log[1]);
     }
@@ -231,4 +234,3 @@ class InfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Test 1', $c->showFile('test.txt', 'HEAD^^'));
     }
 }
-

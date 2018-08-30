@@ -13,17 +13,20 @@
 
 add_action('widgets_init', 'buffercode_banner_upload');
 
-function buffercode_banner_upload() {
+function buffercode_banner_upload()
+{
     register_widget('buffercode_banner_upload_info');
 }
 
-class buffercode_banner_upload_info extends WP_Widget {
-
-    function buffercode_banner_upload_info() {
+class buffercode_banner_upload_info extends WP_Widget
+{
+    public function buffercode_banner_upload_info()
+    {
         $this->WP_Widget('buffercode_banner_upload_info', 'Banner Upload', 'Select the category to display');
     }
 
-    public function form($instance) {
+    public function form($instance)
+    {
         if (isset($instance['buffercode_BU_img_url']) && isset($instance['buffercode_BU_width']) && isset($instance['buffercode_BU_height']) && isset($instance['buffercode_BU_title']) && isset($instance['buffercode_BU_URL']) && isset($instance['buffercode_BU_new_wind'])) {
             $buffercode_BU_img_url = $instance['buffercode_BU_img_url'];
             $buffercode_BU_width = $instance['buffercode_BU_width'];
@@ -38,8 +41,7 @@ class buffercode_banner_upload_info extends WP_Widget {
             $buffercode_BU_title = 'Advertisement';
             $buffercode_BU_URL = '';
             $buffercode_BU_new_wind = "1";
-        }
-        ?>
+        } ?>
 
         <p>Custom Title <input maxlength="50" class="widefat" name="<?php echo $this->get_field_name('buffercode_BU_title'); ?>" type="text" value="<?php echo esc_attr($buffercode_BU_title); ?>" /></p>
 
@@ -59,34 +61,35 @@ class buffercode_banner_upload_info extends WP_Widget {
             <select name="<?php echo $this->get_field_name('buffercode_BU_new_wind'); ?>" id="<?php echo $this->get_field_id('buffercode_BU_new_wind'); ?>" class="widefat">
                 <?php
                 $bc_BU_new_wind_link_options = array('Yes' => '1', 'No' => '2');
-                foreach ($bc_BU_new_wind_link_options as $bc_BU_new_wind_link_vlaue => $bc_BU_new_wind_code) {
-                    echo '<option value="' . $bc_BU_new_wind_code . '" id="' . $bc_BU_new_wind_code . '"', $bc_BU_new_wind_code == $buffercode_BU_new_wind ? ' selected="selected"' : '', '>', $bc_BU_new_wind_link_vlaue, '</option>';
-                }
-                ?>
+        foreach ($bc_BU_new_wind_link_options as $bc_BU_new_wind_link_vlaue => $bc_BU_new_wind_code) {
+            echo '<option value="' . $bc_BU_new_wind_code . '" id="' . $bc_BU_new_wind_code . '"', $bc_BU_new_wind_code == $buffercode_BU_new_wind ? ' selected="selected"' : '', '>', $bc_BU_new_wind_link_vlaue, '</option>';
+        } ?>
             </select></p>
 
         <?php
     }
 
-    function update($new_instance, $old_instance) {
+    public function update($new_instance, $old_instance)
+    {
         $instance = $old_instance;
 
-        $instance['buffercode_BU_title'] = (!empty($new_instance['buffercode_BU_title']) ) ? strip_tags($new_instance['buffercode_BU_title']) : '';
+        $instance['buffercode_BU_title'] = (!empty($new_instance['buffercode_BU_title'])) ? strip_tags($new_instance['buffercode_BU_title']) : '';
 
-        $instance['buffercode_BU_img_url'] = (!empty($new_instance['buffercode_BU_img_url']) ) ? strip_tags($new_instance['buffercode_BU_img_url']) : '';
+        $instance['buffercode_BU_img_url'] = (!empty($new_instance['buffercode_BU_img_url'])) ? strip_tags($new_instance['buffercode_BU_img_url']) : '';
 
-        $instance['buffercode_BU_width'] = (!empty($new_instance['buffercode_BU_width']) ) ? strip_tags($new_instance['buffercode_BU_width']) : '';
+        $instance['buffercode_BU_width'] = (!empty($new_instance['buffercode_BU_width'])) ? strip_tags($new_instance['buffercode_BU_width']) : '';
 
-        $instance['buffercode_BU_height'] = (!empty($new_instance['buffercode_BU_height']) ) ? strip_tags($new_instance['buffercode_BU_height']) : '';
+        $instance['buffercode_BU_height'] = (!empty($new_instance['buffercode_BU_height'])) ? strip_tags($new_instance['buffercode_BU_height']) : '';
 
-        $instance['buffercode_BU_URL'] = (!empty($new_instance['buffercode_BU_URL']) ) ? strip_tags($new_instance['buffercode_BU_URL']) : '';
+        $instance['buffercode_BU_URL'] = (!empty($new_instance['buffercode_BU_URL'])) ? strip_tags($new_instance['buffercode_BU_URL']) : '';
 
-        $instance['buffercode_BU_new_wind'] = (!empty($new_instance['buffercode_BU_new_wind']) ) ? strip_tags($new_instance['buffercode_BU_new_wind']) : '';
+        $instance['buffercode_BU_new_wind'] = (!empty($new_instance['buffercode_BU_new_wind'])) ? strip_tags($new_instance['buffercode_BU_new_wind']) : '';
 
         return $instance;
     }
 
-    function widget($args, $instance) {
+    public function widget($args, $instance)
+    {
         extract($args);
         echo $before_widget;
         $buffercode_BU_title = apply_filters('widget_title', $instance['buffercode_BU_title']);
@@ -117,12 +120,13 @@ class buffercode_banner_upload_info extends WP_Widget {
 
         echo $after_widget;
     }
-
 }
 
-function my_enqueue($hook) {
-    if ('widgets.php' != $hook)
+function my_enqueue($hook)
+{
+    if ('widgets.php' != $hook) {
         return;
+    }
     wp_enqueue_style('thickbox');
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');

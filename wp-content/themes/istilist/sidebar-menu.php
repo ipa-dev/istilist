@@ -3,16 +3,22 @@
 <div class="col span_3_of_12 matchheight">
     <div class="dash_menu">
         <!-- If role == storeowner -->
-        <?php if($user_role == 'storeowner'){ ?>
+        <?php if ($user_role == 'storeowner') {
+    ?>
         <?php wp_nav_menu(array('theme_location'=>'mainmenu')) ?>
-        <?php } ?>
+        <?php
+} ?>
         <!-- If role == storeemployee -->
-        <?php if($user_role == 'storeemployee'){ ?>
+        <?php if ($user_role == 'storeemployee') {
+        ?>
         <?php wp_nav_menu(array('theme_location'=>'storeemployeemenu')); ?>
-        <?php } ?>
+        <?php
+    } ?>
         <!-- If role == storesupervisor -->
-        <?php if($user_role == 'storesupervisor'){ ?>
+        <?php if ($user_role == 'storesupervisor') {
+        ?>
         <?php wp_nav_menu(array('theme_location'=>'storesupervisormenu')); ?>
-        <?php } ?>
+        <?php
+    } ?>
     </div>
 </div>

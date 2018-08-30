@@ -17,8 +17,9 @@
  * @access public
  * @return bool
  */
-function members_role_manager_enabled() {
-	return apply_filters( 'members_role_manager_enabled', members_get_setting( 'role_manager' ) );
+function members_role_manager_enabled()
+{
+    return apply_filters('members_role_manager_enabled', members_get_setting('role_manager'));
 }
 
 /**
@@ -29,8 +30,9 @@ function members_role_manager_enabled() {
  * @access public
  * @return bool
  */
-function members_explicitly_deny_caps() {
-	return apply_filters( 'members_explicitly_deny_caps', members_get_setting( 'explicit_denied_caps' ) );
+function members_explicitly_deny_caps()
+{
+    return apply_filters('members_explicitly_deny_caps', members_get_setting('explicit_denied_caps'));
 }
 
 /**
@@ -40,8 +42,9 @@ function members_explicitly_deny_caps() {
  * @access public
  * @return bool
  */
-function members_multiple_user_roles_enabled() {
-	return apply_filters( 'members_multiple_roles_enabled', members_get_setting( 'multi_roles' ) );
+function members_multiple_user_roles_enabled()
+{
+    return apply_filters('members_multiple_roles_enabled', members_get_setting('multi_roles'));
 }
 
 /**
@@ -51,8 +54,9 @@ function members_multiple_user_roles_enabled() {
  * @access public
  * @return bool
  */
-function members_content_permissions_enabled() {
-	return apply_filters( 'members_content_permissions_enabled', members_get_setting( 'content_permissions' ) );
+function members_content_permissions_enabled()
+{
+    return apply_filters('members_content_permissions_enabled', members_get_setting('content_permissions'));
 }
 
 /**
@@ -62,8 +66,9 @@ function members_content_permissions_enabled() {
  * @access public
  * @return bool
  */
-function members_login_widget_enabled() {
-	return apply_filters( 'members_login_widget_enabled', members_get_setting( 'login_form_widget' ) );
+function members_login_widget_enabled()
+{
+    return apply_filters('members_login_widget_enabled', members_get_setting('login_form_widget'));
 }
 
 /**
@@ -73,8 +78,9 @@ function members_login_widget_enabled() {
  * @access public
  * @return bool
  */
-function members_users_widget_enabled() {
-	return apply_filters( 'members_users_widget_enabled', members_get_setting( 'users_widget' ) );
+function members_users_widget_enabled()
+{
+    return apply_filters('members_users_widget_enabled', members_get_setting('users_widget'));
 }
 
 /**
@@ -84,13 +90,13 @@ function members_users_widget_enabled() {
  * @access public
  * @return mixed
  */
-function members_get_setting( $option = '' ) {
+function members_get_setting($option = '')
+{
+    $defaults = members_get_default_settings();
 
-	$defaults = members_get_default_settings();
+    $settings = wp_parse_args(get_option('members_settings', $defaults), $defaults);
 
-	$settings = wp_parse_args( get_option( 'members_settings', $defaults ), $defaults );
-
-	return isset( $settings[ $option ] ) ? $settings[ $option ] : false;
+    return isset($settings[ $option ]) ? $settings[ $option ] : false;
 }
 
 /**
@@ -100,24 +106,24 @@ function members_get_setting( $option = '' ) {
  * @access public
  * @return array
  */
-function members_get_default_settings() {
+function members_get_default_settings()
+{
+    return array(
 
-	return array(
+        // @since 0.1.0
+        'role_manager'        => 1,
+        'content_permissions' => 1,
+        'private_blog'        => 0,
 
-		// @since 0.1.0
-		'role_manager'        => 1,
-		'content_permissions' => 1,
-		'private_blog'        => 0,
+        // @since 0.2.0
+        'private_feed'              => 0,
+        'login_form_widget'         => 0,
+        'users_widget'              => 0,
+        'content_permissions_error' => esc_html__('Sorry, but you do not have permission to view this content.', 'members'),
+        'private_feed_error'        => esc_html__('You must be logged into the site to view this content.', 'members'),
 
-		// @since 0.2.0
-		'private_feed'              => 0,
-		'login_form_widget'         => 0,
-		'users_widget'              => 0,
-		'content_permissions_error' => esc_html__( 'Sorry, but you do not have permission to view this content.', 'members' ),
-		'private_feed_error'        => esc_html__( 'You must be logged into the site to view this content.',      'members' ),
-
-		// @since 1.0.0
-		'explicit_denied_caps' => true,
-		'multi_roles'          => true,
-	);
+        // @since 1.0.0
+        'explicit_denied_caps' => true,
+        'multi_roles'          => true,
+    );
 }

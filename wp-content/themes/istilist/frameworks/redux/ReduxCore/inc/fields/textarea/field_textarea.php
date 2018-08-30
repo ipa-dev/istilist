@@ -23,12 +23,13 @@
      */
 
 // Exit if accessed directly
-    if ( ! defined( 'ABSPATH' ) ) {
+    if (! defined('ABSPATH')) {
         exit;
     }
 
-    if ( ! class_exists( 'ReduxFramework_textarea' ) ) {
-        class ReduxFramework_textarea {
+    if (! class_exists('ReduxFramework_textarea')) {
+        class ReduxFramework_textarea
+        {
 
             /**
              * Field Constructor.
@@ -39,7 +40,8 @@
              * @since ReduxFramework 1.0.0
              * @type string $field  [test] Description. Default <value>. Accepts <value>, <value>.
              */
-            function __construct( $field = array(), $value = '', $parent ) {
+            public function __construct($field = array(), $value = '', $parent)
+            {
                 $this->parent = $parent;
                 $this->field  = $field;
                 $this->value  = $value;
@@ -55,22 +57,22 @@
              *
              * @return Object A new editor object.
              **/
-            function render() {
+            public function render()
+            {
+                $this->field['placeholder'] = isset($this->field['placeholder']) ? $this->field['placeholder'] : "";
+                $this->field['rows']        = isset($this->field['rows']) ? $this->field['rows'] : 6;
 
-                $this->field['placeholder'] = isset( $this->field['placeholder'] ) ? $this->field['placeholder'] : "";
-                $this->field['rows']        = isset( $this->field['rows'] ) ? $this->field['rows'] : 6;
-
-                // The $this->field variables are already escaped in the ReduxFramework Class.
-                ?>
-                <textarea name="<?php echo $this->field['name'] . $this->field['name_suffix']; ?>" id="<?php echo $this->field['id']; ?>-textarea" placeholder="<?php echo esc_attr( $this->field['placeholder'] ); ?>" class="large-text <?php echo $this->field['class']; ?>" rows="<?php echo $this->field['rows']; ?>"><?php echo esc_textarea( $this->value ); ?></textarea>
+                // The $this->field variables are already escaped in the ReduxFramework Class. ?>
+                <textarea name="<?php echo $this->field['name'] . $this->field['name_suffix']; ?>" id="<?php echo $this->field['id']; ?>-textarea" placeholder="<?php echo esc_attr($this->field['placeholder']); ?>" class="large-text <?php echo $this->field['class']; ?>" rows="<?php echo $this->field['rows']; ?>"><?php echo esc_textarea($this->value); ?></textarea>
             <?php
             }
 
-            function sanitize( $field, $value ) {
-                if ( ! isset( $value ) || empty( $value ) ) {
+            public function sanitize($field, $value)
+            {
+                if (! isset($value) || empty($value)) {
                     $value = "";
                 } else {
-                    $value = esc_textarea( $value );
+                    $value = esc_textarea($value);
                 }
 
                 return $value;

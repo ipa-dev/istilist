@@ -14,9 +14,9 @@ function trafficflowweekly(){
     var data = google.visualization.arrayToDataTable([
         ['Employee', 'Shoppers Conversion'],
         <?php
-            $user_query = new WP_User_Query( array( 'role' => 'storeemployee', 'meta_key' => 'store_id', 'meta_value' => $store_id ) );
+            $user_query = new WP_User_Query(array( 'role' => 'storeemployee', 'meta_key' => 'store_id', 'meta_value' => $store_id ));
             
-            foreach ( $user_query->results as $user ) {
+            foreach ($user_query->results as $user) {
                 $day = date('d')+1;
                 $last_7_day = date('d')-6;
                 $year = date('Y');
@@ -33,58 +33,58 @@ function trafficflowweekly(){
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
-			array(
-				'key'     => 'store_id',
-				'value'   => $store_id,
-				'compare' => '=',
-			),
-			array(
-				'key' => 'stylist_id',
-				'value' => $employee_id,
-				'compare' => '='
-			),
-			'relation' => 'AND'
-		    ),
+            array(
+                'key'     => 'store_id',
+                'value'   => $store_id,
+                'compare' => '=',
+            ),
+            array(
+                'key' => 'stylist_id',
+                'value' => $employee_id,
+                'compare' => '='
+            ),
+            'relation' => 'AND'
+            ),
                     //'author' => $employee_id,
                     'date_query' =>  array(
-                    	array(
-                    		'week' => $week_num,
-                    		'year' => $year
-                    	),    
-                    	'column' => 'post_modified'                
+                        array(
+                            'week' => $week_num,
+                            'year' => $year
+                        ),
+                        'column' => 'post_modified'
                     ),
                 );
                 
-                $the_query1 = new WP_Query( $arg1 );
+                $the_query1 = new WP_Query($arg1);
                 $total_shopper_count = $the_query1->found_posts;
 
                 $arg2 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
-			array(
-				'key'     => 'store_id',
-				'value'   => $store_id,
-				'compare' => '=',
-			),
-			array(
-				'key' => 'stylist_id',
-				'value' => $employee_id,
-				'compare' => '='
-			),
-			array(
-				'key' => 'complete_purchase',
-				'value' => 1,
-				'compare' => '=',
-			),
-			'relation' => 'AND'
-		    ),
+            array(
+                'key'     => 'store_id',
+                'value'   => $store_id,
+                'compare' => '=',
+            ),
+            array(
+                'key' => 'stylist_id',
+                'value' => $employee_id,
+                'compare' => '='
+            ),
+            array(
+                'key' => 'complete_purchase',
+                'value' => 1,
+                'compare' => '=',
+            ),
+            'relation' => 'AND'
+            ),
                     'date_query' =>  array(
-                    	array(
-                    		'week' => $week_num,
-                    		'year' => $year
-                    	),    
-                    	'column' => 'post_modified'                    
+                        array(
+                            'week' => $week_num,
+                            'year' => $year
+                        ),
+                        'column' => 'post_modified'
                     ),
                 );
                 
@@ -92,10 +92,9 @@ function trafficflowweekly(){
                 $sold_shopper_count = $the_query2->found_posts;
 
                 if ($total_shopper_count != 0) {
-                	echo "['$employee_name', ".$sold_shopper_count/$total_shopper_count."],";
-                }
-                else {
-                	echo "['$employee_name', 0],";
+                    echo "['$employee_name', ".$sold_shopper_count/$total_shopper_count."],";
+                } else {
+                    echo "['$employee_name', 0],";
                 }
             }
         ?>
@@ -128,8 +127,8 @@ function trafficflowmonthly(){
     var data = google.visualization.arrayToDataTable([
         ['Employee', 'Shoppers Conversion'],
         <?php
-            $user_query = new WP_User_Query( array( 'role' => 'storeemployee', 'meta_key' => 'store_id', 'meta_value' => $user_ID ) );
-            foreach ( $user_query->results as $user ) {
+            $user_query = new WP_User_Query(array( 'role' => 'storeemployee', 'meta_key' => 'store_id', 'meta_value' => $user_ID ));
+            foreach ($user_query->results as $user) {
                 //$day = date('d')+1;
                 //$last_7_day = date('d')-6;
                 $year = date('Y');
@@ -144,29 +143,29 @@ function trafficflowmonthly(){
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
-			array(
-				'key'     => 'store_id',
-				'value'   => $store_id,
-				'compare' => '=',
-			),
-			array(
-				'key' => 'stylist_id',
-				'value' => $employee_id,
-				'compare' => '='
-			),
-			'relation' => 'AND'
-		    ),
+            array(
+                'key'     => 'store_id',
+                'value'   => $store_id,
+                'compare' => '=',
+            ),
+            array(
+                'key' => 'stylist_id',
+                'value' => $employee_id,
+                'compare' => '='
+            ),
+            'relation' => 'AND'
+            ),
                     //'author' => $employee_id,
                     'date_query' => array(
-	                array(
-	                	'month' => $month,
-	                	'year' => $year
-	                ),    
-                    	'column' => 'post_modified'
+                    array(
+                        'month' => $month,
+                        'year' => $year
+                    ),
+                        'column' => 'post_modified'
                     ),
                 );
                 
-                $the_query3 = new WP_Query( $arg3 );
+                $the_query3 = new WP_Query($arg3);
                 
                 $total_shopper_count = $the_query3->found_posts;
 
@@ -174,42 +173,41 @@ function trafficflowmonthly(){
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
-			array(
-				'key'     => 'store_id',
-				'value'   => $store_id,
-				'compare' => '=',
-			),
-			array(
-				'key' => 'stylist_id',
-				'value' => $employee_id,
-				'compare' => '='
-			),
-			array(
-				'key' => 'complete_purchase',
-				'value' => 1,
-				'compare' => '=',
-			),
-			'relation' => 'AND'
-		    ),
+            array(
+                'key'     => 'store_id',
+                'value'   => $store_id,
+                'compare' => '=',
+            ),
+            array(
+                'key' => 'stylist_id',
+                'value' => $employee_id,
+                'compare' => '='
+            ),
+            array(
+                'key' => 'complete_purchase',
+                'value' => 1,
+                'compare' => '=',
+            ),
+            'relation' => 'AND'
+            ),
                     'date_query' => array(
-	                array(
-	                	'month' => $month,
-	                	'year' => $year
-	                ),    
-                    	'column' => 'post_modified'
+                    array(
+                        'month' => $month,
+                        'year' => $year
+                    ),
+                        'column' => 'post_modified'
                     ),
                 );
                 
-                $the_query4 = new WP_Query( $arg4 );
+                $the_query4 = new WP_Query($arg4);
                 $sold_shopper_count = $the_query4->found_posts;
 
                 
                 
-		if ($total_shopper_count != 0) {
-                	echo "['$employee_name', ".$sold_shopper_count/$total_shopper_count."],";
-                }
-                else {
-                	echo "['$employee_name', 0],";
+                if ($total_shopper_count != 0) {
+                    echo "['$employee_name', ".$sold_shopper_count/$total_shopper_count."],";
+                } else {
+                    echo "['$employee_name', 0],";
                 }
             }
         ?>

@@ -5,14 +5,15 @@
  * @package IXR
  * @since 1.5.0
  */
-class IXR_Value {
-    var $data;
-    var $type;
+class IXR_Value
+{
+    public $data;
+    public $type;
 
-	/**
-	 * PHP5 constructor.
-	 */
-	function __construct( $data, $type = false )
+    /**
+     * PHP5 constructor.
+     */
+    public function __construct($data, $type = false)
     {
         $this->data = $data;
         if (!$type) {
@@ -32,14 +33,15 @@ class IXR_Value {
         }
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Value( $data, $type = false ) {
-		self::__construct( $data, $type );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Value($data, $type = false)
+    {
+        self::__construct($data, $type);
+    }
 
-    function calculateType()
+    public function calculateType()
     {
         if ($this->data === true || $this->data === false) {
             return 'boolean';
@@ -76,7 +78,7 @@ class IXR_Value {
         }
     }
 
-    function getXml()
+    public function getXml()
     {
         // Return XML for this value
         switch ($this->type) {
@@ -103,7 +105,7 @@ class IXR_Value {
             case 'struct':
                 $return = '<struct>'."\n";
                 foreach ($this->data as $name => $value) {
-					$name = htmlspecialchars($name);
+                    $name = htmlspecialchars($name);
                     $return .= "  <member><name>$name</name><value>";
                     $return .= $value->getXml()."</value></member>\n";
                 }
@@ -124,7 +126,7 @@ class IXR_Value {
      * @param array $array
      * @return bool
      */
-    function isStruct($array)
+    public function isStruct($array)
     {
         $expected = 0;
         foreach ($array as $key => $value) {

@@ -6,7 +6,7 @@
      * @package     Redux_Framework
      * @subpackage  Core
      */
-    if ( ! function_exists( 'get_redux_instance' ) ) {
+    if (! function_exists('get_redux_instance')) {
 
         /**
          * Retreive an instance of ReduxFramework
@@ -15,12 +15,13 @@
          *
          * @return object                ReduxFramework
          */
-        function get_redux_instance( $opt_name ) {
-            return ReduxFrameworkInstances::get_instance( $opt_name );
+        function get_redux_instance($opt_name)
+        {
+            return ReduxFrameworkInstances::get_instance($opt_name);
         }
     }
 
-    if ( ! function_exists( 'get_all_redux_instances' ) ) {
+    if (! function_exists('get_all_redux_instances')) {
 
         /**
          * Retreive all instances of ReduxFramework
@@ -28,7 +29,8 @@
          *
          * @return array        format ['opt_name' => $ReduxFramework]
          */
-        function get_all_redux_instances() {
+        function get_all_redux_instances()
+        {
             return ReduxFrameworkInstances::get_all_instances();
         }
     }

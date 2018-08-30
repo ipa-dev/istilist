@@ -170,4 +170,3 @@ class StringBufferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('143', $buffer->getBuffer());
     }
 }
-

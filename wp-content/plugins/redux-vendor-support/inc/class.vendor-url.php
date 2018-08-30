@@ -1,15 +1,17 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 if (!class_exists('Redux_VendorURL')) {
-    class Redux_VendorURL {
-        static public $url;
-        static public $dir;
+    class Redux_VendorURL
+    {
+        public static $url;
+        public static $dir;
     
-        public static function get_url($handle) {
+        public static function get_url($handle)
+        {
             if ($handle == 'ace-editor-js') {
                 return self::$url . 'vendor/ace/ace.js';
             } elseif ($handle == 'select2-js') {

@@ -6,7 +6,9 @@
  * @copyright 2015 ThemePunch
  */
  
-if( !defined( 'ABSPATH') ) exit();
+if (!defined('ABSPATH')) {
+    exit();
+}
 
 $nav = new RevSliderNavigation();
 
@@ -25,9 +27,9 @@ $font_families = $rsopr->getArrFontFamilys();
 
 	<div class="title_line nobgnopd" style="margin-bottom: 20px !important;">
 		<?php 
-			$icon_general = '<div class="icon32" id="icon-options-general"></div>';
-			echo apply_filters( 'rev_icon_general_filter', $icon_general ); 
-		?>
+            $icon_general = '<div class="icon32" id="icon-options-general"></div>';
+            echo apply_filters('rev_icon_general_filter', $icon_general);
+        ?>
 		<div class="view_title">
 			<?php _e('Navigation Editor', 'revslider'); ?>
 		</div>
@@ -49,8 +51,8 @@ $font_families = $rsopr->getArrFontFamilys();
 		<div id="list-of-navigations" style="max-height:430px;overflow:hidden;position:relative;top:0px;left:0px;">  
 			<div class="rs-nav-table tablecontent">
 				<?php
-				//all will be added here through JavaScript
-				?>
+                //all will be added here through JavaScript
+                ?>
 			</div>
 		</div>
 	</div>
@@ -79,12 +81,12 @@ $font_families = $rsopr->getArrFontFamilys();
 											<li data-call="params_special" data-paramid="title"><span class="libtn"><?php _e('Slide Title', 'revslider'); ?></span></li>
 											<li data-call="params_special" data-paramid="description"><span class="libtn"><?php _e('Slide Description', 'revslider'); ?></span></li>
 											<?php
-											for($i=1;$i<=10;$i++){
-												?>
+                                            for ($i=1;$i<=10;$i++) {
+                                                ?>
 												<li data-call="params_markup" data-paramid="<?php echo $i; ?>"><span class="libtn"><?php _e('Parameter ', 'revslider'); ?> <?php echo $i; ?></span></li>
 												<?php
-											}
-											?>
+                                            }
+                                            ?>
 										</ul>
 									</li>
 								</ul>
@@ -172,13 +174,14 @@ $font_families = $rsopr->getArrFontFamilys();
 										<div style="display: none;" class="rs-element-add rs-element-add-box-shadow">
 											<select name="rs-font-family" style="width: 160px">
 												<?php
-												foreach($font_families as $handle => $name){
-													if($name['label'] == 'Dont Show Me') continue;
-													?>
+                                                foreach ($font_families as $handle => $name) {
+                                                    if ($name['label'] == 'Dont Show Me') {
+                                                        continue;
+                                                    } ?>
 													<option value="<?php echo esc_attr($name['label']); ?>"><?php echo esc_attr($name['label']); ?></option>
 													<?php
-												}
-												?>
+                                                }
+                                                ?>
 											</select>
 											<a href="javascript:void(0);" id="rs-add-css-font-family" class="button-primary revblue" original-title=""><?php _e('Add', 'revslider'); ?></a>
 										</div>
@@ -247,7 +250,7 @@ $font_families = $rsopr->getArrFontFamilys();
 		<div class="rs-tabs-preview"></div>
 	</div>
 	
-	<!--a class="button-primary revgreen" id="rs-save-navigation-style" href="javascript:void(0);"><i class="rs-icon-save-light"></i><?php _e('Save All Changes','revslider'); ?></a-->
+	<!--a class="button-primary revgreen" id="rs-save-navigation-style" href="javascript:void(0);"><i class="rs-icon-save-light"></i><?php _e('Save All Changes', 'revslider'); ?></a-->
 	
 	
 	<script type="text/javascript">
@@ -1920,13 +1923,14 @@ $font_families = $rsopr->getArrFontFamilys();
 			<label><?php _e('Default Value:', 'revslider'); ?></label>
 			<select name="ph-font-family" style="width: 112px;">
 				<?php
-				foreach($font_families as $handle => $name){
-					if($name['label'] == 'Dont Show Me') continue;
-					?>
+                foreach ($font_families as $handle => $name) {
+                    if ($name['label'] == 'Dont Show Me') {
+                        continue;
+                    } ?>
 					<option value="<?php echo esc_attr($name['label']); ?>"><?php echo esc_attr($name['label']); ?></option>
 					<?php
-				}
-				?>
+                }
+                ?>
 			</select>
 		</li>
 		<li data-menu="custom">

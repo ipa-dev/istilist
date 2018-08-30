@@ -1,7 +1,7 @@
 <?php
 require("smtp.php");
 require("sasl.php"); //SASL authentication
-$from="noreply@istilist.com"; 
+$from="noreply@istilist.com";
 $smtp=new smtp_class;
 //$smtp->host_name="smtp.gmail.com"; // Or IP address
 $smtp->host_name="smtp.istilist.com";
@@ -22,4 +22,3 @@ $smtp->realm="";
 $smtp->password="Formal!1468";
 $smtp->workstation="";
 $smtp->authentication_mechanism="";
-?>

@@ -18,12 +18,12 @@
      */
 
 // Exit if accessed directly
-    if ( ! defined( 'ABSPATH' ) ) {
+    if (! defined('ABSPATH')) {
         exit;
     }
 
 // Don't duplicate me!
-    if ( ! class_exists( 'ReduxFramework_Extension_options_object' ) ) {
+    if (! class_exists('ReduxFramework_Extension_options_object')) {
 
 
         /**
@@ -31,7 +31,8 @@
          *
          * @since       3.1.6
          */
-        class ReduxFramework_Extension_options_object {
+        class ReduxFramework_Extension_options_object
+        {
 
             // Protected vars
             protected $parent;
@@ -53,10 +54,10 @@
              *
              * @return      void
              */
-            public function __construct( $parent ) {
-
+            public function __construct($parent)
+            {
                 $this->parent = $parent;
-                if ( empty( $this->extension_dir ) ) {
+                if (empty($this->extension_dir)) {
                     //$this->extension_dir = trailingslashit( str_replace( '\\', '/', dirname( __FILE__ ) ) );
                 }
                 $this->field_name = 'options_object';
@@ -66,20 +67,21 @@
                 
                 $this->is_field = Redux_Helpers::isFieldInUse($parent, 'options_object');
 
-                if ( !$this->is_field && $this->parent->args['dev_mode'] && $this->parent->args['show_options_object'] ) {
+                if (!$this->is_field && $this->parent->args['dev_mode'] && $this->parent->args['show_options_object']) {
                     $this->add_section();
                 }
              
-                add_filter( 'redux/' . $this->parent->args['opt_name'] . '/field/class/' . $this->field_name, array(
+                add_filter('redux/' . $this->parent->args['opt_name'] . '/field/class/' . $this->field_name, array(
                     &$this,
                     'overload_field_path'
-                ) ); // Adds the local field                
+                )); // Adds the local field
             }
 
-            public function add_section() {
+            public function add_section()
+            {
                 $this->parent->sections[] = array(
                     'id' => 'options-object',
-                    'title' => __( 'Options Object', 'redux-framework' ),
+                    'title' => __('Options Object', 'redux-framework'),
                     'heading' => '',
                     'icon' => 'el el-info-circle',
                     'customizer' => false,
@@ -94,8 +96,9 @@
             }
 
             // Forces the use of the embeded field path vs what the core typically would use
-            public function overload_field_path( $field ) {
-                return dirname( __FILE__ ) . '/' . $this->field_name . '/field_' . $this->field_name . '.php';
+            public function overload_field_path($field)
+            {
+                return dirname(__FILE__) . '/' . $this->field_name . '/field_' . $this->field_name . '.php';
             }
         } // class
     } // if

@@ -4,31 +4,31 @@ global $user_ID;
 $store_id = get_user_meta($user_ID, 'store_id', true);
 $table_name1 = $wpdb->prefix.'shoppers';
 
-if(!empty($_GET['ar'])){
+if (!empty($_GET['ar'])) {
     $active_section = decripted($_GET['ar']);
 } else {
     $active_section = 'tf-today';
 }
 
-if(!empty($_GET['sp'])){
+if (!empty($_GET['sp'])) {
     $sp_active_section = decripted($_GET['sp']);
 } else {
     $sp_active_section = 'sp-today';
 }
 
-if(!empty($_GET['st'])){
+if (!empty($_GET['st'])) {
     $st_active_section = decripted($_GET['st']);
 } else {
     $st_active_section = 'st-today';
 }
 
-if(!empty($_GET['cl'])){
+if (!empty($_GET['cl'])) {
     $cl_active_section = decripted($_GET['cl']);
 } else {
     $cl_active_section = 'cl-today';
 }
 
-if(!empty($_GET['sz'])){
+if (!empty($_GET['sz'])) {
     $sz_active_section = decripted($_GET['sz']);
 } else {
     $sz_active_section = 'sz-today';
@@ -37,17 +37,30 @@ if(!empty($_GET['sz'])){
 ?>
 <div class="timeframe">
     <ul>
-        <li class="<?php if($active_section == 'cp-year'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-year'); ?>">Year</a></li>
-        <li class="<?php if($active_section == 'cp-lastmonth'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-lastmonth'); ?>">Last Month</a></li>
-        <li class="<?php if($active_section == 'cp-thismonth'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-thismonth'); ?>">This Month</a></li>
-        <li class="<?php if($active_section == 'cp-7days'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-7days'); ?>">Last 7 Days</a></li>
-        <li class="<?php if($active_section == 'cp-today'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-today'); ?>">Today</a></li>
-        <li class="<?php if($active_section == 'cp-custom'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-custom'); ?>">Custom</a></li>
+        <li class="<?php if ($active_section == 'cp-year') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-year'); ?>">Year</a></li>
+        <li class="<?php if ($active_section == 'cp-lastmonth') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-lastmonth'); ?>">Last Month</a></li>
+        <li class="<?php if ($active_section == 'cp-thismonth') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-thismonth'); ?>">This Month</a></li>
+        <li class="<?php if ($active_section == 'cp-7days') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-7days'); ?>">Last 7 Days</a></li>
+        <li class="<?php if ($active_section == 'cp-today') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-today'); ?>">Today</a></li>
+        <li class="<?php if ($active_section == 'cp-custom') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-custom'); ?>">Custom</a></li>
     </ul>
 </div>
 
 <!-- Generate Report -->
-<?php if($active_section == 'cp-year'){ ?>
+<?php if ($active_section == 'cp-year') {
+    ?>
 <script>
 
 google.setOnLoadCallback(customerpurchaseyear);
@@ -60,14 +73,14 @@ function customerpurchaseyear(){
     data.addRows([
         <?php
             $hour = 0;
-            $year = date('Y');
-            $month = 0;
-            //$date = date('d');
-            while($month++ <= 12){
-                //$timetoprint = date('m',mktime(0,0,0,$month,0,$year));
-                $monthName = date('F', mktime(0, 0, 0, $month, 10));
+    $year = date('Y');
+    $month = 0;
+    //$date = date('d');
+    while ($month++ <= 12) {
+        //$timetoprint = date('m',mktime(0,0,0,$month,0,$year));
+        $monthName = date('F', mktime(0, 0, 0, $month, 10));
 
-                $arg1 = array(
+        $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
@@ -87,12 +100,11 @@ function customerpurchaseyear(){
                     'year' => $year,
                 );
 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-		console.log("TEST");
-                echo "['$monthName', $user_count],";
-            }
-        ?>
+        $the_query1 = new WP_Query($arg1);
+        $user_count = $the_query1->found_posts;
+        console.log("TEST");
+        echo "['$monthName', $user_count],";
+    } ?>
     ]);
 
     var options = {
@@ -132,10 +144,12 @@ else {
 </script>
 <h4>Purchases <?php echo date('Y'); ?></h4>
 <div id="customerpurchaseyear"></div><br /><br />
-<?php } ?>
+<?php
+} ?>
 <!--  -->
 
-<?php if($active_section == 'tf-lastmonth'){ ?>
+<?php if ($active_section == 'tf-lastmonth') {
+        ?>
 <script>
 // code for last month
 google.setOnLoadCallback(customerpurchaselastmonth);
@@ -148,14 +162,14 @@ function customerpurchaselastmonth(){
     data.addRows([
         <?php
             $hour = 0;
-            $year = date('Y');
-            $month = date('m')-1;
-            $day = 0;
-            $number_of_days = cal_days_in_month(CAL_GREGORIAN,$month,$year);
-            while($day++ < $number_of_days){
-                $timetoprint = date('m/d/Y',mktime($hour,0,0,$month,$day,$year));
+        $year = date('Y');
+        $month = date('m')-1;
+        $day = 0;
+        $number_of_days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        while ($day++ < $number_of_days) {
+            $timetoprint = date('m/d/Y', mktime($hour, 0, 0, $month, $day, $year));
 
-                $arg1 = array(
+            $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
@@ -176,11 +190,10 @@ function customerpurchaselastmonth(){
                     'day' => $day,
                 );
 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-                echo "['$timetoprint', $user_count],";
-            }
-        ?>
+            $the_query1 = new WP_Query($arg1);
+            $user_count = $the_query1->found_posts;
+            echo "['$timetoprint', $user_count],";
+        } ?>
     ]);
 
     var options = {
@@ -219,10 +232,12 @@ else {
 </script>
 <h4>Purchases Last Month</h4>
 <div id="customerpurchaselastmonth"></div><br /><br />
-<?php } ?>
+<?php
+    } ?>
 <!--  -->
 
-<?php if($active_section == 'cp-thismonth'){ ?>
+<?php if ($active_section == 'cp-thismonth') {
+        ?>
 <script>
 // code for This month
 google.setOnLoadCallback(customerpurchasethismonth);
@@ -235,14 +250,14 @@ function customerpurchasethismonth(){
     data.addRows([
         <?php
             $hour = 0;
-            $year = date('Y');
-            $month = date('m');
-            $day = 0;
-            $number_of_days = cal_days_in_month(CAL_GREGORIAN,$month,$year);
-            while($day++ < $number_of_days){
-                $timetoprint = date('m/d/Y',mktime($hour,0,0,$month,$day,$year));
+        $year = date('Y');
+        $month = date('m');
+        $day = 0;
+        $number_of_days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        while ($day++ < $number_of_days) {
+            $timetoprint = date('m/d/Y', mktime($hour, 0, 0, $month, $day, $year));
 
-                $arg1 = array(
+            $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
@@ -263,11 +278,10 @@ function customerpurchasethismonth(){
                     'day' => $day,
                 );
 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-                echo "['$timetoprint', $user_count],";
-            }
-        ?>
+            $the_query1 = new WP_Query($arg1);
+            $user_count = $the_query1->found_posts;
+            echo "['$timetoprint', $user_count],";
+        } ?>
     ]);
 
     var options = {
@@ -306,10 +320,12 @@ else {
 </script>
 <h4>Purchases This Month</h4>
 <div id="customerpurchasethismonth"></div>
-<?php } ?>
+<?php
+    } ?>
 <!--  -->
 
-<?php if($active_section == 'cp-7days'){ ?>
+<?php if ($active_section == 'cp-7days') {
+        ?>
 <script>
 // code for last 7 days
 google.setOnLoadCallback(customerpurchase7days);
@@ -322,12 +338,12 @@ function customerpurchase7days(){
     data.addRows([
         <?php
             $year = date('Y');
-            $month = date('m');
-            $end_date = date('d')-7;
-            $today = date('d');
-            do{
-                $timetoprint = date('m/d/Y',mktime(0,0,0,$month,$today,$year));
-                $arg2 = array(
+        $month = date('m');
+        $end_date = date('d')-7;
+        $today = date('d');
+        do {
+            $timetoprint = date('m/d/Y', mktime(0, 0, 0, $month, $today, $year));
+            $arg2 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
@@ -349,13 +365,12 @@ function customerpurchase7days(){
 
                 );
 
-                $the_query2 = new WP_Query( $arg2 );
-                $user_count = $the_query2->found_posts;
+            $the_query2 = new WP_Query($arg2);
+            $user_count = $the_query2->found_posts;
 
-                echo "['$timetoprint', $user_count],";
-                $today--;
-            }while($today > $end_date);
-        ?>
+            echo "['$timetoprint', $user_count],";
+            $today--;
+        } while ($today > $end_date); ?>
     ]);
 
     var options = {
@@ -394,10 +409,12 @@ else {
 </script>
 <h4>Purchases last 7 days</h4>
 <div id="customerpurchase7days"></div><br /><br />
-<?php } ?>
+<?php
+    } ?>
 <!--  -->
 
-<?php if($active_section == 'cp-today'){ ?>
+<?php if ($active_section == 'cp-today') {
+        ?>
 <script>
 // code for today
 google.setOnLoadCallback(customerpurchasetoday);
@@ -410,14 +427,14 @@ function customerpurchasetoday(){
     data.addRows([
         <?php
             $hour = 7;
-            $year = date('Y');
-            $month = date('m');
-            $date = date('d');
-            while($hour++ < 19){
-                $timetoprint = date('g a',mktime($hour,0,0,$month,$date,$year));
-                //MASONS CODE FOR WRONG TIME IN ANALYTICS
-                $time_zone = get_user_meta($store_id, "selecttimezone", true);
-                switch ($time_zone) {
+        $year = date('Y');
+        $month = date('m');
+        $date = date('d');
+        while ($hour++ < 19) {
+            $timetoprint = date('g a', mktime($hour, 0, 0, $month, $date, $year));
+            //MASONS CODE FOR WRONG TIME IN ANALYTICS
+            $time_zone = get_user_meta($store_id, "selecttimezone", true);
+            switch ($time_zone) {
                      case "US/Eastern":
                          $offset = 4;
                          break;
@@ -434,8 +451,8 @@ function customerpurchasetoday(){
                          $offset = 0;
                          break;
                 }
-                //END MASONS CODE
-                $arg1 = array(
+            //END MASONS CODE
+            $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_query' => array(
@@ -457,11 +474,10 @@ function customerpurchasetoday(){
                     'hour' => ($hour+$offset)
                 );
 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-                echo "['$timetoprint', $user_count],";
-            }
-        ?>
+            $the_query1 = new WP_Query($arg1);
+            $user_count = $the_query1->found_posts;
+            echo "['$timetoprint', $user_count],";
+        } ?>
     ]);
 
     var options = {
@@ -500,10 +516,12 @@ else {
 </script>
 <h4>Purchases Today</h4>
 <div id="customerpurchasetoday"></div><br /><br />
-<?php } ?>
+<?php
+    } ?>
 <!--  -->
 
-<?php if($active_section == 'cp-custom'){ ?>
+<?php if ($active_section == 'cp-custom') {
+        ?>
 <div class="daterange">
     <form method="post" action="<?php bloginfo('url'); ?>/analytics-reporting/?ar=<?php echo encripted('cp-custom'); ?>">
         <table>
@@ -517,7 +535,8 @@ else {
         </table>
     </form>
 </div>
-<?php if(isset($_POST['showreport'])){ ?>
+<?php if (isset($_POST['showreport'])) {
+            ?>
 <script>
 // code for custom date range
 google.setOnLoadCallback(customerpurchasecustom);
@@ -545,11 +564,11 @@ function customerpurchasecustom(){
 
             $endDate = strtotime($endDate_year.'-'.$endDate_month.'-'.$endDate_date.' 23:59:59');
 
-            for ( $i = $startDate; $i <= $endDate; $i = $i + 86400 ) {
-                $thisYear = date( 'Y', $i ); // 2010-05-01, 2010-05-02, etc
-                $thisMonth = date( 'm', $i );
-                $thisDate = date( 'd', $i );
-                $timetoprint = date( 'm/d/Y', $i );
+            for ($i = $startDate; $i <= $endDate; $i = $i + 86400) {
+                $thisYear = date('Y', $i); // 2010-05-01, 2010-05-02, etc
+                $thisMonth = date('m', $i);
+                $thisDate = date('d', $i);
+                $timetoprint = date('m/d/Y', $i);
                 $arg2 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
@@ -571,12 +590,11 @@ function customerpurchasecustom(){
                     'day' => $thisDate
                 );
 
-                $the_query2 = new WP_Query( $arg2 );
+                $the_query2 = new WP_Query($arg2);
                 $user_count = $the_query2->found_posts;
 
                 echo "['$timetoprint', $user_count],";
-            }
-        ?>
+            } ?>
     ]);
 
     var options = {
@@ -615,8 +633,10 @@ else {
 </script>
 <h4>Purchases Between <?php echo $_POST['fromdate']; ?> to <?php echo $_POST['todate']; ?></h4>
 <div id="customerpurchasecustom"></div><br /><br />
-<?php } ?>
-<?php } ?>
+<?php
+        } ?>
+<?php
+    } ?>
 
 
 <!-- Chart to PNG -->

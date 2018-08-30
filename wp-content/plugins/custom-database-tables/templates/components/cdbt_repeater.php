@@ -30,169 +30,179 @@
 
 // `id` section
 if (isset($this->component_options['id']) && !empty($this->component_options['id'])) {
-  $repeater_id = esc_attr__($this->component_options['id']);
+    $repeater_id = esc_attr__($this->component_options['id']);
 } else {
-  return;
+    return;
 }
 
 // `search` section
-$enable_search = isset($this->component_options['enableSearch']) ? $this->strtobool( $this->component_options['enableSearch'] ) : false;
+$enable_search = isset($this->component_options['enableSearch']) ? $this->strtobool($this->component_options['enableSearch']) : false;
 
 // `filter` section
-$enable_filter = isset($this->component_options['enableFilter']) ? $this->strtobool( $this->component_options['enableFilter'] ) : false;
+$enable_filter = isset($this->component_options['enableFilter']) ? $this->strtobool($this->component_options['enableFilter']) : false;
 
 if (empty($this->component_options['filter_column']) || empty($this->component_options['filters'])) {
-  $enable_filter = false;
+    $enable_filter = false;
 } else {
-  $filter_column = $this->component_options['filter_column'];
-  $filters_list = [];
-  if ( $this->is_assoc( $this->component_options['filters'] ) ) {
-    foreach ( $this->component_options['filters'] as $_list_value => $_label ) {
-      $filters_list[] = sprintf( '<li data-value="%s"><a href="#">%s</a></li>', $_list_value, $_label );
+    $filter_column = $this->component_options['filter_column'];
+    $filters_list = [];
+    if ($this->is_assoc($this->component_options['filters'])) {
+        foreach ($this->component_options['filters'] as $_list_value => $_label) {
+            $filters_list[] = sprintf('<li data-value="%s"><a href="#">%s</a></li>', $_list_value, $_label);
+        }
+    } else {
+        foreach ($this->component_options['filters'] as $val) {
+            $_value = $this->strtohash($val);
+            $_list_value = esc_attr(mb_decode_numericentity(key($_value), array( 0x0, 0x10ffff, 0, 0xffffff ), 'UTF-8'));
+            $_label = ! empty($_value[key($_value)]) ? mb_decode_numericentity($_value[key($_value)], array( 0x0, 0x10ffff, 0, 0xffffff ), 'UTF-8') : $_list_value;
+            $filters_list[] = sprintf('<li data-value="%s"><a href="#">%s</a></li>', $_list_value, $_label);
+        }
     }
-  } else {
-    foreach ( $this->component_options['filters'] as $val ) {
-      $_value = $this->strtohash( $val );
-      $_list_value = esc_attr( mb_decode_numericentity( key( $_value ), array( 0x0, 0x10ffff, 0, 0xffffff ), 'UTF-8' ) );
-      $_label = ! empty( $_value[key( $_value )] ) ? mb_decode_numericentity( $_value[key( $_value )], array( 0x0, 0x10ffff, 0, 0xffffff ), 'UTF-8' ) : $_list_value;
-      $filters_list[] = sprintf( '<li data-value="%s"><a href="#">%s</a></li>', $_list_value, $_label );
-    }
-  }
 }
 
 // `view` section
-$enable_view = isset($this->component_options['enableView']) ? $this->strtobool( $this->component_options['enableView'] ) : false;
+$enable_view = isset($this->component_options['enableView']) ? $this->strtobool($this->component_options['enableView']) : false;
 
 if (isset($this->component_options['defaultView']) && in_array($this->component_options['defaultView'], [ 'list', 'thumbnail' ])) {
-  $default_view = $this->component_options['defaultView'];
+    $default_view = $this->component_options['defaultView'];
 } else {
-  $default_view = 'list';
+    $default_view = 'list';
 }
 
 // `enableEditor` section
-$enable_editor = isset($this->component_options['enableEditor']) ? $this->strtobool( $this->component_options['enableEditor'] ) : false;
+$enable_editor = isset($this->component_options['enableEditor']) ? $this->strtobool($this->component_options['enableEditor']) : false;
 
 // `disableEdit` section
-$disable_edit = isset($this->component_options['disableEdit']) ? $this->strtobool( $this->component_options['disableEdit'] ) : false;
+$disable_edit = isset($this->component_options['disableEdit']) ? $this->strtobool($this->component_options['disableEdit']) : false;
 
 // `listSelectable` section
 if (isset($this->component_options['listSelectable']) && in_array($this->component_options['listSelectable'], [ 'single', 'multi' ])) {
-  $list_selectable = "'" . esc_attr($this->component_options['listSelectable']) . "'";
+    $list_selectable = "'" . esc_attr($this->component_options['listSelectable']) . "'";
 } else {
-  $list_selectable = 'false';
+    $list_selectable = 'false';
 }
 
 // `staticHeight` section
 $static_height = -1;
 if (isset($this->component_options['staticHeight'])) {
-  $static_height = $this->strtobool($this->component_options['staticHeight']) ? 'true' : 'false';
+    $static_height = $this->strtobool($this->component_options['staticHeight']) ? 'true' : 'false';
 }
 
 // `pageIndex` section
 if (isset($this->component_options['pageIndex']) && intval($this->component_options['pageIndex']) >= 0) {
-  $page_index = intval($this->component_options['pageIndex']);
+    $page_index = intval($this->component_options['pageIndex']);
 } else {
-  $page_index = 0;
+    $page_index = 0;
 }
 
 // `pageSize` section
 if (isset($this->component_options['pageSize']) && intval($this->component_options['pageSize']) > 0) {
-  $page_size = intval($this->component_options['pageSize']);
-  if (!in_array($page_size, [5, 10, 20, 50, 100])) {
-    $insert_position = 0;
-    if (5 < $page_size && $page_size < 10) 
-      $insert_position = 1;
-    if (10 < $page_size && $page_size < 20) 
-      $insert_position = 2;
-    if (20 < $page_size && $page_size < 50) 
-      $insert_position = 3;
-    if (50 < $page_size && $page_size < 100) 
-      $insert_position = 4;
-    if (100 < $page_size) 
-      $insert_position = 5;
-  } else {
-    $insert_position = -1;
-  }
+    $page_size = intval($this->component_options['pageSize']);
+    if (!in_array($page_size, [5, 10, 20, 50, 100])) {
+        $insert_position = 0;
+        if (5 < $page_size && $page_size < 10) {
+            $insert_position = 1;
+        }
+        if (10 < $page_size && $page_size < 20) {
+            $insert_position = 2;
+        }
+        if (20 < $page_size && $page_size < 50) {
+            $insert_position = 3;
+        }
+        if (50 < $page_size && $page_size < 100) {
+            $insert_position = 4;
+        }
+        if (100 < $page_size) {
+            $insert_position = 5;
+        }
+    } else {
+        $insert_position = -1;
+    }
 } else {
-  $page_size = 10;
-  $insert_position = -1;
+    $page_size = 10;
+    $insert_position = -1;
 }
 if ($insert_position >= 0) {
-  $insert_page_size_line = sprintf( '<li data-value="%d" data-selected="true"><a href="#">%d</a></li>', $page_size, $page_size );
+    $insert_page_size_line = sprintf('<li data-value="%d" data-selected="true"><a href="#">%d</a></li>', $page_size, $page_size);
 }
 
 // `customRowScripts` section
 if (isset($this->component_options['customRowScripts']) && !empty($this->component_options['customRowScripts'])) {
-  $custom_rows = $this->component_options['customRowScripts'];
+    $custom_rows = $this->component_options['customRowScripts'];
 }
 
 // `columns` section
 if (!isset($this->component_options['columns']) || empty($this->component_options['columns'])) {
-  return;
+    return;
 } else {
-  $columns = [];
-  $numric_properties = [];
-  $custom_columns = [];
-  $display_columns = [];
-  foreach ($this->component_options['columns'] as $i => $setting) {
-    $columns[$i] = [
-      'label' => $setting['label'], 
-      'property' => $setting['property'], 
+    $columns = [];
+    $numric_properties = [];
+    $custom_columns = [];
+    $display_columns = [];
+    foreach ($this->component_options['columns'] as $i => $setting) {
+        $columns[$i] = [
+      'label' => $setting['label'],
+      'property' => $setting['property'],
       'sortable' => isset($setting['sortable']) && $setting['sortable'] ? true : false,
     ];
-    if (isset($setting['sortDirection']) && in_array(strtolower($setting['sortDirection']), [ 'asc', 'desc' ])) 
-      $columns[$i]['sortDirection'] = $setting['sortDirection'];
+        if (isset($setting['sortDirection']) && in_array(strtolower($setting['sortDirection']), [ 'asc', 'desc' ])) {
+            $columns[$i]['sortDirection'] = $setting['sortDirection'];
+        }
     
-    if (isset($setting['dataNumric']) && true === $setting['dataNumric']) 
-      $numric_properties[] = $columns[$i]['property'];
+        if (isset($setting['dataNumric']) && true === $setting['dataNumric']) {
+            $numric_properties[] = $columns[$i]['property'];
+        }
     
-    if (isset($setting['className']) && !empty($setting['className'])) 
-      $columns[$i]['className'] = $setting['className'];
+        if (isset($setting['className']) && !empty($setting['className'])) {
+            $columns[$i]['className'] = $setting['className'];
+        }
     
-    if (isset($setting['width']) && intval($setting['width']) > 0) 
-      $columns[$i]['width'] = intval($setting['width']);
+        if (isset($setting['width']) && intval($setting['width']) > 0) {
+            $columns[$i]['width'] = intval($setting['width']);
+        }
     
-    if ( isset( $setting['customColumnRenderer'] ) && ! empty( $setting['customColumnRenderer'] ) ) {
-      if ( is_array( $setting['customColumnRenderer'] ) && array_key_exists( $columns[$i]['property'], $setting['customColumnRenderer'] ) ) {
-        $custom_columns[$columns[$i]['property']] = $setting['customColumnRenderer'][$columns[$i]['property']];
-      } else {
-        $custom_columns[$columns[$i]['property']] = $setting['customColumnRenderer'];
-      }
+        if (isset($setting['customColumnRenderer']) && ! empty($setting['customColumnRenderer'])) {
+            if (is_array($setting['customColumnRenderer']) && array_key_exists($columns[$i]['property'], $setting['customColumnRenderer'])) {
+                $custom_columns[$columns[$i]['property']] = $setting['customColumnRenderer'][$columns[$i]['property']];
+            } else {
+                $custom_columns[$columns[$i]['property']] = $setting['customColumnRenderer'];
+            }
+        }
+    
+        if (isset($setting['customRowRenderer']) && !empty($setting['customRowRenderer'])) {
+            $custom_rows = isset($custom_rows) ? array_merge($custom_rows, $setting['customRowRenderer']) : $setting['customRowRenderer'];
+        }
+    
+        $display_columns[] = $setting['property']; // .':'. $setting['label'];
     }
-    
-    if (isset($setting['customRowRenderer']) && !empty($setting['customRowRenderer'])) 
-      $custom_rows = isset($custom_rows) ? array_merge($custom_rows, $setting['customRowRenderer']) : $setting['customRowRenderer'];
-    
-    $display_columns[] = $setting['property']; // .':'. $setting['label'];
-  }
 }
 
 // `data` section
 if (!isset($this->component_options['data']) || empty($this->component_options['data'])) {
-  return;
+    return;
 } else {
-  $items = $this->component_options['data'];
+    $items = $this->component_options['data'];
 }
 
 // `addClass` section
 if (!isset($this->component_options['addClass']) || empty($this->component_options['addClass'])) {
-  $add_class = '';
+    $add_class = '';
 } else {
-  $add_class = $this->component_options['addClass'];
+    $add_class = $this->component_options['addClass'];
 }
 
 // `afterRender` section
 if (!isset($this->component_options['afterRender']) || empty($this->component_options['afterRender'])) {
-  $after_render = '';
+    $after_render = '';
 } else {
-  $after_render = $this->component_options['afterRender'];
+    $after_render = $this->component_options['afterRender'];
 }
 
 // `thumbnailTemplate` section
 if (!isset($this->component_options['thumbnailTemplate']) || empty($this->component_options['thumbnailTemplate'])) {
-  $thumbnail_template = '\'<div class="thumbnail repeater-thumbnail {{thumbnail_class}}" style="background: {{thumbnail_bgcolor}};"><img height="{{thumbnail_height}}" src="{{thumbnail_src}}" width="{{thumbnail_width}}"><span>{{thumbnail_title}}</span></div>\'';
+    $thumbnail_template = '\'<div class="thumbnail repeater-thumbnail {{thumbnail_class}}" style="background: {{thumbnail_bgcolor}};"><img height="{{thumbnail_height}}" src="{{thumbnail_src}}" width="{{thumbnail_width}}"><span>{{thumbnail_title}}</span></div>\'';
 } else {
-  $thumbnail_template = $this->component_options['thumbnailTemplate'];
+    $thumbnail_template = $this->component_options['thumbnailTemplate'];
 }
 
 /**
@@ -200,7 +210,7 @@ if (!isset($this->component_options['thumbnailTemplate']) || empty($this->compon
  * ---------------------------------------------------------------------------
  */
 ?>
-  <div class="repeater<?php echo ' ' . $add_class; ?>" id="<?php echo $repeater_id; ?>" data-cols="<?php echo implode( ',', $display_columns ); ?>">
+  <div class="repeater<?php echo ' ' . $add_class; ?>" id="<?php echo $repeater_id; ?>" data-cols="<?php echo implode(',', $display_columns); ?>">
   <?php if ($enable_search || $enable_filter || $enable_view || $enable_editor) : ?>
     <div class="repeater-header">
       <div class="repeater-header-left">
@@ -278,17 +288,29 @@ if (!isset($this->component_options['thumbnailTemplate']) || empty($this->compon
               <span class="sr-only"><?php _e('Toggle Dropdown', CDBT); ?></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-              <?php if ($insert_position === 0) echo $insert_page_size_line; ?>
+              <?php if ($insert_position === 0) {
+    echo $insert_page_size_line;
+} ?>
               <li data-value="5"<?php if ($page_size === 5) : ?> data-selected="true"<?php endif; ?>><a href="#">5</a></li>
-              <?php if ($insert_position === 1) echo $insert_page_size_line; ?>
+              <?php if ($insert_position === 1) {
+    echo $insert_page_size_line;
+} ?>
               <li data-value="10"<?php if ($page_size === 10) : ?> data-selected="true"<?php endif; ?>><a href="#">10</a></li>
-              <?php if ($insert_position === 2) echo $insert_page_size_line; ?>
+              <?php if ($insert_position === 2) {
+    echo $insert_page_size_line;
+} ?>
               <li data-value="20"<?php if ($page_size === 20) : ?> data-selected="true"<?php endif; ?>><a href="#">20</a></li>
-              <?php if ($insert_position === 3) echo $insert_page_size_line; ?>
+              <?php if ($insert_position === 3) {
+    echo $insert_page_size_line;
+} ?>
               <li data-value="50"<?php if ($page_size === 50) : ?> data-selected="true"<?php endif; ?>><a href="#">50</a></li>
-              <?php if ($insert_position === 4) echo $insert_page_size_line; ?>
+              <?php if ($insert_position === 4) {
+    echo $insert_page_size_line;
+} ?>
               <li data-value="100"<?php if ($page_size === 100) : ?> data-selected="true"<?php endif; ?>><a href="#">100</a></li>
-              <?php if ($insert_position === 5) echo $insert_page_size_line; ?>
+              <?php if ($insert_position === 5) {
+    echo $insert_page_size_line;
+} ?>
             </ul>
             <input class="hidden hidden-field" name="itemsPerPage" readonly="readonly" aria-hidden="true" type="text"/>
           </div>
@@ -358,7 +380,7 @@ repeater['<?php echo $repeater_id; ?>'] = function() {
         var index = Math.floor(Math.random() * (max - min + 1)) + min;
         return statuses[index];
       }
- 
+
       for(var i=1; i<=100; i++) {
         var item = {
           id: i,
@@ -449,21 +471,21 @@ endif; ?>
     
     // sort by
     data = _.sortBy(data, function(item) {
-<?php if (!empty($numric_properties)) : 
+<?php if (!empty($numric_properties)) :
     $conditions = [];
     foreach ($numric_properties as $property) {
-      $conditions[] = sprintf("options.sortProperty === '%s'", $property);
+        $conditions[] = sprintf("options.sortProperty === '%s'", $property);
     }
 ?>
       if (<?php echo implode(' || ', $conditions); ?>) {
         return parseFloat(item[options.sortProperty]);
       } else {
         if (typeof options.sortProperty === 'undefined') {
-          var sortCache = <?php if ( is_admin() ) : ?>docCookies.getItem('cdbtSortCache');<?php else : ?>typeof getCookie === 'function' ? getCookie('cdbtSortCache') : '';<?php endif; ?>
-          if (<?php if ( is_admin() ) : ?>null<?php else : ?>''<?php endif; ?> !== sortCache) {
+          var sortCache = <?php if (is_admin()) : ?>docCookies.getItem('cdbtSortCache');<?php else : ?>typeof getCookie === 'function' ? getCookie('cdbtSortCache') : '';<?php endif; ?>
+          if (<?php if (is_admin()) : ?>null<?php else : ?>''<?php endif; ?> !== sortCache) {
             var sortCookie = JSON.parse(sortCache);
             if (typeof sortCookie === 'object' && _.size(sortCookie) > 0 && typeof sortCookie['<?php echo $repeater_id; ?>'] !== 'undefined') {
-              var indexNum = sortCookie['<?php echo $repeater_id; ?>'][0]<?php if ( strpos( $repeater_id, 'cdbt-repeater-edit-' ) === 0 ) : ?> - 1<?php endif; ?>;
+              var indexNum = sortCookie['<?php echo $repeater_id; ?>'][0]<?php if (strpos($repeater_id, 'cdbt-repeater-edit-') === 0) : ?> - 1<?php endif; ?>;
               options.sortProperty = _.keys(item)[indexNum];
               options.sortDirection = sortCookie['<?php echo $repeater_id; ?>'][1];
             }
@@ -476,11 +498,11 @@ endif; ?>
       }
 <?php else : ?>
       if (typeof options.sortProperty === 'undefined') {
-        var sortCache = <?php if ( is_admin() ) : ?>docCookies.getItem('cdbtSortCache');<?php else : ?>typeof getCookie === 'function' ? getCookie('cdbtSortCache') : '';<?php endif; ?>
-        if (<?php if ( is_admin() ) : ?>null<?php else : ?>''<?php endif; ?> !== sortCache) {
+        var sortCache = <?php if (is_admin()) : ?>docCookies.getItem('cdbtSortCache');<?php else : ?>typeof getCookie === 'function' ? getCookie('cdbtSortCache') : '';<?php endif; ?>
+        if (<?php if (is_admin()) : ?>null<?php else : ?>''<?php endif; ?> !== sortCache) {
           var sortCookie = JSON.parse(sortCache);
           if (typeof sortCookie === 'object' && _.size(sortCookie) > 0 && typeof sortCookie['<?php echo $repeater_id; ?>'] !== 'undefined') {
-            var indexNum = sortCookie['<?php echo $repeater_id; ?>'][0]<?php if ( strpos( $repeater_id, 'cdbt-repeater-edit-' ) === 0 ) : ?> - 1<?php endif; ?>;
+            var indexNum = sortCookie['<?php echo $repeater_id; ?>'][0]<?php if (strpos($repeater_id, 'cdbt-repeater-edit-') === 0) : ?> - 1<?php endif; ?>;
             options.sortProperty = _.keys(item)[indexNum];
             options.sortDirection = sortCookie['<?php echo $repeater_id; ?>'][1];
           }
@@ -559,11 +581,11 @@ endif; ?>
     $('#<?php echo $repeater_id; ?>').find('.sorted').removeClass('sorted');
     $('#<?php echo $repeater_id; ?>').find('thead th.sortable').each(function(){
       $(this).find('.rlc').attr('class', 'glyphicon rlc');
-      var sortCache = <?php if ( is_admin() ) : ?>docCookies.getItem('cdbtSortCache');<?php else : ?>typeof getCookie == 'function' ? getCookie('cdbtSortCache') : '';<?php endif; ?>
-      if (<?php if ( is_admin() ) : ?>null<?php else : ?>''<?php endif; ?> !== sortCache) {
+      var sortCache = <?php if (is_admin()) : ?>docCookies.getItem('cdbtSortCache');<?php else : ?>typeof getCookie == 'function' ? getCookie('cdbtSortCache') : '';<?php endif; ?>
+      if (<?php if (is_admin()) : ?>null<?php else : ?>''<?php endif; ?> !== sortCache) {
         var sortCookie = JSON.parse(sortCache);
         if (typeof sortCookie === 'object' && _.size(sortCookie) > 0 && typeof sortCookie['<?php echo $repeater_id; ?>'] !== 'undefined') {
-          var indexNum = sortCookie['<?php echo $repeater_id; ?>'][0]<?php if ( strpos( $repeater_id, 'cdbt-repeater-edit-' ) === 0 ) : ?> + 1<?php endif; ?>;
+          var indexNum = sortCookie['<?php echo $repeater_id; ?>'][0]<?php if (strpos($repeater_id, 'cdbt-repeater-edit-') === 0) : ?> + 1<?php endif; ?>;
           if ( $(this).index() === indexNum ) {
             $(this).addClass('sorted').find('.sortable').addClass('sorted');
             var up_down = $('#<?php echo $repeater_id; ?>').data().currentSortDirection === 'asc' ? 'up' : 'down';
@@ -572,7 +594,7 @@ endif; ?>
         }
       }
     });
-<?php if ( ! empty( $after_render ) ) :
+<?php if (! empty($after_render)) :
   echo $after_render . '()';
 endif; ?>
   }
@@ -581,7 +603,7 @@ endif; ?>
   var repeater = $('#<?php echo $repeater_id; ?>');
   repeater.repeater({
     list_selectable: <?php echo $list_selectable; ?>, // (single | multi)
-    list_noItemsHTML: "<?php _e( 'No result.', CDBT); ?>",
+    list_noItemsHTML: "<?php _e('No result.', CDBT); ?>",
     list_highlightSortedColumn: false,
     list_sortClearing: true,
     
@@ -602,7 +624,9 @@ endif; ?>
     
     //dropPagingCap: 3, 
     
-    <?php if ($static_height !== -1) printf('staticHeight: %s,', $static_height); ?>
+    <?php if ($static_height !== -1) {
+    printf('staticHeight: %s,', $static_height);
+} ?>
     
     thumbnail_template: <?php echo $thumbnail_template; ?>,
     

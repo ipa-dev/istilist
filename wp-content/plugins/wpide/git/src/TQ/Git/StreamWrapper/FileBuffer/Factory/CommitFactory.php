@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\StreamWrapper\FileBuffer\Factory;
+
 use TQ\Git\StreamWrapper\PathInformation;
 use TQ\Git\StreamWrapper\FileBuffer\StringBuffer;
 
@@ -73,5 +74,4 @@ class CommitFactory implements Factory
         $buffer = $repo->showCommit($path->getArgument('ref'));
         return new StringBuffer($buffer, array(), 'r');
     }
-
 }

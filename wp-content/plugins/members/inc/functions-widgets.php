@@ -11,7 +11,7 @@
  */
 
 # Hook widget registration to the 'widgets_init' hook.
-add_action( 'widgets_init', 'members_register_widgets' );
+add_action('widgets_init', 'members_register_widgets');
 
 /**
  * Registers widgets for the plugin.
@@ -20,21 +20,20 @@ add_action( 'widgets_init', 'members_register_widgets' );
  * @access public
  * @return void
  */
-function members_register_widgets() {
+function members_register_widgets()
+{
 
-	// If the login form widget is enabled.
-	if ( members_login_widget_enabled() ) {
+    // If the login form widget is enabled.
+    if (members_login_widget_enabled()) {
+        require_once(members_plugin()->inc_dir . 'class-widget-login.php');
 
-		require_once( members_plugin()->inc_dir . 'class-widget-login.php' );
+        register_widget('Members_Widget_Login');
+    }
 
-		register_widget( 'Members_Widget_Login' );
-	}
+    // If the users widget is enabled.
+    if (members_users_widget_enabled()) {
+        require_once(members_plugin()->inc_dir . 'class-widget-users.php');
 
-	// If the users widget is enabled.
-	if ( members_users_widget_enabled() ) {
-
-		require_once( members_plugin()->inc_dir . 'class-widget-users.php' );
-
-		register_widget( 'Members_Widget_users' );
-	}
+        register_widget('Members_Widget_users');
+    }
 }

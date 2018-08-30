@@ -11,7 +11,7 @@
  */
 
 # Registers default groups.
-add_action( 'init', 'members_register_role_groups', 15 );
+add_action('init', 'members_register_role_groups', 15);
 
 /**
  * Returns the instance of the `Members_Role_Group_Factory` object. Use this function to access the object.
@@ -21,8 +21,9 @@ add_action( 'init', 'members_register_role_groups', 15 );
  * @access public
  * @return object
  */
-function members_role_group_factory() {
-	return Members_Role_Group_Factory::get_instance();
+function members_role_group_factory()
+{
+    return Members_Role_Group_Factory::get_instance();
 }
 
 /**
@@ -35,8 +36,9 @@ function members_role_group_factory() {
  * @param  array   $args
  * @return void
  */
-function members_register_role_group( $name, $args = array() ) {
-	members_role_group_factory()->register_group( $name, $args );
+function members_register_role_group($name, $args = array())
+{
+    members_role_group_factory()->register_group($name, $args);
 }
 
 /**
@@ -48,8 +50,9 @@ function members_register_role_group( $name, $args = array() ) {
  * @param  string  $name
  * @return void
  */
-function members_unregister_role_group( $name ) {
-	members_role_group_factory()->unregister_group( $name );
+function members_unregister_role_group($name)
+{
+    members_role_group_factory()->unregister_group($name);
 }
 
 /**
@@ -61,8 +64,9 @@ function members_unregister_role_group( $name ) {
  * @param  string  $name
  * @return bool
  */
-function members_role_group_exists( $name ) {
-	return members_role_group_factory()->group_exists( $name );
+function members_role_group_exists($name)
+{
+    return members_role_group_factory()->group_exists($name);
 }
 
 /**
@@ -73,8 +77,9 @@ function members_role_group_exists( $name ) {
  * @access public
  * @return array
  */
-function members_get_role_groups() {
-	return members_role_group_factory()->groups;
+function members_get_role_groups()
+{
+    return members_role_group_factory()->groups;
 }
 
 /**
@@ -87,8 +92,9 @@ function members_get_role_groups() {
  * @param  string      $name
  * @return object|bool
  */
-function members_get_role_group( $name ) {
-	return members_role_group_factory()->get_group( $name );
+function members_get_role_group($name)
+{
+    return members_role_group_factory()->get_group($name);
 }
 
 /**
@@ -98,68 +104,75 @@ function members_get_role_group( $name ) {
  * @access public
  * @return void
  */
-function members_register_role_groups() {
+function members_register_role_groups()
+{
 
-	// Get the current user.
-	$current_user = wp_get_current_user();
+    // Get the current user.
+    $current_user = wp_get_current_user();
 
-	if ( is_object( $current_user ) ) {
+    if (is_object($current_user)) {
 
-		// Register the mine group.
-		members_register_role_group( 'mine',
-			array(
-				'label'       => esc_html__( 'Mine', 'members' ),
-				'label_count' => _n_noop( 'Mine %s', 'Mine %s', 'members' ),
-				'roles'       => $current_user->roles,
-			)
-		);
-	}
+        // Register the mine group.
+        members_register_role_group(
+            'mine',
+            array(
+                'label'       => esc_html__('Mine', 'members'),
+                'label_count' => _n_noop('Mine %s', 'Mine %s', 'members'),
+                'roles'       => $current_user->roles,
+            )
+        );
+    }
 
-	// Register the active group.
-	members_register_role_group( 'active',
-		array(
-			'label'       => esc_html__( 'Has Users', 'members' ),
-			'label_count' => _n_noop( 'Has Users %s', 'Has Users %s', 'members' ),
-			'roles'       => array(), // These will be updated on the fly b/c it requires counting users.
-		)
-	);
+    // Register the active group.
+    members_register_role_group(
+        'active',
+        array(
+            'label'       => esc_html__('Has Users', 'members'),
+            'label_count' => _n_noop('Has Users %s', 'Has Users %s', 'members'),
+            'roles'       => array(), // These will be updated on the fly b/c it requires counting users.
+        )
+    );
 
-	// Register the inactive group.
-	members_register_role_group( 'inactive',
-		array(
-			'label'       => esc_html__( 'No Users', 'members' ),
-			'label_count' => _n_noop( 'No Users %s', 'No Users %s', 'members' ),
-			'roles'       => array(), // These will be updated on the fly b/c it requires counting users.
-		)
-	);
+    // Register the inactive group.
+    members_register_role_group(
+        'inactive',
+        array(
+            'label'       => esc_html__('No Users', 'members'),
+            'label_count' => _n_noop('No Users %s', 'No Users %s', 'members'),
+            'roles'       => array(), // These will be updated on the fly b/c it requires counting users.
+        )
+    );
 
-	// Register the editable group.
-	members_register_role_group( 'editable',
-		array(
-			'label'       => esc_html__( 'Editable', 'members' ),
-			'label_count' => _n_noop( 'Editable %s', 'Editable %s', 'members' ),
-			'roles'       => members_get_editable_role_slugs(),
-		)
-	);
+    // Register the editable group.
+    members_register_role_group(
+        'editable',
+        array(
+            'label'       => esc_html__('Editable', 'members'),
+            'label_count' => _n_noop('Editable %s', 'Editable %s', 'members'),
+            'roles'       => members_get_editable_role_slugs(),
+        )
+    );
 
-	// Register the uneditable group.
-	members_register_role_group( 'uneditable',
-		array(
-			'label'       => esc_html__( 'Uneditable', 'members' ),
-			'label_count' => _n_noop( 'Uneditable %s', 'Uneditable %s', 'members' ),
-			'roles'       => members_get_uneditable_role_slugs(),
-		)
-	);
+    // Register the uneditable group.
+    members_register_role_group(
+        'uneditable',
+        array(
+            'label'       => esc_html__('Uneditable', 'members'),
+            'label_count' => _n_noop('Uneditable %s', 'Uneditable %s', 'members'),
+            'roles'       => members_get_uneditable_role_slugs(),
+        )
+    );
 
-	// Register the WordPress group.
-	members_register_role_group( 'wordpress',
-		array(
-			'label'       => esc_html__( 'WordPress', 'members' ),
-			'label_count' => _n_noop( 'WordPress %s', 'WordPress %s', 'members' ),
-			'roles'       => members_get_wordpress_role_slugs(),
-		)
-	);
+    // Register the WordPress group.
+    members_register_role_group(
+        'wordpress',
+        array(
+            'label'       => esc_html__('WordPress', 'members'),
+            'label_count' => _n_noop('WordPress %s', 'WordPress %s', 'members'),
+            'roles'       => members_get_wordpress_role_slugs(),
+        )
+    );
 
-	// Hook for registering role groups. Plugins should always register on this hook.
-	do_action( 'members_register_role_groups' );
+    // Hook for registering role groups. Plugins should always register on this hook.
+    do_action('members_register_role_groups');
 }

@@ -7,7 +7,7 @@
 
  
 if (!defined('ABSPATH')) {
-	exit();
+    exit();
 }
 
 $operations = new RevSliderOperations();
@@ -24,8 +24,12 @@ $_width_tablet = (isset($arrValues['width_tablet'])) ? $arrValues['width_tablet'
 $_width_mobile = (isset($arrValues['width_mobile'])) ? $arrValues['width_mobile'] : 480;
 
 
-if(!isset($is_edit)) $is_edit = false;
-if(!isset($linksEditSlides)) $linksEditSlides = '';
+if (!isset($is_edit)) {
+    $is_edit = false;
+}
+if (!isset($linksEditSlides)) {
+    $linksEditSlides = '';
+}
 ?>
 
 <div class="wrap settings_wrap">
@@ -33,9 +37,9 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 
 	<div class="title_line" style="margin-bottom:0px !important">
 		<?php 
-			$icon_general = '<div class="icon32" id="icon-options-general"></div>';
-			echo apply_filters( 'rev_icon_general_filter', $icon_general ); 
-		?>
+            $icon_general = '<div class="icon32" id="icon-options-general"></div>';
+            echo apply_filters('rev_icon_general_filter', $icon_general);
+        ?>
 		<div class="view_title"><?php echo ($is_edit) ? __("Edit Slider", 'revslider') : __("New Slider", 'revslider'); ?></div>
 		<a href="<?php echo RevSliderGlobals::LINK_HELP_SLIDER;?>" class="button-secondary float_right mtop_10 mleft_10" target="_blank"><?php _e("Help", 'revslider'); ?></a>
 		<div class="tp-clearfix"></div>
@@ -57,14 +61,14 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 			</div>
 			
 			<?php
-		if (isset($linksEditSlides)) {
-			?>
+        if (isset($linksEditSlides)) {
+            ?>
 			<div class="rs-mini-toolbar-button rs-toolbar-slides">
-				<a class="button-primary revblue" href="<?php echo $linksEditSlides;?>"  id="link_edit_slides_t"><i class="revicon-pencil-1"></i><span class="mini-toolbar-text"><?php _e("Edit Slides", 'revslider');?></span></a>
+				<a class="button-primary revblue" href="<?php echo $linksEditSlides; ?>"  id="link_edit_slides_t"><i class="revicon-pencil-1"></i><span class="mini-toolbar-text"><?php _e("Edit Slides", 'revslider'); ?></span></a>
 			</div>
 				<?php
-		}
-		?>
+        }
+        ?>
 			<div class="rs-mini-toolbar-button  rs-toolbar-preview">
 				<a class="button-primary revgray" href="javascript:void(0)"  id="button_preview_slider_t" ><i class="revicon-search-1"></i><span class="mini-toolbar-text"><?php _e("Preview", 'revslider');?></span></a>
 			</div>
@@ -112,21 +116,21 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 	</script>
 
 	<?php 
-		$settings_wrapper_class = '';
-		$settings_wrapper_class = apply_filters( 'rev_main_options_settings_wrapper_class_filter', $settings_wrapper_class );
-	?>
+        $settings_wrapper_class = '';
+        $settings_wrapper_class = apply_filters('rev_main_options_settings_wrapper_class_filter', $settings_wrapper_class);
+    ?>
 	<div class="settings_panel">
 		<div class="settings_panel_left settings_wrapper<?php echo $settings_wrapper_class;?>">
 			<form name="form_slider_main" id="form_slider_main" onkeypress="return event.keyCode != 13;">
 				
 				<input type="hidden" name="hero_active" value="<?php echo RevSliderFunctions::getVal($arrFieldsParams, 'hero_active', -1); ?>" />
 				
-				<?php echo apply_filters( 'rev_main_options_pre_content_source_filter' , ''); ?>
+				<?php echo apply_filters('rev_main_options_pre_content_source_filter', ''); ?>
 				<!-- CONTENT SOURCE -->
 				<div id="content_source_sb" class="setting_box">
 					<?php $headline = '<h3><span class="setting-step-number">1</span><span>'.__("Content Source", 'revslider').'</span></h3>';
-						  echo apply_filters( 'rev_main_options_headline_content_source_filter', $headline );
-					?>
+                          echo apply_filters('rev_main_options_headline_content_source_filter', $headline);
+                    ?>
 					<div class="inside" style="padding:0px;">
 						<div class="source-selector-wrapper">
 							<?php $source_type = RevSliderFunctions::getVal($arrFieldsParams, 'source_type', 'gallery');?>
@@ -401,7 +405,7 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 								<input type="text" value="<?php echo RevSliderFunctions::getVal($arrFieldsParams, 'youtube-api', '');?>" name="youtube-api" title="<?php _e('Put in your YouTube API Key', 'revslider');?>">
 							</p>
 							
-							<span class="description"><?php _e('Find information about the YouTube API key <a target="_blank" href="https://developers.google.com/youtube/v3/getting-started#before-you-start">here</a>','revslider');?></span>
+							<span class="description"><?php _e('Find information about the YouTube API key <a target="_blank" href="https://developers.google.com/youtube/v3/getting-started#before-you-start">here</a>', 'revslider');?></span>
 						</div>
 						<div style="width:50%;display:block;float:left;">
 							<span class="rev-new-label"><?php _e('Channel ID', 'revslider');?></span>
@@ -416,7 +420,7 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 							<div id="youtube-playlist-wrap">
 								<p>
 									<span class="rev-new-label"><?php _e('Select Playlist', 'revslider'); ?></span>
-									<input type="hidden" name="youtube-playlist" value="<?php echo RevSliderFunctions::getVal($arrFieldsParams,'youtube-playlist', '') ?>">
+									<input type="hidden" name="youtube-playlist" value="<?php echo RevSliderFunctions::getVal($arrFieldsParams, 'youtube-playlist', '') ?>">
 									<select name="youtube-playlist-select">
 									</select>
 								</p>
@@ -470,45 +474,45 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 							<div class="rs-woocommerce-product-wrap" style="display: none;">
 								<span class="rev-new-label"><?php _e('Post Types:', 'revslider');?></span>
 								<?php
-								$post_type = RevSliderWooCommerce::getCustomPostTypes();
-								$sel_post_types = RevSliderFunctions::getVal($arrFieldsParams, 'product_types', 'product');
-								$sel_post_types = explode(',', $sel_post_types);
-								if (empty($sel_post_types)) {
-									$sel_post_types = array('post');
-								}
-								//default
-								?>
+                                $post_type = RevSliderWooCommerce::getCustomPostTypes();
+                                $sel_post_types = RevSliderFunctions::getVal($arrFieldsParams, 'product_types', 'product');
+                                $sel_post_types = explode(',', $sel_post_types);
+                                if (empty($sel_post_types)) {
+                                    $sel_post_types = array('post');
+                                }
+                                //default
+                                ?>
 								<select id="product_types" name="product_types" multiple size='2' style="width:181px; vertical-align: top; height:50px">
 									<?php
-									if (!empty($post_type)) {
-										foreach ($post_type as $post_handle => $post_name) {
-											$sel = (in_array($post_handle, $sel_post_types)) ? ' selected="selected"' : '';
-											echo '<option value="' . $post_handle . '"' . $sel . '>' . $post_name . '</option>';
-										}
-									}
-									?>
+                                    if (!empty($post_type)) {
+                                        foreach ($post_type as $post_handle => $post_name) {
+                                            $sel = (in_array($post_handle, $sel_post_types)) ? ' selected="selected"' : '';
+                                            echo '<option value="' . $post_handle . '"' . $sel . '>' . $post_name . '</option>';
+                                        }
+                                    }
+                                    ?>
 								</select>
 								<?php
-								$sel_product_category = RevSliderFunctions::getVal($arrFieldsParams, 'product_category', '');
-								$sel_product_category = explode(',', $sel_product_category);
+                                $sel_product_category = RevSliderFunctions::getVal($arrFieldsParams, 'product_category', '');
+                                $sel_product_category = explode(',', $sel_product_category);
 
-								?>
+                                ?>
 								<span class="tp-clearfix"></span>
 								<span class="rev-new-label"><?php _e('Product Categories:', 'revslider');?></span>
 								<select id="product_category" name="product_category" multiple size='7' style="width:181px; vertical-align: top;">
 									<?php
-									if (!empty($postTypesWithCats)) {
-										foreach ($postTypesWithCats as $post_type => $post_array) {
-											if (!empty($post_array)) {
-												foreach ($post_array as $cat_handle => $cat_name) {
-													$sel = (in_array($cat_handle, $sel_product_category)) ? ' selected="selected"' : '';
-													$dis = (strpos($cat_handle, 'option_disabled') !== false) ? ' disabled="disabled"' : '';
-													echo '<option value="' . $cat_handle . '"' . $dis . $sel . '>' . $cat_name . '</option>';
-												}
-											}
-										}
-									}
-									?>
+                                    if (!empty($postTypesWithCats)) {
+                                        foreach ($postTypesWithCats as $post_type => $post_array) {
+                                            if (!empty($post_array)) {
+                                                foreach ($post_array as $cat_handle => $cat_name) {
+                                                    $sel = (in_array($cat_handle, $sel_product_category)) ? ' selected="selected"' : '';
+                                                    $dis = (strpos($cat_handle, 'option_disabled') !== false) ? ' disabled="disabled"' : '';
+                                                    echo '<option value="' . $cat_handle . '"' . $dis . $sel . '>' . $cat_name . '</option>';
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
 								</select>
 							</div>
 							<div class="rs-specific-posts-wrap">
@@ -516,21 +520,21 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 								--><input type="text" class='regular-text' placeholder="<?php _e('coma separated | ex: 23,24,25', 'revslider'); ?>" id="posts_list" name="posts_list" value="<?php echo RevSliderFunctions::getVal($arrFieldsParams, 'posts_list', '');?>" style="width:255px" />
 								<span class="tp-clearfix"></span>
 								<?php
-								$pop_posts = $uslider->getPostsFromPopular(15);
-								$rec_posts = $uslider->getPostsFromRecent(15);
-								$recent = array();
-								$popular = array();
-								if(!empty($pop_posts)){
-									foreach($pop_posts as $p_post){
-										$popular[] = $p_post['ID'];
-									}
-								}
-								if(!empty($rec_posts)){
-									foreach($rec_posts as $r_post){
-										$recent[] = $r_post['ID'];
-									}
-								}
-								?>
+                                $pop_posts = $uslider->getPostsFromPopular(15);
+                                $rec_posts = $uslider->getPostsFromRecent(15);
+                                $recent = array();
+                                $popular = array();
+                                if (!empty($pop_posts)) {
+                                    foreach ($pop_posts as $p_post) {
+                                        $popular[] = $p_post['ID'];
+                                    }
+                                }
+                                if (!empty($rec_posts)) {
+                                    foreach ($rec_posts as $r_post) {
+                                        $recent[] = $r_post['ID'];
+                                    }
+                                }
+                                ?>
 								<span class="rev-new-label"></span><a class="button-primary revblue" id="rev-fetch-popular-posts" style="width: 200px;" href="javascript:jQuery('#posts_list').val(jQuery('#posts_list').val()+'<?php echo implode(',', $popular); ?>');void(0);"><i class="eg-icon-plus-circled" style="margin-right:10px"></i><?php _e('Add Popular Posts', 'revslider'); ?></a>
 								<span class="tp-clearfix"></span>
 								<span class="rev-new-label"></span><a class="button-primary revblue" id="rev-fetch-recent-posts" style="width: 200px;" href="javascript:jQuery('#posts_list').val(jQuery('#posts_list').val()+'<?php echo implode(',', $recent); ?>');void(0);"><i class="eg-icon-plus-circled" style="margin-right:10px"></i><?php _e('Add Recent Posts', 'revslider'); ?></a>
@@ -550,80 +554,80 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 								<div class="rs-post-type-wrap">
 									<span class="rev-new-label"><?php _e('Post Types:', 'revslider');?></span>
 									<?php
-									$post_type = RevSliderFunctionsWP::getPostTypesAssoc();
-									$sel_post_types = RevSliderFunctions::getVal($arrFieldsParams, 'post_types', 'post');
-									$sel_post_types = explode(',', $sel_post_types);
-									if (empty($sel_post_types)) {
-										$sel_post_types = array('post');
-									}
-									//default
-									?>
+                                    $post_type = RevSliderFunctionsWP::getPostTypesAssoc();
+                                    $sel_post_types = RevSliderFunctions::getVal($arrFieldsParams, 'post_types', 'post');
+                                    $sel_post_types = explode(',', $sel_post_types);
+                                    if (empty($sel_post_types)) {
+                                        $sel_post_types = array('post');
+                                    }
+                                    //default
+                                    ?>
 									<select id="post_types" name="post_types" multiple size='7' style="width:181px; vertical-align: top; height:100px">
 										<?php
-										if (!empty($post_type)) {
-											foreach ($post_type as $post_handle => $post_name) {
-												$sel = (in_array($post_handle, $sel_post_types)) ? ' selected="selected"' : '';
-												echo '<option value="' . $post_handle . '"' . $sel . '>' . $post_name . '</option>';
-											}
-										}
-										?>
+                                        if (!empty($post_type)) {
+                                            foreach ($post_type as $post_handle => $post_name) {
+                                                $sel = (in_array($post_handle, $sel_post_types)) ? ' selected="selected"' : '';
+                                                echo '<option value="' . $post_handle . '"' . $sel . '>' . $post_name . '</option>';
+                                            }
+                                        }
+                                        ?>
 									</select>
 									<?php
-									$sel_post_cagetory = RevSliderFunctions::getVal($arrFieldsParams, 'post_category', '');
-									$sel_post_cagetory = explode(',', $sel_post_cagetory);
+                                    $sel_post_cagetory = RevSliderFunctions::getVal($arrFieldsParams, 'post_category', '');
+                                    $sel_post_cagetory = explode(',', $sel_post_cagetory);
 
-									?>
+                                    ?>
 									<span class="tp-clearfix"></span>
 									<span class="rev-new-label"><?php _e('Post Categories:', 'revslider');?></span>
 									<select id="post_category" name="post_category" multiple size='7' style="width:181px; vertical-align: top;">
 										<?php
-										if (!empty($postTypesWithCats)) {
-											foreach ($postTypesWithCats as $post_type => $post_array) {
-												if (!empty($post_array)) {
-													foreach ($post_array as $cat_handle => $cat_name) {
-														$sel = (in_array($cat_handle, $sel_post_cagetory)) ? ' selected="selected"' : '';
-														$dis = (strpos($cat_handle, 'option_disabled') !== false) ? ' disabled="disabled"' : '';
-														echo '<option value="' . $cat_handle . '"' . $dis . $sel . '>' . $cat_name . '</option>';
-													}
-												}
-											}
-										}
-										?>
+                                        if (!empty($postTypesWithCats)) {
+                                            foreach ($postTypesWithCats as $post_type => $post_array) {
+                                                if (!empty($post_array)) {
+                                                    foreach ($post_array as $cat_handle => $cat_name) {
+                                                        $sel = (in_array($cat_handle, $sel_post_cagetory)) ? ' selected="selected"' : '';
+                                                        $dis = (strpos($cat_handle, 'option_disabled') !== false) ? ' disabled="disabled"' : '';
+                                                        echo '<option value="' . $cat_handle . '"' . $dis . $sel . '>' . $cat_name . '</option>';
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        ?>
 									</select>
 								</div>
 							</div>
 						</div>
 						<?php
-						//events integration
-						if (RevSliderEventsManager::isEventsExists()) {
-							$arrEventsFilter = RevSliderEventsManager::getArrFilterTypes();
+                        //events integration
+                        if (RevSliderEventsManager::isEventsExists()) {
+                            $arrEventsFilter = RevSliderEventsManager::getArrFilterTypes();
 
-							if (!empty($arrEventsFilter)) {
-								echo '<p>';
-								$events_filter = RevSliderFunctions::getVal($arrFieldsParams, 'events_filter', '');
-								echo '<span class="rev-new-label">' . __('Filter Events By:', 'revslider') . '</span>';
-								echo '<select id="events_filter" name="events_filter">';
-								foreach ($arrEventsFilter as $event_handle => $event_name) {
-									$sel = ($event_handle == $events_filter) ? ' selected="selected"' : '';
-									echo '<option value="' . $event_handle . '"' . $sel . '>' . $event_name . '</option>';
-								}
-								echo '</select>';
-								echo '</p>';
-							}
-						}
-						?>
+                            if (!empty($arrEventsFilter)) {
+                                echo '<p>';
+                                $events_filter = RevSliderFunctions::getVal($arrFieldsParams, 'events_filter', '');
+                                echo '<span class="rev-new-label">' . __('Filter Events By:', 'revslider') . '</span>';
+                                echo '<select id="events_filter" name="events_filter">';
+                                foreach ($arrEventsFilter as $event_handle => $event_name) {
+                                    $sel = ($event_handle == $events_filter) ? ' selected="selected"' : '';
+                                    echo '<option value="' . $event_handle . '"' . $sel . '>' . $event_name . '</option>';
+                                }
+                                echo '</select>';
+                                echo '</p>';
+                            }
+                        }
+                        ?>
 						<div style="width:50%;display:none;float:left;" class="rs-show-for-wc">
 							<?php $product_sortby = RevSliderFunctions::getVal($arrFieldsParams, 'product_sortby', 'ID');?>
 							<?php $wc_sortby = RevSliderWooCommerce::getArrSortBy(); ?>
 							<span class="rev-new-label"><?php _e('Sort Products By:', 'revslider');?></span>
 							<select id="product_sortby" name="product_sortby">
 								<?php
-								foreach($wc_sortby as $wc_val => $wc_name){
-									?>
-									<option value="<?php echo $wc_val; ?>" <?php selected($product_sortby, $wc_val); ?>><?php echo $wc_name;?></option>
+                                foreach ($wc_sortby as $wc_val => $wc_name) {
+                                    ?>
+									<option value="<?php echo $wc_val; ?>" <?php selected($product_sortby, $wc_val); ?>><?php echo $wc_name; ?></option>
 									<?php
-								}
-								?>
+                                }
+                                ?>
 								<option value="ID" <?php selected($product_sortby, 'ID');?>><?php _e('Post ID', 'revslider');?></option>
 								<option value="date" <?php selected($product_sortby, 'date');?>><?php _e('Date', 'revslider');?></option>
 								<option value="title" <?php selected($product_sortby, 'title');?>><?php _e('Title', 'revslider');?></option>
@@ -691,16 +695,16 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<option value="none" <?php selected($post_sortby, 'none');?>><?php _e('Unsorted', 'revslider');?></option>
 										<option value="menu_order" <?php selected($post_sortby, 'menu_order');?>><?php _e('Custom Order', 'revslider');?></option>
 										<?php
-										if (RevSliderEventsManager::isEventsExists()) {
-											$arrEMSortBy = RevSliderEventsManager::getArrSortBy();
-											if (!empty($arrEMSortBy)) {
-												foreach ($arrEMSortBy as $event_handle => $event_name) {
-													$sel = ($event_handle == $post_sortby) ? ' selected="selected"' : '';
-													echo '<option value="' . $event_handle . '"' . $sel . '>' . $event_name . '</option>';
-												}
-											}
-										}
-										?>
+                                        if (RevSliderEventsManager::isEventsExists()) {
+                                            $arrEMSortBy = RevSliderEventsManager::getArrSortBy();
+                                            if (!empty($arrEMSortBy)) {
+                                                foreach ($arrEMSortBy as $event_handle => $event_name) {
+                                                    $sel = ($event_handle == $post_sortby) ? ' selected="selected"' : '';
+                                                    echo '<option value="' . $event_handle . '"' . $sel . '>' . $event_name . '</option>';
+                                                }
+                                            }
+                                        }
+                                        ?>
 									</select>
 									<span class="tp-clearfix"></span>
 
@@ -728,12 +732,12 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 				</div>
 
 
-				<?php echo apply_filters( 'rev_main_options_pre_slider_title_filter' , ''); ?>
+				<?php echo apply_filters('rev_main_options_pre_slider_title_filter', ''); ?>
 				<!-- SLIDER TITLE AND SHORTCODE -->
 				<div id="slider_title_sb" class="setting_box" style="background:#fff">
 					<?php $headline = '<h3><span class="setting-step-number">2</span><span>'.__("Slider Title & ShortCode", 'revslider').'</span></h3>';
-						  echo apply_filters( 'rev_main_options_headline_slider_title_filter', $headline );
-					?>
+                          echo apply_filters('rev_main_options_headline_slider_title_filter', $headline);
+                    ?>
 					<div class="inside">
 						<div class="slidertitlebox">
 
@@ -760,14 +764,14 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 					</div>
 				</div>
 
-				<?php echo apply_filters( 'rev_main_options_pre_slider_type_filter' , ''); ?>
+				<?php echo apply_filters('rev_main_options_pre_slider_type_filter', ''); ?>
 				<!-- THE SLIDE TYPE CHOOSER -->
 				<div id="slider_type_sb" class="setting_box">
 					<?php
-					$slider_type = RevSliderFunctions::getVal($arrFieldsParams, 'slider-type', 'standard');
-					$headline = '<h3><span class="setting-step-number">3</span><span>'.__("Select a Slider Type", 'revslider').'</span></h3>';
-					echo apply_filters( 'rev_main_options_headline_slider_type_filter', $headline );
-					?>
+                    $slider_type = RevSliderFunctions::getVal($arrFieldsParams, 'slider-type', 'standard');
+                    $headline = '<h3><span class="setting-step-number">3</span><span>'.__("Select a Slider Type", 'revslider').'</span></h3>';
+                    echo apply_filters('rev_main_options_headline_slider_type_filter', $headline);
+                    ?>
 					<div class="rs-slidetypeselector">
 
 						<div data-mode="standardpreset" class="rs-slidertype<?php echo ($slider_type == 'standard') ? ' selected' : '';?>">
@@ -790,19 +794,19 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 					<div id="preset-selector-wrapper" class="preset-selector-wrapper" style="display:none">
 						<div id="preselect-horiz-wrapper" class="preselect-horiz-wrapper">
 							<?php
-							$presets = RevSliderOperations::get_preset_settings();
-							
-							echo '<span class="rs-preset-selector rs-do-nothing standardpreset heropreset carouselpreset" id="rs-add-new-settings-preset">';
-							echo '<span class="rs-preset-image" style="background-image: url('.RS_PLUGIN_URL.'/admin/assets/images/mainoptions/add_preset.png);"></span>';
-							echo '	<span class="rs-preset-label">' . __('Save Current Settings as Preset', 'revslider') . '</span>';
-							echo '</span>';
-							
-							echo '<script type="text/javascript">';
-							//$pjs = RevSliderFunctions::jsonEncodeForClientSide($pjs);
-							$pjs = RevSliderFunctions::jsonEncodeForClientSide($presets);
-							echo 'var revslider_presets = jQuery.parseJSON(' . $pjs . ');';
-							echo '</script>';
-							?>
+                            $presets = RevSliderOperations::get_preset_settings();
+                            
+                            echo '<span class="rs-preset-selector rs-do-nothing standardpreset heropreset carouselpreset" id="rs-add-new-settings-preset">';
+                            echo '<span class="rs-preset-image" style="background-image: url('.RS_PLUGIN_URL.'/admin/assets/images/mainoptions/add_preset.png);"></span>';
+                            echo '	<span class="rs-preset-label">' . __('Save Current Settings as Preset', 'revslider') . '</span>';
+                            echo '</span>';
+                            
+                            echo '<script type="text/javascript">';
+                            //$pjs = RevSliderFunctions::jsonEncodeForClientSide($pjs);
+                            $pjs = RevSliderFunctions::jsonEncodeForClientSide($presets);
+                            echo 'var revslider_presets = jQuery.parseJSON(' . $pjs . ');';
+                            echo '</script>';
+                            ?>
 							<span class="tp-clearfix"></span>
 						</div>
 					 </div>
@@ -1153,48 +1157,48 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 				<!-- SLIDE LAYOUT -->
 
 				<?php
-				$width_notebook = RevSliderFunctions::getVal($arrFieldsParams, "width_notebook", $_width_notebook);
-				$height_notebook = RevSliderFunctions::getVal($arrFieldsParams, "height_notebook");
-				if (intval($height_notebook) == 0) {
-					$height_notebook = 768;
-				}
+                $width_notebook = RevSliderFunctions::getVal($arrFieldsParams, "width_notebook", $_width_notebook);
+                $height_notebook = RevSliderFunctions::getVal($arrFieldsParams, "height_notebook");
+                if (intval($height_notebook) == 0) {
+                    $height_notebook = 768;
+                }
 
-				$width = RevSliderFunctions::getVal($arrFieldsParams, "width", $_width);
-				$height = RevSliderFunctions::getVal($arrFieldsParams, "height", 868);
+                $width = RevSliderFunctions::getVal($arrFieldsParams, "width", $_width);
+                $height = RevSliderFunctions::getVal($arrFieldsParams, "height", 868);
 
-				$width_tablet = RevSliderFunctions::getVal($arrFieldsParams, "width_tablet", $_width_tablet);
-				if (intval($width_tablet) == 0) {
-					$width_tablet = $_width_tablet;
-				}
+                $width_tablet = RevSliderFunctions::getVal($arrFieldsParams, "width_tablet", $_width_tablet);
+                if (intval($width_tablet) == 0) {
+                    $width_tablet = $_width_tablet;
+                }
 
-				$height_tablet = RevSliderFunctions::getVal($arrFieldsParams, "height_tablet");
-				if (intval($height_tablet) == 0) {
-					$height_tablet = 960;
-				}
-				$width_mobile = RevSliderFunctions::getVal($arrFieldsParams, "width_mobile", $_width_mobile);
+                $height_tablet = RevSliderFunctions::getVal($arrFieldsParams, "height_tablet");
+                if (intval($height_tablet) == 0) {
+                    $height_tablet = 960;
+                }
+                $width_mobile = RevSliderFunctions::getVal($arrFieldsParams, "width_mobile", $_width_mobile);
 
-				if (intval($width_mobile) == 0) {
-					$width_mobile = $_width_mobile;
-				}
+                if (intval($width_mobile) == 0) {
+                    $width_mobile = $_width_mobile;
+                }
 
-				$height_mobile = RevSliderFunctions::getVal($arrFieldsParams, "height_mobile");
-				if (intval($height_mobile) == 0) {
-					$height_mobile = 720;
-				}
+                $height_mobile = RevSliderFunctions::getVal($arrFieldsParams, "height_mobile");
+                if (intval($height_mobile) == 0) {
+                    $height_mobile = 720;
+                }
 
-				$advanced_sizes = RevSliderFunctions::getVal($arrFieldsParams, "advanced-responsive-sizes", 'false');
-				$advanced_sizes = RevSliderFunctions::strToBool($advanced_sizes);
+                $advanced_sizes = RevSliderFunctions::getVal($arrFieldsParams, "advanced-responsive-sizes", 'false');
+                $advanced_sizes = RevSliderFunctions::strToBool($advanced_sizes);
 
-				$sliderType = RevSliderFunctions::getVal($arrFieldsParams, "slider_type");
+                $sliderType = RevSliderFunctions::getVal($arrFieldsParams, "slider_type");
 
-				?>
+                ?>
 
-				<?php echo apply_filters( 'rev_main_options_pre_slider_layout_filter', '', array($width, $height, $arrFieldsParams)); ?>
+				<?php echo apply_filters('rev_main_options_pre_slider_layout_filter', '', array($width, $height, $arrFieldsParams)); ?>
 				<div class="setting_box" id="rs-slider-layout-cont">
 					<?php
-						$headline = '<h3><span class="setting-step-number">4</span><span>'.__("Slide Layout", 'revslider').'</span></h3>';
-						echo apply_filters( 'rev_main_options_headline_slider_layout_filter', $headline );
-					?>
+                        $headline = '<h3><span class="setting-step-number">4</span><span>'.__("Slide Layout", 'revslider').'</span></h3>';
+                        echo apply_filters('rev_main_options_headline_slider_layout_filter', $headline);
+                    ?>
 					<div class="inside" style="padding:0px">
 
 						<?php $slider_type = RevSliderFunctions::getVal($arrFieldsParams, 'slider_type', 'fullwidth');?>
@@ -1717,12 +1721,12 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 					</div>
 				</div>
 
-				<?php echo apply_filters( 'rev_main_options_pre_customize_build_implement_filter' , ''); ?>
+				<?php echo apply_filters('rev_main_options_pre_customize_build_implement_filter', ''); ?>
 				<div id="customize_build_implement_sb" class="setting_box">
 					<?php
-						$headline = '<h3><span class="setting-step-number">5</span><span>'.__("Customize, Build & Implement", 'revslider').'</span></h3>';
-						echo apply_filters( 'rev_main_options_headline_customize_build_implement_filter', $headline );
-					?>
+                        $headline = '<h3><span class="setting-step-number">5</span><span>'.__("Customize, Build & Implement", 'revslider').'</span></h3>';
+                        echo apply_filters('rev_main_options_headline_customize_build_implement_filter', $headline);
+                    ?>
 					<div class="inside" style="padding:35px 20px">
 						<div class="slidertitlebox breakdownonmobile">
 							<span class="one-third-container" style="text-align:center">
@@ -1739,12 +1743,12 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 								<span class="description" style="text-align:center;min-height:60px;"><?php _e("Our drag and drop editor will make creating slide content an absolut breeze. This is where the magic happens!", 'revslider');?></span>
 								<div style="float:none; clear:both; height:20px;"></div>
 								<?php
-								if (isset($linksEditSlides)) {
-									?>
-									<a class="button-primary revblue" href="<?php echo $linksEditSlides;?>"  id="link_edit_slides"><i class="revicon-pencil-1"></i><?php _e("Edit Slides", 'revslider');?> </a>
+                                if (isset($linksEditSlides)) {
+                                    ?>
+									<a class="button-primary revblue" href="<?php echo $linksEditSlides; ?>"  id="link_edit_slides"><i class="revicon-pencil-1"></i><?php _e("Edit Slides", 'revslider'); ?> </a>
 									<?php
-								}
-								?>
+                                }
+                                ?>
 							</span>
 
 							<span class="one-third-container" style="text-align:center">
@@ -1791,34 +1795,32 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 			<div class="divide20"></div>
 
 			<?php
-			if ($is_edit) {
-				$custom_css = '';
-				$custom_js = '';
-				if (!empty($sliderID)) {
-					$custom_css = @stripslashes($arrFieldsParams['custom_css']);
-					$custom_js = @stripslashes($arrFieldsParams['custom_javascript']);
-				}
-				
-				$hidebox = '';
-				if(!RevSliderFunctionsWP::isAdminUser() && apply_filters('revslider_restrict_role', true)){
-					$hidebox = 'display: none;';
-				}
-				?>
+            if ($is_edit) {
+                $custom_css = '';
+                $custom_js = '';
+                if (!empty($sliderID)) {
+                    $custom_css = @stripslashes($arrFieldsParams['custom_css']);
+                    $custom_js = @stripslashes($arrFieldsParams['custom_javascript']);
+                }
+                
+                $hidebox = '';
+                if (!RevSliderFunctionsWP::isAdminUser() && apply_filters('revslider_restrict_role', true)) {
+                    $hidebox = 'display: none;';
+                } ?>
 
-				<?php echo apply_filters( 'rev_main_options_pre_customize_css_js_filter' , ''); ?>
+				<?php echo apply_filters('rev_main_options_pre_customize_css_js_filter', ''); ?>
 				<div id="customize_css_js_sb" class="setting_box" id="css-javascript-customs" style="max-width:100%;position:relative;overflow:hidden;<?php echo $hidebox; ?>">
 					<?php
-						$headline = '<h3><span class="setting-step-number">6</span><span>'.__("Custom CSS / Javascript", 'revslider').'</span></h3>';
-						echo apply_filters( 'rev_main_options_headline_customize_css_js_filter', $headline );
-					?>
+                        $headline = '<h3><span class="setting-step-number">6</span><span>'.__("Custom CSS / Javascript", 'revslider').'</span></h3>';
+                echo apply_filters('rev_main_options_headline_customize_css_js_filter', $headline); ?>
 					<div class="inside" id="codemirror-wrapper">
 
 						<span class="cbi-title"><?php _e("Custom CSS", 'revslider')?></span>
-						<textarea name="custom_css" id="rs_custom_css"><?php echo $custom_css;?></textarea>
+						<textarea name="custom_css" id="rs_custom_css"><?php echo $custom_css; ?></textarea>
 						<div class="divide20"></div>
 
 						<span class="cbi-title"><?php _e("Custom JavaScript", 'revslider')?></span>
-						<textarea name="custom_javascript" id="rs_custom_javascript"><?php echo $custom_js;?></textarea>
+						<textarea name="custom_javascript" id="rs_custom_javascript"><?php echo $custom_js; ?></textarea>
 						<div class="divide20"></div>
 
 					</div>
@@ -1857,8 +1859,8 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 				</script>
 
 				<?php
-			}
-			?>
+            }
+            ?>
 		</div>
 
 
@@ -2097,15 +2099,15 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 								<!-- GENERAL MISC. -->
 								<div id="general-misc" style="display:none">
 									<?php
-									if (RevSliderWpml::isWpmlExists()) {
-										?>
+                                    if (RevSliderWpml::isWpmlExists()) {
+                                        ?>
 										<!-- MULTI LANGUANGE -->
-										<span id="label_use_wpml" class="label" origtitle="<?php _e("Show multi language controls across the slider. Only available when wpml plugin exists.", 'revslider');?>"><?php _e("Use Multi Language (WPML)", 'revslider');?> </span>
-										<input type="checkbox" class="tp-moderncheckbox withlabel" id="use_wpml" name="use_wpml" data-unchecked="off" <?php checked(RevSliderFunctions::getVal($arrFieldsParams, 'use_wpml', 'off'), "on");?>>
+										<span id="label_use_wpml" class="label" origtitle="<?php _e("Show multi language controls across the slider. Only available when wpml plugin exists.", 'revslider'); ?>"><?php _e("Use Multi Language (WPML)", 'revslider'); ?> </span>
+										<input type="checkbox" class="tp-moderncheckbox withlabel" id="use_wpml" name="use_wpml" data-unchecked="off" <?php checked(RevSliderFunctions::getVal($arrFieldsParams, 'use_wpml', 'off'), "on"); ?>>
 										<div class="clearfix"></div>
 										<?php
-									}
-									?>
+                                    }
+                                    ?>
 									
 									<div class="dontshowonhero">
 										<!-- NEXT SLIDE ON FOCUS -->
@@ -2149,13 +2151,13 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-slide_transition" /> <span id="label_def-slide_transition" origtitle="<?php _e("Default transition by creating a new slide.", 'revslider');?>" class="label"><?php _e('Transitions', 'revslider');?></span>
 										<select id="def-slide_transition" name="def-slide_transition" style="max-width:105px" class="withlabel">
 											<?php
-											$def_trans = RevSliderFunctions::getVal($arrFieldsParams, 'def-slide_transition', 'fade');
-											foreach ($transitions as $handle => $name) {
-												$not = (strpos($handle, 'notselectable') !== false) ? ' disabled="disabled"' : '';
-												$sel = ($def_trans == $handle) ? ' selected="selected"' : '';
-												echo '<option value="' . $handle . '"' . $not . $sel . '>' . $name . '</option>';
-											}
-											?>
+                                            $def_trans = RevSliderFunctions::getVal($arrFieldsParams, 'def-slide_transition', 'fade');
+                                            foreach ($transitions as $handle => $name) {
+                                                $not = (strpos($handle, 'notselectable') !== false) ? ' disabled="disabled"' : '';
+                                                $sel = ($def_trans == $handle) ? ' selected="selected"' : '';
+                                                echo '<option value="' . $handle . '"' . $not . $sel . '>' . $name . '</option>';
+                                            }
+                                            ?>
 										</select>
 										<div class="clear"></div>
 
@@ -2166,25 +2168,25 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<div class="clear"></div>
 
 										<?php
-										$img_sizes = RevSliderBase::get_all_image_sizes();
-										$bg_image_size = RevSliderFunctions::getVal($arrFieldsParams, 'def-image_source_type', 'full');
-										?>
+                                        $img_sizes = RevSliderBase::get_all_image_sizes();
+                                        $bg_image_size = RevSliderFunctions::getVal($arrFieldsParams, 'def-image_source_type', 'full');
+                                        ?>
 										<input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-image_source_type" /> <span id="label_def-image_source_type" class="label" origtitle="<?php _e("Default main image source size by creating a new slide.", 'revslider');?>" ><?php _e('Image Source Size', 'revslider');?></span>
 										<select name="def-image_source_type">
 											<?php
-											foreach ($img_sizes as $imghandle => $imgSize) {
-												$sel = ($bg_image_size == $imghandle) ? ' selected="selected"' : '';
-												echo '<option value="' . $imghandle . '"' . $sel . '>' . $imgSize . '</option>';
-											}
-											?>
+                                            foreach ($img_sizes as $imghandle => $imgSize) {
+                                                $sel = ($bg_image_size == $imghandle) ? ' selected="selected"' : '';
+                                                echo '<option value="' . $imghandle . '"' . $sel . '>' . $imgSize . '</option>';
+                                            }
+                                            ?>
 										</select>
 										<div class="clear"></div>
 
 										<?php
-										$bgFit = RevSliderFunctions::getVal($arrFieldsParams, 'def-background_fit', 'cover');
-										$bgFitX = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_fit_x', '100');
-										$bgFitY = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_fit_y', '100');
-										?>
+                                        $bgFit = RevSliderFunctions::getVal($arrFieldsParams, 'def-background_fit', 'cover');
+                                        $bgFitX = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_fit_x', '100');
+                                        $bgFitY = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_fit_y', '100');
+                                        ?>
 										<input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-background_fit" /> <span id="label_def-background_fit" origtitle="<?php _e("Default background size by creating a new slide.", 'revslider');?>"  class="label"><?php _e('Background Fit', 'revslider');?></span>
 										<select id="def-background_fit" name="def-background_fit" style="max-width: 105px;" class="withlabel">
 											<option value="cover"<?php selected($bgFit, 'cover');?>>cover</option>
@@ -2193,20 +2195,20 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 											<option value="normal"<?php selected($bgFit, 'normal');?>>normal</option>
 										</select>
 										<input type="text" name="def-bg_fit_x" style="<?php if ($bgFit != 'percentage') {
-											echo 'display: none; ';
-										}
-										?> width:60px;margin-right:10px" value="<?php echo $bgFitX;?>" />
+                                            echo 'display: none; ';
+                                        }
+                                        ?> width:60px;margin-right:10px" value="<?php echo $bgFitX;?>" />
 										<input type="text" name="def-bg_fit_y" style="<?php if ($bgFit != 'percentage') {
-											echo 'display: none; ';
-										}
-										?> width:60px;margin-right:10px"  value="<?php echo $bgFitY;?>" />
+                                            echo 'display: none; ';
+                                        }
+                                        ?> width:60px;margin-right:10px"  value="<?php echo $bgFitY;?>" />
 										<div class="clear"></div>
 
 										<?php
-										$bgPosition = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_position', 'center center');
-										$bgPositionX = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_position_x', '0');
-										$bgPositionY = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_position_y', '0');
-										?>
+                                        $bgPosition = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_position', 'center center');
+                                        $bgPositionX = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_position_x', '0');
+                                        $bgPositionY = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_position_y', '0');
+                                        ?>
 										<input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-bg_position" /> <span id="label_slide_bg_position" origtitle="<?php _e("Default background position by creating a new slide.", 'revslider');?>" class="label"><?php _e('Background Position', 'revslider');?></span>
 										<select name="def-bg_position" id="slide_bg_position" class="withlabel">
 											<option value="center top"<?php selected($bgPosition, 'center top');?>>center top</option>
@@ -2221,17 +2223,17 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 											<option value="right bottom"<?php selected($bgPosition, 'right bottom');?>>right bottom</option>
 										</select>
 										<input type="text" name="def-bg_position_x" style="<?php if ($bgPosition != 'percentage') {
-											echo 'display: none;';
-										}
-										?>width:60px;margin-right:10px" value="<?php echo $bgPositionX;?>" />
-										<input type="text" name="def-bg_position_y" style="<?php if ($bgPosition != 'percentage') { 
-											echo 'display: none;';
-										}
-										?>width:60px;margin-right:10px" value="<?php echo $bgPositionY;?>" />
+                                            echo 'display: none;';
+                                        }
+                                        ?>width:60px;margin-right:10px" value="<?php echo $bgPositionX;?>" />
+										<input type="text" name="def-bg_position_y" style="<?php if ($bgPosition != 'percentage') {
+                                            echo 'display: none;';
+                                        }
+                                        ?>width:60px;margin-right:10px" value="<?php echo $bgPositionY;?>" />
 										<div class="clear"></div>
 										<?php
-										$bgRepeat = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_repeat', 'no-repeat');
-										?>
+                                        $bgRepeat = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_repeat', 'no-repeat');
+                                        ?>
 										<input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-bg_repeat" />
 										<span id="slide_bg_repeat" origtitle="<?php _e("Default background repeat by creating a new slide.", 'revslider');?>"  class="label"><?php _e('Background Repeat', 'revslider');?></span>
 										<select name="def-bg_repeat" id="slide_bg_repeat" style="margin-right:20px">
@@ -2249,9 +2251,9 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 
 										<div class="clear"></div>
 										<div id="def-kenburns-wrapper" <?php if ($kenburn_effect == 'off') {
-										echo 'style="display: none;"';
-										}
-										?>>
+                                            echo 'style="display: none;"';
+                                        }
+                                        ?>>
 
 										<?php $kb_start_fit = RevSliderFunctions::getVal($arrFieldsParams, 'def-kb_start_fit', '100');?>
 										<input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-kb_start_fit" />
@@ -2301,35 +2303,35 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<div class="clear"></div>
 
 										<?php /*$bgEndPosition = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_end_position', 'center top');?>
-										<input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-bg_end_position" /> <span id="label_bg_end_position" class="label"><?php _e('End Position:', 'revslider');?></span>
-										<select name="def-bg_end_position" id="slide_bg_end_position">
-											<option <?php selected($bgEndPosition, 'center top');?> value="center top">center top</option>
-											<option <?php selected($bgEndPosition, 'center right');?> value="center right">center right</option>
-											<option <?php selected($bgEndPosition, 'center bottom');?> value="center bottom">center bottom</option>
-											<option <?php selected($bgEndPosition, 'center center');?> value="center center">center center</option>
-											<option <?php selected($bgEndPosition, 'left top');?> value="left top">left top</option>
-											<option <?php selected($bgEndPosition, 'left center');?> value="left center">left center</option>
-											<option <?php selected($bgEndPosition, 'left bottom');?> value="left bottom">left bottom</option>
-											<option <?php selected($bgEndPosition, 'right top');?> value="right top">right top</option>
-											<option <?php selected($bgEndPosition, 'right center');?> value="right center">right center</option>
-											<option <?php selected($bgEndPosition, 'right bottom');?> value="right bottom">right bottom</option>
+                                        <input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-bg_end_position" /> <span id="label_bg_end_position" class="label"><?php _e('End Position:', 'revslider');?></span>
+                                        <select name="def-bg_end_position" id="slide_bg_end_position">
+                                            <option <?php selected($bgEndPosition, 'center top');?> value="center top">center top</option>
+                                            <option <?php selected($bgEndPosition, 'center right');?> value="center right">center right</option>
+                                            <option <?php selected($bgEndPosition, 'center bottom');?> value="center bottom">center bottom</option>
+                                            <option <?php selected($bgEndPosition, 'center center');?> value="center center">center center</option>
+                                            <option <?php selected($bgEndPosition, 'left top');?> value="left top">left top</option>
+                                            <option <?php selected($bgEndPosition, 'left center');?> value="left center">left center</option>
+                                            <option <?php selected($bgEndPosition, 'left bottom');?> value="left bottom">left bottom</option>
+                                            <option <?php selected($bgEndPosition, 'right top');?> value="right top">right top</option>
+                                            <option <?php selected($bgEndPosition, 'right center');?> value="right center">right center</option>
+                                            <option <?php selected($bgEndPosition, 'right bottom');?> value="right bottom">right bottom</option>
 
-										</select>
-										<?php
-										$bgEndPositionX = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_end_position_x', '0');
-										$bgEndPositionY = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_end_position_y', '0');
-										?>
-										<input type="text" name="def-bg_end_position_x" style="<?php if ($bgEndPosition != 'percentage') {
-											echo ' display: none;';
-										}
-										?>width:60px;margin-right:10px" value="<?php echo $bgEndPositionX;?>" />
-										<input type="text" name="def-bg_end_position_y" style="<?php if ($bgEndPosition != 'percentage') {
-											echo ' display: none;';
-										}
-										?>width:60px;margin-right:10px" value="<?php echo $bgEndPositionY;?>" />
-										<div class="clear"></div>
-										*/
-										?>
+                                        </select>
+                                        <?php
+                                        $bgEndPositionX = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_end_position_x', '0');
+                                        $bgEndPositionY = RevSliderFunctions::getVal($arrFieldsParams, 'def-bg_end_position_y', '0');
+                                        ?>
+                                        <input type="text" name="def-bg_end_position_x" style="<?php if ($bgEndPosition != 'percentage') {
+                                            echo ' display: none;';
+                                        }
+                                        ?>width:60px;margin-right:10px" value="<?php echo $bgEndPositionX;?>" />
+                                        <input type="text" name="def-bg_end_position_y" style="<?php if ($bgEndPosition != 'percentage') {
+                                            echo ' display: none;';
+                                        }
+                                        ?>width:60px;margin-right:10px" value="<?php echo $bgEndPositionY;?>" />
+                                        <div class="clear"></div>
+                                        */
+                                        ?>
 										
 										<?php $kb_end_fit = RevSliderFunctions::getVal($arrFieldsParams, 'def-kb_end_fit', '100');?>
 										<input type="checkbox" class="rs-ingore-save rs-reset-slide-setting" name="reset-kb_end_fit" /> <span id="label_kb_end_fit" class="label"><?php _e('End Fit: (in %):', 'revslider');?></span>
@@ -2410,14 +2412,14 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<span id="label_first_transition_type" class="label" origtitle="<?php _e("First slide transition type", 'revslider');?>"><?php _e("Transition Type", 'revslider');?> </span>
 										<select id="first_transition_type" name="first_transition_type" style="max-width:100px"  class="withlabel">
 											<?php
-											$transitions = $operations->getArrTransition();
-											$ftt = RevSliderFunctions::getVal($arrFieldsParams, 'first_transition_type', 'fade');
-											foreach ($transitions as $handle => $name) {
-												$not = (strpos($handle, 'notselectable') !== false) ? ' disabled="disabled"' : '';
-												$sel = ($handle == $ftt) ? ' selected="selected"' : '';
-												echo '<option value="' . $handle . '"' . $not . $sel . '>' . $name . '</option>';
-											}
-											?>
+                                            $transitions = $operations->getArrTransition();
+                                            $ftt = RevSliderFunctions::getVal($arrFieldsParams, 'first_transition_type', 'fade');
+                                            foreach ($transitions as $handle => $name) {
+                                                $not = (strpos($handle, 'notselectable') !== false) ? ' disabled="disabled"' : '';
+                                                $sel = ($handle == $ftt) ? ' selected="selected"' : '';
+                                                echo '<option value="' . $handle . '"' . $not . $sel . '>' . $name . '</option>';
+                                            }
+                                            ?>
 										</select>
 										<div class="clear"></div>
 
@@ -2475,7 +2477,9 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 									<input type="checkbox" class="tp-moderncheckbox withlabel"  id="label_viewport" name="label_viewport" data-unchecked="off" <?php checked(RevSliderFunctions::getVal($arrFieldsParams, 'label_viewport', 'off'), 'on');?>>
 									<div class="clear"></div>
 
-									<div id="viewportoptionsofslider" class="withsublabels" <?php if(RevSliderFunctions::getVal($arrFieldsParams, 'label_viewport', 'off') == 'off') echo 'style="display: none;"'; ?>>
+									<div id="viewportoptionsofslider" class="withsublabels" <?php if (RevSliderFunctions::getVal($arrFieldsParams, 'label_viewport', 'off') == 'off') {
+                                                echo 'style="display: none;"';
+                                            } ?>>
 										<span class="label"><?php _e('Out Of ViewPort:', 'revslider');?></span>
 										<select name="viewport_start">
 											<option value="wait" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'viewport_start', 'wait'), "wait");?>><?php _e("Wait", 'revslider');?></option>
@@ -2881,17 +2885,17 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<select id="navigation_arrow_style" name="navigation_arrow_style" class=" withlabel triggernavstyle">
 											<option value="" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'navigation_arrow_style', 'round'), ''); ?>><?php _e('No Style', 'revslider'); ?></option>
 											<?php
-											if (!empty($arr_navigations)) {
-												$mav = RevSliderFunctions::getVal($arrFieldsParams, 'navigation_arrow_style', 'round');
-												foreach ($arr_navigations as $cur_nav) {
-													if (isset($cur_nav['markup']['arrows'])) {
-														?>
-														<option value="<?php echo esc_attr($cur_nav['handle']);?>" <?php selected($mav, esc_attr($cur_nav['handle']));?>><?php echo esc_attr($cur_nav['name']);?></option>
+                                            if (!empty($arr_navigations)) {
+                                                $mav = RevSliderFunctions::getVal($arrFieldsParams, 'navigation_arrow_style', 'round');
+                                                foreach ($arr_navigations as $cur_nav) {
+                                                    if (isset($cur_nav['markup']['arrows'])) {
+                                                        ?>
+														<option value="<?php echo esc_attr($cur_nav['handle']); ?>" <?php selected($mav, esc_attr($cur_nav['handle'])); ?>><?php echo esc_attr($cur_nav['name']); ?></option>
 														<?php
-													}
-												}
-											}
-											?>
+                                                    }
+                                                }
+                                            }
+                                            ?>
 										</select>
 										<div class="clear"></div>
 										<span class="label triggernavstyle" id="label_navigation_arrows_preset" origtitle="<?php _e("Preset", 'revslider');?>"><?php _e("Preset", 'revslider');?></span>
@@ -3041,16 +3045,16 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<select id="navigation_bullets_style" name="navigation_bullets_style" class="triggernavstyle withlabel">
 											<option value="" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'navigation_bullets_style', 'round'), ''); ?>><?php _e('No Style', 'revslider'); ?></option>
 											<?php
-											if (!empty($arr_navigations)) {
-												foreach ($arr_navigations as $cur_nav) {
-													if (isset($cur_nav['markup']['bullets'])) {
-														?>
-														<option value="<?php echo esc_attr($cur_nav['handle']);?>" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'navigation_bullets_style', 'round'), esc_attr($cur_nav['handle']));?>><?php echo esc_attr($cur_nav['name']);?></option>
+                                            if (!empty($arr_navigations)) {
+                                                foreach ($arr_navigations as $cur_nav) {
+                                                    if (isset($cur_nav['markup']['bullets'])) {
+                                                        ?>
+														<option value="<?php echo esc_attr($cur_nav['handle']); ?>" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'navigation_bullets_style', 'round'), esc_attr($cur_nav['handle'])); ?>><?php echo esc_attr($cur_nav['name']); ?></option>
 														<?php
-													}
-												}
-											}
-											?>
+                                                    }
+                                                }
+                                            }
+                                            ?>
 										</select>
 										<div class="clear"></div>
 										<span class="label triggernavstyle" id="label_navigation_bullets_preset" origtitle="<?php _e("Preset", 'revslider');?>"><?php _e("Preset", 'revslider');?></span>
@@ -3181,7 +3185,7 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 
 
 										<span class="label" id="label_thumbnails_wrapper_color"  origtitle="<?php _e("Thumbnails wrapper background color. For transparent leave empty.", 'revslider');?>"><?php _e("Wrapper color", 'revslider');?> </span>
-										<input type="text"  class="my-color-field rs-layer-input-field tipsy_enabled_top withlabel" title="<?php _e("Wrapper Color", 'revslider');?>"  id="thumbnails_wrapper_color" data-editing="Thumbnails Wrapper BG Color" name="thumbnails_wrapper_color" value="<?php echo TPColorpicker::convert(RevSliderFunctions::getVal($arrFieldsParams, 'thumbnails_wrapper_color', 'transparent'),RevSliderFunctions::getVal($arrFieldsParams, 'thumbnails_wrapper_opacity', false));?>" />
+										<input type="text"  class="my-color-field rs-layer-input-field tipsy_enabled_top withlabel" title="<?php _e("Wrapper Color", 'revslider');?>"  id="thumbnails_wrapper_color" data-editing="Thumbnails Wrapper BG Color" name="thumbnails_wrapper_color" value="<?php echo TPColorpicker::convert(RevSliderFunctions::getVal($arrFieldsParams, 'thumbnails_wrapper_color', 'transparent'), RevSliderFunctions::getVal($arrFieldsParams, 'thumbnails_wrapper_opacity', false));?>" />
 										<div class="clear"></div>
 
 										<h4><?php _e("Thumbnails", 'revslider');?></h4>
@@ -3190,16 +3194,16 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<select id="thumbnails_style" name="thumbnails_style" class="triggernavstyle withlabel">
 											<option value="" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'thumbnails_style', 'round'), ''); ?>><?php _e('No Style', 'revslider'); ?></option>
 											<?php
-											if (!empty($arr_navigations)) {
-												foreach ($arr_navigations as $cur_nav) {
-													if (isset($cur_nav['markup']['thumbs'])) {
-														?>
-														<option value="<?php echo esc_attr($cur_nav['handle']);?>" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'thumbnails_style', 'round'), esc_attr($cur_nav['handle']));?>><?php echo esc_attr($cur_nav['name']);?></option>
+                                            if (!empty($arr_navigations)) {
+                                                foreach ($arr_navigations as $cur_nav) {
+                                                    if (isset($cur_nav['markup']['thumbs'])) {
+                                                        ?>
+														<option value="<?php echo esc_attr($cur_nav['handle']); ?>" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'thumbnails_style', 'round'), esc_attr($cur_nav['handle'])); ?>><?php echo esc_attr($cur_nav['name']); ?></option>
 														<?php
-													}
-												}
-											}
-											?>
+                                                    }
+                                                }
+                                            }
+                                            ?>
 										</select>
 										<div class="clear"></div>
 										<span class="label triggernavstyle" id="label_navigation_thumbs_preset" origtitle="<?php _e("Preset", 'revslider');?>"><?php _e("Preset", 'revslider');?></span>
@@ -3364,7 +3368,7 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 
 
 										<span class="label" id="label_tabs_wrapper_color" origtitle="<?php _e("Tabs wrapper background color. For transparent leave empty.", 'revslider');?>"><?php _e("Wrapper Color", 'revslider');?> </span>
-										<input type="text"  class="my-color-field rs-layer-input-field tipsy_enabled_top withlabel" title="<?php _e("Wrapper Color", 'revslider');?>"  id="tabs_wrapper_color" name="tabs_wrapper_color" data-editing="Tabs Wrapped BG Color" value="<?php echo TPColorpicker::convert(RevSliderFunctions::getVal($arrFieldsParams, 'tabs_wrapper_color', 'transparent'),RevSliderFunctions::getVal($arrFieldsParams, 'tabs_wrapper_opacity', false));?>" />
+										<input type="text"  class="my-color-field rs-layer-input-field tipsy_enabled_top withlabel" title="<?php _e("Wrapper Color", 'revslider');?>"  id="tabs_wrapper_color" name="tabs_wrapper_color" data-editing="Tabs Wrapped BG Color" value="<?php echo TPColorpicker::convert(RevSliderFunctions::getVal($arrFieldsParams, 'tabs_wrapper_color', 'transparent'), RevSliderFunctions::getVal($arrFieldsParams, 'tabs_wrapper_opacity', false));?>" />
 										<div class="clear"></div>
 
 										<h4><?php _e("Tabs", 'revslider');?></h4>
@@ -3373,16 +3377,16 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<select id="tabs_style" name="tabs_style" class="triggernavstyle withlabel">
 											<option value="" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'tabs_style', 'round'), ''); ?>><?php _e('No Style', 'revslider'); ?></option>
 											<?php
-											if (!empty($arr_navigations)) {
-												foreach ($arr_navigations as $cur_nav) {
-													if (isset($cur_nav['markup']['tabs'])) {
-														?>
-														<option value="<?php echo esc_attr($cur_nav['handle']);?>" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'tabs_style', 'round'), esc_attr($cur_nav['handle']));?>><?php echo esc_attr($cur_nav['name']);?></option>
+                                            if (!empty($arr_navigations)) {
+                                                foreach ($arr_navigations as $cur_nav) {
+                                                    if (isset($cur_nav['markup']['tabs'])) {
+                                                        ?>
+														<option value="<?php echo esc_attr($cur_nav['handle']); ?>" <?php selected(RevSliderFunctions::getVal($arrFieldsParams, 'tabs_style', 'round'), esc_attr($cur_nav['handle'])); ?>><?php echo esc_attr($cur_nav['name']); ?></option>
 														<?php
-													}
-												}
-											}
-											?>
+                                                    }
+                                                }
+                                            }
+                                            ?>
 										</select>
 										<script>
 											jQuery(document).ready(function() {
@@ -3839,8 +3843,8 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 
 								<!-- Carousel Easing -->
 								<?php
-								$car_easing = RevSliderFunctions::getVal($arrFieldsParams, 'carousel_easing', 'Power3.easeInOut');
-								?>
+                                $car_easing = RevSliderFunctions::getVal($arrFieldsParams, 'carousel_easing', 'Power3.easeInOut');
+                                ?>
 								<span class="label" id="label_carousel_easing" origtitle="<?php _e("The carousel easing", 'revslider');?>"><?php _e("Easing", 'revslider');?> </span>
 								<select id="carousel_easing" class="withlabel"  name="carousel_easing" style="width: 106px;">
 									<option <?php selected($car_easing, 'Linear.easeNone');?> value="Linear.easeNone">Linear.easeNone</option>
@@ -4274,8 +4278,8 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 
 								<!-- SCALE EFFECT ON SCROLL -->
 								<?php /*<span class="label" id="label_scale_scrolleffect" origtitle="<?php _e("Endable / Disable scale Effect on Scroll:", 'revslider');?>"><?php _e("Scale Effect", 'revslider');?> </span>
-								<input type="checkbox" class="tp-moderncheckbox withlabel" id="scale_scrolleffect" name="scale_scrolleffect" data-unchecked="off" <?php checked(RevSliderFunctions::getVal($arrFieldsParams, "scale_scrolleffect", "off"), "on");?>>
-								<div class="clear"></div>*/ ?>
+                                <input type="checkbox" class="tp-moderncheckbox withlabel" id="scale_scrolleffect" name="scale_scrolleffect" data-unchecked="off" <?php checked(RevSliderFunctions::getVal($arrFieldsParams, "scale_scrolleffect", "off"), "on");?>>
+                                <div class="clear"></div>*/ ?>
 
 								<!-- BLUR EFFECT ON SCROLL -->
 								<span class="label" id="label_blur_scrolleffect" origtitle="<?php _e("Endable / Disable Blur Effect on Scroll", 'revslider');?>"><?php _e("Blur Effect", 'revslider');?> </span>
@@ -4354,52 +4358,50 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 
 
 					<?php
-					if (!empty($sliderID)) {
-						?>
+                    if (!empty($sliderID)) {
+                        ?>
 						<!-- SPEED MONITOR -->
 						<div class="setting_box" id="v_sp_mo">
 							<h3 class="box_closed"><i class="rs-rp-accordion-icon eg-icon-cog-alt"></i>
 								<div class="setting_box-arrow"></div>
-								<span><?php _e("Performance and SEO Optimization", 'revslider');?></span>
+								<span><?php _e("Performance and SEO Optimization", 'revslider'); ?></span>
 							</h3>
 
 							<div class="inside" style="display:none;">
 
 								<!-- LAZY LOAD -->
 								<?php
-								$llt = RevSliderFunctions::getVal($arrFieldsParams, 'lazy_load_type', false);
-								if ($llt === false) {
-									//do fallback checks to removed lazy_load value since version 5.0 and replaced with an enhanced version
-									$old_ll = RevSliderFunctions::getVal($arrFieldsParams, 'lazy_load', 'off');
-									$llt = ($old_ll == 'on') ? 'all' : 'none';
-								}
-								?>
-								<span id="label_lazy_load_type" class="label" origtitle="<?php _e("How to load/preload the images. <br><br><strong>All</strong> - Load all image element in a sequence at the initialisation. This will boost up the loading of your page, and will preload all images to have a smooth and breakless run already in the first loop.  <br><br><strong>Smart</strong> - It will load the page as quick as possible, and load only the current and neighbour slide elements. If slide is called which not loaded yet, will be loaded on demand with minimal delays.   <br><br><strong>Single</strong> - It will load only the the start slide. Any other slides will be loaded on demand.", 'revslider');?>"><?php _e("Lazy Load", 'revslider');?> </span>
+                                $llt = RevSliderFunctions::getVal($arrFieldsParams, 'lazy_load_type', false);
+                        if ($llt === false) {
+                            //do fallback checks to removed lazy_load value since version 5.0 and replaced with an enhanced version
+                            $old_ll = RevSliderFunctions::getVal($arrFieldsParams, 'lazy_load', 'off');
+                            $llt = ($old_ll == 'on') ? 'all' : 'none';
+                        } ?>
+								<span id="label_lazy_load_type" class="label" origtitle="<?php _e("How to load/preload the images. <br><br><strong>All</strong> - Load all image element in a sequence at the initialisation. This will boost up the loading of your page, and will preload all images to have a smooth and breakless run already in the first loop.  <br><br><strong>Smart</strong> - It will load the page as quick as possible, and load only the current and neighbour slide elements. If slide is called which not loaded yet, will be loaded on demand with minimal delays.   <br><br><strong>Single</strong> - It will load only the the start slide. Any other slides will be loaded on demand.", 'revslider'); ?>"><?php _e("Lazy Load", 'revslider'); ?> </span>
 								<select id="lazy_load_type" name="lazy_load_type" class="withlabel" >
-									<option value="all" <?php selected($llt, 'all');?>><?php _e("All", 'revslider');?></option>
-									<option value="smart" <?php selected($llt, 'smart');?>><?php _e("Smart", 'revslider');?></option>
-									<option value="single" <?php selected($llt, 'single');?>><?php _e("Single", 'revslider');?></option>
-									<option value="none" <?php selected($llt, 'none');?>><?php _e("No Lazy Loading", 'revslider');?></option>
+									<option value="all" <?php selected($llt, 'all'); ?>><?php _e("All", 'revslider'); ?></option>
+									<option value="smart" <?php selected($llt, 'smart'); ?>><?php _e("Smart", 'revslider'); ?></option>
+									<option value="single" <?php selected($llt, 'single'); ?>><?php _e("Single", 'revslider'); ?></option>
+									<option value="none" <?php selected($llt, 'none'); ?>><?php _e("No Lazy Loading", 'revslider'); ?></option>
 								</select>
 								<div class="clearfix"></div>
 								
 								<?php
-								/*$seo_opti = RevSliderFunctions::getVal($arrFieldsParams, 'seo_optimization', 'none');
-								?>
-								<span id="label_seo_optimization" class="label" origtitle="<?php _e('Define SEO Optimization for the Images in the Slider, useful if Lazy Load is on.', 'revslider');?>"><?php _e('SEO Optimization', 'revslider');?> </span>
-								<select id="seo_optimization" name="seo_optimization" class="withlabel">
-									<option value="none" <?php selected($seo_opti, 'none');?>><?php _e("None", 'revslider');?></option>
-									<option value="noscript" <?php selected($seo_opti, 'noscript');?>><?php _e("NoScript", 'revslider');?></option>
-									<option value="noframe" <?php selected($seo_opti, 'noframe');?>><?php _e("NoFrame", 'revslider');?></option>
-								</select>
-								<div class="clearfix"></div>
-								*/ ?>
+                                /*$seo_opti = RevSliderFunctions::getVal($arrFieldsParams, 'seo_optimization', 'none');
+                                ?>
+                                <span id="label_seo_optimization" class="label" origtitle="<?php _e('Define SEO Optimization for the Images in the Slider, useful if Lazy Load is on.', 'revslider');?>"><?php _e('SEO Optimization', 'revslider');?> </span>
+                                <select id="seo_optimization" name="seo_optimization" class="withlabel">
+                                    <option value="none" <?php selected($seo_opti, 'none');?>><?php _e("None", 'revslider');?></option>
+                                    <option value="noscript" <?php selected($seo_opti, 'noscript');?>><?php _e("NoScript", 'revslider');?></option>
+                                    <option value="noframe" <?php selected($seo_opti, 'noframe');?>><?php _e("NoFrame", 'revslider');?></option>
+                                </select>
+                                <div class="clearfix"></div>
+                                */ ?>
 								
 								<!-- MONITORING PART -->
-								<?php //list all images and speed here ?>
+								<?php //list all images and speed here?>
 								<?php
-								RevSliderOperations::get_slider_speed($sliderID);
-								?>
+                                RevSliderOperations::get_slider_speed($sliderID); ?>
 							</div><!-- END OF INSIDE-->
 						</div>
 						<script>
@@ -4429,8 +4431,8 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 						</script>
 
 						<?php
-						}
-						?>
+                    }
+                        ?>
 
 
 
@@ -4548,75 +4550,74 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 					</div>
 
 					<?php
-					$glob_vals = RevSliderOperations::getGeneralSettingsValues();
-					$dl_fonts = RevSliderFunctions::getVal($glob_vals, 'load_google_fonts', 'off');
-					if($dl_fonts === 'off'){
-						?>
+                    $glob_vals = RevSliderOperations::getGeneralSettingsValues();
+                    $dl_fonts = RevSliderFunctions::getVal($glob_vals, 'load_google_fonts', 'off');
+                    if ($dl_fonts === 'off') {
+                        ?>
 						<div class="setting_box rs-cm-refresh" id="v_goo_fo">
 							<h3 class="box_closed"><i class="rs-rp-accordion-icon eg-icon-font"></i>
 								<div class="setting_box-arrow"></div>
-								<span><?php _e('Google Fonts', 'revslider');?></span>
+								<span><?php _e('Google Fonts', 'revslider'); ?></span>
 							</h3>
 
 							<div class="inside" style="display:none">
 
 								<div class="rs-gf-listing">
 									<?php
-									$subsets = RevSliderFunctions::getVal($arrFieldsParams, 'subsets', array());
-									
-									$gf = array();
-									if ($is_edit) {
-										if(!empty($sliderID)) {
-											$gf = $slider->getUsedFonts();
-										}
-									}
-									if(!empty($gf)){
-										echo '<h4 style="margin-top:0px;margin-bottom:8px">'.__('Dynamically Registered Google Fonts', 'revslider').'</h4>';
-										
-										foreach($gf as $mgf => $mgv){
-											echo '<div class="single-google-font-item">';
-											echo '<span class="label font-name-label">'.$mgf.':';
-											if(!empty($mgv['variants'])){
-												$mgfirst = true;
-												foreach($mgv['variants'] as $mgvk => $mgvv){
-													if(!$mgfirst) echo ',';
-													echo $mgvk;
-													$mgfirst = false;
-												}
-											}	
-											echo '</span>';
-											echo '<div class="single-font-setting-wrapper">';
-											if(!empty($mgv['slide'])){
-												echo '<span class="label">Used in Slide:</span>';
-												echo '<select class="google-font-slide-link-list">';
-												echo '<option value="blank">Edit Slide(s)</option>';
-												foreach($mgv['slide'] as $mgskey => $mgsval){
-													echo '<option value="'.self::getViewUrl(RevSliderAdmin::VIEW_SLIDE,'id='.$mgsval['id'].'&slider='.intval($sliderID)).'">'.__('Edit:', 'revslider').' '.esc_attr($mgsval['title']).'</option>';
-												}
-												echo '</select>';
-												
-											}
-											
-											if(!empty($mgv['subsets'])){
-												echo '<div class="clear"></div>';
-												
-												foreach($mgv['subsets'] as $ssk => $ssv){
-													echo '<span class="label subsetlabel">'.$ssv.'</span>';
-													echo '<input class="tp-moderncheckbox" type="checkbox" data-useval="true" value="'.esc_attr($mgf.'+'.$ssv).'" name="subsets[]" ';
-													if(array_search(esc_attr($mgf.'+'.$ssv), $subsets) !== false){
-														echo 'checked="checked"';
-													}
-													echo '> ';
-												}
-											}
-											echo '</div>';
-											echo '</div>';
-										}
-									} else {
-										echo '<h4 style="margin-top:0px;">'.__('No dynamic fonts registered', 'revslider').'</h4>';
-									}
-									
-									?>
+                                    $subsets = RevSliderFunctions::getVal($arrFieldsParams, 'subsets', array());
+                                    
+                        $gf = array();
+                        if ($is_edit) {
+                            if (!empty($sliderID)) {
+                                $gf = $slider->getUsedFonts();
+                            }
+                        }
+                        if (!empty($gf)) {
+                            echo '<h4 style="margin-top:0px;margin-bottom:8px">'.__('Dynamically Registered Google Fonts', 'revslider').'</h4>';
+                                        
+                            foreach ($gf as $mgf => $mgv) {
+                                echo '<div class="single-google-font-item">';
+                                echo '<span class="label font-name-label">'.$mgf.':';
+                                if (!empty($mgv['variants'])) {
+                                    $mgfirst = true;
+                                    foreach ($mgv['variants'] as $mgvk => $mgvv) {
+                                        if (!$mgfirst) {
+                                            echo ',';
+                                        }
+                                        echo $mgvk;
+                                        $mgfirst = false;
+                                    }
+                                }
+                                echo '</span>';
+                                echo '<div class="single-font-setting-wrapper">';
+                                if (!empty($mgv['slide'])) {
+                                    echo '<span class="label">Used in Slide:</span>';
+                                    echo '<select class="google-font-slide-link-list">';
+                                    echo '<option value="blank">Edit Slide(s)</option>';
+                                    foreach ($mgv['slide'] as $mgskey => $mgsval) {
+                                        echo '<option value="'.self::getViewUrl(RevSliderAdmin::VIEW_SLIDE, 'id='.$mgsval['id'].'&slider='.intval($sliderID)).'">'.__('Edit:', 'revslider').' '.esc_attr($mgsval['title']).'</option>';
+                                    }
+                                    echo '</select>';
+                                }
+                                            
+                                if (!empty($mgv['subsets'])) {
+                                    echo '<div class="clear"></div>';
+                                                
+                                    foreach ($mgv['subsets'] as $ssk => $ssv) {
+                                        echo '<span class="label subsetlabel">'.$ssv.'</span>';
+                                        echo '<input class="tp-moderncheckbox" type="checkbox" data-useval="true" value="'.esc_attr($mgf.'+'.$ssv).'" name="subsets[]" ';
+                                        if (array_search(esc_attr($mgf.'+'.$ssv), $subsets) !== false) {
+                                            echo 'checked="checked"';
+                                        }
+                                        echo '> ';
+                                    }
+                                }
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                        } else {
+                            echo '<h4 style="margin-top:0px;">'.__('No dynamic fonts registered', 'revslider').'</h4>';
+                        } ?>
 								</div>
 								<script>
 									jQuery('.google-font-slide-link-list').on('change', function() {
@@ -4635,7 +4636,7 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										
 									});
 								</script>
-								<!--h4><?php _e("Deprecated Google Font Import",'revslider');?></h4>
+								<!--h4><?php _e("Deprecated Google Font Import", 'revslider'); ?></h4>
 								<div id="rs-google-fonts">
 								
 								</div-->
@@ -4643,12 +4644,12 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 						</div>
 						
 						<?php
-					}
-					
-					$revslider_addon = apply_filters('revslider_slider_addons', array(), $arrFieldsParams);
-					if(!empty($revslider_addon)){
-						foreach($revslider_addon as $addon_handle => $addon_values){
-							?>
+                    }
+                    
+                    $revslider_addon = apply_filters('revslider_slider_addons', array(), $arrFieldsParams);
+                    if (!empty($revslider_addon)) {
+                        foreach ($revslider_addon as $addon_handle => $addon_values) {
+                            ?>
 							<!-- ADDON <?php echo esc_attr($addon_values['title']); ?> SETTINGS -->
 							<div class="setting_box" id="addon-settings-wrapper">
 								<h3 class="box_closed"><i class="rs-rp-accordion-icon <?php echo (isset($addon_values['icon'])) ? esc_attr($addon_values['icon']) : 'eg-icon-plus-circled'; ?>"></i>
@@ -4664,51 +4665,51 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 								</div>
 							</div>
 							<?php
-						}
-					}
-					?>
+                        }
+                    }
+                    ?>
 				</form>
 			
 				<!-- IMPORT / EXPORT SETTINGS -->
 				<?php
-				if(!RS_DEMO){
-					if ($is_edit) {
-						?>
+                if (!RS_DEMO) {
+                    if ($is_edit) {
+                        ?>
 						<div class="setting_box" id="v_imp_exp">
 							<h3 class="box_closed"><i class="rs-rp-accordion-icon eg-icon-upload"></i>
 								<div class="setting_box-arrow"></div>
-								<span><?php _e('Import / Export / Replace', 'revslider');?></span>
+								<span><?php _e('Import / Export / Replace', 'revslider'); ?></span>
 							</h3>
 							<div class="inside" style="display:none">
 								<ul class="main-options-small-tabs" style="display:inline-block; ">
-									<li data-content="#import-import" class="selected"><?php _e('Import', 'revslider');?></li>
-									<li data-content="#import-export" class=""><?php _e('Export', 'revslider');?></li>
-									<li data-content="#import-replace" class=""><?php _e('Replace URL', 'revslider');?></li>
+									<li data-content="#import-import" class="selected"><?php _e('Import', 'revslider'); ?></li>
+									<li data-content="#import-export" class=""><?php _e('Export', 'revslider'); ?></li>
+									<li data-content="#import-replace" class=""><?php _e('Replace URL', 'revslider'); ?></li>
 								</ul>
 								
 								<div id="import-import">
 									<?php
-									if(!RevSliderFunctionsWP::isAdminUser() && apply_filters('revslider_restrict_role', true)){
-										_e('Import only available for Administrators', 'revslider');
-									}else{
-										?>
+                                    if (!RevSliderFunctionsWP::isAdminUser() && apply_filters('revslider_restrict_role', true)) {
+                                        _e('Import only available for Administrators', 'revslider');
+                                    } else {
+                                        ?>
 										<form name="import_slider_form" id="rs_import_slider_form" action="<?php echo RevSliderBase::$url_ajax; ?>" enctype="multipart/form-data" method="post">
 											<input type="hidden" name="action" value="revslider_ajax_action">
 											<input type="hidden" name="client_action" value="import_slider">
 											<input type="hidden" name="sliderid" value="<?php echo $sliderID; ?>">
-											<input type="hidden" name="nonce" value="<?php echo wp_create_nonce("revslider_actions");?>">
+											<input type="hidden" name="nonce" value="<?php echo wp_create_nonce("revslider_actions"); ?>">
 											<input type="file" name="import_file" class="input_import_slider" style="width:100%; font-size:12px;">
 											<div style="width:100%;height:25px"></div>
 
-											<span class="label label-with-subsection" id="label_update_animations" origtitle="<?php _e("Overwrite or append the custom animations due the new imported values ?", 'revslider');?>"><?php _e("Custom Animations", 'revslider');?> </span>
+											<span class="label label-with-subsection" id="label_update_animations" origtitle="<?php _e("Overwrite or append the custom animations due the new imported values ?", 'revslider'); ?>"><?php _e("Custom Animations", 'revslider'); ?> </span>
 											<input class="withlabel" type="radio" name="update_animations" value="true" checked="checked"> <?php _e("overwrite", 'revslider')?>
 											<input class="withlabel"  type="radio" name="update_animations" value="false"> <?php _e("append", 'revslider')?>
 											<div class="tp-clearfix"></div>
 
-											<!--span class="label label-with-subsection" id="label_update_static_captions" origtitle="<?php _e("Overwrite or append the static styles due the new imported values ?", 'revslider');?>"><?php _e("Static Styles", 'revslider');?> </span>
+											<!--span class="label label-with-subsection" id="label_update_static_captions" origtitle="<?php _e("Overwrite or append the static styles due the new imported values ?", 'revslider'); ?>"><?php _e("Static Styles", 'revslider'); ?> </span>
 											<input class="withlabel" type="radio" name="update_static_captions" value="true"> <?php _e("overwrite", 'revslider')?>
 											<input class="withlabel" type="radio" name="update_static_captions" value="false"> <?php _e("append", 'revslider')?>
-											<input class="withlabel" type="radio" name="update_static_captions" value="none" checked="checked"> <?php _e("ignore",'revslider'); ?>
+											<input class="withlabel" type="radio" name="update_static_captions" value="none" checked="checked"> <?php _e("ignore", 'revslider'); ?>
 											<div class="tp-clearfix"></div-->
 
 											<div class="divide5"></div>
@@ -4717,8 +4718,7 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<div class="divide20"></div>
 										<div class="revred api-desc" style="padding:8px;color:#fff;font-weight:600;font-size:12px"><?php _e("Note! Style templates will be updated if they exist. Importing slider, will delete all the current slider settings and slides and replacing it with the imported content.", 'revslider')?></div>
 										<?php
-									}
-									?>
+                                    } ?>
 								</div>
 
 								<div id="import-export" style="display:none">
@@ -4727,11 +4727,11 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 
 								<div id="import-replace" style="display:none">
 
-									<span class="label label-with-subsection" id="label_replace_url_from" origtitle="<?php _e("Replace all layer and background image url's. example - replace from: http://localhost", 'revslider');?>"><?php _e("Replace From", 'revslider');?> </span>
+									<span class="label label-with-subsection" id="label_replace_url_from" origtitle="<?php _e("Replace all layer and background image url's. example - replace from: http://localhost", 'revslider'); ?>"><?php _e("Replace From", 'revslider'); ?> </span>
 									<input type="text" class="text-sidebar-link withlabel" id="replace_url_from">
 									<div class="tp-clearfix"></div>
 
-									<span class="label label-with-subsection" id="label_replace_url_to" origtitle="<?php _e("Replace all layer and background image url's. example - replace to: http://yoursite.com", 'revslider');?>"><?php _e("Replace To", 'revslider');?> </span>
+									<span class="label label-with-subsection" id="label_replace_url_to" origtitle="<?php _e("Replace all layer and background image url's. example - replace to: http://yoursite.com", 'revslider'); ?>"><?php _e("Replace To", 'revslider'); ?> </span>
 									<input type="text" class="text-sidebar-link withlabel" id="replace_url_to">
 									<div class="tp-clearfix"></div>
 
@@ -4746,82 +4746,81 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 								</div>
 							</div>
 						</div>
-						<?php 
-					}
-				}
-				?> <!-- END OF IMPORT EXPORT SETTINGS -->
+						<?php
+                    }
+                }
+                ?> <!-- END OF IMPORT EXPORT SETTINGS -->
 
 					<!-- API SETTINGS -->
 					<?php
-					if ($is_edit) {
-						$api = "revapi" . $sliderID;
-						?>
+                    if ($is_edit) {
+                        $api = "revapi" . $sliderID; ?>
 
 						<div class="setting_box rs-cm-refresh" id="v_api_se">
 							<h3 class="box_closed"><i class="rs-rp-accordion-icon eg-icon-magic"></i>
 								<div class="setting_box-arrow"></div>
-								<span><?php _e('API Functions', 'revslider');?></span>
+								<span><?php _e('API Functions', 'revslider'); ?></span>
 							</h3>
 							<div class="inside" style="display:none">
 								<ul class="main-options-small-tabs" style="display:inline-block; ">
-									<li data-content="#api-method" class="selected"><?php _e('Methods', 'revslider');?></li>
-									<li data-content="#api-events" class=""><?php _e('Events', 'revslider');?></li>
+									<li data-content="#api-method" class="selected"><?php _e('Methods', 'revslider'); ?></li>
+									<li data-content="#api-events" class=""><?php _e('Events', 'revslider'); ?></li>
 								</ul>
 								<div id="api-method">
-									<span class="label" id="label_apiapi1" style="min-width:130px" origtitle="<?php _e("Call this function to start the slider.", 'revslider');?>"><?php _e("Start Slider", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi1" style="min-width:130px" origtitle="<?php _e("Call this function to start the slider.", 'revslider'); ?>"><?php _e("Start Slider", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly  class="api-input withlabel" id="apiapi0" value="<?php echo $api?>.revstart();"></span>
 									<div class="tp-clearfix"></div>
 									
-									<span class="label" id="label_apiapi1" style="min-width:130px" origtitle="<?php _e("Call this function to pause the slider.", 'revslider');?>"><?php _e("Pause Slider", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi1" style="min-width:130px" origtitle="<?php _e("Call this function to pause the slider.", 'revslider'); ?>"><?php _e("Pause Slider", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly  class="api-input withlabel" id="apiapi1" value="<?php echo $api?>.revpause();"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi2" style="min-width:130px" origtitle="<?php _e("Call this function to play the slider if it is paused.", 'revslider');?>"><?php _e("Resume Slider", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi2" style="min-width:130px" origtitle="<?php _e("Call this function to play the slider if it is paused.", 'revslider'); ?>"><?php _e("Resume Slider", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi2" value="<?php echo $api?>.revresume();"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi3" style="min-width:130px" origtitle="<?php _e("Switch slider to previous slide.", 'revslider');?>"><?php _e("Previous Slide", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi3" style="min-width:130px" origtitle="<?php _e("Switch slider to previous slide.", 'revslider'); ?>"><?php _e("Previous Slide", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi3" value="<?php echo $api?>.revprev();"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi4" style="min-width:130px" origtitle="<?php _e("Switch slider to next slide.", 'revslider');?>"><?php _e("Next Slide", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi4" style="min-width:130px" origtitle="<?php _e("Switch slider to next slide.", 'revslider'); ?>"><?php _e("Next Slide", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi4" value="<?php echo $api?>.revnext();"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi5" style="min-width:130px" origtitle="<?php _e("Switch to the slide which is defined as parameter.", 'revslider');?>"><?php _e("Go To Slide", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi5" style="min-width:130px" origtitle="<?php _e("Switch to the slide which is defined as parameter.", 'revslider'); ?>"><?php _e("Go To Slide", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi5" value="<?php echo $api?>.revshowslide(2);"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi5" style="min-width:130px" origtitle="<?php _e("Switch to the slide which is defined as parameter.", 'revslider');?>"><?php _e("Go To Slide with ID", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi5" style="min-width:130px" origtitle="<?php _e("Switch to the slide which is defined as parameter.", 'revslider'); ?>"><?php _e("Go To Slide with ID", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi5" value="<?php echo $api?>.revcallslidewithid('rs-1007');"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi6" style="min-width:130px" origtitle="<?php _e("Get the amount of existing slides in the slider.", 'revslider');?>"><?php _e("Max Slides", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi6" style="min-width:130px" origtitle="<?php _e("Get the amount of existing slides in the slider.", 'revslider'); ?>"><?php _e("Max Slides", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi6" value="<?php echo $api?>.revmaxslide();"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi7" style="min-width:130px" origtitle="<?php _e("Get the current focused slide index.", 'revslider');?>"><?php _e("Current Slide", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi7" style="min-width:130px" origtitle="<?php _e("Get the current focused slide index.", 'revslider'); ?>"><?php _e("Current Slide", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi7" value="<?php echo $api?>.revcurrentslide();"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi8" style="min-width:130px" origtitle="<?php _e("Get the previously played slide.", 'revslider');?>"><?php _e("Last Slide", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi8" style="min-width:130px" origtitle="<?php _e("Get the previously played slide.", 'revslider'); ?>"><?php _e("Last Slide", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi8" value="<?php echo $api?>.revlastslide();"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi9" style="min-width:130px" origtitle="<?php _e("Scroll page under the slider.", 'revslider');?>"><?php _e("External Scroll", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi9" style="min-width:130px" origtitle="<?php _e("Scroll page under the slider.", 'revslider'); ?>"><?php _e("External Scroll", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly class="api-input withlabel" id="apiapi9" value="<?php echo $api?>.revscroll(offset);"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi10" style="min-width:130px" origtitle="<?php _e("Recalculate all positions, sizing etc in the slider.  This should be called i.e. if Slider was invisible and becomes visible without any window resize event.", 'revslider');?>"><?php _e("Redraw Slider", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi10" style="min-width:130px" origtitle="<?php _e("Recalculate all positions, sizing etc in the slider.  This should be called i.e. if Slider was invisible and becomes visible without any window resize event.", 'revslider'); ?>"><?php _e("Redraw Slider", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly  class="api-input withlabel" id="apiapi10" value="<?php echo $api?>.revredraw();"></span>
 									<div class="tp-clearfix"></div>
 
-									<span class="label" id="label_apiapi12" style="min-width:130px" origtitle="<?php _e("Remove One Slide with Slide Index from the Slider. Index starts with 0 which will remove the first slide.", 'revslider');?>"><?php _e("Remove Slide", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi12" style="min-width:130px" origtitle="<?php _e("Remove One Slide with Slide Index from the Slider. Index starts with 0 which will remove the first slide.", 'revslider'); ?>"><?php _e("Remove Slide", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly  class="api-input withlabel" id="apiapi12" value="<?php echo $api?>.revremoveslide(slideindex);"></span>
 									<div class="tp-clearfix"></div>
 
 
-									<span class="label" id="label_apiapi11" style="min-width:130px" origtitle="<?php _e("Unbind all listeners, remove current animations and delete containers. Ready for Garbage collection.", 'revslider');?>"><?php _e("Kill Slider", 'revslider')?>:</span>
+									<span class="label" id="label_apiapi11" style="min-width:130px" origtitle="<?php _e("Unbind all listeners, remove current animations and delete containers. Ready for Garbage collection.", 'revslider'); ?>"><?php _e("Kill Slider", 'revslider')?>:</span>
 									<input type="text" style="width:180px" readonly  class="api-input withlabel" id="apiapi11" value="<?php echo $api?>.revkill();"></span>
 									<div class="tp-clearfix"></div>
 								</div>
@@ -4836,9 +4835,9 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 <?php echo $api?>.bind("revolution.slide.onchange",function (e,data) {
 	console.log("slide changed to: "+data.slideIndex);
 	console.log("current slide <li> Index: "+data.slideLIIndex);
-	//data.currentslide - <?php _e('Current  Slide as jQuery Object', 'revslider');?>
+	//data.currentslide - <?php _e('Current  Slide as jQuery Object', 'revslider'); ?>
 
-	//data.prevslide - <?php _e('Previous Slide as jQuery Object', 'revslider');?>  
+	//data.prevslide - <?php _e('Previous Slide as jQuery Object', 'revslider'); ?>  
 });</textarea>
 <h4 style="margin-top:15px"><?php _e("Slider paused", 'revslider')?></h4>
 <textarea class="api_area" style=" height:80px;" readonly>
@@ -4854,21 +4853,21 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 <textarea class="api_area" style=" height:130px;" readonly>
 <?php echo $api?>.bind("revolution.slide.onvideoplay",function (e,data) {
 	console.log("video play");
-	//data.video - <?php _e('The Video API to Manage Video functions', 'revslider');?>
+	//data.video - <?php _e('The Video API to Manage Video functions', 'revslider'); ?>
 
-	//data.videotype - <?php _e('youtube, vimeo, html5', 'revslider');?>
+	//data.videotype - <?php _e('youtube, vimeo, html5', 'revslider'); ?>
 
-	//data.settings - <?php _e('Video Settings', 'revslider');?>
+	//data.settings - <?php _e('Video Settings', 'revslider'); ?>
 });</textarea>
 <h4 style="margin-top:15px"><?php _e("Video stopped in slider", 'revslider')?></h4>
 <textarea class="api_area" style=" height:130px;" readonly>
 <?php echo $api?>.bind("revolution.slide.onvideostop",function (e,data) {
 	console.log("video stop");
-	//data.video - <?php _e('The Video API to Manage Video functions', 'revslider');?>
+	//data.video - <?php _e('The Video API to Manage Video functions', 'revslider'); ?>
 
-	//data.videotype - <?php _e('youtube, vimeo, html5', 'revslider');?>
+	//data.videotype - <?php _e('youtube, vimeo, html5', 'revslider'); ?>
 
-	//data.settings - <?php _e('Video Settings', 'revslider');?>
+	//data.settings - <?php _e('Video Settings', 'revslider'); ?>
 });</textarea>
 <h4 style="margin-top:15px"><?php _e("Slider reached the 'stop at' slide", 'revslider')?></h4>
 <textarea class="api_area" style=" height:80px;" readonly>
@@ -4879,17 +4878,17 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 <textarea class="api_area" style=" height:100px;" readonly>
 <?php echo $api?>.bind("revolution.slide.onbeforeswap",function (e) {
 	console.log("Slider Before Swap");
-	//data.currentslide - <?php _e('Current Slide as jQuery Object', 'revslider');?>
+	//data.currentslide - <?php _e('Current Slide as jQuery Object', 'revslider'); ?>
 
-	//data.nextslide - <?php _e('Coming Slide as jQuery Object', 'revslider');?>
+	//data.nextslide - <?php _e('Coming Slide as jQuery Object', 'revslider'); ?>
 });</textarea>
 <h4 style="margin-top:15px"><?php _e("Finnished with slide change", 'revslider')?></h4>
 <textarea class="api_area" style=" height:100px;" readonly>
 <?php echo $api?>.bind("revolution.slide.onafterswap",function (e) {
 	console.log("Slider After Swap");
-	//data.currentslide - <?php _e('Current Slide as jQuery Object', 'revslider');?>
+	//data.currentslide - <?php _e('Current Slide as jQuery Object', 'revslider'); ?>
 
-	//data.prevslide - <?php _e('Previous Slide as jQuery Object', 'revslider');?>
+	//data.prevslide - <?php _e('Previous Slide as jQuery Object', 'revslider'); ?>
 });</textarea>
 <h4 style="margin-top:15px"><?php _e("Last slide starts", 'revslider')?></h4>
 <textarea class="api_area" style=" height:80px;" readonly>
@@ -4899,20 +4898,20 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 <h4 style="margin-top:15px"><?php _e("Layer Events", 'revslider')?></h4>
 <textarea class="api_area" style=" height:130px;" readonly>
 <?php echo $api?>.bind("revolution.slide.layeraction",function (e) {
-	//data.eventtype - <?php _e('Layer Action (enterstage, enteredstage, leavestage,leftstage)', 'revslider');?>
+	//data.eventtype - <?php _e('Layer Action (enterstage, enteredstage, leavestage,leftstage)', 'revslider'); ?>
 
-	//data.layertype - <?php _e('Layer Type (image,video,html)', 'revslider');?>
+	//data.layertype - <?php _e('Layer Type (image,video,html)', 'revslider'); ?>
 
-	//data.layersettings - <?php _e('Default Settings for Layer', 'revslider');?>
+	//data.layersettings - <?php _e('Default Settings for Layer', 'revslider'); ?>
 
-	//data.layer - <?php _e('Layer as jQuery Object', 'revslider');?>
+	//data.layer - <?php _e('Layer as jQuery Object', 'revslider'); ?>
 
 });</textarea>
 								</div>
 							</div>
 						</div>
 						<?php
-}?>	<!-- END OF API SETTINGS -->
+                    }?>	<!-- END OF API SETTINGS -->
 				</div>
 
 			<!-- THE TOOLBAR FUN -->
@@ -4971,20 +4970,20 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 			
 			
 			<?php
-			$ph_presets_full = array();
-			foreach($arr_navigations as $nav){
-				if(isset($nav['settings']) && isset($nav['settings']['presets']) && !empty($nav['settings']['presets'])){
-					foreach($nav['settings']['presets'] as $prsst){
-						if(!isset($ph_presets_full[$nav['handle']][$prsst['type']])){
-							$ph_presets_full[$nav['handle']][$prsst['type']] = array();
-						}
-						if(!isset($ph_presets_full[$nav['handle']][$prsst['type']][$prsst['handle']])){
-							$ph_presets_full[$nav['handle']][$prsst['type']][$prsst['handle']] = $prsst;
-						}
-					}
-				}
-			}
-			?>
+            $ph_presets_full = array();
+            foreach ($arr_navigations as $nav) {
+                if (isset($nav['settings']) && isset($nav['settings']['presets']) && !empty($nav['settings']['presets'])) {
+                    foreach ($nav['settings']['presets'] as $prsst) {
+                        if (!isset($ph_presets_full[$nav['handle']][$prsst['type']])) {
+                            $ph_presets_full[$nav['handle']][$prsst['type']] = array();
+                        }
+                        if (!isset($ph_presets_full[$nav['handle']][$prsst['type']][$prsst['handle']])) {
+                            $ph_presets_full[$nav['handle']][$prsst['type']][$prsst['handle']] = $prsst;
+                        }
+                    }
+                }
+            }
+            ?>
 			
 			var phpfullresets = jQuery.parseJSON(<?php echo RevSliderFunctions::jsonEncodeForClientSide($ph_presets_full); ?>);
 			
@@ -5387,49 +5386,50 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 				
 				function fillNavStylePlaceholderOnInit(){
 					<?php
-					$ph_types = array('navigation_arrow_style' => 'arrows', 'navigation_bullets_style' => 'bullets', 'tabs_style' => 'tabs', 'thumbnails_style' => 'thumbs');
-					foreach($ph_types as $phname => $pht){
-
-						$ph_arr_type = RevSliderFunctions::getVal($arrFieldsParams, $phname, '');
-						
-						$ph_init = array();
-						$ph_presets = array();
-						foreach($arr_navigations as $nav){
-							if($nav['handle'] == $ph_arr_type){ //check for settings, placeholders
-								if(isset($nav['settings']) && isset($nav['settings']['placeholders'])){
-									foreach($nav['settings']['placeholders'] as $placeholder){
-										if(empty($placeholder)) continue;
-										
-										$ph_vals = array();
-										$ph_vals_def = array();
-										
-										//$placeholder['type']
-										foreach($placeholder['data'] as $k => $d){
-											$ph_vals[$k] = stripslashes(RevSliderFunctions::getVal($arrFieldsParams, 'ph-'.$ph_arr_type.'-'.$pht.'-'.$placeholder['handle'].'-'.$k, $d));
-											$ph_vals_def[$k] = stripslashes(RevSliderFunctions::getVal($arrFieldsParams, 'ph-'.$ph_arr_type.'-'.$pht.'-'.$placeholder['handle'].'-'.$k.'-def', 'off'));											
-										}
-										
-										$ph_init[] = array('nav-type' => @$placeholder['nav-type'], 'title' => @$placeholder['title'], 'handle' => $placeholder['handle'], 'type' => $placeholder['type'], 'data' => $ph_vals, 'default' => $ph_vals_def);
-									}
-									if(!empty($ph_vals) && isset($nav['settings']['presets']) && !empty($nav['settings']['presets'])){
-										$ph_presets[$nav['handle']] = $nav['settings']['presets'];
-									}
-								}
-								break;
-							}
-						}
-						
-						if(!empty($ph_init)){
-							?>
+                    $ph_types = array('navigation_arrow_style' => 'arrows', 'navigation_bullets_style' => 'bullets', 'tabs_style' => 'tabs', 'thumbnails_style' => 'thumbs');
+                    foreach ($ph_types as $phname => $pht) {
+                        $ph_arr_type = RevSliderFunctions::getVal($arrFieldsParams, $phname, '');
+                        
+                        $ph_init = array();
+                        $ph_presets = array();
+                        foreach ($arr_navigations as $nav) {
+                            if ($nav['handle'] == $ph_arr_type) { //check for settings, placeholders
+                                if (isset($nav['settings']) && isset($nav['settings']['placeholders'])) {
+                                    foreach ($nav['settings']['placeholders'] as $placeholder) {
+                                        if (empty($placeholder)) {
+                                            continue;
+                                        }
+                                        
+                                        $ph_vals = array();
+                                        $ph_vals_def = array();
+                                        
+                                        //$placeholder['type']
+                                        foreach ($placeholder['data'] as $k => $d) {
+                                            $ph_vals[$k] = stripslashes(RevSliderFunctions::getVal($arrFieldsParams, 'ph-'.$ph_arr_type.'-'.$pht.'-'.$placeholder['handle'].'-'.$k, $d));
+                                            $ph_vals_def[$k] = stripslashes(RevSliderFunctions::getVal($arrFieldsParams, 'ph-'.$ph_arr_type.'-'.$pht.'-'.$placeholder['handle'].'-'.$k.'-def', 'off'));
+                                        }
+                                        
+                                        $ph_init[] = array('nav-type' => @$placeholder['nav-type'], 'title' => @$placeholder['title'], 'handle' => $placeholder['handle'], 'type' => $placeholder['type'], 'data' => $ph_vals, 'default' => $ph_vals_def);
+                                    }
+                                    if (!empty($ph_vals) && isset($nav['settings']['presets']) && !empty($nav['settings']['presets'])) {
+                                        $ph_presets[$nav['handle']] = $nav['settings']['presets'];
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        
+                        if (!empty($ph_init)) {
+                            ?>
 							var phvals = jQuery.parseJSON(<?php echo RevSliderFunctions::jsonEncodeForClientSide($ph_init); ?>);
 							var phpresets = jQuery.parseJSON(<?php echo RevSliderFunctions::jsonEncodeForClientSide($ph_presets); ?>);
 							
 							//check for values
 							showNavStylePlaceholder('<?php echo $pht; ?>', phvals, phpresets);
 							<?php
-						}
-					}
-					?>
+                        }
+                    }
+                    ?>
 				}
 				
 				
@@ -5523,18 +5523,19 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 							case 'font-family':								
 								ph_html+= '<select style="width:112px" name="ph-'+cur_edit_type+'-'+navtype+'-'+m['handle']+'-font_family" class="triggernavstyle custom-preset-val" id="'+isfor+'">';
 								<?php
-								$font_families = $operations->getArrFontFamilys();
-								foreach($font_families as $handle => $name){
-									if($name['label'] == 'Dont Show Me') continue;
-									?>
+                                $font_families = $operations->getArrFontFamilys();
+                                foreach ($font_families as $handle => $name) {
+                                    if ($name['label'] == 'Dont Show Me') {
+                                        continue;
+                                    } ?>
 									ph_html+= '<option value="<?php echo esc_attr($name['label']); ?>"';
 									if(m['data']['font_family'] == '<?php echo esc_attr($name['label']); ?>'){
 										ph_html+= ' selected="selected"';
 									}
 									ph_html+= '><?php echo esc_attr($name['label']); ?></option>';
 									<?php
-								}
-								?>
+                                }
+                                ?>
 								ph_html+= '</select>';
 								
 							break;
@@ -6073,15 +6074,15 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 				});
 				
 				<?php
-				$google_font = RevSliderFunctions::getVal($arrFieldsParams, 'google_font', array());
-				if(!empty($google_font) && is_array($google_font)){
-					foreach($google_font as $gfont){
-						?>
+                $google_font = RevSliderFunctions::getVal($arrFieldsParams, 'google_font', array());
+                if (!empty($google_font) && is_array($google_font)) {
+                    foreach ($google_font as $gfont) {
+                        ?>
 						jQuery('#rs-google-fonts').append(googlef_template_container({'value':'<?php echo esc_attr($gfont); ?>'}));
 						<?php
-					}
-				}
-				?>*/
+                    }
+                }
+                ?>*/
 				/*
 				
 				var data = {};
@@ -6140,16 +6141,16 @@ THE INFO ABOUT EMBEDING OF THE SLIDER
 <div class="rs-dialog-embed-slider" style="display: none;">
 	<div class="revyellow" style="background: none repeat scroll 0% 0% #F1C40F; left:0px;top:36px;position:absolute;height:224px;padding:20px 10px;"><i style="color:#fff;font-size:25px" class="revicon-arrows-ccw"></i></div>
 	<div style="margin:5px 0px; padding-left: 55px;">
-		<div style="font-size:14px;margin-bottom:10px;"><strong><?php _e("Standard Embeding",'revslider'); ?></strong></div>
-		<?php _e("For the",'revslider'); ?> <b><?php _e("pages or posts editor",'revslider'); ?></b> <?php _e("insert the shortcode:",'revslider'); ?> <code class="rs-example-alias-1"></code>
+		<div style="font-size:14px;margin-bottom:10px;"><strong><?php _e("Standard Embeding", 'revslider'); ?></strong></div>
+		<?php _e("For the", 'revslider'); ?> <b><?php _e("pages or posts editor", 'revslider'); ?></b> <?php _e("insert the shortcode:", 'revslider'); ?> <code class="rs-example-alias-1"></code>
 		<div style="width:100%;height:10px"></div>
-		<?php _e("From the",'revslider'); ?> <b><?php _e("widgets panel",'revslider'); ?></b> <?php _e("drag the \"Revolution Slider\" widget to the desired sidebar",'revslider'); ?>
+		<?php _e("From the", 'revslider'); ?> <b><?php _e("widgets panel", 'revslider'); ?></b> <?php _e("drag the \"Revolution Slider\" widget to the desired sidebar", 'revslider'); ?>
 		<div style="width:100%;height:25px"></div>
-		<div id="advanced-emeding" style="font-size:14px;margin-bottom:10px;"><strong><?php _e("Advanced Embeding",'revslider'); ?></strong><i class="eg-icon-plus"></i></div>
+		<div id="advanced-emeding" style="font-size:14px;margin-bottom:10px;"><strong><?php _e("Advanced Embeding", 'revslider'); ?></strong><i class="eg-icon-plus"></i></div>
 		<div id="advanced-accord" style="display:none">
-			<?php _e("From the",'revslider'); ?> <b><?php _e("theme html",'revslider'); ?></b> <?php _e("use",'revslider'); ?>: <code>&lt?php putRevSlider( '<span class="rs-example-alias">alias</span>' ); ?&gt</code><br>
-			<span><?php _e("To add the slider only to homepage use",'revslider'); ?>: <code>&lt?php putRevSlider('<span class="rs-example-alias"><?php echo $exampleID; ?></span>', 'homepage'); ?&gt</code></span></br>
-			<span><?php _e("To add the slider on specific pages or posts use",'revslider'); ?>: <code>&lt?php putRevSlider('<span class="rs-example-alias"><?php echo $exampleID; ?></span>', '2,10'); ?&gt</code></span></br>
+			<?php _e("From the", 'revslider'); ?> <b><?php _e("theme html", 'revslider'); ?></b> <?php _e("use", 'revslider'); ?>: <code>&lt?php putRevSlider( '<span class="rs-example-alias">alias</span>' ); ?&gt</code><br>
+			<span><?php _e("To add the slider only to homepage use", 'revslider'); ?>: <code>&lt?php putRevSlider('<span class="rs-example-alias"><?php echo $exampleID; ?></span>', 'homepage'); ?&gt</code></span></br>
+			<span><?php _e("To add the slider on specific pages or posts use", 'revslider'); ?>: <code>&lt?php putRevSlider('<span class="rs-example-alias"><?php echo $exampleID; ?></span>', '2,10'); ?&gt</code></span></br>
 		</div>
 		
 	</div>

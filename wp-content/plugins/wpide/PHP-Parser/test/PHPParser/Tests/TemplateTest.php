@@ -6,7 +6,8 @@ class PHPParser_Tests_TemplateTest extends PHPUnit_Framework_TestCase
      * @dataProvider provideTestPlaceholderReplacement
      * @covers PHPParser_Template
      */
-    public function testPlaceholderReplacement($templateCode, $placeholders, $expectedPrettyPrint) {
+    public function testPlaceholderReplacement($templateCode, $placeholders, $expectedPrettyPrint)
+    {
         $parser = new PHPParser_Parser(new PHPParser_Lexer);
         $prettyPrinter = new PHPParser_PrettyPrinter_Default;
 
@@ -17,7 +18,8 @@ class PHPParser_Tests_TemplateTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function provideTestPlaceholderReplacement() {
+    public function provideTestPlaceholderReplacement()
+    {
         return array(
             array(
                 '<?php $__name__ + $__Name__;',

@@ -120,4 +120,3 @@ class ResolverTest extends \PHPUnit_Framework_TestCase
         $resolver->findFactory($path, 'r+');
     }
 }
-

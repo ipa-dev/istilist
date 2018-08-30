@@ -3,7 +3,8 @@
 // Array of Elusive Icons
 // Contributed by @WhatJustHappened
 // Last updated: 14 Sept. 2013
-    function get_font_icons() {
+    function get_font_icons()
+    {
         $elusiveIcons = array(
             'el el-address-book-alt',
             'el el-address-book',
@@ -309,4 +310,4 @@
         return $elusiveIcons;
     }
 
-    add_filter( 'redux/font-icons', 'get_font_icons' );
+    add_filter('redux/font-icons', 'get_font_icons');

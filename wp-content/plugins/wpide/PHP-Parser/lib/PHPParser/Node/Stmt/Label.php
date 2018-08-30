@@ -11,7 +11,8 @@ class PHPParser_Node_Stmt_Label extends PHPParser_Node_Stmt
      * @param string $name       Name
      * @param array  $attributes Additional attributes
      */
-    public function __construct($name, array $attributes = array()) {
+    public function __construct($name, array $attributes = array())
+    {
         parent::__construct(
             array(
                 'name' => $name,

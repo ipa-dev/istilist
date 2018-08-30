@@ -1,41 +1,41 @@
 <?php 
 global $user_ID;
-if(isset($_POST['update'])){
-    if(!empty($_POST['pwd1']) && !empty($_POST['pwd2'])){
-        if($_POST['pwd1'] == $_POST['pwd2']){
-            wp_set_password( $_POST['pwd1'], $user_ID );
+if (isset($_POST['update'])) {
+    if (!empty($_POST['pwd1']) && !empty($_POST['pwd2'])) {
+        if ($_POST['pwd1'] == $_POST['pwd2']) {
+            wp_set_password($_POST['pwd1'], $user_ID);
         }
     }
     
-    if($_FILES["profile_pic"]["error"] == 0) {
+    if ($_FILES["profile_pic"]["error"] == 0) {
         echo ABSPATH . "wp-admin" . '/includes/image.php';
-        require_once(ABSPATH . "wp-admin" . '/includes/image.php'); 
-        require_once(ABSPATH . "wp-admin" . '/includes/file.php'); 
+        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
         require_once(ABSPATH . "wp-admin" . '/includes/media.php');
         
         $image = array();
-        $image = $_FILES["profile_pic"]; 
-        if ($image['size']) {     // if it is an image     
-            if ( preg_match('/(jpg|jpeg|png|gif)$/', $image['type']) ) {       
-                $override = array('test_form' => false);       // save the file, and store an array, containing its location in $file       
-                $file = wp_handle_upload( $image, $override );
+        $image = $_FILES["profile_pic"];
+        if ($image['size']) {     // if it is an image
+            if (preg_match('/(jpg|jpeg|png|gif)$/', $image['type'])) {
+                $override = array('test_form' => false);       // save the file, and store an array, containing its location in $file
+                $file = wp_handle_upload($image, $override);
                 $attachment = array(
                     'post_title' => $image['name'],
                     'post_content' => '',
                     'post_type' => 'attachment',
                     'post_mime_type' => $image['type'],
                     'guid' => $file['url']
-                ); 
-                $attach_id = wp_insert_attachment( $attachment, $file[ 'file' ]);
-                $attach_data = wp_generate_attachment_metadata( $attach_id, $file['file'] );
-                wp_update_attachment_metadata( $attach_id, $attach_data );
+                );
+                $attach_id = wp_insert_attachment($attachment, $file[ 'file' ]);
+                $attach_data = wp_generate_attachment_metadata($attach_id, $file['file']);
+                wp_update_attachment_metadata($attach_id, $attach_data);
                  
-                update_user_meta($user_ID, 'profile_pic', $attach_id);     
-            } else {       // Not an image.        
-                // Die and let the user know that they made a mistake.       
-                wp_die('No image was uploaded.');     
-                }   
+                update_user_meta($user_ID, 'profile_pic', $attach_id);
+            } else {       // Not an image.
+                // Die and let the user know that they made a mistake.
+                wp_die('No image was uploaded.');
             }
+        }
     }
     
     $display_name = $_POST['fname'].' '.$_POST['lname'];
@@ -104,9 +104,13 @@ if(isset($_POST['update'])){
                 <select name="country">
                     <option value="">Select Country</option>
                     <?php $xml=simplexml_load_file(get_template_directory()."/theme-framework-lib/authentication_fuctions/country.xml") or die("Error: Cannot create object"); ?>
-                    <?php foreach($xml->children() as $country) { ?>
-                    <option value="<?php echo $country->iso_code; ?>" <?php if(get_user_meta($user_ID, 'country', true) == $country->iso_code){echo 'selected="selected"';} ?>><?php echo $country->name; ?></option>
-                    <?php } ?>
+                    <?php foreach ($xml->children() as $country) {
+    ?>
+                    <option value="<?php echo $country->iso_code; ?>" <?php if (get_user_meta($user_ID, 'country', true) == $country->iso_code) {
+        echo 'selected="selected"';
+    } ?>><?php echo $country->name; ?></option>
+                    <?php
+} ?>
                 </select>
             </div>
         </div>

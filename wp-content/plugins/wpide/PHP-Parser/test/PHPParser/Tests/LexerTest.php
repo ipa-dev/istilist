@@ -5,14 +5,16 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
     /** @var PHPParser_Lexer */
     protected $lexer;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->lexer = new PHPParser_Lexer;
     }
 
     /**
      * @dataProvider provideTestError
      */
-    public function testError($code, $message) {
+    public function testError($code, $message)
+    {
         try {
             $this->lexer->startLexing($code);
         } catch (PHPParser_Error $e) {
@@ -24,7 +26,8 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
         $this->fail('Expected PHPParser_Error');
     }
 
-    public function provideTestError() {
+    public function provideTestError()
+    {
         return array(
             array('<?php /*', 'Unterminated comment on line 1'),
             array('<?php ' . "\1", 'Unexpected character "' . "\1" . '" (ASCII 1) on unknown line'),
@@ -35,7 +38,8 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTestLex
      */
-    public function testLex($code, $tokens) {
+    public function testLex($code, $tokens)
+    {
         $this->lexer->startLexing($code);
         while ($id = $this->lexer->getNextToken($value, $startAttributes, $endAttributes)) {
             $token = array_shift($tokens);
@@ -47,7 +51,8 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function provideTestLex() {
+    public function provideTestLex()
+    {
         return array(
             // tests conversion of closing PHP tag and drop of whitespace and opening tags
             array(
@@ -124,7 +129,8 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTestHaltCompiler
      */
-    public function testHandleHaltCompiler($code, $remaining) {
+    public function testHandleHaltCompiler($code, $remaining)
+    {
         $this->lexer->startLexing($code);
 
         while (PHPParser_Parser::T_HALT_COMPILER !== $this->lexer->getNextToken());
@@ -133,7 +139,8 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $this->lexer->getNextToken());
     }
 
-    public function provideTestHaltCompiler() {
+    public function provideTestHaltCompiler()
+    {
         return array(
             array('<?php ... __halt_compiler();Remaining Text', 'Remaining Text'),
             array('<?php ... __halt_compiler ( ) ;Remaining Text', 'Remaining Text'),

@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\StreamWrapper\FileBuffer\Factory;
+
 use TQ\Git\StreamWrapper\PathInformation;
 use TQ\Git\StreamWrapper\FileBuffer\StringBuffer;
 
@@ -76,5 +77,4 @@ class LogFactory implements Factory
         );
         return new StringBuffer($buffer, array(), 'r');
     }
-
 }

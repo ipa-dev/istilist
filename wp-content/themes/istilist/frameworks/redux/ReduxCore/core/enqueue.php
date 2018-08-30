@@ -1,27 +1,30 @@
 <?php
 
-    if ( ! defined( 'ABSPATH' ) ) {
+    if (! defined('ABSPATH')) {
         exit;
     }
 
-    if ( ! class_exists( 'reduxCoreEnqueue' ) ) {
-        class reduxCoreEnqueue {
+    if (! class_exists('reduxCoreEnqueue')) {
+        class reduxCoreEnqueue
+        {
             public $parent = null;
 
             private $min = '';
             private $timestamp = '';
 
-            public function __construct( $parent ) {
+            public function __construct($parent)
+            {
                 $this->parent = $parent;
 
                 Redux_Functions::$_parent = $parent;
             }
 
-            public function init() {
+            public function init()
+            {
                 $this->min = Redux_Functions::isMin();
 
                 $this->timestamp = ReduxFramework::$_version;
-                if ( $this->parent->args['dev_mode'] ) {
+                if ($this->parent->args['dev_mode']) {
                     $this->timestamp .= '.' . time();
                 }
 
@@ -41,15 +44,16 @@
                  *
                  * @param  object $this ReduxFramework
                  */
-                do_action( "redux-enqueue-{$this->parent->args['opt_name']}", $this->parent ); // REMOVE
+                do_action("redux-enqueue-{$this->parent->args['opt_name']}", $this->parent); // REMOVE
 
                 /**
                  * action 'redux/page/{opt_name}/enqueue'
                  */
-                do_action( "redux/page/{$this->parent->args['opt_name']}/enqueue" );
+                do_action("redux/page/{$this->parent->args['opt_name']}/enqueue");
             }
 
-            private function register_styles() {
+            private function register_styles()
+            {
 
                 //*****************************************************************
                 // Redux Admin CSS
@@ -65,7 +69,7 @@
                 //*****************************************************************
                 // Redux Fields CSS
                 //*****************************************************************
-                if ( ! $this->parent->args['dev_mode'] ) {
+                if (! $this->parent->args['dev_mode']) {
                     wp_enqueue_style(
                         'redux-fields-css',
                         ReduxFramework::$_url . 'assets/css/redux-fields.css',
@@ -97,7 +101,7 @@
                 $css_file = 'redux-spectrum.min.css';
                 if ($this->parent->args['dev_mode']) {
                     $css_file = 'redux-spectrum.css';
-                }                
+                }
                 
                 wp_register_style(
                     'redux-spectrum-css',
@@ -139,7 +143,7 @@
                 //*****************************************************************
                 wp_enqueue_style(
                     'jquery-ui-css',
-                    apply_filters( "redux/page/{$this->parent->args['opt_name']}/enqueue/jquery-ui-css", ReduxFramework::$_url . 'assets/css/vendor/jquery-ui-bootstrap/jquery-ui-1.10.0.custom.css' ),
+                    apply_filters("redux/page/{$this->parent->args['opt_name']}/enqueue/jquery-ui-css", ReduxFramework::$_url . 'assets/css/vendor/jquery-ui-bootstrap/jquery-ui-1.10.0.custom.css'),
                     array(),
                     $this->timestamp,
                     'all'
@@ -148,9 +152,9 @@
                 //*****************************************************************
                 // Iris CSS
                 //*****************************************************************
-                wp_enqueue_style( 'wp-color-picker' );
+                wp_enqueue_style('wp-color-picker');
 
-                if ( $this->parent->args['dev_mode'] ) {
+                if ($this->parent->args['dev_mode']) {
 
                     //*****************************************************************
                     // Color Picker CSS
@@ -178,7 +182,7 @@
                 //*****************************************************************
                 // RTL CSS
                 //*****************************************************************
-                if ( is_rtl() ) {
+                if (is_rtl()) {
                     wp_enqueue_style(
                         'redux-rtl-css',
                         ReduxFramework::$_url . 'assets/css/rtl.css',
@@ -187,16 +191,16 @@
                         'all'
                     );
                 }
-
             }
 
-            private function register_scripts() {
+            private function register_scripts()
+            {
                 //*****************************************************************
                 // JQuery / JQuery UI JS
                 //*****************************************************************
-                wp_enqueue_script( 'jquery' );
-                wp_enqueue_script( 'jquery-ui-core' );
-                wp_enqueue_script( 'jquery-ui-dialog' );
+                wp_enqueue_script('jquery');
+                wp_enqueue_script('jquery-ui-core');
+                wp_enqueue_script('jquery-ui-dialog');
 
                 //*****************************************************************
                 // Select2 Sortable JS
@@ -255,14 +259,14 @@
                     array( 'jquery' ),
                     '1.3.3',
                     true
-                );                
+                );
                 
                 $depArray = array( 'jquery' );
 
                 //*****************************************************************
                 // Vendor JS
                 //*****************************************************************
-                if ( $this->parent->args['dev_mode'] ) {
+                if ($this->parent->args['dev_mode']) {
                     wp_register_script(
                         'redux-vendor',
                         ReduxFramework::$_url . 'assets/js/vendor.min.js',
@@ -271,7 +275,7 @@
                         true
                     );
 
-                    array_push( $depArray, 'redux-vendor' );
+                    array_push($depArray, 'redux-vendor');
                 }
 
                 //*****************************************************************
@@ -294,14 +298,14 @@
                 );
             }
 
-            private function enqueue_fields() {
-                foreach ( $this->parent->sections as $section ) {
-                    if ( isset( $section['fields'] ) ) {
-                        foreach ( $section['fields'] as $field ) {
+            private function enqueue_fields()
+            {
+                foreach ($this->parent->sections as $section) {
+                    if (isset($section['fields'])) {
+                        foreach ($section['fields'] as $field) {
                             // TODO AFTER GROUP WORKS - Revert IF below
                             // if( isset( $field['type'] ) && $field['type'] != 'callback' ) {
-                            if ( isset( $field['type'] ) && $field['type'] != 'callback' ) {
-
+                            if (isset($field['type']) && $field['type'] != 'callback') {
                                 $field_class = 'ReduxFramework_' . $field['type'];
 
                                 /**
@@ -311,35 +315,34 @@
                                  * @param       string        field class file path
                                  * @param array $field        field config data
                                  */
-                                $class_file = apply_filters( "redux/{$this->parent->args['opt_name']}/field/class/{$field['type']}", ReduxFramework::$_dir . "inc/fields/{$field['type']}/field_{$field['type']}.php", $field );
-                                if ( $class_file ) {
-                                    if ( ! class_exists( $field_class ) ) {
-                                        if ( file_exists( $class_file ) ) {
-                                            require_once( $class_file );
+                                $class_file = apply_filters("redux/{$this->parent->args['opt_name']}/field/class/{$field['type']}", ReduxFramework::$_dir . "inc/fields/{$field['type']}/field_{$field['type']}.php", $field);
+                                if ($class_file) {
+                                    if (! class_exists($field_class)) {
+                                        if (file_exists($class_file)) {
+                                            require_once($class_file);
                                         }
                                     }
 
-                                    if ( ( method_exists( $field_class, 'enqueue' ) ) || method_exists( $field_class, 'localize' ) ) {
-
-                                        if ( ! isset( $this->parent->options[ $field['id'] ] ) ) {
+                                    if ((method_exists($field_class, 'enqueue')) || method_exists($field_class, 'localize')) {
+                                        if (! isset($this->parent->options[ $field['id'] ])) {
                                             $this->parent->options[ $field['id'] ] = "";
                                         }
-                                        $theField = new $field_class( $field, $this->parent->options[ $field['id'] ], $this->parent );
+                                        $theField = new $field_class($field, $this->parent->options[ $field['id'] ], $this->parent);
 
                                         // Move dev_mode check to a new if/then block
-                                        if ( ! wp_script_is( 'redux-field-' . $field['type'] . '-js', 'enqueued' ) && class_exists( $field_class ) && method_exists( $field_class, 'enqueue' ) ) {
+                                        if (! wp_script_is('redux-field-' . $field['type'] . '-js', 'enqueued') && class_exists($field_class) && method_exists($field_class, 'enqueue')) {
                                             $theField->enqueue();
                                         }
 
-                                        if ( method_exists( $field_class, 'localize' ) ) {
-                                            $params = $theField->localize( $field );
-                                            if ( ! isset( $this->parent->localize_data[ $field['type'] ] ) ) {
+                                        if (method_exists($field_class, 'localize')) {
+                                            $params = $theField->localize($field);
+                                            if (! isset($this->parent->localize_data[ $field['type'] ])) {
                                                 $this->parent->localize_data[ $field['type'] ] = array();
                                             }
-                                            $this->parent->localize_data[ $field['type'] ][ $field['id'] ] = $theField->localize( $field );
+                                            $this->parent->localize_data[ $field['type'] ][ $field['id'] ] = $theField->localize($field);
                                         }
 
-                                        unset( $theField );
+                                        unset($theField);
                                     }
                                 }
                             }
@@ -348,16 +351,17 @@
                 }
             }
 
-            public function get_warnings_and_errors_array() {
+            public function get_warnings_and_errors_array()
+            {
                 // Construct the errors array.
-                if ( isset( $this->parent->transients['last_save_mode'] ) && ! empty( $this->parent->transients['notices']['errors'] ) ) {
+                if (isset($this->parent->transients['last_save_mode']) && ! empty($this->parent->transients['notices']['errors'])) {
                     $theTotal  = 0;
                     $theErrors = array();
 
-                    foreach ( $this->parent->transients['notices']['errors'] as $error ) {
+                    foreach ($this->parent->transients['notices']['errors'] as $error) {
                         $theErrors[ $error['section_id'] ]['errors'][] = $error;
 
-                        if ( ! isset( $theErrors[ $error['section_id'] ]['total'] ) ) {
+                        if (! isset($theErrors[ $error['section_id'] ]['total'])) {
                             $theErrors[ $error['section_id'] ]['total'] = 0;
                         }
 
@@ -366,18 +370,18 @@
                     }
 
                     $this->parent->localize_data['errors'] = array( 'total' => $theTotal, 'errors' => $theErrors );
-                    unset( $this->parent->transients['notices']['errors'] );
+                    unset($this->parent->transients['notices']['errors']);
                 }
 
                 // Construct the warnings array.
-                if ( isset( $this->parent->transients['last_save_mode'] ) && ! empty( $this->parent->transients['notices']['warnings'] ) ) {
+                if (isset($this->parent->transients['last_save_mode']) && ! empty($this->parent->transients['notices']['warnings'])) {
                     $theTotal    = 0;
                     $theWarnings = array();
 
-                    foreach ( $this->parent->transients['notices']['warnings'] as $warning ) {
+                    foreach ($this->parent->transients['notices']['warnings'] as $warning) {
                         $theWarnings[ $warning['section_id'] ]['warnings'][] = $warning;
 
-                        if ( ! isset( $theWarnings[ $warning['section_id'] ]['total'] ) ) {
+                        if (! isset($theWarnings[ $warning['section_id'] ]['total'])) {
                             $theWarnings[ $warning['section_id'] ]['total'] = 0;
                         }
 
@@ -385,43 +389,44 @@
                         $theTotal ++;
                     }
 
-                    unset( $this->parent->transients['notices']['warnings'] );
+                    unset($this->parent->transients['notices']['warnings']);
                     $this->parent->localize_data['warnings'] = array(
                         'total'    => $theTotal,
                         'warnings' => $theWarnings
                     );
                 }
 
-                if ( empty( $this->parent->transients['notices'] ) ) {
-                    unset( $this->parent->transients['notices'] );
+                if (empty($this->parent->transients['notices'])) {
+                    unset($this->parent->transients['notices']);
                 }
             }
 
-            private function set_localized_data() {
+            private function set_localized_data()
+            {
                 $this->parent->localize_data['required']       = $this->parent->required;
                 $this->parent->localize_data['fonts']          = $this->parent->fonts;
                 $this->parent->localize_data['required_child'] = $this->parent->required_child;
                 $this->parent->localize_data['fields']         = $this->parent->fields;
 
-                if ( isset( $this->parent->font_groups['google'] ) ) {
+                if (isset($this->parent->font_groups['google'])) {
                     $this->parent->localize_data['googlefonts'] = $this->parent->font_groups['google'];
                 }
 
-                if ( isset( $this->parent->font_groups['std'] ) ) {
+                if (isset($this->parent->font_groups['std'])) {
                     $this->parent->localize_data['stdfonts'] = $this->parent->font_groups['std'];
                 }
 
-                if ( isset( $this->parent->font_groups['customfonts'] ) ) {
+                if (isset($this->parent->font_groups['customfonts'])) {
                     $this->parent->localize_data['customfonts'] = $this->parent->font_groups['customfonts'];
                 }
 
                 $this->parent->localize_data['folds'] = $this->parent->folds;
 
                 // Make sure the children are all hidden properly.
-                foreach ( $this->parent->fields as $key => $value ) {
-                    if ( in_array( $key, $this->parent->fieldsHidden ) ) {
-                        foreach ( $value as $k => $v ) {
-                            if ( ! in_array( $k, $this->parent->fieldsHidden ) ) {
+                foreach ($this->parent->fields as $key => $value) {
+                    if (in_array($key, $this->parent->fieldsHidden)) {
+                        foreach ($value as $k => $v) {
+                            if (! in_array($k, $this->parent->fieldsHidden)) {
                                 $this->parent->fieldsHidden[] = $k;
                                 $this->parent->folds[ $k ]    = "hide";
                             }
@@ -429,10 +434,10 @@
                     }
                 }
 
-                if ( isset( $this->parent->args['dev_mode'] ) && $this->parent->args['dev_mode'] == true ) {
-                    $nonce                               = wp_create_nonce( 'redux-ads-nonce' );
-                    $base                                = admin_url( 'admin-ajax.php' ) . '?action=redux_p&nonce=' . $nonce . '&url=';
-                    $this->parent->localize_data['rAds'] = Redux_Helpers::rURL_fix( $base, $this->parent->args['opt_name'] );
+                if (isset($this->parent->args['dev_mode']) && $this->parent->args['dev_mode'] == true) {
+                    $nonce                               = wp_create_nonce('redux-ads-nonce');
+                    $base                                = admin_url('admin-ajax.php') . '?action=redux_p&nonce=' . $nonce . '&url=';
+                    $this->parent->localize_data['rAds'] = Redux_Helpers::rURL_fix($base, $this->parent->args['opt_name']);
                 }
 
                 $this->parent->localize_data['fieldsHidden'] = $this->parent->fieldsHidden;
@@ -445,7 +450,7 @@
                  *
                  * @param       string        save_pending string
                  */
-                $save_pending = apply_filters( "redux/{$this->parent->args['opt_name']}/localize/save_pending", __( 'You have changes that are not saved. Would you like to save them now?', 'redux-framework' ) );
+                $save_pending = apply_filters("redux/{$this->parent->args['opt_name']}/localize/save_pending", __('You have changes that are not saved. Would you like to save them now?', 'redux-framework'));
 
                 /**
                  * Reset all string
@@ -453,7 +458,7 @@
                  *
                  * @param       string        reset all string
                  */
-                $reset_all = apply_filters( "redux/{$this->parent->args['opt_name']}/localize/reset", __( 'Are you sure? Resetting will lose all custom values.', 'redux-framework' ) );
+                $reset_all = apply_filters("redux/{$this->parent->args['opt_name']}/localize/reset", __('Are you sure? Resetting will lose all custom values.', 'redux-framework'));
 
                 /**
                  * Reset section string
@@ -461,7 +466,7 @@
                  *
                  * @param       string        reset section string
                  */
-                $reset_section = apply_filters( "redux/{$this->parent->args['opt_name']}/localize/reset_section", __( 'Are you sure? Resetting will lose all custom values in this section.', 'redux-framework' ) );
+                $reset_section = apply_filters("redux/{$this->parent->args['opt_name']}/localize/reset_section", __('Are you sure? Resetting will lose all custom values in this section.', 'redux-framework'));
 
                 /**
                  * Preset confirm string
@@ -469,14 +474,14 @@
                  *
                  * @param       string        preset confirm string
                  */
-                $preset_confirm = apply_filters( "redux/{$this->parent->args['opt_name']}/localize/preset", __( 'Your current options will be replaced with the values of this preset. Would you like to proceed?', 'redux-framework' ) );
+                $preset_confirm = apply_filters("redux/{$this->parent->args['opt_name']}/localize/preset", __('Your current options will be replaced with the values of this preset. Would you like to proceed?', 'redux-framework'));
                 global $pagenow;
                 $this->parent->localize_data['args'] = array(
                     'save_pending'          => $save_pending,
                     'reset_confirm'         => $reset_all,
                     'reset_section_confirm' => $reset_section,
                     'preset_confirm'        => $preset_confirm,
-                    'please_wait'           => __( 'Please Wait', 'redux-framework' ),
+                    'please_wait'           => __('Please Wait', 'redux-framework'),
                     'opt_name'              => $this->parent->args['opt_name'],
                     'slug'                  => $this->parent->args['page_slug'],
                     'hints'                 => $this->parent->args['hints'],
@@ -487,8 +492,8 @@
                 );
 
                 $this->parent->localize_data['ajax'] = array(
-                    'console' => __( 'There was an error saving. Here is the result of your action:', 'redux-framework' ),
-                    'alert'   => __( 'There was a problem with your action. Please try again or reload the page.', 'redux-framework' ),
+                    'console' => __('There was an error saving. Here is the result of your action:', 'redux-framework'),
+                    'alert'   => __('There was a problem with your action. Please try again or reload the page.', 'redux-framework'),
                 );
 
 
@@ -500,8 +505,7 @@
                     $this->parent->localize_data
                 );
 
-                wp_enqueue_script( 'redux-js' ); // Enque the JS now
-
+                wp_enqueue_script('redux-js'); // Enque the JS now
             }
         }
     }

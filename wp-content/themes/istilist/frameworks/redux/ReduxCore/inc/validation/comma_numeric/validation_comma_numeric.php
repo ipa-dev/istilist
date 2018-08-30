@@ -1,7 +1,8 @@
 <?php
 
-    if ( ! class_exists( 'Redux_Validation_comma_numeric' ) ) {
-        class Redux_Validation_comma_numeric {
+    if (! class_exists('Redux_Validation_comma_numeric')) {
+        class Redux_Validation_comma_numeric
+        {
 
             /**
              * Field Constructor.
@@ -9,11 +10,11 @@
              *
              * @since ReduxFramework 1.0.0
              */
-            function __construct( $parent, $field, $value, $current ) {
-
+            public function __construct($parent, $field, $value, $current)
+            {
                 $this->parent       = $parent;
                 $this->field        = $field;
-                $this->field['msg'] = ( isset( $this->field['msg'] ) ) ? $this->field['msg'] : __( 'You must provide a comma separated list of numerical values for this option.', 'redux-framework' );
+                $this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('You must provide a comma separated list of numerical values for this option.', 'redux-framework');
                 $this->value        = $value;
                 $this->current      = $current;
 
@@ -26,12 +27,12 @@
              *
              * @since ReduxFramework 1.0.0
              */
-            function validate() {
+            public function validate()
+            {
+                $this->value = str_replace(' ', '', $this->value);
 
-                $this->value = str_replace( ' ', '', $this->value );
-
-                if ( ! is_numeric( str_replace( ',', '', $this->value ) ) ) {
-                    $this->value = ( isset( $this->current ) ) ? $this->current : '';
+                if (! is_numeric(str_replace(',', '', $this->value))) {
+                    $this->value = (isset($this->current)) ? $this->current : '';
                     $this->error = $this->field;
                 }
             } //function

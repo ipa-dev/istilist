@@ -20,7 +20,8 @@
  * @package Text_Diff
  * @since   0.2.0
  */
-class Text_Diff_Engine_string {
+class Text_Diff_Engine_string
+{
 
     /**
      * Parses a unified or context diff.
@@ -35,7 +36,7 @@ class Text_Diff_Engine_string {
      *
      * @return array  List of all diff operations.
      */
-    function diff($diff, $mode = 'autodetect')
+    public function diff($diff, $mode = 'autodetect')
     {
         // Detect line breaks.
         $lnbr = "\n";
@@ -88,7 +89,7 @@ class Text_Diff_Engine_string {
      *
      * @return array  List of all diff operations.
      */
-    function parseUnifiedDiff($diff)
+    public function parseUnifiedDiff($diff)
     {
         $edits = array();
         $end = count($diff) - 1;
@@ -143,7 +144,7 @@ class Text_Diff_Engine_string {
      *
      * @return array  List of all diff operations.
      */
-    function parseContextDiff(&$diff)
+    public function parseContextDiff(&$diff)
     {
         $edits = array();
         $i = $max_i = $j = $max_j = 0;
@@ -244,5 +245,4 @@ class Text_Diff_Engine_string {
 
         return $edits;
     }
-
 }

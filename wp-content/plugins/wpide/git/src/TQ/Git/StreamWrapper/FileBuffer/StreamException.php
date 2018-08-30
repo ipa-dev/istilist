@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\StreamWrapper\FileBuffer;
+
 use TQ\Git\Exception;
 
 /**

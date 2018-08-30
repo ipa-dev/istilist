@@ -19,12 +19,13 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-if ( ! class_exists( 'ReduxFramework_palette' ) ) {
-    class ReduxFramework_palette {
+if (! class_exists('ReduxFramework_palette')) {
+    class ReduxFramework_palette
+    {
 
         /**
          * Field Constructor.
@@ -34,7 +35,8 @@ if ( ! class_exists( 'ReduxFramework_palette' ) ) {
          * @access      public
          * @return      void
          */
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
@@ -48,7 +50,8 @@ if ( ! class_exists( 'ReduxFramework_palette' ) ) {
          * @access      public
          * @return      void
          */
-        public function render() {
+        public function render()
+        {
             if (empty($this->field['palettes'])) {
                 echo 'No palettes have been set.';
                 return;
@@ -56,14 +59,14 @@ if ( ! class_exists( 'ReduxFramework_palette' ) ) {
             
             echo '<div id="' . $this->field['id'] . '" class="buttonset">';
 
-            foreach ( $this->field['palettes'] as $value => $colorSet ) {
-                $checked = checked( $this->value , $value, false );
+            foreach ($this->field['palettes'] as $value => $colorSet) {
+                $checked = checked($this->value, $value, false);
                 echo '<input type="radio" value="' . $value . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" class="redux-palette-set ' . $this->field['class'] . '" id="' . $this->field['id'] . '-' . $value . '"' . $checked . '>';
                 echo '<label for="' . $this->field['id'] . '-' . $value . '">';
                 
-                foreach ( $colorSet as $color ) {
-                    printf( "<span style='background: {$color}'>{$color}</span>" );
-                }                
+                foreach ($colorSet as $color) {
+                    printf("<span style='background: {$color}'>{$color}</span>");
+                }
                 
                 echo '</label>';
                 echo '</input>';
@@ -80,7 +83,8 @@ if ( ! class_exists( 'ReduxFramework_palette' ) ) {
          * @access      public
          * @return      void
          */
-        public function enqueue() {
+        public function enqueue()
+        {
             $min = Redux_Functions::isMin();
             
             wp_enqueue_script(
@@ -89,7 +93,7 @@ if ( ! class_exists( 'ReduxFramework_palette' ) ) {
                 array( 'jquery', 'redux-js', 'jquery-ui-button', 'jquery-ui-core' ),
                 time(),
                 true
-            );  
+            );
             
             if ($this->parent->args['dev_mode']) {
                 wp_enqueue_style(
@@ -99,12 +103,12 @@ if ( ! class_exists( 'ReduxFramework_palette' ) ) {
                     time(),
                     'all'
                 );
-            }            
-        }        
+            }
+        }
         
         
-        public function output() {
-            
+        public function output()
+        {
         }
     }
 }

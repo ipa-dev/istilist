@@ -1,12 +1,13 @@
 <?php
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-if ( ! class_exists( 'ReduxFramework_switch' ) ) {
-    class ReduxFramework_switch {
+if (! class_exists('ReduxFramework_switch')) {
+    class ReduxFramework_switch
+    {
 
         /**
          * Field Constructor.
@@ -14,7 +15,8 @@ if ( ! class_exists( 'ReduxFramework_switch' ) ) {
          *
          * @since ReduxFramework 0.0.4
          */
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
@@ -26,22 +28,22 @@ if ( ! class_exists( 'ReduxFramework_switch' ) ) {
          *
          * @since ReduxFramework 0.0.4
          */
-        function render() {
-
+        public function render()
+        {
             $cb_enabled = $cb_disabled = ''; //no errors, please
             //
             //Get selected
-            if ( (int) $this->value == 1 ) {
+            if ((int) $this->value == 1) {
                 $cb_enabled = ' selected';
             } else {
                 $cb_disabled = ' selected';
             }
 
             //Label ON
-            $this->field['on'] = isset( $this->field['on'] ) ? $this->field['on'] : __( 'On', 'redux-framework' );
+            $this->field['on'] = isset($this->field['on']) ? $this->field['on'] : __('On', 'redux-framework');
 
             //Label OFF
-            $this->field['off'] = isset( $this->field['off'] ) ? $this->field['off'] : __( 'Off', 'redux-framework' );
+            $this->field['off'] = isset($this->field['off']) ? $this->field['off'] : __('Off', 'redux-framework');
 
             echo '<div class="switch-options">';
             echo '<label class="cb-enable' . $cb_enabled . '" data-id="' . $this->field['id'] . '"><span>' . $this->field['on'] . '</span></label>';
@@ -56,7 +58,8 @@ if ( ! class_exists( 'ReduxFramework_switch' ) ) {
          *
          * @since ReduxFramework 0.0.4
          */
-        function enqueue() {
+        public function enqueue()
+        {
             wp_enqueue_script(
                 'redux-field-switch-js',
                 ReduxFramework::$_url . 'inc/fields/switch/field_switch' . Redux_Functions::isMin() . '.js',

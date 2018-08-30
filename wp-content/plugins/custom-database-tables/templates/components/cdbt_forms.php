@@ -13,7 +13,7 @@
  * 'displaySubmit' => @boolean [optional] For default is true; Is false only if called from `cdbt-edit`.
  * 'whereClause' => @array [optional] For default is null; Only if called from `cdbt-edit`.
  * 'redirectUrl' => @string [optional] For default is null;
- * 'formElements' => @array [require] As follow is: 
+ * 'formElements' => @array [require] As follow is:
  *   [
  *   'elementName' => @string [require] Column name
  *   'elementLabel' => @string [require] Column's logical name
@@ -26,7 +26,7 @@
  *   'horizontalList' => @boolean [optional] For default is false (Enable if element type is checkbox, radio)
  *   'elementSize' => @string [optional] Styling width of element. Integer of pixel as width if does not use bootstrap style, otherwise will be able to use class name as `col-sm-n`.
  *   'helperText' => @string [optional] Helper text is displayed at the bottom of the input form
- *   'elementExtras' => @array (assoc) [optional] Freely addition attributes for using when generating content in input form; As follow is: 
+ *   'elementExtras' => @array (assoc) [optional] Freely addition attributes for using when generating content in input form; As follow is:
  *     [
  *     'accept' => (anything) Enable only if element type is file
  *     'autocomplete' => (on|off|default) Enable if element type is text, search, url, tel, email, password, datetime, date, month, week, time, number, range, color
@@ -44,7 +44,7 @@
  *     'data-moment-format' => (string) Date format for `moment.js`, for default is `L`
  *     ]
  *   ]
- * 'optionExtras' => @array [optional] 
+ * 'optionExtras' => @array [optional]
  * ]
  */
 
@@ -55,133 +55,138 @@
 
 // `id` section
 if (isset($this->component_options['id']) && !empty($this->component_options['id'])) {
-  $modal_id = esc_attr__($this->component_options['id']);
+    $modal_id = esc_attr__($this->component_options['id']);
 } else {
-  $modal_id = 'cdbtForm';
+    $modal_id = 'cdbtForm';
 }
 
 // `entryTable` section
-if (!isset($this->component_options['entryTable']) || empty($this->component_options['entryTable'])) 
-  return;
+if (!isset($this->component_options['entryTable']) || empty($this->component_options['entryTable'])) {
+    return;
+}
 
 // `useBootstrap` section
 if (isset($this->component_options['useBootstrap'])) {
-  $use_bootstrap = $this->strtobool($this->component_options['useBootstrap']);
+    $use_bootstrap = $this->strtobool($this->component_options['useBootstrap']);
 } else {
-  $use_bootstrap = true;
+    $use_bootstrap = true;
 }
 
 // `outputTitle` section
 if (isset($this->component_options['outputTitle']) && !empty($this->component_options['outputTitle'])) {
-  $form_title = $this->component_options['outputTitle'];
+    $form_title = $this->component_options['outputTitle'];
 } else {
-  $form_title = '';
+    $form_title = '';
 }
 
 // `fileUpload` section
 if (isset($this->component_options['fileUpload'])) {
-  $is_file_upload = $this->strtobool($this->component_options['fileUpload']);
+    $is_file_upload = $this->strtobool($this->component_options['fileUpload']);
 } else {
-  $is_file_upload = false;
+    $is_file_upload = false;
 }
 
 // `actionUrl` section
 if (isset($this->component_options['actionUrl']) && !empty($this->component_options['actionUrl'])) {
-  $action_url = esc_url($this->component_options['actionUrl']);
+    $action_url = esc_url($this->component_options['actionUrl']);
 } else {
-  $_current_url = is_admin() && isset($this->query['page']) && !empty($this->query['page']) ? add_query_arg([ 'page' => $this->query['page'] ]) : $_SERVER['REQUEST_URI'];
-  $action_url = esc_url($_current_url);
+    $_current_url = is_admin() && isset($this->query['page']) && !empty($this->query['page']) ? add_query_arg([ 'page' => $this->query['page'] ]) : $_SERVER['REQUEST_URI'];
+    $action_url = esc_url($_current_url);
 }
 $hidden_fields = [];
 if (is_admin()) {
-  $_current_page = $_current_tab = '';
-  if (isset($this->query['page']) && !empty($this->query['page'])) 
-    $_current_page = $this->query['page'];
-  
-  if (isset($this->query['tab']) && !empty($this->query['tab'])) 
-    $_current_tab = $this->query['tab'];
-  
-  if (empty($_current_page) || empty($_current_tab)) {
-    if (strpos($action_url, '?') !== false) {
-      list(, $_queries) = explode('?', $action_url);
-      $_queries = explode('&#038;', $_queries);
-      if (!empty($_queries) && is_array($_queries)) {
-        foreach ($_queries as $_query) {
-          list($_p, $_v) = explode('=', $_query);
-          if ('page' === $_p) 
-            $_current_page = trim($_v);
-          if ('tab' === $_p) 
-            $_current_tab = trim($_v);
-        }
-      }
-      unset($_queries, $_query, $_p, $_v);
+    $_current_page = $_current_tab = '';
+    if (isset($this->query['page']) && !empty($this->query['page'])) {
+        $_current_page = $this->query['page'];
     }
-  }
-  $hidden_fields[] = sprintf( '<input type="hidden" name="page" value="%s">', $_current_page );
-  $hidden_fields[] = sprintf( '<input type="hidden" name="active_tab" value="%s">', $_current_tab );
   
-  if ($_current_page) {
-    $wp_nonce_action = 'cdbt_management_console-' . $_current_page;
-  } else {
-    $wp_nonce_action = 'cdbt_entry_data-' . $this->component_options['entryTable'];
-  }
+    if (isset($this->query['tab']) && !empty($this->query['tab'])) {
+        $_current_tab = $this->query['tab'];
+    }
+  
+    if (empty($_current_page) || empty($_current_tab)) {
+        if (strpos($action_url, '?') !== false) {
+            list(, $_queries) = explode('?', $action_url);
+            $_queries = explode('&#038;', $_queries);
+            if (!empty($_queries) && is_array($_queries)) {
+                foreach ($_queries as $_query) {
+                    list($_p, $_v) = explode('=', $_query);
+                    if ('page' === $_p) {
+                        $_current_page = trim($_v);
+                    }
+                    if ('tab' === $_p) {
+                        $_current_tab = trim($_v);
+                    }
+                }
+            }
+            unset($_queries, $_query, $_p, $_v);
+        }
+    }
+    $hidden_fields[] = sprintf('<input type="hidden" name="page" value="%s">', $_current_page);
+    $hidden_fields[] = sprintf('<input type="hidden" name="active_tab" value="%s">', $_current_tab);
+  
+    if ($_current_page) {
+        $wp_nonce_action = 'cdbt_management_console-' . $_current_page;
+    } else {
+        $wp_nonce_action = 'cdbt_entry_data-' . $this->component_options['entryTable'];
+    }
 } else {
-  $wp_nonce_action = 'cdbt_entry_data-' . $this->component_options['entryTable'];
+    $wp_nonce_action = 'cdbt_entry_data-' . $this->component_options['entryTable'];
 }
 unset($_current_url, $_current_page, $_current_tab);
 
 // `formAction` section
 if (isset($this->component_options['formAction']) && !empty($this->component_options['formAction'])) {
-  $form_action = $this->component_options['formAction'];
+    $form_action = $this->component_options['formAction'];
 } else {
-  $form_action = 'entry_data';
+    $form_action = 'entry_data';
 }
 
 // `submitLabel` section
-if ( isset( $this->component_options['submitLabel'] ) && ! empty( $this->component_options['submitLabel'] ) ) {
-  $button_label = $this->component_options['submitLabel'];
+if (isset($this->component_options['submitLabel']) && ! empty($this->component_options['submitLabel'])) {
+    $button_label = $this->component_options['submitLabel'];
 } else {
-  $button_label = __('Register Data', CDBT);
+    $button_label = __('Register Data', CDBT);
 }
 
 // `displaySubmit` section
 if (isset($this->component_options['displaySubmit'])) {
-  $display_submit_button = $this->strtobool($this->component_options['displaySubmit']);
+    $display_submit_button = $this->strtobool($this->component_options['displaySubmit']);
 } else {
-  $display_submit_button = true;
+    $display_submit_button = true;
 }
 
 // `whereClause` section
 if (isset($this->component_options['whereClause']) && !empty($this->component_options['whereClause']) && is_array($this->component_options['whereClause'])) {
-  $hidden_fields[] = sprintf( '<input type="hidden" name="where_clause" value="%s">', esc_attr(serialize($this->component_options['whereClause'])) );
-  $is_wc_exists = true;
+    $hidden_fields[] = sprintf('<input type="hidden" name="where_clause" value="%s">', esc_attr(serialize($this->component_options['whereClause'])));
+    $is_wc_exists = true;
 } else {
-  $is_wc_exists = false;
+    $is_wc_exists = false;
 }
 
 // `redirectUrl` section
 $_redirect_url = '';
 if (isset($this->component_options['redirectUrl']) && !empty($this->component_options['redirectUrl'])) {
-  $_redirect_url = esc_url( $this->component_options['redirectUrl'] );
+    $_redirect_url = esc_url($this->component_options['redirectUrl']);
 }
-$hidden_fields[] = sprintf( '<input type="hidden" id="cdbt-entry-redirection" name="redirect_url" value="%s">', $_redirect_url );
+$hidden_fields[] = sprintf('<input type="hidden" id="cdbt-entry-redirection" name="redirect_url" value="%s">', $_redirect_url);
 
 // is editable form
 $is_editable = !$display_submit_button && $is_wc_exists ? true : false;
 
 // `formElements` section
 if (!isset($this->component_options['formElements']) || empty($this->component_options['formElements'])) {
-  return;
+    return;
 } else {
-  $form_elements = $this->component_options['formElements'];
+    $form_elements = $this->component_options['formElements'];
 }
 
-if ( array_key_exists( 'prevent_duplicate_sending', $this->options ) && $this->options['prevent_duplicate_sending'] ) {
-  // set one time token
-  $_cdbt_token = isset( $_COOKIE['_cdbt_token'] ) ? $_COOKIE['_cdbt_token'] : '';
+if (array_key_exists('prevent_duplicate_sending', $this->options) && $this->options['prevent_duplicate_sending']) {
+    // set one time token
+    $_cdbt_token = isset($_COOKIE['_cdbt_token']) ? $_COOKIE['_cdbt_token'] : '';
 }
 
-$form_hash = sha1( microtime() );
+$form_hash = sha1(microtime());
 $label_required = '<div class="pull-right cdbt-form-required"><span class="label label-danger">'. __('Required', CDBT) .'</span></div>';
 /**
  * Render the Form common header
@@ -190,52 +195,60 @@ $label_required = '<div class="pull-right cdbt-form-required"><span class="label
 ?>
 <div class="cdbt-entry-data-form">
   <form method="post" action="<?php echo $action_url; ?>" id="<?php echo $form_hash; ?>" class="form-horizontal"<?php if ($is_file_upload) : ?> enctype="multipart/form-data"<?php endif; ?> >
-    <?php if (!empty($hidden_fields)) { echo implode("\n", $hidden_fields); } ?>
+    <?php if (!empty($hidden_fields)) {
+    echo implode("\n", $hidden_fields);
+} ?>
     <input type="hidden" name="action" value="<?php echo $form_action; ?>">
     <input type="hidden" name="table" value="<?php echo $this->component_options['entryTable']; ?>">
-    <?php if ( array_key_exists( 'prevent_duplicate_sending', $this->options ) && $this->options['prevent_duplicate_sending'] ) : ?><input type="hidden" name="_cdbt_token" value="<?php echo $_cdbt_token; ?>"><?php endif; ?>
-    <?php wp_nonce_field( $wp_nonce_action ); ?>
+    <?php if (array_key_exists('prevent_duplicate_sending', $this->options) && $this->options['prevent_duplicate_sending']) : ?><input type="hidden" name="_cdbt_token" value="<?php echo $_cdbt_token; ?>"><?php endif; ?>
+    <?php wp_nonce_field($wp_nonce_action); ?>
     
-    <?php if (!empty($form_title)) { echo $form_title; } ?>
+    <?php if (!empty($form_title)) {
+    echo $form_title;
+} ?>
     
 <?php
 
 if ($use_bootstrap) {
-  
-  foreach ($form_elements as $element) {
-    // Parse element options
-    $is_required = $this->strtobool($element['isRequired']);
-    $selectable_list = $this->strtohash($element['selectableList']);
-    if (is_int($element['elementSize']) && $element['elementSize'] > 0) 
-      $element['elementSize'] = sprintf( 'col-sm-%d', ($is_editable ? $element['elementSize'] + 1 : $element['elementSize']) );
-    $element_size = empty($element['elementSize']) || !preg_match('/^col-.*/iU', $element['elementSize']) ? 'col-sm-9' : esc_attr($element['elementSize']);
-    $placeholder = empty($element['placeholder']) ? sprintf( __('Please enter the %s', CDBT), $element['elementLabel'] ) : esc_attr($element['placeholder']);
-    $input_attributes = [];
-    if (!empty($element['elementExtras'])) {
-      foreach($element['elementExtras'] as $attr_name => $attr_value) {
-        $input_attributes[] = sprintf('%s="%s"', esc_attr($attr_name), esc_attr($attr_value));
-      }
-    }
-    $add_attributes = implode(' ', $input_attributes);
+    foreach ($form_elements as $element) {
+        // Parse element options
+        $is_required = $this->strtobool($element['isRequired']);
+        $selectable_list = $this->strtohash($element['selectableList']);
+        if (is_int($element['elementSize']) && $element['elementSize'] > 0) {
+            $element['elementSize'] = sprintf('col-sm-%d', ($is_editable ? $element['elementSize'] + 1 : $element['elementSize']));
+        }
+        $element_size = empty($element['elementSize']) || !preg_match('/^col-.*/iU', $element['elementSize']) ? 'col-sm-9' : esc_attr($element['elementSize']);
+        $placeholder = empty($element['placeholder']) ? sprintf(__('Please enter the %s', CDBT), $element['elementLabel']) : esc_attr($element['placeholder']);
+        $input_attributes = [];
+        if (!empty($element['elementExtras'])) {
+            foreach ($element['elementExtras'] as $attr_name => $attr_value) {
+                $input_attributes[] = sprintf('%s="%s"', esc_attr($attr_name), esc_attr($attr_value));
+            }
+        }
+        $add_attributes = implode(' ', $input_attributes);
     
-    switch ($element['elementType']) {
+        switch ($element['elementType']) {
 /**
  * Render the Form using Bootstrap style
  * ---------------------------------------------------------------------------
 search, datetime, date, month, week, time, color
  */
-      case 'text': 
-      case 'url': 
-      case 'tel': 
-      case 'email': 
-      case 'password': 
-      case 'number': 
-      case 'range': 
+      case 'text':
+      case 'url':
+      case 'tel':
+      case 'email':
+      case 'password':
+      case 'number':
+      case 'range':
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="<?php echo $element_size; ?>">
-        <input id="entry-data-<?php echo esc_attr($element['elementName']); ?>" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" type="<?php echo esc_attr($element['elementType']); ?>" value="<?php echo esc_attr($element['defaultValue']); ?>" class="form-control <?php echo esc_attr($element['addClass']); ?>" placeholder="<?php echo $placeholder; ?>" <?php echo $add_attributes; ?><?php if ($is_required) { echo ' required'; } ?>>
+        <input id="entry-data-<?php echo esc_attr($element['elementName']); ?>" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" type="<?php echo esc_attr($element['elementType']); ?>" value="<?php echo esc_attr($element['defaultValue']); ?>" class="form-control <?php echo esc_attr($element['addClass']); ?>" placeholder="<?php echo $placeholder; ?>" <?php echo $add_attributes; ?><?php if ($is_required) {
+    echo ' required';
+} ?>>
       </div>
       <div class="col-sm-10">
       <?php if (isset($element['helperText']) && !empty($element['helperText'])) : ?><p class="help-block col-sm-10"><?php echo esc_html($element['helperText']); ?></p><?php endif; ?>
@@ -243,13 +256,17 @@ search, datetime, date, month, week, time, color
     </div><!-- /entry-data-<?php echo esc_attr($element['elementName']); ?> -->
 <?php
         break;
-      case 'spinbox': 
+      case 'spinbox':
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="col-sm-10">
         <div class="spinbox disits-3 <?php echo esc_attr($element['addClass']); ?>" data-initialize="spinbox" id="entry-data-<?php echo esc_attr($element['elementName']); ?>">
-          <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" value="<?php echo esc_attr($element['defaultValue']); ?>" class="form-control input-mini spinbox-input" placeholder="<?php echo $placeholder; ?>" <?php echo $add_attributes; ?><?php if ($is_required) { echo ' required'; } ?>>
+          <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" value="<?php echo esc_attr($element['defaultValue']); ?>" class="form-control input-mini spinbox-input" placeholder="<?php echo $placeholder; ?>" <?php echo $add_attributes; ?><?php if ($is_required) {
+    echo ' required';
+} ?>>
           <div class="spinbox-buttons btn-group btn-group-vertical">
             <button type="button" class="btn btn-default spinbox-up btn-xs"><span class="glyphicon glyphicon-chevron-up"></span><span class="sr-only"><?php echo __('Increase', CDBT); ?></span></button>
             <button type="button" class="btn btn-default spinbox-down btn-xs"><span class="glyphicon glyphicon-chevron-down"></span><span class="sr-only"><?php echo __('Decrease', CDBT); ?></span></button>
@@ -260,22 +277,28 @@ search, datetime, date, month, week, time, color
     </div><!-- /entry-data-<?php echo esc_attr($element['elementName']); ?> -->
 <?php
         break;
-      case 'textarea': 
+      case 'textarea':
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="col-sm-9">
-        <textarea id="entry-data-<?php echo esc_attr($element['elementName']); ?>" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" class="form-control <?php echo esc_attr($element['addClass']); ?>" placeholder="<?php echo $placeholder; ?>" <?php echo $add_attributes; ?><?php if ($is_required) { echo ' required'; } ?>><?php echo $element['defaultValue']; ?></textarea>
+        <textarea id="entry-data-<?php echo esc_attr($element['elementName']); ?>" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" class="form-control <?php echo esc_attr($element['addClass']); ?>" placeholder="<?php echo $placeholder; ?>" <?php echo $add_attributes; ?><?php if ($is_required) {
+    echo ' required';
+} ?>><?php echo $element['defaultValue']; ?></textarea>
       </div>
       <?php if (isset($element['helperText']) && !empty($element['helperText'])) : ?><p class="help-block col-sm-offset-2"><?php echo esc_html($element['helperText']); ?></p><?php endif; ?>
     </div><!-- /entry-data-<?php echo esc_attr($element['elementName']); ?> -->
 <?php
         break;
-      case 'combobox': 
+      case 'combobox':
 ?>
     <div class="form-group">
       <div class="input-group input-append dropdown combobox" data-initialize="combobox">
-        <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" id="entry-data-<?php echo esc_attr($element['elementName']); ?>" value="<?php echo esc_attr($element['defaultValue']); ?>" class="form-control text-center" placeholder="<?php echo $placeholder; ?>" <?php echo $add_attributes; ?><?php if ($is_required) { echo ' required'; } ?>>
+        <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" id="entry-data-<?php echo esc_attr($element['elementName']); ?>" value="<?php echo esc_attr($element['defaultValue']); ?>" class="form-control text-center" placeholder="<?php echo $placeholder; ?>" <?php echo $add_attributes; ?><?php if ($is_required) {
+    echo ' required';
+} ?>>
         <div class="input-group-btn">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
           <ul class="dropdown-menu dropdown-menu-right">
@@ -288,10 +311,12 @@ search, datetime, date, month, week, time, color
     </div><!-- /entry-data-<?php echo esc_attr($element['elementName']); ?> -->
 <?php
         break;
-      case 'select': 
+      case 'select':
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="col-sm-10">
         <div class="btn-group selectlist <?php echo esc_attr($element['addClass']); ?>" data-resize="auto" data-initialize="selectlist" id="entry-data-<?php echo esc_attr($element['elementName']); ?>">
           <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
@@ -311,16 +336,18 @@ search, datetime, date, month, week, time, color
     </div><!-- /entry-data-<?php echo esc_attr($element['elementName']); ?> -->
 <?php
         break;
-      case 'checkbox': 
+      case 'checkbox':
         $index_num = 0;
         $is_horizontal = $element['horizontalList'];
         $default_values = $this->strtoarray($element['defaultValue']);
         $is_multiple = count($selectable_list) > 1 ? true : false;
         $add_classes = $is_required ? $element['addClass'] . ' required' : $element['addClass'];
-        $selectable_list = empty( $selectable_list ) ? [ __('Undefined', CDBT) => '' ] : $selectable_list;
+        $selectable_list = empty($selectable_list) ? [ __('Undefined', CDBT) => '' ] : $selectable_list;
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="col-sm-10">
       <?php foreach ($selectable_list as $list_label => $list_value) : $index_num++; ?>
         <?php if (!$is_horizontal) : ?><div class="checkbox<?php /* echo esc_attr($add_classes); */ ?>"><?php endif; ?>
@@ -337,13 +364,15 @@ search, datetime, date, month, week, time, color
 <?php
         unset($index_num, $is_horizontal, $default_values);
         break;
-      case 'radio': 
+      case 'radio':
         $index_num = 0;
         $is_horizontal = $element['horizontalList'];
         $default_values= $this->strtoarray($element['defaultValue']);
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="col-sm-10">
       <?php foreach ($selectable_list as $list_label => $list_value) : $index_num++; ?>
         <?php if (!$is_horizontal) : ?><div class="radio <?php echo esc_attr($element['addClass']); ?>"><?php endif; ?>
@@ -359,15 +388,19 @@ search, datetime, date, month, week, time, color
 <?php
         unset($index_num, $is_horizontal, $default_values);
         break;
-      case 'boolean': 
+      case 'boolean':
         $checked = ($this->strtobool($element['defaultValue'])) ? ' checked="checked"' : '';
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="col-sm-10">
         <div class="checkbox <?php echo esc_attr($element['addClass']); ?>" id="entry-data-<?php echo esc_attr($element['elementName']); ?>">
           <label class="checkbox-custom" data-initialize="checkbox">
-            <input class="sr-only" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" type="checkbox" value="1"<?php echo $checked; ?> <?php echo $add_attributes; ?><?php if ($is_required) { echo ' required'; } ?>>
+            <input class="sr-only" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" type="checkbox" value="1"<?php echo $checked; ?> <?php echo $add_attributes; ?><?php if ($is_required) {
+    echo ' required';
+} ?>>
             <span class="checkbox-label"><?php if (isset($element['helperText']) && !empty($element['helperText'])) : ?><?php echo esc_html($element['helperText']); ?><?php else : ?><?php echo $element['elementLabel']; ?><?php endif; ?></span>
           </label>
         </div>
@@ -376,26 +409,28 @@ search, datetime, date, month, week, time, color
 <?php
         unset($checked);
         break;
-      case 'file': 
+      case 'file':
         $is_fileupsize = isset($element['elementExtras']['maxlength']) && !empty($element['elementExtras']['maxlength']) ? true : false;
         if (!empty($element['defaultValue'])) {
-          $_file_type = $this->check_binary_data($element['defaultValue']);
-          $_binary_array = $this->esc_binary_data($element['defaultValue']);
-          if ('image' === $_file_type) {
-            $_image_src = sprintf( 'data:%s;base64, %s', $_binary_array['mime_type'], $_binary_array['bin_data'] );
-            $add_field = sprintf( '<input class="hidden hidden-field" type="hidden" name="%s[%s-cache]" value="%s">', $this->domain_name, esc_attr($element['elementName']), $_binary_array['bin_data'] );
-            $add_field .= sprintf( '<div class="current-image-thumbnail" style="display: inline-block;"><img src="%s" class="img-thumbnail" style="height: 64px;"> <small>%s (%s)</small></div>', $_image_src, rawurldecode($_binary_array['origin_file']), $this->convert_filesize($_binary_array['file_size']) );
-          } else {
-            $add_field = sprintf( '<input class="hidden hidden-field" type="hidden" name="%s[%s-cache]" value="%s">', $this->domain_name, esc_attr($element['elementName']), $_binary_array['bin_data'] );
-            $icon_type = in_array($_file_type, ['audio', 'excel', 'movie', 'pdf', 'powerpoint', 'sound', 'text', 'video', 'word', 'zip' ]) ? $_file_type . '-o' : 'o';
-            $add_field .= sprintf( '<div class="current-binary-filename pull-left" style="display: inline-block;"><i class="fa fa-file-%s"></i> <small>%s (%s)</small></div>', $icon_type, rawurldecode($_binary_array['origin_file']), $this->convert_filesize($_binary_array['file_size']) );
-          }
+            $_file_type = $this->check_binary_data($element['defaultValue']);
+            $_binary_array = $this->esc_binary_data($element['defaultValue']);
+            if ('image' === $_file_type) {
+                $_image_src = sprintf('data:%s;base64, %s', $_binary_array['mime_type'], $_binary_array['bin_data']);
+                $add_field = sprintf('<input class="hidden hidden-field" type="hidden" name="%s[%s-cache]" value="%s">', $this->domain_name, esc_attr($element['elementName']), $_binary_array['bin_data']);
+                $add_field .= sprintf('<div class="current-image-thumbnail" style="display: inline-block;"><img src="%s" class="img-thumbnail" style="height: 64px;"> <small>%s (%s)</small></div>', $_image_src, rawurldecode($_binary_array['origin_file']), $this->convert_filesize($_binary_array['file_size']));
+            } else {
+                $add_field = sprintf('<input class="hidden hidden-field" type="hidden" name="%s[%s-cache]" value="%s">', $this->domain_name, esc_attr($element['elementName']), $_binary_array['bin_data']);
+                $icon_type = in_array($_file_type, ['audio', 'excel', 'movie', 'pdf', 'powerpoint', 'sound', 'text', 'video', 'word', 'zip' ]) ? $_file_type . '-o' : 'o';
+                $add_field .= sprintf('<div class="current-binary-filename pull-left" style="display: inline-block;"><i class="fa fa-file-%s"></i> <small>%s (%s)</small></div>', $icon_type, rawurldecode($_binary_array['origin_file']), $this->convert_filesize($_binary_array['file_size']));
+            }
         } else {
-          $add_field = sprintf( '<input class="hidden hidden-field" type="hidden" name="%s[%s-cache]" value="%s">', $this->domain_name, esc_attr($element['elementName']), $element['defaultValue'] );
+            $add_field = sprintf('<input class="hidden hidden-field" type="hidden" name="%s[%s-cache]" value="%s">', $this->domain_name, esc_attr($element['elementName']), $element['defaultValue']);
         }
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="col-sm-9">
         <input class="<?php echo esc_attr($element['addClass']); ?>" type="file" id="entry-data-<?php echo esc_attr($element['elementName']); ?>" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]"<?php if ($is_required) : ?> required<?php endif; ?>>
         <?php if ($is_fileupsize) : ?><p class="help-block"><?php printf(__('Notice: Maximum upload file size is %s.', CDBT), '<strong>'. $element['elementExtras']['maxlength'] .'</strong>'); ?></p><?php endif; ?>
@@ -408,64 +443,66 @@ search, datetime, date, month, week, time, color
 <?php
         unset($_file_type, $_binary_array, $add_field);
         break;
-      case 'datetime': 
+      case 'datetime':
         $month_list = [
-          [ 'fullname' => __('January', CDBT), 'aliase' => __('Jan', CDBT) ], 
-          [ 'fullname' => __('February', CDBT), 'aliase' => __('Feb', CDBT) ], 
-          [ 'fullname' => __('March', CDBT), 'aliase' => __('Mar', CDBT) ], 
-          [ 'fullname' => __('April', CDBT), 'aliase' => __('Apr', CDBT) ], 
-          [ 'fullname' => __('May', CDBT), 'aliase' => __('May', CDBT) ], 
-          [ 'fullname' => __('June', CDBT), 'aliase' => __('Jun', CDBT) ], 
-          [ 'fullname' => __('July', CDBT), 'aliase' => __('Jul', CDBT) ], 
-          [ 'fullname' => __('August', CDBT), 'aliase' => __('Aug', CDBT) ], 
-          [ 'fullname' => __('September', CDBT), 'aliase' => __('Sep', CDBT) ], 
-          [ 'fullname' => __('October', CDBT), 'aliase' => __('Oct', CDBT) ], 
-          [ 'fullname' => __('November', CDBT), 'aliase' => __('Nov', CDBT) ], 
-          [ 'fullname' => __('December', CDBT), 'aliase' => __('Dec', CDBT) ], 
+          [ 'fullname' => __('January', CDBT), 'aliase' => __('Jan', CDBT) ],
+          [ 'fullname' => __('February', CDBT), 'aliase' => __('Feb', CDBT) ],
+          [ 'fullname' => __('March', CDBT), 'aliase' => __('Mar', CDBT) ],
+          [ 'fullname' => __('April', CDBT), 'aliase' => __('Apr', CDBT) ],
+          [ 'fullname' => __('May', CDBT), 'aliase' => __('May', CDBT) ],
+          [ 'fullname' => __('June', CDBT), 'aliase' => __('Jun', CDBT) ],
+          [ 'fullname' => __('July', CDBT), 'aliase' => __('Jul', CDBT) ],
+          [ 'fullname' => __('August', CDBT), 'aliase' => __('Aug', CDBT) ],
+          [ 'fullname' => __('September', CDBT), 'aliase' => __('Sep', CDBT) ],
+          [ 'fullname' => __('October', CDBT), 'aliase' => __('Oct', CDBT) ],
+          [ 'fullname' => __('November', CDBT), 'aliase' => __('Nov', CDBT) ],
+          [ 'fullname' => __('December', CDBT), 'aliase' => __('Dec', CDBT) ],
         ];
         $week_list = [
-          [ 'fullname' => __('Sunday', CDBT), 'aliase' => __('Su', CDBT) ], 
-          [ 'fullname' => __('Monday', CDBT), 'aliase' => __('Mo', CDBT) ], 
-          [ 'fullname' => __('Tuesday', CDBT), 'aliase' => __('Tu', CDBT) ], 
-          [ 'fullname' => __('Wednesday', CDBT), 'aliase' => __('We', CDBT) ], 
-          [ 'fullname' => __('Thursday', CDBT), 'aliase' => __('Th', CDBT) ], 
-          [ 'fullname' => __('Friday', CDBT), 'aliase' => __('Fr', CDBT) ], 
-          [ 'fullname' => __('Saturday', CDBT), 'aliase' => __('Sa', CDBT) ], 
+          [ 'fullname' => __('Sunday', CDBT), 'aliase' => __('Su', CDBT) ],
+          [ 'fullname' => __('Monday', CDBT), 'aliase' => __('Mo', CDBT) ],
+          [ 'fullname' => __('Tuesday', CDBT), 'aliase' => __('Tu', CDBT) ],
+          [ 'fullname' => __('Wednesday', CDBT), 'aliase' => __('We', CDBT) ],
+          [ 'fullname' => __('Thursday', CDBT), 'aliase' => __('Th', CDBT) ],
+          [ 'fullname' => __('Friday', CDBT), 'aliase' => __('Fr', CDBT) ],
+          [ 'fullname' => __('Saturday', CDBT), 'aliase' => __('Sa', CDBT) ],
         ];
-        if ( ! empty( $element['defaultValue'] ) ) {
-          $_parse_vars = explode( ' ', $element['defaultValue'] );
-          if ( array_key_exists( 1, $_parse_vars ) ) {
-            $_time = $_parse_vars[1];
-          }
-          $_date = $_parse_vars[0];
-          if ( '0000-00-00' !== $_date ) {
-            list( $_year, $_month, $_day ) = explode( '-', $_date );
-            $default_date = sprintf( '%s/%s/%s', $_month, $_day, $_year );
-          } else {
-            $default_date = date_i18n( 'm/d/Y' );
-          }
+        if (! empty($element['defaultValue'])) {
+            $_parse_vars = explode(' ', $element['defaultValue']);
+            if (array_key_exists(1, $_parse_vars)) {
+                $_time = $_parse_vars[1];
+            }
+            $_date = $_parse_vars[0];
+            if ('0000-00-00' !== $_date) {
+                list($_year, $_month, $_day) = explode('-', $_date);
+                $default_date = sprintf('%s/%s/%s', $_month, $_day, $_year);
+            } else {
+                $default_date = date_i18n('m/d/Y');
+            }
         } else {
-          $default_date = date_i18n( 'm/d/Y' );
+            $default_date = date_i18n('m/d/Y');
         }
         
-        if ( isset( $_time ) && ! empty( $_time ) ) {
-          list( $_hour, $_minute, $_second ) = explode( ':', $_time );
+        if (isset($_time) && ! empty($_time)) {
+            list($_hour, $_minute, $_second) = explode(':', $_time);
         } else {
-          $_hour = $_minute = $_second = 0;
+            $_hour = $_minute = $_second = 0;
         }
-        if ( isset( $element['elementExtras']['datetime'] ) && $this->strtobool( $element['elementExtras']['datetime'] ) ) {
-          $toggle_datetime = '';
+        if (isset($element['elementExtras']['datetime']) && $this->strtobool($element['elementExtras']['datetime'])) {
+            $toggle_datetime = '';
         } else {
-          $toggle_datetime = ' style="visibility: hidden;"';
+            $toggle_datetime = ' style="visibility: hidden;"';
         }
         $_on_timer = 'created' === $element['elementName'] ? true : false;
 ?>
     <div class="form-group">
-      <label for="entry-data-<?php echo esc_attr( $element['elementName'] ); ?>-date" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ( $is_required ){ echo $label_required; } ?></label>
+      <label for="entry-data-<?php echo esc_attr($element['elementName']); ?>-date" class="col-sm-2 control-label"><?php echo $element['elementLabel']; ?><?php if ($is_required) {
+    echo $label_required;
+} ?></label>
       <div class="col-sm-10">
-        <div class="datepicker cdbt-datepicker" data-initialize="datepicker" id="entry-data-<?php echo esc_attr( $element['elementName'] ); ?>-date" <?php if (isset($default_date) && !empty($default_date)) : ?>data-date="<?php echo $default_date; ?>"<?php endif; ?> data-allow-past-dates="allowPastDates" <?php echo $add_attributes; ?>>
+        <div class="datepicker cdbt-datepicker" data-initialize="datepicker" id="entry-data-<?php echo esc_attr($element['elementName']); ?>-date" <?php if (isset($default_date) && !empty($default_date)) : ?>data-date="<?php echo $default_date; ?>"<?php endif; ?> data-allow-past-dates="allowPastDates" <?php echo $add_attributes; ?>>
           <div class="input-group col-sm-3 pull-left">
-            <input class="form-control text-center" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr( $element['elementName'] ); ?>][date]" type="text">
+            <input class="form-control text-center" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>][date]" type="text">
             <div class="input-group-btn">
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-calendar"></span>
@@ -522,9 +559,9 @@ search, datetime, date, month, week, time, color
           </div><!-- /date-picker -->
         </div>
         <div class="clock-mark pull-left"<?php echo $toggle_datetime; ?>><span class="glyphicon glyphicon-time text-muted"></span></div>
-        <div class="col-sm-2 pull-left datepicker-combobox-hour"<?php if ( $_on_timer ) : ?> data-on-timer="true"<?php endif; ?><?php echo $toggle_datetime; ?>>
+        <div class="col-sm-2 pull-left datepicker-combobox-hour"<?php if ($_on_timer) : ?> data-on-timer="true"<?php endif; ?><?php echo $toggle_datetime; ?>>
           <div class="input-group input-append dropdown combobox" data-initialize="combobox">
-            <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr( $element['elementName'] ); ?>][hour]" id="entry-data-<?php echo esc_attr( $element['elementName'] ); ?>-hour" value="<?php echo $_hour; ?>" class="form-control text-center" pattern="^[0-9]+$">
+            <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>][hour]" id="entry-data-<?php echo esc_attr($element['elementName']); ?>-hour" value="<?php echo $_hour; ?>" class="form-control text-center" pattern="^[0-9]+$">
             <div class="input-group-btn">
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
               <ul class="dropdown-menu dropdown-menu-right">
@@ -536,9 +573,9 @@ search, datetime, date, month, week, time, color
           </div><!-- /hour-combobox -->
         </div>
         <p class="time-separater-block pull-left"<?php echo $toggle_datetime; ?>><b class="time-separater text-muted">:</b></p>
-        <div class="col-sm-2 pull-left datepicker-combobox-minute"<?php if ( $_on_timer ) : ?> data-on-timer="true"<?php endif; ?><?php echo $toggle_datetime; ?>>
+        <div class="col-sm-2 pull-left datepicker-combobox-minute"<?php if ($_on_timer) : ?> data-on-timer="true"<?php endif; ?><?php echo $toggle_datetime; ?>>
           <div class="input-group input-append dropdown combobox" data-initialize="combobox">
-            <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr( $element['elementName'] ); ?>][minute]" id="entry-data-<?php echo esc_attr( $element['elementName'] ); ?>-minute" value="<?php echo $_minute; ?>" class="form-control text-center" pattern="^[0-9]+$">
+            <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>][minute]" id="entry-data-<?php echo esc_attr($element['elementName']); ?>-minute" value="<?php echo $_minute; ?>" class="form-control text-center" pattern="^[0-9]+$">
             <div class="input-group-btn">
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
               <ul class="dropdown-menu dropdown-menu-right">
@@ -550,9 +587,9 @@ search, datetime, date, month, week, time, color
           </div><!-- /minute-combobox -->
         </div>
         <p class="time-separater-block pull-left"<?php echo $toggle_datetime; ?>><b class="time-separater text-muted">:</b></p>
-        <div class="col-sm-2 pull-left datepicker-combobox-second"<?php if ( $_on_timer ) : ?> data-on-timer="true"<?php endif; ?><?php echo $toggle_datetime; ?>>
+        <div class="col-sm-2 pull-left datepicker-combobox-second"<?php if ($_on_timer) : ?> data-on-timer="true"<?php endif; ?><?php echo $toggle_datetime; ?>>
           <div class="input-group input-append dropdown combobox" data-initialize="combobox">
-            <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr( $element['elementName'] ); ?>][second]" id="entry-data-<?php echo esc_attr( $element['elementName'] ); ?>-second" value="<?php echo $_second; ?>" class="form-control text-center" pattern="^[0-9]+$">
+            <input type="text" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>][second]" id="entry-data-<?php echo esc_attr($element['elementName']); ?>-second" value="<?php echo $_second; ?>" class="form-control text-center" pattern="^[0-9]+$">
             <div class="input-group-btn">
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
               <ul class="dropdown-menu dropdown-menu-right">
@@ -564,7 +601,7 @@ search, datetime, date, month, week, time, color
           </div><!-- /second-combobox -->
         </div>
       </div>
-      <input type="hidden" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr( $element['elementName'] ); ?>][prev_date]" value="<?php echo esc_attr( $element['defaultValue'] ); ?>">
+      <input type="hidden" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>][prev_date]" value="<?php echo esc_attr($element['defaultValue']); ?>">
     </div><!-- /entry-data-<?php echo esc_attr($element['elementName']); ?> -->
 <?php
         unset($default_date, $_time, $_hour, $_minute, $_second);
@@ -573,41 +610,39 @@ search, datetime, date, month, week, time, color
         /*
         if ( in_array( strtolower( esc_attr( $element['elementName'] ) ), [ 'created', 'updated' ] ) ) {
           if ( '0000-00-00 00:00:00' === $element['defaultValue'] ) {
-            
+
           }
         }
         */
-        if ( ! empty( $element['defaultValue'] ) ) {
-?>
+        if (! empty($element['defaultValue'])) {
+            ?>
     <div class="hide">
-      <input id="entry-data-<?php echo esc_attr( $element['elementName'] ); ?>" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr( $element['elementName'] ); ?>]" type="hidden" value="<?php echo esc_attr( $element['defaultValue'] ); ?>">
-    </div><!-- /entry-data-<?php echo esc_attr( $element['elementName'] ); ?> -->
+      <input id="entry-data-<?php echo esc_attr($element['elementName']); ?>" name="<?php echo $this->domain_name; ?>[<?php echo esc_attr($element['elementName']); ?>]" type="hidden" value="<?php echo esc_attr($element['defaultValue']); ?>">
+    </div><!-- /entry-data-<?php echo esc_attr($element['elementName']); ?> -->
 <?php
         }
         break;
-      default: 
+      default:
         break;
     }
-  }
-  
+    }
 } else {
-  foreach ($form_elements as $element) {
-    switch ($element['elementType']) {
+    foreach ($form_elements as $element) {
+        switch ($element['elementType']) {
 /**
  * Render the Form at normal html
  * ---------------------------------------------------------------------------
  */
-      case 'text': 
+      case 'text':
 ?>
 
 
 <?php
         break;
-      default: 
+      default:
         break;
     }
-  }
-  
+    }
 }
 /**
  * Render the Form common footer

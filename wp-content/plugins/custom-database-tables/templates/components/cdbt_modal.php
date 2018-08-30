@@ -4,7 +4,7 @@
  * [
  * 'id' => @string is element id [optional] For default is `cdbtModal`
  * 'modalSize' => @string [optional] For default is null, or `large`, `small`
- * 'modalTitle' => @string [optional] 
+ * 'modalTitle' => @string [optional]
  * 'modalBody' => @string [optional] Allowed HTML markup
  * 'modalFooter' => @array [optional] Array of HTML markup of the buttons that want to add to the footer
  * 'modalBackdrop' => @mixed [optional] Boolean or the string `static`, for default is true
@@ -23,76 +23,76 @@
 
 // `id` section
 if (isset($this->component_options['id']) && !empty($this->component_options['id'])) {
-  $modal_id = esc_attr__($this->component_options['id']);
+    $modal_id = esc_attr__($this->component_options['id']);
 } else {
-  $modal_id = 'cdbtModal';
+    $modal_id = 'cdbtModal';
 }
 
 // `modalSize` section
 if (isset($this->component_options['modalSize']) && !empty($this->component_options['modalSize']) && in_array(strtolower($this->component_options['modalSize']), [ 'large', 'small' ])) {
-  $modal_size = ('large' === strtolower($this->component_options['modalSize'])) ? 'modal-lg' : 'modal-sm';
+    $modal_size = ('large' === strtolower($this->component_options['modalSize'])) ? 'modal-lg' : 'modal-sm';
 } else {
-  $modal_size = '';
+    $modal_size = '';
 }
 
 // `modalTitle` section
 if (isset($this->component_options['modalTitle']) && !empty($this->component_options['modalTitle'])) {
-  $modal_title = esc_html__($this->component_options['modalTitle']);
+    $modal_title = esc_html__($this->component_options['modalTitle']);
 } else {
-  $modal_title = '';
+    $modal_title = '';
 }
 
 // `modalBody` section
 if (isset($this->component_options['modalBody']) && !empty($this->component_options['modalBody'])) {
-  $modal_body = $this->component_options['modalBody'];
+    $modal_body = $this->component_options['modalBody'];
 } else {
-  $modal_body = '';
+    $modal_body = '';
 }
 
 // `modalFooter` section
 if (isset($this->component_options['modalFooter']) && is_array($this->component_options['modalFooter']) && !empty($this->component_options['modalFooter'])) {
-  $modal_footer = implode("\n", $this->component_options['modalFooter']);
+    $modal_footer = implode("\n", $this->component_options['modalFooter']);
 } else {
-  $modal_footer = '';
+    $modal_footer = '';
 }
 
 // `modalBackdrop` section
 if (isset($this->component_options['modalBackdrop']) && !empty($this->component_options['modalBackdrop'])) {
-  if ('static' === $this->component_options['modalBackdrop']) {
-    $modal_backdrop = $this->component_options['modalBackdrop'];
-  } else {
-    $modal_backdrop = $this->component_options['modalBackdrop'] ? 'true' : 'false';
-  }
+    if ('static' === $this->component_options['modalBackdrop']) {
+        $modal_backdrop = $this->component_options['modalBackdrop'];
+    } else {
+        $modal_backdrop = $this->component_options['modalBackdrop'] ? 'true' : 'false';
+    }
 } else {
-  $modal_backdrop = 'true';
+    $modal_backdrop = 'true';
 }
 
 // `modalKeyboard` section
 if (isset($this->component_options['modalKeyboard']) && !empty($this->component_options['modalKeyboard'])) {
-  $modal_keyboard = $this->component_options['modalKeyboard'] ? 'true' : 'false';
+    $modal_keyboard = $this->component_options['modalKeyboard'] ? 'true' : 'false';
 } else {
-  $modal_keyboard = 'true';
+    $modal_keyboard = 'true';
 }
 
 // `modalShow` section
 if (isset($this->component_options['modalShow']) && !empty($this->component_options['modalShow'])) {
-  $modal_show = $this->component_options['modalShow'] ? 'true' : 'false';
+    $modal_show = $this->component_options['modalShow'] ? 'true' : 'false';
 } else {
-  $modal_show = 'true';
+    $modal_show = 'true';
 }
 
 // `modalHideEvent` section
 if (isset($this->component_options['modalHideEvent']) && !empty($this->component_options['modalHideEvent'])) {
-  $modal_hide_event = $this->component_options['modalHideEvent'];
+    $modal_hide_event = $this->component_options['modalHideEvent'];
 } else {
-  $modal_hide_event = 'return';
+    $modal_hide_event = 'return';
 }
 
 // `modalShowEvent` section
 if (isset($this->component_options['modalShowEvent']) && !empty($this->component_options['modalShowEvent'])) {
-  $modal_show_event = $this->component_options['modalShowEvent'];
+    $modal_show_event = $this->component_options['modalShowEvent'];
 } else {
-  $modal_show_event = 'return;';
+    $modal_show_event = 'return;';
 }
 
 

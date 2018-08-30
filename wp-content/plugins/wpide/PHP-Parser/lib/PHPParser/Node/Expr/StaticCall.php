@@ -15,7 +15,8 @@ class PHPParser_Node_Expr_StaticCall extends PHPParser_Node_Expr
      * @param PHPParser_Node_Arg[]                    $args       Arguments
      * @param array                                   $attributes Additional attributes
      */
-    public function __construct($class, $name, array $args = array(), array $attributes = array()) {
+    public function __construct($class, $name, array $args = array(), array $attributes = array())
+    {
         parent::__construct(
             array(
                 'class' => $class,

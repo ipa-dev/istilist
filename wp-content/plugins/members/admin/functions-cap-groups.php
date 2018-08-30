@@ -11,7 +11,7 @@
  */
 
 # Registers default groups.
-add_action( 'init', 'members_register_cap_groups', 15 );
+add_action('init', 'members_register_cap_groups', 15);
 
 /**
  * Returns the instance of the `Members_Cap_Group_Factory` object. Use this function to access the object.
@@ -21,8 +21,9 @@ add_action( 'init', 'members_register_cap_groups', 15 );
  * @access public
  * @return object
  */
-function members_cap_group_factory() {
-	return Members_Cap_Group_Factory::get_instance();
+function members_cap_group_factory()
+{
+    return Members_Cap_Group_Factory::get_instance();
 }
 
 /**
@@ -35,8 +36,9 @@ function members_cap_group_factory() {
  * @param  array   $args
  * @return void
  */
-function members_register_cap_group( $name, $args = array() ) {
-	members_cap_group_factory()->register_group( $name, $args );
+function members_register_cap_group($name, $args = array())
+{
+    members_cap_group_factory()->register_group($name, $args);
 }
 
 /**
@@ -48,8 +50,9 @@ function members_register_cap_group( $name, $args = array() ) {
  * @param  string  $name
  * @return void
  */
-function members_unregister_cap_group( $name ) {
-	members_cap_group_factory()->unregister_group( $name );
+function members_unregister_cap_group($name)
+{
+    members_cap_group_factory()->unregister_group($name);
 }
 
 /**
@@ -61,8 +64,9 @@ function members_unregister_cap_group( $name ) {
  * @param  string  $name
  * @return bool
  */
-function members_cap_group_exists( $name ) {
-	return members_cap_group_factory()->group_exists( $name );
+function members_cap_group_exists($name)
+{
+    return members_cap_group_factory()->group_exists($name);
 }
 
 /**
@@ -73,8 +77,9 @@ function members_cap_group_exists( $name ) {
  * @access public
  * @return array
  */
-function members_get_cap_groups() {
-	return members_cap_group_factory()->groups;
+function members_get_cap_groups()
+{
+    return members_cap_group_factory()->groups;
 }
 
 /**
@@ -87,8 +92,9 @@ function members_get_cap_groups() {
  * @param  string      $name
  * @return object|bool
  */
-function members_get_cap_group( $name ) {
-	return members_cap_group_factory()->get_group( $name );
+function members_get_cap_group($name)
+{
+    return members_cap_group_factory()->get_group($name);
 }
 
 /**
@@ -98,147 +104,159 @@ function members_get_cap_group( $name ) {
  * @access public
  * @return void
  */
-function members_register_cap_groups() {
+function members_register_cap_groups()
+{
 
-	// Register the all group.
-	members_register_cap_group( 'all',
-		array(
-			'label'       => esc_html__( 'All', 'members' ),
-			'caps'        => members_get_all_group_caps(),
-			'icon'        => 'dashicons-plus',
-			'merge_added' => false
-		)
-	);
+    // Register the all group.
+    members_register_cap_group(
+        'all',
+        array(
+            'label'       => esc_html__('All', 'members'),
+            'caps'        => members_get_all_group_caps(),
+            'icon'        => 'dashicons-plus',
+            'merge_added' => false
+        )
+    );
 
-	// Registers the general group.
-	members_register_cap_group( 'general',
-		array(
-			'label' => esc_html__( 'General', 'members' ),
-			'caps'  => members_get_general_group_caps(),
-			'icon'  => 'dashicons-wordpress'
-		)
-	);
+    // Registers the general group.
+    members_register_cap_group(
+        'general',
+        array(
+            'label' => esc_html__('General', 'members'),
+            'caps'  => members_get_general_group_caps(),
+            'icon'  => 'dashicons-wordpress'
+        )
+    );
 
-	// Loop through every custom post type.
-	foreach ( get_post_types( array(), 'objects' ) as $type ) {
+    // Loop through every custom post type.
+    foreach (get_post_types(array(), 'objects') as $type) {
 
-		// Skip revisions and nave menu items.
-		if ( in_array( $type->name, array( 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset' ) ) )
-			continue;
+        // Skip revisions and nave menu items.
+        if (in_array($type->name, array( 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset' ))) {
+            continue;
+        }
 
-		// Get the caps for the post type.
-		$has_caps = members_get_post_type_group_caps( $type->name );
+        // Get the caps for the post type.
+        $has_caps = members_get_post_type_group_caps($type->name);
 
-		// Skip if the post type doesn't have caps.
-		if ( empty( $has_caps ) )
-			continue;
+        // Skip if the post type doesn't have caps.
+        if (empty($has_caps)) {
+            continue;
+        }
 
-		// Set the default post type icon.
-		$icon = $type->hierarchical ? 'dashicons-admin-page' : 'dashicons-admin-post';
+        // Set the default post type icon.
+        $icon = $type->hierarchical ? 'dashicons-admin-page' : 'dashicons-admin-post';
 
-		// Get the post type icon.
-		if ( is_string( $type->menu_icon ) && preg_match( '/dashicons-/i', $type->menu_icon ) )
-			$icon = $type->menu_icon;
+        // Get the post type icon.
+        if (is_string($type->menu_icon) && preg_match('/dashicons-/i', $type->menu_icon)) {
+            $icon = $type->menu_icon;
+        } elseif ('attachment' === $type->name) {
+            $icon = 'dashicons-admin-media';
+        } elseif ('download' === $type->name) {
+            $icon = 'dashicons-download';
+        } // EDD
 
-		else if ( 'attachment' === $type->name )
-			$icon = 'dashicons-admin-media';
+        elseif ('product' === $type->name) {
+            $icon = 'dashicons-cart';
+        }
 
-		else if ( 'download' === $type->name )
-			$icon = 'dashicons-download'; // EDD
+        // Register the post type cap group.
+        members_register_cap_group(
+            "type-{$type->name}",
+            array(
+                'label' => $type->labels->name,
+                'caps'  => $has_caps,
+                'icon'  => $icon
+            )
+        );
+    }
 
-		else if ( 'product' === $type->name )
-			$icon = 'dashicons-cart';
+    // Register the taxonomy group.
+    members_register_cap_group(
+        'taxonomy',
+        array(
+            'label'      => esc_html__('Taxonomies', 'members'),
+            'caps'       => members_get_taxonomy_group_caps(),
+            'icon'       => 'dashicons-tag',
+            'diff_added' => true
+        )
+    );
 
-		// Register the post type cap group.
-		members_register_cap_group( "type-{$type->name}",
-			array(
-				'label' => $type->labels->name,
-				'caps'  => $has_caps,
-				'icon'  => $icon
-			)
-		);
-	}
+    // Register the theme group.
+    members_register_cap_group(
+        'theme',
+        array(
+            'label' => esc_html__('Appearance', 'members'),
+            'caps'  => members_get_theme_group_caps(),
+            'icon'  => 'dashicons-admin-appearance'
+        )
+    );
 
-	// Register the taxonomy group.
-	members_register_cap_group( 'taxonomy',
-		array(
-			'label'      => esc_html__( 'Taxonomies', 'members' ),
-			'caps'       => members_get_taxonomy_group_caps(),
-			'icon'       => 'dashicons-tag',
-			'diff_added' => true
-		)
-	);
+    // Register the plugin group.
+    members_register_cap_group(
+        'plugin',
+        array(
+            'label' => esc_html__('Plugins', 'members'),
+            'caps'  => members_get_plugin_group_caps(),
+            'icon'  => 'dashicons-admin-plugins'
+        )
+    );
 
-	// Register the theme group.
-	members_register_cap_group( 'theme',
-		array(
-			'label' => esc_html__( 'Appearance', 'members' ),
-			'caps'  => members_get_theme_group_caps(),
-			'icon'  => 'dashicons-admin-appearance'
-		)
-	);
+    // Register the user group.
+    members_register_cap_group(
+        'user',
+        array(
+            'label' => esc_html__('Users', 'members'),
+            'caps'  => members_get_user_group_caps(),
+            'icon'  => 'dashicons-admin-users'
+        )
+    );
 
-	// Register the plugin group.
-	members_register_cap_group( 'plugin',
-		array(
-			'label' => esc_html__( 'Plugins', 'members' ),
-			'caps'  => members_get_plugin_group_caps(),
-			'icon'  => 'dashicons-admin-plugins'
-		)
-	);
+    // Register the custom group.
+    members_register_cap_group(
+        'custom',
+        array(
+            'label'      => esc_html__('Custom', 'members'),
+            'caps'       => members_get_capabilities(),
+            'icon'       => 'dashicons-admin-generic',
+            'diff_added' => true
+        )
+    );
 
-	// Register the user group.
-	members_register_cap_group( 'user',
-		array(
-			'label' => esc_html__( 'Users', 'members' ),
-			'caps'  => members_get_user_group_caps(),
-			'icon'  => 'dashicons-admin-users'
-		)
-	);
+    // Hook for registering cap groups. Plugins should always register on this hook.
+    do_action('members_register_cap_groups');
 
-	// Register the custom group.
-	members_register_cap_group( 'custom',
-		array(
-			'label'      => esc_html__( 'Custom', 'members' ),
-			'caps'       => members_get_capabilities(),
-			'icon'       => 'dashicons-admin-generic',
-			'diff_added' => true
-		)
-	);
+    // Check if the `all` group is registered.
+    if (members_cap_group_exists('all')) {
 
-	// Hook for registering cap groups. Plugins should always register on this hook.
-	do_action( 'members_register_cap_groups' );
+        // Set up an empty caps array and get the `all` group object.
+        $caps   = array();
+        $_group = members_get_cap_group('all');
 
-	// Check if the `all` group is registered.
-	if ( members_cap_group_exists( 'all' ) ) {
+        // Get the caps from every registered group.
+        foreach (members_get_cap_groups() as $group) {
+            $caps = array_merge($caps, $group->caps);
+        }
 
-		// Set up an empty caps array and get the `all` group object.
-		$caps   = array();
-		$_group = members_get_cap_group( 'all' );
+        // Sort the caps alphabetically.
+        asort($caps);
 
-		// Get the caps from every registered group.
-		foreach ( members_get_cap_groups() as $group )
-			$caps = array_merge( $caps, $group->caps );
+        // Assign all caps to the `all` group.
+        $_group->caps = array_unique($caps);
+    }
 
-		// Sort the caps alphabetically.
-		asort( $caps );
+    // Check if the `custom` group is registered and there's possibly other non-default groups.
+    if (has_action('members_register_cap_groups') && members_cap_group_exists('custom')) {
 
-		// Assign all caps to the `all` group.
-		$_group->caps = array_unique( $caps );
-	}
+        // Get the custom group object.
+        $custom = members_cap_group_factory()->groups[ 'custom' ];
 
-	// Check if the `custom` group is registered and there's possibly other non-default groups.
-	if ( has_action( 'members_register_cap_groups' ) && members_cap_group_exists( 'custom' ) ) {
+        // Unset the custom group object.
+        unset(members_cap_group_factory()->groups[ 'custom' ]);
 
-		// Get the custom group object.
-		$custom = members_cap_group_factory()->groups[ 'custom' ];
-
-		// Unset the custom group object.
-		unset( members_cap_group_factory()->groups[ 'custom' ] );
-
-		// Move the custom group object to the end.
-		members_cap_group_factory()->groups[ 'custom' ] = $custom;
-	}
+        // Move the custom group object to the end.
+        members_cap_group_factory()->groups[ 'custom' ] = $custom;
+    }
 }
 
 /**
@@ -248,9 +266,9 @@ function members_register_cap_groups() {
  * @access public
  * @return array
  */
-function members_get_all_group_caps() {
-
-	return members_get_capabilities();
+function members_get_all_group_caps()
+{
+    return members_get_capabilities();
 }
 
 /**
@@ -260,20 +278,20 @@ function members_get_all_group_caps() {
  * @access public
  * @return array
  */
-function members_get_general_group_caps() {
-
-	return array(
-		'edit_dashboard',
-		'edit_files',
-		'export',
-		'import',
-		'manage_links',
-		'manage_options',
-		'moderate_comments',
-		'read',
-		'unfiltered_html',
-		'update_core',
-	);
+function members_get_general_group_caps()
+{
+    return array(
+        'edit_dashboard',
+        'edit_files',
+        'export',
+        'import',
+        'manage_links',
+        'manage_options',
+        'moderate_comments',
+        'read',
+        'unfiltered_html',
+        'update_core',
+    );
 }
 
 /**
@@ -283,36 +301,38 @@ function members_get_general_group_caps() {
  * @access public
  * @return array
  */
-function members_get_post_type_group_caps( $post_type = 'post' ) {
+function members_get_post_type_group_caps($post_type = 'post')
+{
 
-	// Get the post type caps.
-	$caps = (array) get_post_type_object( $post_type )->cap;
+    // Get the post type caps.
+    $caps = (array) get_post_type_object($post_type)->cap;
 
-	// remove meta caps.
-	unset( $caps['edit_post']   );
-	unset( $caps['read_post']   );
-	unset( $caps['delete_post'] );
+    // remove meta caps.
+    unset($caps['edit_post']);
+    unset($caps['read_post']);
+    unset($caps['delete_post']);
 
-	// Get the cap names only.
-	$caps = array_values( $caps );
+    // Get the cap names only.
+    $caps = array_values($caps);
 
-	// If this is not a core post/page post type.
-	if ( ! in_array( $post_type, array( 'post', 'page' ) ) ) {
+    // If this is not a core post/page post type.
+    if (! in_array($post_type, array( 'post', 'page' ))) {
 
-		// Get the post and page caps.
-		$post_caps = array_values( (array) get_post_type_object( 'post' )->cap );
-		$page_caps = array_values( (array) get_post_type_object( 'page' )->cap );
+        // Get the post and page caps.
+        $post_caps = array_values((array) get_post_type_object('post')->cap);
+        $page_caps = array_values((array) get_post_type_object('page')->cap);
 
-		// Remove post/page caps from the current post type caps.
-		$caps = array_diff( $caps, $post_caps, $page_caps );
-	}
+        // Remove post/page caps from the current post type caps.
+        $caps = array_diff($caps, $post_caps, $page_caps);
+    }
 
-	// If attachment post type, add the `unfiltered_upload` cap.
-	if ( 'attachment' === $post_type )
-		$caps[] = 'unfiltered_upload';
+    // If attachment post type, add the `unfiltered_upload` cap.
+    if ('attachment' === $post_type) {
+        $caps[] = 'unfiltered_upload';
+    }
 
-	// Make sure there are no duplicates and return.
-	return array_unique( $caps );
+    // Make sure there are no duplicates and return.
+    return array_unique($caps);
 }
 
 /**
@@ -322,16 +342,17 @@ function members_get_post_type_group_caps( $post_type = 'post' ) {
  * @access public
  * @return array
  */
-function members_get_taxonomy_group_caps() {
+function members_get_taxonomy_group_caps()
+{
+    $taxi = get_taxonomies(array(), 'objects');
 
-	$taxi = get_taxonomies( array(), 'objects' );
+    $caps = array();
 
-	$caps = array();
+    foreach ($taxi as $tax) {
+        $caps = array_merge($caps, array_values((array) $tax->cap));
+    }
 
-	foreach ( $taxi as $tax )
-		$caps = array_merge( $caps, array_values( (array) $tax->cap ) );
-
-	return array_unique( $caps );
+    return array_unique($caps);
 }
 
 /**
@@ -341,16 +362,16 @@ function members_get_taxonomy_group_caps() {
  * @access public
  * @return array
  */
-function members_get_theme_group_caps() {
-
-	return array(
-		'delete_themes',
-		'edit_theme_options',
-		'edit_themes',
-		'install_themes',
-		'switch_themes',
-		'update_themes',
-	);
+function members_get_theme_group_caps()
+{
+    return array(
+        'delete_themes',
+        'edit_theme_options',
+        'edit_themes',
+        'install_themes',
+        'switch_themes',
+        'update_themes',
+    );
 }
 
 /**
@@ -360,15 +381,15 @@ function members_get_theme_group_caps() {
  * @access public
  * @return array
  */
-function members_get_plugin_group_caps() {
-
-	return array(
-		'activate_plugins',
-		'delete_plugins',
-		'edit_plugins',
-		'install_plugins',
-		'update_plugins',
-	);
+function members_get_plugin_group_caps()
+{
+    return array(
+        'activate_plugins',
+        'delete_plugins',
+        'edit_plugins',
+        'install_plugins',
+        'update_plugins',
+    );
 }
 
 /**
@@ -378,21 +399,21 @@ function members_get_plugin_group_caps() {
  * @access public
  * @return array
  */
-function members_get_user_group_caps() {
-
-	return array(
-		'add_users',
-		'create_roles',
-		'create_users',
-		'delete_roles',
-		'delete_users',
-		'edit_roles',
-		'edit_users',
-		'list_roles',
-		'list_users',
-		'promote_users',
-		'remove_users',
-	);
+function members_get_user_group_caps()
+{
+    return array(
+        'add_users',
+        'create_roles',
+        'create_users',
+        'delete_roles',
+        'delete_users',
+        'edit_roles',
+        'edit_users',
+        'list_roles',
+        'list_users',
+        'promote_users',
+        'remove_users',
+    );
 }
 
 /**
@@ -402,7 +423,7 @@ function members_get_user_group_caps() {
  * @access public
  * @return array
  */
-function members_get_custom_group_caps() {
-
-	return members_get_capabilities();
+function members_get_custom_group_caps()
+{
+    return members_get_capabilities();
 }

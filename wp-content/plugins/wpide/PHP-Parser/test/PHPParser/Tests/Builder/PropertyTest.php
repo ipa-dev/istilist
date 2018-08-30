@@ -2,11 +2,13 @@
 
 class PHPParser_Tests_Builder_PropertyTest extends PHPUnit_Framework_TestCase
 {
-    public function createPropertyBuilder($name) {
+    public function createPropertyBuilder($name)
+    {
         return new PHPParser_Builder_Property($name);
     }
 
-    public function testModifiers() {
+    public function testModifiers()
+    {
         $node = $this->createPropertyBuilder('test')
             ->makePrivate()
             ->makeStatic()
@@ -58,7 +60,8 @@ class PHPParser_Tests_Builder_PropertyTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTestDefaultValues
      */
-    public function testDefaultValues($value, $expectedValueNode) {
+    public function testDefaultValues($value, $expectedValueNode)
+    {
         $node = $this->createPropertyBuilder('test')
             ->setDefault($value)
             ->getNode()
@@ -67,7 +70,8 @@ class PHPParser_Tests_Builder_PropertyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedValueNode, $node->props[0]->default);
     }
 
-    public function provideTestDefaultValues() {
+    public function provideTestDefaultValues()
+    {
         return array(
             array(
                 null,

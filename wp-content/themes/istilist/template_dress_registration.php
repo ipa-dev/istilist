@@ -1,11 +1,11 @@
 <?php /* Template Name: Dress Registraton */ ?>
 <?php
 ob_start();
-if(isset($_POST['download_csv'])){
+if (isset($_POST['download_csv'])) {
     global $user_ID;
     $store_id = get_user_meta($user_ID, 'store_id', true);
-    $output_filename = 'export_' . strftime( '%Y-%m-%d-%H-%M-%S' )  . '.csv';
-    $output_handle = @fopen( 'php://output', "a" );
+    $output_filename = 'export_' . strftime('%Y-%m-%d-%H-%M-%S')  . '.csv';
+    $output_handle = @fopen('php://output', "a");
 
     $csv_header = array(
         'id',
@@ -21,7 +21,7 @@ if(isset($_POST['download_csv'])){
         'spacial_order',
         'customer_wear_date'
     );
-    fputcsv( $output_handle, $csv_header );
+    fputcsv($output_handle, $csv_header);
 
     $post_args1 = array(
         'post_type' => 'dress_reg',
@@ -31,12 +31,12 @@ if(isset($_POST['download_csv'])){
         'posts_per_page' => -1
     );
 
-    $the_query1 = new WP_Query( $post_args1 );
+    $the_query1 = new WP_Query($post_args1);
     $posts = $the_query1->posts;
 
 
 
-    foreach ( $posts as $post ) {
+    foreach ($posts as $post) {
         $output = array(
             $post->ID,
             get_post_meta($post->ID, 'purchase_date', true),
@@ -51,8 +51,8 @@ if(isset($_POST['download_csv'])){
             get_post_meta($post->ID, 'spacial_order', true),
             get_post_meta($post->ID, 'customer_wear_date', true),
         );
-    	// Add row to file
-    	fputcsv( $output_handle, $output );
+        // Add row to file
+        fputcsv($output_handle, $output);
     }
     /*
     //rewind($output_handle);
@@ -70,19 +70,20 @@ if(isset($_POST['download_csv'])){
     $sent_message = wp_mail( $emailto, $subject, $msg, $headers, $attachments );
     */
 
-    fclose( $output_handle );
-    header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
-    header( 'Content-Description: File Transfer' );
-    header( 'Content-type: text/csv' );
-    header( 'Content-Disposition: attachment; filename=' . $output_filename );
-    header( 'Expires: 0' );
-    header( 'Pragma: public' );
+    fclose($output_handle);
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Content-Description: File Transfer');
+    header('Content-type: text/csv');
+    header('Content-Disposition: attachment; filename=' . $output_filename);
+    header('Expires: 0');
+    header('Pragma: public');
     //echo $data;
     exit;
 }
 ?>
 <?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
+<?php if (is_user_logged_in()) {
+    ?>
 <?php global $user_ID; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <?php $store_owner_id = get_user_meta($user_ID, 'store_id', true); ?>
@@ -93,7 +94,8 @@ if(isset($_POST['download_csv'])){
 	        <?php get_sidebar('menu'); ?>
 	        <div class="col span_9_of_12 matchheight">
                 <div class="dash_content">
-                    <?php if(($user_role == 'storeowner') || ($user_role == 'storesupervisor')){ ?>
+                    <?php if (($user_role == 'storeowner') || ($user_role == 'storesupervisor')) {
+        ?>
                     <h1><?php the_title(); ?>
                         <span class="h1inlinelink">
                             <form method="post" id="download_form" action="">
@@ -101,16 +103,19 @@ if(isset($_POST['download_csv'])){
                             </form>
                         </span>
                     </h1>
-                    <?php } ?>
+                    <?php
+    } ?>
 
-                    <?php if($user_role == 'storeemployee'){ ?>
+                    <?php if ($user_role == 'storeemployee') {
+        ?>
                     <h1><?php the_title(); ?></h1>
-                    <?php } ?>
+                    <?php
+    } ?>
                     <div class="box">
                         <?php
 
 
-                            if(isset($_POST['dress_registration'])){
+                            if (isset($_POST['dress_registration'])) {
                                 global $wpdb;
                                 $post_arg = array(
                                     'post_type' => 'dress_reg',
@@ -120,9 +125,9 @@ if(isset($_POST['download_csv'])){
                                     'post_date' => date('Y-m-d H:i:s'),
                                     'post_status' => 'publish'
                                 );
-                                $new_post_id = wp_insert_post( $post_arg );
+                                $new_post_id = wp_insert_post($post_arg);
 
-                                if($new_post_id){
+                                if ($new_post_id) {
                                     add_post_meta($new_post_id, 'purchase_date', $_POST['purchase_date']);
                                     add_post_meta($new_post_id, 'stylist_employee', $_POST['stylist_employee']);
                                     add_post_meta($new_post_id, 'school_event', $_POST['school_event']);
@@ -137,12 +142,11 @@ if(isset($_POST['download_csv'])){
                                     add_post_meta($new_post_id, 'store_id', $store_id);
 
                                     echo '<p class="successMsg">Thank you for your valuable time and information.</p>';
-                                    //header("Location: ".get_bloginfo('home')."/dashboard");
+                                //header("Location: ".get_bloginfo('home')."/dashboard");
                                 } else {
                                     echo '<p class="errorMsg">Sorry, your information is not updated.</p>';
                                 }
-                            }
-                        ?>
+                            } ?>
                         <form id="forms" method="post" action="">
                             <div class="section group">
                                 <div class="col span_6_of_12">
@@ -154,15 +158,14 @@ if(isset($_POST['download_csv'])){
                                     <select name="stylist_employee">
                                         <option value="">Select</option>
                                         <?php
-                                        $user_query = new WP_User_Query( array( 'role' => 'storeemployee', 'meta_key' => 'store_id', 'meta_value' => $user_ID ) );
-                                        if ( ! empty( $user_query->results ) ) {
-                                        	foreach ( $user_query->results as $user ) {
-                                        ?>
+                                        $user_query = new WP_User_Query(array( 'role' => 'storeemployee', 'meta_key' => 'store_id', 'meta_value' => $user_ID ));
+    if (! empty($user_query->results)) {
+        foreach ($user_query->results as $user) {
+            ?>
                                         <option value="<?php echo $user->display_name; ?>"><?php echo $user->display_name; ?></option>
                                         <?php
-                                        	}
-                                        }
-                                        ?>
+        }
+    } ?>
                                     </select>
                                 </div>
                             </div>
@@ -196,11 +199,11 @@ if(isset($_POST['download_csv'])){
                                     ?>
                                     <select name="designer">
                                         <option value="">Select</option>
-                                    <?php //while ( $designers->have_posts() ) : $designers->the_post(); ?>
-                                        <option value="<?php //echo get_the_ID(); ?>"><?php //echo the_title(); ?></option>
-                                    <?php //endwhile; ?>
+                                    <?php //while ( $designers->have_posts() ) : $designers->the_post();?>
+                                        <option value="<?php //echo get_the_ID();?>"><?php //echo the_title();?></option>
+                                    <?php //endwhile;?>
                                     </select>
-                                    <?php //wp_reset_postdata(); ?>
+                                    <?php //wp_reset_postdata();?>
                                     -->
                                     <input type="text" name="designer" />
                                 </div>
@@ -221,11 +224,11 @@ if(isset($_POST['download_csv'])){
                                     ?>
                                     <select name="style_number">
                                         <option value="">Select</option>
-                                    <?php //while ( $styles->have_posts() ) : $styles->the_post(); ?>
-                                        <option value="<?php //echo get_the_ID(); ?>"><?php //echo the_title(); ?></option>
-                                    <?php //endwhile; ?>
+                                    <?php //while ( $styles->have_posts() ) : $styles->the_post();?>
+                                        <option value="<?php //echo get_the_ID();?>"><?php //echo the_title();?></option>
+                                    <?php //endwhile;?>
                                     </select>
-                                    <?php //wp_reset_postdata(); ?>
+                                    <?php //wp_reset_postdata();?>
                                     -->
                                     <input type="text" name="style_number" />
                                 </div>
@@ -244,11 +247,11 @@ if(isset($_POST['download_csv'])){
                                     ?>
                                     <select name="color">
                                         <option value="">Select</option>
-                                    <?php //while ( $colors->have_posts() ) : $colors->the_post(); ?>
-                                        <option value="<?php //echo get_the_ID(); ?>"><?php //echo the_title(); ?></option>
-                                    <?php //endwhile; ?>
+                                    <?php //while ( $colors->have_posts() ) : $colors->the_post();?>
+                                        <option value="<?php //echo get_the_ID();?>"><?php //echo the_title();?></option>
+                                    <?php //endwhile;?>
                                     </select>
-                                    <?php //wp_reset_postdata(); ?>
+                                    <?php //wp_reset_postdata();?>
                                     -->
                                     <input type="text" name="color" />
                                 </div>
@@ -269,11 +272,11 @@ if(isset($_POST['download_csv'])){
                                     ?>
                                     <select name="size">
                                         <option value="">Select</option>
-                                    <?php //while ( $sizes->have_posts() ) : $sizes->the_post(); ?>
-                                        <option value="<?php //echo get_the_ID(); ?>"><?php //echo the_title(); ?></option>
-                                    <?php //endwhile; ?>
+                                    <?php //while ( $sizes->have_posts() ) : $sizes->the_post();?>
+                                        <option value="<?php //echo get_the_ID();?>"><?php //echo the_title();?></option>
+                                    <?php //endwhile;?>
                                     </select>
-                                    <?php //wp_reset_postdata(); ?>
+                                    <?php //wp_reset_postdata();?>
                                     -->
                                     <input type="text" name="size" />
                                 </div>
@@ -307,7 +310,7 @@ if(isset($_POST['download_csv'])){
                     <?php $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; ?>
                     <?php
                         if (isset($_POST['search_query'])) {
-                          $post_args = array(
+                            $post_args = array(
                             'post_type' => 'dress_reg',
                             'post_status' => 'publish',
                             'meta_query' => array(
@@ -326,9 +329,8 @@ if(isset($_POST['download_csv'])){
                             'paged' => $paged,
                             'posts_per_page' => 15
                           );
-                        }
-                        else {
-                          $post_args = array(
+                        } else {
+                            $post_args = array(
                             'post_type' => 'dress_reg',
                             'post_status' => 'publish',
                             'meta_key' => 'store_id',
@@ -338,12 +340,11 @@ if(isset($_POST['download_csv'])){
                           );
                         }
 
-                        $the_query = new WP_Query( $post_args );
+    $the_query = new WP_Query($post_args);
 
-                        if ( $the_query->have_posts() ){
-                            while ( $the_query->have_posts() ) : $the_query->the_post();
-                            $reg_id = get_the_ID();
-                    ?>
+    if ($the_query->have_posts()) {
+        while ($the_query->have_posts()) : $the_query->the_post();
+        $reg_id = get_the_ID(); ?>
                     <div class="dressBox">
                         <div class="section group">
                             <div class="col span_11_of_12">
@@ -399,14 +400,17 @@ if(isset($_POST['download_csv'])){
                     </div>
                     <?php
                             endwhile;
-                        } else {
-                        ?>
+    } else {
+        ?>
                         <div class="box">
                             <p style="text-align: center; padding-bottom: 0;">No Dress Registered</p>
                         </div>
-                        <?php } ?>
+                        <?php
+    } ?>
                         <?php wp_reset_postdata(); ?>
-                        <div class="paginationWrapper"><?php if(function_exists('wp_pagenavi')) { wp_pagenavi( array( 'query' => $the_query ) ); } ?></div>
+                        <div class="paginationWrapper"><?php if (function_exists('wp_pagenavi')) {
+        wp_pagenavi(array( 'query' => $the_query ));
+    } ?></div>
                     </div>
 
                 </div>
@@ -415,4 +419,7 @@ if(isset($_POST['download_csv'])){
 	    </div>
 	</div>
 </div>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+} else {
+        header('Location: '.get_bloginfo('url').'/login');
+    } ?>

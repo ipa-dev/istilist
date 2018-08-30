@@ -1,5 +1,7 @@
 <?php
-if( !defined( 'ABSPATH') ) exit();
+if (!defined('ABSPATH')) {
+    exit();
+}
 
 $tmpl = new RevSliderTemplate();
 
@@ -22,14 +24,14 @@ $glob_vals = $operations->getGeneralSettingsValues();
 		<div class="revolution-template-switcher">		
 			<span id="template_filter_buttons_wrapper" style="display:table-cell;vertical-align:top">	
 				<?php
-				if(!empty($author_template_slider) && is_array($author_template_slider)){
-					foreach($author_template_slider as $name => $v){
-						?>
+                if (!empty($author_template_slider) && is_array($author_template_slider)) {
+                    foreach ($author_template_slider as $name => $v) {
+                        ?>
 						<span data-type="temp_<?php echo sanitize_title($name); ?>" class="template_filter_button"><?php echo esc_attr($name); ?></span>
 						<?php
-					}
-				}
-				?>
+                    }
+                }
+                ?>
 				<span style="display:none" id="selected_template_package_title">Light Content Block Page</span>
 				<span  style="display:none" id="leave_selected_template_package"><?php _e('Back', 'revslider'); ?></span>
 				<span class="template_filter_button selected" data-type="temp_all"><?php _e('All Templates', 'revslider'); ?></span>
@@ -243,8 +245,8 @@ $glob_vals = $operations->getGeneralSettingsValues();
 	};
 	
 	<?php
-	if(isset($_REQUEST['update_shop'])){
-		?>
+    if (isset($_REQUEST['update_shop'])) {
+        ?>
 		jQuery(document).ready(function(){
 			var recalls_amount = 0;
 			function callTemplateSlider() {
@@ -270,15 +272,15 @@ $glob_vals = $operations->getGeneralSettingsValues();
 			callTemplateSlider();
 		});			
 		<?php
-	}
-	?>
+    }
+    ?>
 	var slider_package_uids = {};
 	var slider_package_names = {};
 </script>
 
 
 <!-- Import template slider dialog -->
-<div id="dialog_import_template_slider" title="<?php _e("Import Template Slider",'revslider'); ?>" class="dialog_import_template_slider" style="display:none">
+<div id="dialog_import_template_slider" title="<?php _e("Import Template Slider", 'revslider'); ?>" class="dialog_import_template_slider" style="display:none">
 	<form id="form-import-online-slider-local" action="<?php echo RevSliderBase::$url_ajax; ?>" enctype="multipart/form-data" method="post">
 		<input type="hidden" name="action" value="revslider_ajax_action">
 		<input type="hidden" name="client_action" value="import_slider_template_slidersview">
@@ -288,40 +290,40 @@ $glob_vals = $operations->getGeneralSettingsValues();
 		<p><?php _e('Please select the corresponding zip file from the download packages import folder called', 'revslider'); ?>:</p> 
 		<p class="filetoimport"><b><span class="rs-zip-name"></span></b></p>
 		<?php
-		$single_page_creation = RevSliderFunctions::getVal($glob_vals, "single_page_creation", "off");
-		?>
+        $single_page_creation = RevSliderFunctions::getVal($glob_vals, "single_page_creation", "off");
+        ?>
 		<table style="margin: 20px 0;<?php echo ($single_page_creation == 'on') ? '' : 'display: none;'; ?>">
 			<tr>
-				<td><?php _e('Create Blank Page:','revslider'); ?></td>
+				<td><?php _e('Create Blank Page:', 'revslider'); ?></td>
 				<td><input type="radio" name="page-creation" value="true"> <?php _e('Yes', 'revslider'); ?></td>
 				<td><input type="radio" name="page-creation" value="false" checked="checked"> <?php _e('No', 'revslider'); ?></td>
 			</tr>
 		</table>
 		<?php
-		
-		?>
+
+        ?>
 		<p class="import-file-wrapper"><input type="file" size="60" name="import_file" class="input_import_slider "></p>
-		<span style="margin-top:45px;display:block"><input type="submit" class="rs-import-slider-button button-primary revblue tp-be-button" value="<?php _e("Import Template Slider",'revslider'); ?>"></span>
+		<span style="margin-top:45px;display:block"><input type="submit" class="rs-import-slider-button button-primary revblue tp-be-button" value="<?php _e("Import Template Slider", 'revslider'); ?>"></span>
 		<span class="tp-clearfix"></span>
-		<span style="font-weight: 700;"><?php _e("Note: style templates will be updated if they exist!",'revslider'); ?></span>
+		<span style="font-weight: 700;"><?php _e("Note: style templates will be updated if they exist!", 'revslider'); ?></span>
 		<table style="display: none;">
 			<tr>
-				<td><?php _e("Custom Animations:",'revslider'); ?></td>
-				<td><input type="radio" name="update_animations" value="true" checked="checked"> <?php _e('Overwrite','revslider'); ?></td>
-				<td><input type="radio" name="update_animations" value="false"> <?php _e('Append','revslider'); ?></td>
+				<td><?php _e("Custom Animations:", 'revslider'); ?></td>
+				<td><input type="radio" name="update_animations" value="true" checked="checked"> <?php _e('Overwrite', 'revslider'); ?></td>
+				<td><input type="radio" name="update_animations" value="false"> <?php _e('Append', 'revslider'); ?></td>
 			</tr>
 			<!--tr>
-				<td><?php _e("Static Styles:",'revslider'); ?></td>
-				<td><input type="radio" name="update_static_captions" value="true"> <?php _e('Overwrite','revslider'); ?></td>
-				<td><input type="radio" name="update_static_captions" value="false"> <?php _e('Append','revslider'); ?></td>
-				<td><input type="radio" name="update_static_captions" value="none" checked="checked"> <?php _e('Ignore','revslider'); ?></td>
+				<td><?php _e("Static Styles:", 'revslider'); ?></td>
+				<td><input type="radio" name="update_static_captions" value="true"> <?php _e('Overwrite', 'revslider'); ?></td>
+				<td><input type="radio" name="update_static_captions" value="false"> <?php _e('Append', 'revslider'); ?></td>
+				<td><input type="radio" name="update_static_captions" value="none" checked="checked"> <?php _e('Ignore', 'revslider'); ?></td>
 			</tr-->
 		</table>
 	</form>
 </div>
 
 
-<div id="dialog_import_template_slider_from" title="<?php _e("Import Template Slider",'revslider'); ?>" class="dialog_import_template_slider_from" style="display:none">
+<div id="dialog_import_template_slider_from" title="<?php _e("Import Template Slider", 'revslider'); ?>" class="dialog_import_template_slider_from" style="display:none">
 	<?php _e('Import Slider from local or from ThemePunch server?', 'revslider'); ?>
 	<form action="<?php echo RevSliderBase::$url_ajax; ?>" enctype="multipart/form-data" method="post" name="rs-import-template-from-server" id="rs-import-template-from-server">
 		<input type="hidden" name="action" value="revslider_ajax_action">
@@ -333,18 +335,18 @@ $glob_vals = $operations->getGeneralSettingsValues();
 	</form>
 </div>
 
-<div id="dialog_import_template_slider_info" title="<?php _e('Importing Status','revslider'); ?>" class="dialog_import_template_slider_info" style="display:none">
+<div id="dialog_import_template_slider_info" title="<?php _e('Importing Status', 'revslider'); ?>" class="dialog_import_template_slider_info" style="display:none">
 	<!-- ADD INFOS HERE ON DEMAND -->
 	<div class="revslider_logo_rotating"><div class="revslidercycle"></div></div>
 	<div id="install-slider-counter-wrapper"><span id="install-slider-counter"></span></div>
-	<div id="nowinstalling_label"><?php _e('Now Installing','revslider'); ?></div>
+	<div id="nowinstalling_label"><?php _e('Now Installing', 'revslider'); ?></div>
 	<div id="import_dialog_box_action"></div>
 	<div id="import_dialog_box"></div>
 	
 </div>
 
-<div id="dialog_import_template_slider_page_template" title="<?php _e("Create Blank Page",'revslider'); ?>" class="dialog_import_template_slider_page_template" style="display:none">
+<div id="dialog_import_template_slider_page_template" title="<?php _e("Create Blank Page", 'revslider'); ?>" class="dialog_import_template_slider_page_template" style="display:none">
 	<?php
-	_e('Create a Blank Demo Page with this Slider added to it?', 'revslider');
-	?>
+    _e('Create a Blank Demo Page with this Slider added to it?', 'revslider');
+    ?>
 </div>

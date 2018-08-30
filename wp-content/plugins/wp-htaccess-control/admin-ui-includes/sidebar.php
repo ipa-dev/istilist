@@ -7,8 +7,8 @@ $plugin_url  = $WPhtc->plugin_url;
 <div id="wphtc-sidebar">
 	<div class="wphtc-section">
 		<div class="wphtc-section-title stuffbox">
-			<!--<div title="Click to toggle" class="handlediv" style="background:url('<?php bloginfo( "wpurl" ) ?>/wp-admin/images/menu-bits.gif') no-repeat scroll left -111px transparent"><br></div>-->
-			<h3><?php _e( 'About this Plugin', 'wp-htaccess-control' ); ?></h3>
+			<!--<div title="Click to toggle" class="handlediv" style="background:url('<?php bloginfo("wpurl") ?>/wp-admin/images/menu-bits.gif') no-repeat scroll left -111px transparent"><br></div>-->
+			<h3><?php _e('About this Plugin', 'wp-htaccess-control'); ?></h3>
 		</div>
 		<div class="wphtc-inputs">
 			<ul>
@@ -27,7 +27,7 @@ $plugin_url  = $WPhtc->plugin_url;
 	<!--
 	<div class="wphtc-section">
 		<div class="wphtc-section-title stuffbox">
-			<h3><?php _e( 'Latest donations', 'wp-htaccess-control' ); ?></h3>
+			<h3><?php _e('Latest donations', 'wp-htaccess-control'); ?></h3>
 		</div>
 
 		<div class="wphtc-inputs">
@@ -35,5 +35,5 @@ $plugin_url  = $WPhtc->plugin_url;
 		</div>
 	</div>
 	-->
-	<p id="foot">WP htaccess Control <?php _e( 'by', 'wp-htaccess-control' ); ?> António Andrade</p>
+	<p id="foot">WP htaccess Control <?php _e('by', 'wp-htaccess-control'); ?> António Andrade</p>
 </div>

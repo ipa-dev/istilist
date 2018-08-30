@@ -5,8 +5,9 @@
  *
  * @param callable $callback
  */
-function scb_init( $callback = null ) {
-	if ( $callback ) {
-		call_user_func( $callback );
-	}
+function scb_init($callback = null)
+{
+    if ($callback) {
+        call_user_func($callback);
+    }
 }

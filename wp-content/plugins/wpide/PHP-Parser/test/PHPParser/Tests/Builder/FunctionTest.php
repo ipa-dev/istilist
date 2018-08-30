@@ -2,11 +2,13 @@
 
 class PHPParser_Tests_Builder_FunctionTest extends PHPUnit_Framework_TestCase
 {
-    public function createFunctionBuilder($name) {
+    public function createFunctionBuilder($name)
+    {
         return new PHPParser_Builder_Function($name);
     }
 
-    public function testReturnByRef() {
+    public function testReturnByRef()
+    {
         $node = $this->createFunctionBuilder('test')
             ->makeReturnByRef()
             ->getNode()
@@ -20,7 +22,8 @@ class PHPParser_Tests_Builder_FunctionTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testParams() {
+    public function testParams()
+    {
         $param1 = new PHPParser_Node_Param('test1');
         $param2 = new PHPParser_Node_Param('test2');
         $param3 = new PHPParser_Node_Param('test3');
@@ -39,7 +42,8 @@ class PHPParser_Tests_Builder_FunctionTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testStmts() {
+    public function testStmts()
+    {
         $stmt1 = new PHPParser_Node_Expr_Print(new PHPParser_Node_Scalar_String('test1'));
         $stmt2 = new PHPParser_Node_Expr_Print(new PHPParser_Node_Scalar_String('test2'));
         $stmt3 = new PHPParser_Node_Expr_Print(new PHPParser_Node_Scalar_String('test3'));
@@ -62,7 +66,8 @@ class PHPParser_Tests_Builder_FunctionTest extends PHPUnit_Framework_TestCase
      * @expectedException LogicException
      * @expectedExceptionMessage Expected parameter node, got "Name"
      */
-    public function testInvalidParamError() {
+    public function testInvalidParamError()
+    {
         $this->createFunctionBuilder('test')
             ->addParam(new PHPParser_Node_Name('foo'))
         ;

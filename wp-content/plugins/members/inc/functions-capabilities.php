@@ -11,8 +11,8 @@
  */
 
 # Disables the old user levels from capabilities array.
-add_filter( 'members_get_capabilities', 'members_remove_old_levels'  );
-add_filter( 'members_get_capabilities', 'members_remove_hidden_caps' );
+add_filter('members_get_capabilities', 'members_remove_old_levels');
+add_filter('members_get_capabilities', 'members_remove_hidden_caps');
 
 /**
  * Function for sanitizing a capability.
@@ -22,8 +22,9 @@ add_filter( 'members_get_capabilities', 'members_remove_hidden_caps' );
  * @param  string  $cap
  * @return string
  */
-function members_sanitize_cap( $cap ) {
-	return apply_filters( 'members_sanitize_cap', sanitize_key( $cap ) );
+function members_sanitize_cap($cap)
+{
+    return apply_filters('members_sanitize_cap', sanitize_key($cap));
 }
 
 /**
@@ -34,8 +35,9 @@ function members_sanitize_cap( $cap ) {
  * @param  string  $cap
  * @return bool
  */
-function members_cap_exists( $cap ) {
-	return in_array( $cap, members_get_capabilities() );
+function members_cap_exists($cap)
+{
+    return in_array($cap, members_get_capabilities());
 }
 
 /**
@@ -47,11 +49,11 @@ function members_cap_exists( $cap ) {
  * @param  string  $cap
  * @return bool
  */
-function members_is_cap_editable( $cap ) {
+function members_is_cap_editable($cap)
+{
+    $uneditable = array_keys(members_get_uneditable_role_names());
 
-	$uneditable = array_keys( members_get_uneditable_role_names() );
-
-	return ! in_array( $cap, members_get_wp_capabilities() ) && ! array_intersect( $uneditable, members_get_cap_roles( $cap ) );
+    return ! in_array($cap, members_get_wp_capabilities()) && ! array_intersect($uneditable, members_get_cap_roles($cap));
 }
 
 /**
@@ -62,18 +64,19 @@ function members_is_cap_editable( $cap ) {
  * @param  string  $cap
  * @return array
  */
-function members_get_cap_roles( $cap ) {
-	global $wp_roles;
+function members_get_cap_roles($cap)
+{
+    global $wp_roles;
 
-	$_roles = array();
+    $_roles = array();
 
-	foreach ( $wp_roles->role_objects as $role ) {
+    foreach ($wp_roles->role_objects as $role) {
+        if ($role->has_cap($cap)) {
+            $_roles[] = $role->name;
+        }
+    }
 
-		if ( $role->has_cap( $cap ) )
-			$_roles[] = $role->name;
-	}
-
-	return $_roles;
+    return $_roles;
 }
 
 /**
@@ -86,23 +89,24 @@ function members_get_cap_roles( $cap ) {
  * @access public
  * @return array
  */
-function members_get_capabilities() {
+function members_get_capabilities()
+{
 
-	// Merge the default WP, role, and plugin caps together.
-	$capabilities = array_merge(
-		members_get_wp_capabilities(),
-		members_get_role_capabilities(),
-		members_get_plugin_capabilities()
-	);
+    // Merge the default WP, role, and plugin caps together.
+    $capabilities = array_merge(
+        members_get_wp_capabilities(),
+        members_get_role_capabilities(),
+        members_get_plugin_capabilities()
+    );
 
-	// Apply filters to the array of capabilities.
-	$capabilities = apply_filters( 'members_get_capabilities', $capabilities );
+    // Apply filters to the array of capabilities.
+    $capabilities = apply_filters('members_get_capabilities', $capabilities);
 
-	// Sort the capabilities alphabetically.
-	sort( $capabilities );
+    // Sort the capabilities alphabetically.
+    sort($capabilities);
 
-	// Discard duplicates and return.
-	return array_unique( $capabilities );
+    // Discard duplicates and return.
+    return array_unique($capabilities);
 }
 
 /**
@@ -117,26 +121,28 @@ function members_get_capabilities() {
  * @global object  $wp_roles
  * @return array
  */
-function members_get_role_capabilities() {
-	global $wp_roles;
+function members_get_role_capabilities()
+{
+    global $wp_roles;
 
-	// Set up an empty capabilities array.
-	$capabilities = array();
+    // Set up an empty capabilities array.
+    $capabilities = array();
 
-	// Loop through each role object because we need to get the caps.
-	foreach ( $wp_roles->role_objects as $key => $role ) {
+    // Loop through each role object because we need to get the caps.
+    foreach ($wp_roles->role_objects as $key => $role) {
 
-		// Make sure that the role has caps.
-		if ( is_array( $role->capabilities ) ) {
+        // Make sure that the role has caps.
+        if (is_array($role->capabilities)) {
 
-			// Add each of the role's caps (both granted and denied) to the array.
-			foreach ( $role->capabilities as $cap => $grant )
-				$capabilities[ $cap ] = $cap;
-		}
-	}
+            // Add each of the role's caps (both granted and denied) to the array.
+            foreach ($role->capabilities as $cap => $grant) {
+                $capabilities[ $cap ] = $cap;
+            }
+        }
+    }
 
-	// Return the capabilities array, making sure there are no duplicates.
-	return array_unique( $capabilities );
+    // Return the capabilities array, making sure there are no duplicates.
+    return array_unique($capabilities);
 }
 
 /**
@@ -147,15 +153,15 @@ function members_get_role_capabilities() {
  * @access public
  * @return array
  */
-function members_get_plugin_capabilities() {
-
-	return array(
-		'list_roles',	   // View roles list.
-		'create_roles',	   // Create new roles.
-		'delete_roles',	   // Delete roles.
-		'edit_roles',	   // Edit a role's caps.
-		'restrict_content' // Restrict content (content permissions component).
-	);
+function members_get_plugin_capabilities()
+{
+    return array(
+        'list_roles',	   // View roles list.
+        'create_roles',	   // Create new roles.
+        'delete_roles',	   // Delete roles.
+        'edit_roles',	   // Edit a role's caps.
+        'restrict_content' // Restrict content (content permissions component).
+    );
 }
 
 /**
@@ -173,61 +179,61 @@ function members_get_plugin_capabilities() {
  * @access public
  * @return array
  */
-function members_get_wp_capabilities() {
-
-	return array(
-		'activate_plugins',
-		'add_users',
-		'create_users',
-		'delete_others_pages',
-		'delete_others_posts',
-		'delete_pages',
-		'delete_plugins',
-		'delete_posts',
-		'delete_private_pages',
-		'delete_private_posts',
-		'delete_published_pages',
-		'delete_published_posts',
-		'delete_themes',
-		'delete_users',
-		'edit_dashboard',
-		'edit_files',
-		'edit_others_pages',
-		'edit_others_posts',
-		'edit_pages',
-		'edit_plugins',
-		'edit_posts',
-		'edit_private_pages',
-		'edit_private_posts',
-		'edit_published_pages',
-		'edit_published_posts',
-		'edit_theme_options',
-		'edit_themes',
-		'edit_users',
-		'export',
-		'import',
-		'install_plugins',
-		'install_themes',
-		'list_users',
-		'manage_categories',
-		'manage_links',
-		'manage_options',
-		'moderate_comments',
-		'promote_users',
-		'publish_pages',
-		'publish_posts',
-		'read',
-		'read_private_pages',
-		'read_private_posts',
-		'remove_users',
-		'switch_themes',
-		'unfiltered_html',
-		'unfiltered_upload',
-		'update_core',
-		'update_plugins',
-		'update_themes',
-		'upload_files'
-	);
+function members_get_wp_capabilities()
+{
+    return array(
+        'activate_plugins',
+        'add_users',
+        'create_users',
+        'delete_others_pages',
+        'delete_others_posts',
+        'delete_pages',
+        'delete_plugins',
+        'delete_posts',
+        'delete_private_pages',
+        'delete_private_posts',
+        'delete_published_pages',
+        'delete_published_posts',
+        'delete_themes',
+        'delete_users',
+        'edit_dashboard',
+        'edit_files',
+        'edit_others_pages',
+        'edit_others_posts',
+        'edit_pages',
+        'edit_plugins',
+        'edit_posts',
+        'edit_private_pages',
+        'edit_private_posts',
+        'edit_published_pages',
+        'edit_published_posts',
+        'edit_theme_options',
+        'edit_themes',
+        'edit_users',
+        'export',
+        'import',
+        'install_plugins',
+        'install_themes',
+        'list_users',
+        'manage_categories',
+        'manage_links',
+        'manage_options',
+        'moderate_comments',
+        'promote_users',
+        'publish_pages',
+        'publish_posts',
+        'read',
+        'read_private_pages',
+        'read_private_posts',
+        'remove_users',
+        'switch_themes',
+        'unfiltered_html',
+        'unfiltered_upload',
+        'update_core',
+        'update_plugins',
+        'update_themes',
+        'upload_files'
+    );
 }
 
 /**
@@ -239,14 +245,16 @@ function members_get_wp_capabilities() {
  * @param  string  $cap
  * @return bool
  */
-function members_check_for_cap( $cap = '' ) {
+function members_check_for_cap($cap = '')
+{
 
-	// Without a capability, we have nothing to check for.  Just return false.
-	if ( ! $cap )
-		return false;
+    // Without a capability, we have nothing to check for.  Just return false.
+    if (! $cap) {
+        return false;
+    }
 
-	// Check if the cap is assigned to any role.
-	return in_array( $cap, members_get_role_capabilities() );
+    // Check if the cap is assigned to any role.
+    return in_array($cap, members_get_role_capabilities());
 }
 
 /**
@@ -256,42 +264,44 @@ function members_check_for_cap( $cap = '' ) {
  * @access public
  * @return array
  */
-function members_get_hidden_caps() {
+function members_get_hidden_caps()
+{
+    $caps = array();
 
-	$caps = array();
+    // Unfiltered uploads.
+    if (is_multisite() || ! defined('ALLOW_UNFILTERED_UPLOADS') || ! ALLOW_UNFILTERED_UPLOADS) {
+        $caps[] = 'unfiltered_upload';
+    }
 
-	// Unfiltered uploads.
-	if ( is_multisite() || ! defined( 'ALLOW_UNFILTERED_UPLOADS' ) || ! ALLOW_UNFILTERED_UPLOADS )
-		$caps[] = 'unfiltered_upload';
+    // Unfiltered HTML.
+    if (is_multisite() || (defined('DISALLOW_UNFILTERED_HTML') && DISALLOW_UNFILTERED_HTML)) {
+        $caps[] = 'unfiltered_html';
+    }
 
-	// Unfiltered HTML.
-	if ( is_multisite() || ( defined( 'DISALLOW_UNFILTERED_HTML' ) && DISALLOW_UNFILTERED_HTML ) )
-		$caps[] = 'unfiltered_html';
+    // File editing.
+    if (is_multisite() || (defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT)) {
+        $caps[] = 'edit_files';
+        $caps[] = 'edit_plugins';
+        $caps[] = 'edit_themes';
+    }
 
-	// File editing.
-	if ( is_multisite() || ( defined( 'DISALLOW_FILE_EDIT' ) && DISALLOW_FILE_EDIT ) ) {
-		$caps[] = 'edit_files';
-		$caps[] = 'edit_plugins';
-		$caps[] = 'edit_themes';
-	}
+    // File mods.
+    if (is_multisite() || (defined('DISALLOW_FILE_MODS') && DISALLOW_FILE_MODS)) {
+        $caps[] = 'edit_files';
+        $caps[] = 'edit_plugins';
+        $caps[] = 'edit_themes';
+        $caps[] = 'update_plugins';
+        $caps[] = 'delete_plugins';
+        $caps[] = 'install_plugins';
+        $caps[] = 'upload_plugins';
+        $caps[] = 'update_themes';
+        $caps[] = 'delete_themes';
+        $caps[] = 'install_themes';
+        $caps[] = 'upload_themes';
+        $caps[] = 'update_core';
+    }
 
-	// File mods.
-	if ( is_multisite() || ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS ) ) {
-		$caps[] = 'edit_files';
-		$caps[] = 'edit_plugins';
-		$caps[] = 'edit_themes';
-		$caps[] = 'update_plugins';
-		$caps[] = 'delete_plugins';
-		$caps[] = 'install_plugins';
-		$caps[] = 'upload_plugins';
-		$caps[] = 'update_themes';
-		$caps[] = 'delete_themes';
-		$caps[] = 'install_themes';
-		$caps[] = 'upload_themes';
-		$caps[] = 'update_core';
-	}
-
-	return array_unique( $caps );
+    return array_unique($caps);
 }
 
 /**
@@ -302,8 +312,9 @@ function members_get_hidden_caps() {
  * @param  array  $caps
  * @return array
  */
-function members_remove_hidden_caps( $caps ) {
-	return apply_filters( 'members_remove_hidden_caps', true ) ? array_diff( $caps, members_get_hidden_caps() ) : $caps;
+function members_remove_hidden_caps($caps)
+{
+    return apply_filters('members_remove_hidden_caps', true) ? array_diff($caps, members_get_hidden_caps()) : $caps;
 }
 
 /**
@@ -315,21 +326,21 @@ function members_remove_hidden_caps( $caps ) {
  * @access public
  * @return array
  */
-function members_get_old_levels() {
-
-	return array(
-		'level_0',
-		'level_1',
-		'level_2',
-		'level_3',
-		'level_4',
-		'level_5',
-		'level_6',
-		'level_7',
-		'level_8',
-		'level_9',
-		'level_10'
-	);
+function members_get_old_levels()
+{
+    return array(
+        'level_0',
+        'level_1',
+        'level_2',
+        'level_3',
+        'level_4',
+        'level_5',
+        'level_6',
+        'level_7',
+        'level_8',
+        'level_9',
+        'level_10'
+    );
 }
 
 /**
@@ -341,8 +352,9 @@ function members_get_old_levels() {
  * @param  array  $caps
  * @return array
  */
-function members_remove_old_levels( $caps ) {
-	return apply_filters( 'members_remove_old_levels', true ) ? array_diff( $caps, members_get_old_levels() ) : $caps;
+function members_remove_old_levels($caps)
+{
+    return apply_filters('members_remove_old_levels', true) ? array_diff($caps, members_get_old_levels()) : $caps;
 }
 
 /**
@@ -354,9 +366,9 @@ function members_remove_old_levels( $caps ) {
  * @access public
  * @return array
  */
-function members_new_role_default_capabilities() {
-
-	return apply_filters( 'members_new_role_default_capabilities', array( 'read' ) );
+function members_new_role_default_capabilities()
+{
+    return apply_filters('members_new_role_default_capabilities', array( 'read' ));
 }
 
 /**
@@ -368,7 +380,7 @@ function members_new_role_default_capabilities() {
  * @access public
  * @return array
  */
-function members_new_role_default_caps() {
-
-	return apply_filters( 'members_new_role_default_caps', array( 'read' => true ) );
+function members_new_role_default_caps()
+{
+    return apply_filters('members_new_role_default_caps', array( 'read' => true ));
 }

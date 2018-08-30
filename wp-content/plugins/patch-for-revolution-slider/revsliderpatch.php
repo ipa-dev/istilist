@@ -30,102 +30,98 @@ revsliderpatch_blockxss();
 
 function revsliderpatch_blocklfd()
 {
-	global $wpdb;
+    global $wpdb;
 
-	if(stristr($_SERVER["SCRIPT_FILENAME"],"/wp-admin/admin-ajax.php"))
-	{
-		$file = preg_replace('/[^\da-zA-Z0-9 -_.]/i', '', $_GET['img']);
-		$q = @explode(".",$file);
-		$accepted = array("jpg","JPG","jpeg","gif","png","PNG","GIF","");
-		if (!in_array($q[count($q)-1],$accepted))
-		{
-			$wpdb->query($wpdb->prepare("insert into revsliderpatch_blacklist(IP,date,exploit) values ('%s','%d','%s')",$_SERVER['REMOTE_ADDR'],time(),"Local File Download"));
-			die("Revolution Slider hack attempt detected and logged.");
-		}
-	}
+    if (stristr($_SERVER["SCRIPT_FILENAME"], "/wp-admin/admin-ajax.php")) {
+        $file = preg_replace('/[^\da-zA-Z0-9 -_.]/i', '', $_GET['img']);
+        $q = @explode(".", $file);
+        $accepted = array("jpg","JPG","jpeg","gif","png","PNG","GIF","");
+        if (!in_array($q[count($q)-1], $accepted)) {
+            $wpdb->query($wpdb->prepare("insert into revsliderpatch_blacklist(IP,date,exploit) values ('%s','%d','%s')", $_SERVER['REMOTE_ADDR'], time(), "Local File Download"));
+            die("Revolution Slider hack attempt detected and logged.");
+        }
+    }
 }
 
 function revsliderpatch_blockafl()
 {
-	global $wpdb;
+    global $wpdb;
 
-	if(stristr($_SERVER["SCRIPT_FILENAME"],"/wp-admin/admin-ajax.php"))
-	{
-		if($_POST['action'] != "")
-			$_POST['action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_POST['action']);
-		else
-			$_POST['action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_REQUEST['action']);
-		if($_POST['client_action'] != "")
-			$_POST['client_action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_POST['client_action']);
-		else
-			$_POST['client_action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_REQUEST['client_action']);
-		if ((stristr($_POST['action'],"revslider_ajax_action") || stristr($_POST['action'],"showbiz_ajax_action")) && $_POST['client_action']=="update_plugin")
-		{
-			$wpdb->query($wpdb->prepare("insert into revsliderpatch_blacklist(IP,date,exploit) values ('%s','%d','%s')",$_SERVER['REMOTE_ADDR'],time(),"Arbitrary File Upload"));
-			die("Revolution Slider hack attempt detected and logged.");
-		}
-	}
+    if (stristr($_SERVER["SCRIPT_FILENAME"], "/wp-admin/admin-ajax.php")) {
+        if ($_POST['action'] != "") {
+            $_POST['action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_POST['action']);
+        } else {
+            $_POST['action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_REQUEST['action']);
+        }
+        if ($_POST['client_action'] != "") {
+            $_POST['client_action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_POST['client_action']);
+        } else {
+            $_POST['client_action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_REQUEST['client_action']);
+        }
+        if ((stristr($_POST['action'], "revslider_ajax_action") || stristr($_POST['action'], "showbiz_ajax_action")) && $_POST['client_action']=="update_plugin") {
+            $wpdb->query($wpdb->prepare("insert into revsliderpatch_blacklist(IP,date,exploit) values ('%s','%d','%s')", $_SERVER['REMOTE_ADDR'], time(), "Arbitrary File Upload"));
+            die("Revolution Slider hack attempt detected and logged.");
+        }
+    }
 }
 
 function revsliderpatch_blockxss()
 {
-	global $wpdb;	
+    global $wpdb;
 
-	if(stristr($_SERVER["SCRIPT_FILENAME"],"/wp-admin/admin-ajax.php"))
-	{
-		if($_POST['action'] != "")
-			$_POST['action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_POST['action']);
-		else
-			$_POST['action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_REQUEST['action']);
-		if($_POST['client_action'] != "")
-			$_POST['client_action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_POST['client_action']);
-		else
-			$_POST['client_action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_REQUEST['client_action']);
-		if ((stristr($_POST['action'],"revslider_ajax_action") || stristr($_POST['action'],"showbiz_ajax_action")) && $_POST['client_action']=="update_captions_css")
-		{
-			$_POST['data'] = htmlentities($_POST['data'],ENT_QUOTES);
-		}
-	}
+    if (stristr($_SERVER["SCRIPT_FILENAME"], "/wp-admin/admin-ajax.php")) {
+        if ($_POST['action'] != "") {
+            $_POST['action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_POST['action']);
+        } else {
+            $_POST['action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_REQUEST['action']);
+        }
+        if ($_POST['client_action'] != "") {
+            $_POST['client_action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_POST['client_action']);
+        } else {
+            $_POST['client_action'] = preg_replace('/[^a-zA-Z_\-0-9]/i', '', $_REQUEST['client_action']);
+        }
+        if ((stristr($_POST['action'], "revslider_ajax_action") || stristr($_POST['action'], "showbiz_ajax_action")) && $_POST['client_action']=="update_captions_css") {
+            $_POST['data'] = htmlentities($_POST['data'], ENT_QUOTES);
+        }
+    }
 }
 
 /* Create an admin menu with options to manage */
-add_action("admin_menu","revsliderpatch_main");
+add_action("admin_menu", "revsliderpatch_main");
 
 function revsliderpatch_main()
 {
-	revsliderpatch_install();
+    revsliderpatch_install();
 
-	add_menu_page('Patch for Revolution Slider', 'Patch for Revolution Slider', 'administrator', 'revsliderpatch', 'revsliderpatch_list');
-	add_submenu_page('revsliderpatch', 'Black list', 'Black list', 'administrator', 'revsliderpatch', 'revsliderpatch_list');
-	add_submenu_page('revsliderpatch', 'Donate', 'Donate', 'administrator', 'pcgcatalog_donate', 'revsliderpatch_donate');
+    add_menu_page('Patch for Revolution Slider', 'Patch for Revolution Slider', 'administrator', 'revsliderpatch', 'revsliderpatch_list');
+    add_submenu_page('revsliderpatch', 'Black list', 'Black list', 'administrator', 'revsliderpatch', 'revsliderpatch_list');
+    add_submenu_page('revsliderpatch', 'Donate', 'Donate', 'administrator', 'pcgcatalog_donate', 'revsliderpatch_donate');
 }
 
 function revsliderpatch_install()
 {
-	global $wpdb;
+    global $wpdb;
 
-	$wpdb->query("CREATE TABLE IF NOT EXISTS `revsliderpatch_blacklist` (`ID` int(11) NOT NULL,`IP` text NOT NULL,`date` text NOT NULL,`exploit` text NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;");
+    $wpdb->query("CREATE TABLE IF NOT EXISTS `revsliderpatch_blacklist` (`ID` int(11) NOT NULL,`IP` text NOT NULL,`date` text NOT NULL,`exploit` text NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;");
 }
 
 function revsliderpatch_list()
 {
-	global $wpdb;
-?>
+    global $wpdb; ?>
 <div class="wrap">
 	<h1>Black list</h1>
 	Below is a list with everyone who attempted to use a Revolution Slider exploit to gain access to your website.<br /><br />
 
 	<?php
-		if($_GET['del']=="true")
-		{
-			if($_GET['hash'] == md5($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . DB_PASSWORD))
-				$wpdb->query("truncate table revsliderpatch_blacklist");
-		}
+        if ($_GET['del']=="true") {
+            if ($_GET['hash'] == md5($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . DB_PASSWORD)) {
+                $wpdb->query("truncate table revsliderpatch_blacklist");
+            }
+        }
 
-		$lists = $wpdb->get_results("select * from revsliderpatch_blacklist");
-		if(!empty($lists))
-		{
-	?>
+    $lists = $wpdb->get_results("select * from revsliderpatch_blacklist");
+    if (!empty($lists)) {
+        ?>
 			<input onClick="document.location='admin.php?page=revsliderpatch&del=true&hash=<?php echo md5($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . DB_PASSWORD); ?>';" type="button" name="button" class="button button-primary" value="Clear the list"/><br /><br />
 
 			<table class="wp-list-table widefat fixed" style="margin-top:10px;">
@@ -149,29 +145,32 @@ function revsliderpatch_list()
 				<tbody>
 
 				<?php
-					$elements = $wpdb->get_results("select count(*) as counter from revsliderpatch_blacklist");
-					$perpage = 20;
-		
-					$pag = (int) $_GET['pag'];
-					if($pag <= 0) {$pag = 1;}
+                    $elements = $wpdb->get_results("select count(*) as counter from revsliderpatch_blacklist");
+        $perpage = 20;
+        
+        $pag = (int) $_GET['pag'];
+        if ($pag <= 0) {
+            $pag = 1;
+        }
 
-					if($pag > ceil($elements[0]->counter/$perpage)) {$pag = 1;}
+        if ($pag > ceil($elements[0]->counter/$perpage)) {
+            $pag = 1;
+        }
 
-					$lists = $wpdb->get_results("select * from revsliderpatch_blacklist order by ID desc limit " . ($pag-1) . ", $perpage");
+        $lists = $wpdb->get_results("select * from revsliderpatch_blacklist order by ID desc limit " . ($pag-1) . ", $perpage");
 
-					$i = -1;
-					foreach($lists as $list)
-					{
-						if($i % 2 == 0)
-							echo '<tr class="alternative">';
-						else
-							echo '<tr>';
-						echo '<td>'.$list->IP.'</td>';
-						echo '<td>'.date('j.m.Y H:i:s T P',$list->date).'</td>';
-						echo '<td>'.$list->exploit.'</td>';
-						echo '</tr>';
-					}
-				?>          
+        $i = -1;
+        foreach ($lists as $list) {
+            if ($i % 2 == 0) {
+                echo '<tr class="alternative">';
+            } else {
+                echo '<tr>';
+            }
+            echo '<td>'.$list->IP.'</td>';
+            echo '<td>'.date('j.m.Y H:i:s T P', $list->date).'</td>';
+            echo '<td>'.$list->exploit.'</td>';
+            echo '</tr>';
+        } ?>          
 
 				</tbody>
 			</table>
@@ -180,30 +179,26 @@ function revsliderpatch_list()
 				<div style="float:left;width:50%"><?php echo $elements[0]->counter; ?> attackers in total</i></div>
 				<div style="float:left;text-align:right;width:50%">
 					<?php
-							if($pag > 1)
-							{
-								?>
+                            if ($pag > 1) {
+                                ?>
 							<input type="button" onClick="document.location='admin.php?page=revsliderpatch&pag=<?php echo $pag-1; ?>';" class="button button-primary" value="Prev page"/>&nbsp;&nbsp;<?php
-							}			
-							if($pag < ceil($elements[0]->counter/$perpage))
-							{
-								?><input type="button" onClick="document.location='admin.php?page=revsliderpatch&pag=<?php echo $pag+1; ?>';" class="button button-primary" value="Next page"/><?php
-							}
-					?>
+                            }
+        if ($pag < ceil($elements[0]->counter/$perpage)) {
+            ?><input type="button" onClick="document.location='admin.php?page=revsliderpatch&pag=<?php echo $pag+1; ?>';" class="button button-primary" value="Next page"/><?php
+        } ?>
 				</div>
 			</div>
 <?php
-		}else{
-			echo "Nothing to show for now.";
-		}
-	?>
+    } else {
+        echo "Nothing to show for now.";
+    } ?>
 </div>
 <?php
 }
 
 function revsliderpatch_donate()
 {
-?>
+    ?>
 <div class="wrap">
 	<h1>Donate</h1>
 	If you feel secure using "Patch for Revolution Slider", why don't you buy me a beer?<br /><br />

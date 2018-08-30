@@ -7,7 +7,7 @@
             <div class="col span_4_of_12">
                 <?php
                     $key = $_GET['key'];
-                    if(isset($_POST['add_member']) && !empty($key)){
+                    if (isset($_POST['add_member']) && !empty($key)) {
                         global $wpdb;
                         $user_status = 1;
                         $wpdb->update($wpdb->users, array('user_status' => $user_status), array('user_activation_key' => $key));
@@ -16,7 +16,7 @@
                         $userid = $user_data[0]->ID;
 
                         $pwd = $_POST['pwd1'];
-                        wp_set_password( $pwd, $userid );
+                        wp_set_password($pwd, $userid);
                         echo '<div class="successMsg"><strong>Congratulations</strong><br /><br />Your account has been activated. Click here to <strong><a href="'.get_bloginfo('home').'/login">Login</a></strong></div>';
                     }
                 ?>
@@ -24,12 +24,16 @@
                 
                 <div class="loginSection">
                     <div class="box">
-                        <?php if($errorCode == 1){ ?>
+                        <?php if ($errorCode == 1) {
+                    ?>
                             <div class="errorMsg">Incorrect login details...Please try again.</div>
-                        <?php } ?>
-                        <?php if($errorCode == 2){ ?>
+                        <?php
+                } ?>
+                        <?php if ($errorCode == 2) {
+                    ?>
                             <div class="errorMsg">Your account is not activated...Please check your mail and activate your account.</div>
-                        <?php } ?>
+                        <?php
+                } ?>
                         <div class="commonForm">
                             <form id="forms" method="post" action="">
                                 <div>

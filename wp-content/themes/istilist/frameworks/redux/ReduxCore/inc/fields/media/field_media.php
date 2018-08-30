@@ -21,19 +21,20 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if ( ! class_exists( 'ReduxFramework_media' ) ) {
+if (! class_exists('ReduxFramework_media')) {
 
     /**
      * Main ReduxFramework_media class
      *
      * @since       1.0.0
      */
-    class ReduxFramework_media {
+    class ReduxFramework_media
+    {
 
         /**
          * Field Constructor.
@@ -43,7 +44,8 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
          * @access      public
          * @return      void
          */
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
@@ -57,7 +59,8 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
          * @access      public
          * @return      void
          */
-        public function render() {
+        public function render()
+        {
 
             // No errors please
             $defaults = array(
@@ -68,13 +71,13 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
                 'thumbnail' => '',
             );
 
-            $this->value = wp_parse_args( $this->value, $defaults );
+            $this->value = wp_parse_args($this->value, $defaults);
 
             if (isset($this->field['mode']) && $this->field['mode'] == false) {
                 $this->field['mode'] = 0;
             }
 
-            if ( ! isset( $this->field['mode'] ) ) {
+            if (! isset($this->field['mode'])) {
                 $this->field['mode'] = "image";
             }
 
@@ -93,34 +96,33 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
 
                 // Enum mime types
                 foreach ($mimeTypes as $ext => $type) {
-                    if (strpos($ext,'|')) {
+                    if (strpos($ext, '|')) {
                         $expArr = explode('|', $ext);
 
-                        foreach($expArr as $ext){
-                            if (in_array($ext, $libArray )) {
+                        foreach ($expArr as $ext) {
+                            if (in_array($ext, $libArray)) {
                                 $jsonArr[$ext] = $type;
                             }
                         }
-                    } elseif (in_array($ext, $libArray )) {
+                    } elseif (in_array($ext, $libArray)) {
                         $jsonArr[$ext] = $type;
                     }
-
                 }
 
                 $libFilter = urlencode(json_encode($jsonArr));
             }
 
-            if ( empty( $this->value ) && ! empty( $this->field['default'] ) ) { // If there are standard values and value is empty
-                if ( is_array( $this->field['default'] ) ) {
-                    if ( ! empty( $this->field['default']['id'] ) ) {
+            if (empty($this->value) && ! empty($this->field['default'])) { // If there are standard values and value is empty
+                if (is_array($this->field['default'])) {
+                    if (! empty($this->field['default']['id'])) {
                         $this->value['id'] = $this->field['default']['id'];
                     }
 
-                    if ( ! empty( $this->field['default']['url'] ) ) {
+                    if (! empty($this->field['default']['url'])) {
                         $this->value['url'] = $this->field['default']['url'];
                     }
                 } else {
-                    if ( is_numeric( $this->field['default'] ) ) { // Check if it's an attachment ID
+                    if (is_numeric($this->field['default'])) { // Check if it's an attachment ID
                         $this->value['id'] = $this->field['default'];
                     } else { // Must be a URL
                         $this->value['url'] = $this->field['default'];
@@ -129,8 +131,8 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
             }
 
 
-            if ( empty( $this->value['url'] ) && ! empty( $this->value['id'] ) ) {
-                $img                   = wp_get_attachment_image_src( $this->value['id'], 'full' );
+            if (empty($this->value['url']) && ! empty($this->value['id'])) {
+                $img                   = wp_get_attachment_image_src($this->value['id'], 'full');
                 $this->value['url']    = $img[0];
                 $this->value['width']  = $img[1];
                 $this->value['height'] = $img[2];
@@ -138,18 +140,18 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
 
             $hide = 'hide ';
 
-            if ( ( isset( $this->field['preview'] ) && $this->field['preview'] === false ) ) {
+            if ((isset($this->field['preview']) && $this->field['preview'] === false)) {
                 $this->field['class'] .= " noPreview";
             }
 
-            if ( ( ! empty( $this->field['url'] ) && $this->field['url'] === true ) || isset( $this->field['preview'] ) && $this->field['preview'] === false ) {
+            if ((! empty($this->field['url']) && $this->field['url'] === true) || isset($this->field['preview']) && $this->field['preview'] === false) {
                 $hide = '';
             }
 
-            $placeholder = isset( $this->field['placeholder'] ) ? $this->field['placeholder'] : __( 'No media selected', 'redux-framework' );
+            $placeholder = isset($this->field['placeholder']) ? $this->field['placeholder'] : __('No media selected', 'redux-framework');
 
             $readOnly = ' readonly="readonly"';
-            if ( isset( $this->field['readonly'] ) && $this->field['readonly'] === false ) {
+            if (isset($this->field['readonly']) && $this->field['readonly'] === false) {
                 $readOnly = '';
             }
 
@@ -164,16 +166,16 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
             //Preview
             $hide = '';
 
-            if ( ( isset( $this->field['preview'] ) && $this->field['preview'] === false ) || empty( $this->value['url'] ) ) {
+            if ((isset($this->field['preview']) && $this->field['preview'] === false) || empty($this->value['url'])) {
                 $hide = 'hide ';
             }
 
-            if ( empty( $this->value['thumbnail'] ) && ! empty( $this->value['url'] ) ) { // Just in case
-                if ( ! empty( $this->value['id'] ) ) {
-                    $image                    = wp_get_attachment_image_src( $this->value['id'], array(
+            if (empty($this->value['thumbnail']) && ! empty($this->value['url'])) { // Just in case
+                if (! empty($this->value['id'])) {
+                    $image                    = wp_get_attachment_image_src($this->value['id'], array(
                             150,
                             150
-                        ) );
+                        ));
 
                     if (empty($image[0]) || $image[0] == '') {
                         $this->value['thumbnail'] = $this->value['url'];
@@ -195,14 +197,14 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
             echo '<div class="upload_button_div">';
 
             //If the user has WP3.5+ show upload/remove button
-            echo '<span class="button media_upload_button" id="' . $this->field['id'] . '-media">' . __( 'Upload', 'redux-framework' ) . '</span>';
+            echo '<span class="button media_upload_button" id="' . $this->field['id'] . '-media">' . __('Upload', 'redux-framework') . '</span>';
 
             $hide = '';
-            if ( empty( $this->value['url'] ) || $this->value['url'] == '' ) {
+            if (empty($this->value['url']) || $this->value['url'] == '') {
                 $hide = ' hide';
             }
 
-            echo '<span class="button remove-image' . $hide . '" id="reset_' . $this->field['id'] . '" rel="' . $this->field['id'] . '">' . __( 'Remove', 'redux-framework' ) . '</span>';
+            echo '<span class="button remove-image' . $hide . '" id="reset_' . $this->field['id'] . '" rel="' . $this->field['id'] . '">' . __('Remove', 'redux-framework') . '</span>';
 
             echo '</div>';
         }
@@ -215,11 +217,12 @@ if ( ! class_exists( 'ReduxFramework_media' ) ) {
          * @access      public
          * @return      void
          */
-        public function enqueue() {
-            if ( function_exists( 'wp_enqueue_media' ) ) {
+        public function enqueue()
+        {
+            if (function_exists('wp_enqueue_media')) {
                 wp_enqueue_media();
             } else {
-                wp_enqueue_script( 'media-upload' );
+                wp_enqueue_script('media-upload');
             }
             
             wp_enqueue_script(

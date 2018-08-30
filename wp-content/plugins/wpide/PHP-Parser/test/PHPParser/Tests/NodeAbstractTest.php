@@ -2,7 +2,8 @@
 
 class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase
 {
-    public function testConstruct() {
+    public function testConstruct()
+    {
         $attributes = array(
             'startLine' => 10,
             'comments'  => array(
@@ -36,7 +37,8 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase
     /**
      * @depends testConstruct
      */
-    public function testGetDocComment(PHPParser_Node $node) {
+    public function testGetDocComment(PHPParser_Node $node)
+    {
         $this->assertEquals('/** doc comment */', $node->getDocComment());
         array_pop($node->getAttribute('comments')); // remove doc comment
         $this->assertNull($node->getDocComment());
@@ -47,7 +49,8 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase
     /**
      * @depends testConstruct
      */
-    public function testChange(PHPParser_Node $node) {
+    public function testChange(PHPParser_Node $node)
+    {
         // change of line
         $node->setLine(15);
         $this->assertEquals(15, $node->getLine());
@@ -66,7 +69,8 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(isset($node->subNode));
     }
 
-    public function testAttributes() {
+    public function testAttributes()
+    {
         /** @var $node PHPParser_Node */
         $node = $this->getMockForAbstractClass('PHPParser_NodeAbstract');
 

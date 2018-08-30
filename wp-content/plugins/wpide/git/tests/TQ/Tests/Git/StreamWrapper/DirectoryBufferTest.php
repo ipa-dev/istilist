@@ -32,7 +32,7 @@ class DirectoryBufferTest extends \PHPUnit_Framework_TestCase
         $listing    = array('a', 'b', 'c');
         $iterator   = new DirectoryBuffer($listing);
         $i          = 0;
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $this->assertEquals($listing[$i], $iterator->current());
             $this->assertEquals($i, $iterator->key());
             $i++;
@@ -58,4 +58,3 @@ class DirectoryBufferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($listing), $i);
     }
 }
-

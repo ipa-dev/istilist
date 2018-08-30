@@ -12,12 +12,14 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract
      */
     protected $aliases;
 
-    public function beforeTraverse(array $nodes) {
+    public function beforeTraverse(array $nodes)
+    {
         $this->namespace = null;
         $this->aliases   = array();
     }
 
-    public function enterNode(PHPParser_Node $node) {
+    public function enterNode(PHPParser_Node $node)
+    {
         if ($node instanceof PHPParser_Node_Stmt_Namespace) {
             $this->namespace = $node->name;
             $this->aliases   = array();
@@ -26,7 +28,8 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract
                 throw new PHPParser_Error(
                     sprintf(
                         'Cannot use "%s" as "%s" because the name is already in use',
-                        $node->name, $node->alias
+                        $node->name,
+                        $node->alias
                     ),
                     $node->getLine()
                 );
@@ -85,7 +88,8 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract
         }
     }
 
-    protected function resolveClassName(PHPParser_Node_Name $name) {
+    protected function resolveClassName(PHPParser_Node_Name $name)
+    {
         // don't resolve special class names
         if (in_array((string) $name, array('self', 'parent', 'static'))) {
             return $name;
@@ -107,7 +111,8 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract
         return new PHPParser_Node_Name_FullyQualified($name->parts, $name->getAttributes());
     }
 
-    protected function resolveOtherName(PHPParser_Node_Name $name) {
+    protected function resolveOtherName(PHPParser_Node_Name $name)
+    {
         // fully qualified names are already resolved and we can't do anything about unqualified
         // ones at compiler-time
         if ($name->isFullyQualified() || $name->isUnqualified()) {
@@ -125,7 +130,8 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract
         return new PHPParser_Node_Name_FullyQualified($name->parts, $name->getAttributes());
     }
 
-    protected function addNamespacedName(PHPParser_Node $node) {
+    protected function addNamespacedName(PHPParser_Node $node)
+    {
         if (null !== $this->namespace) {
             $node->namespacedName = clone $this->namespace;
             $node->namespacedName->append($node->name);

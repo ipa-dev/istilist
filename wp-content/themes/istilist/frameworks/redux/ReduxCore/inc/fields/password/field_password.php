@@ -5,12 +5,13 @@
      */
 
 // Exit if accessed directly
-    if ( ! defined( 'ABSPATH' ) ) {
+    if (! defined('ABSPATH')) {
         exit;
     }
 
-    if ( ! class_exists( 'ReduxFramework_password' ) ) {
-        class ReduxFramework_password {
+    if (! class_exists('ReduxFramework_password')) {
+        class ReduxFramework_password
+        {
 
             /**
              * Field Constructor.
@@ -18,7 +19,8 @@
              *
              * @since ReduxFramework 1.0.1
              */
-            function __construct( $field = array(), $value = '', $parent ) {
+            public function __construct($field = array(), $value = '', $parent)
+            {
                 $this->parent = $parent;
                 $this->field  = $field;
                 $this->value  = $value;
@@ -30,8 +32,9 @@
              *
              * @since ReduxFramework 1.0.1
              */
-            function render() {
-                if ( ! empty( $this->field['username'] ) && $this->field['username'] === true ) {
+            public function render()
+            {
+                if (! empty($this->field['username']) && $this->field['username'] === true) {
                     $this->_render_combined_field();
                 } else {
                     $this->_render_single_field();
@@ -53,25 +56,25 @@
              *        )
              *        </code>
              */
-            private function _render_combined_field() {
-
+            private function _render_combined_field()
+            {
                 $defaults = array(
                     'username'    => '',
                     'password'    => '',
                     'placeholder' => array(
-                        'password' => __( 'Password', 'redux-framework' ),
-                        'username' => __( 'Username', 'redux-framework' )
+                        'password' => __('Password', 'redux-framework'),
+                        'username' => __('Username', 'redux-framework')
                     )
                 );
 
-                $this->value = wp_parse_args( $this->value, $defaults );
+                $this->value = wp_parse_args($this->value, $defaults);
 
-                if ( ! empty( $this->field['placeholder'] ) ) {
-                    if ( is_array( $this->field['placeholder'] ) ) {
-                        if ( ! empty( $this->field['placeholder']['password'] ) ) {
+                if (! empty($this->field['placeholder'])) {
+                    if (is_array($this->field['placeholder'])) {
+                        if (! empty($this->field['placeholder']['password'])) {
                             $this->value['placeholder']['password'] = $this->field['placeholder']['password'];
                         }
-                        if ( ! empty( $this->field['placeholder']['username'] ) ) {
+                        if (! empty($this->field['placeholder']['username'])) {
                             $this->value['placeholder']['username'] = $this->field['placeholder']['username'];
                         }
                     } else {
@@ -80,10 +83,10 @@
                 }
 
                 // Username field
-                echo '<input type="text" autocomplete="off" placeholder="' . $this->value['placeholder']['username'] . '" id="' . $this->field['id'] . '[username]" name="' . $this->field['name'] . $this->field['name_suffix'] . '[username]' . '" value="' . esc_attr( $this->value['username'] ) . '" class="' . $this->field['class'] . '" />&nbsp;';
+                echo '<input type="text" autocomplete="off" placeholder="' . $this->value['placeholder']['username'] . '" id="' . $this->field['id'] . '[username]" name="' . $this->field['name'] . $this->field['name_suffix'] . '[username]' . '" value="' . esc_attr($this->value['username']) . '" class="' . $this->field['class'] . '" />&nbsp;';
 
                 // Password field
-                echo '<input type="password" autocomplete="off" placeholder="' . $this->value['placeholder']['password'] . '" id="' . $this->field['id'] . '[password]" name="' . $this->field['name'] . $this->field['name_suffix'] . '[password]' . '" value="' . esc_attr( $this->value['password'] ) . '" class="' . $this->field['class'] . '" />';
+                echo '<input type="password" autocomplete="off" placeholder="' . $this->value['placeholder']['password'] . '" id="' . $this->field['id'] . '[password]" name="' . $this->field['name'] . $this->field['name_suffix'] . '[password]' . '" value="' . esc_attr($this->value['password']) . '" class="' . $this->field['class'] . '" />';
             }
 
             /**
@@ -99,8 +102,9 @@
              *        )
              *        </code>
              */
-            private function _render_single_field() {
-                echo '<input type="password" id="' . $this->field['id'] . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" value="' . esc_attr( $this->value ) . '" class="' . $this->field['class'] . '" />';
+            private function _render_single_field()
+            {
+                echo '<input type="password" id="' . $this->field['id'] . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" value="' . esc_attr($this->value) . '" class="' . $this->field['class'] . '" />';
             }
         }
     }

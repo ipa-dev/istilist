@@ -1,12 +1,13 @@
 <?php
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-if ( ! class_exists( 'ReduxFramework_spinner' ) ) {
-    class ReduxFramework_spinner {
+if (! class_exists('ReduxFramework_spinner')) {
+    class ReduxFramework_spinner
+    {
 
         /**
          * Field Constructor.
@@ -14,7 +15,8 @@ if ( ! class_exists( 'ReduxFramework_spinner' ) ) {
          *
          * @since ReduxFramework 3.0.0
          */
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
@@ -26,8 +28,8 @@ if ( ! class_exists( 'ReduxFramework_spinner' ) ) {
          *
          * @since ReduxFramework 3.0.0
          */
-        function render() {
-
+        public function render()
+        {
             $params = array(
                 'min'     => '',
                 'max'     => '',
@@ -35,9 +37,9 @@ if ( ! class_exists( 'ReduxFramework_spinner' ) ) {
                 'default' => '',
             );
 
-            $this->field = wp_parse_args( $this->field, $params );
+            $this->field = wp_parse_args($this->field, $params);
             $data_string = "";
-            foreach($this->field as $key => $val) {
+            foreach ($this->field as $key => $val) {
                 if (in_array($key, array('min', 'max', 'step', 'default'))) {
                     $data_string.= " data-".$key.'="'.$val.'"';
                 }
@@ -47,7 +49,7 @@ if ( ! class_exists( 'ReduxFramework_spinner' ) ) {
 
             // Don't allow input edit if there's a step
             $readonly = "";
-            if ( isset( $this->field['edit'] ) && $this->field['edit'] == false ) {
+            if (isset($this->field['edit']) && $this->field['edit'] == false) {
                 $readonly = ' readonly="readonly"';
             }
 
@@ -62,43 +64,43 @@ if ( ! class_exists( 'ReduxFramework_spinner' ) ) {
          *
          * @since Redux_Framework 3.1.1
          */
-        function clean() {
-
-            if ( empty( $this->field['min'] ) ) {
+        public function clean()
+        {
+            if (empty($this->field['min'])) {
                 $this->field['min'] = 0;
             } else {
-                $this->field['min'] = intval( $this->field['min'] );
+                $this->field['min'] = intval($this->field['min']);
             }
 
-            if ( empty( $this->field['max'] ) ) {
-                $this->field['max'] = intval( $this->field['min'] ) + 1;
+            if (empty($this->field['max'])) {
+                $this->field['max'] = intval($this->field['min']) + 1;
             } else {
-                $this->field['max'] = intval( $this->field['max'] );
+                $this->field['max'] = intval($this->field['max']);
             }
 
-            if ( empty( $this->field['step'] ) || $this->field['step'] > $this->field['max'] ) {
+            if (empty($this->field['step']) || $this->field['step'] > $this->field['max']) {
                 $this->field['step'] = 1;
             } else {
-                $this->field['step'] = intval( $this->field['step'] );
+                $this->field['step'] = intval($this->field['step']);
             }
 
-            if ( empty( $this->value ) && ! empty( $this->field['default'] ) && intval( $this->field['min'] ) >= 1 ) {
-                $this->value = intval( $this->field['default'] );
+            if (empty($this->value) && ! empty($this->field['default']) && intval($this->field['min']) >= 1) {
+                $this->value = intval($this->field['default']);
             }
 
-            if ( empty( $this->value ) && intval( $this->field['min'] ) >= 1 ) {
-                $this->value = intval( $this->field['min'] );
+            if (empty($this->value) && intval($this->field['min']) >= 1) {
+                $this->value = intval($this->field['min']);
             }
 
-            if ( empty( $this->value ) ) {
+            if (empty($this->value)) {
                 $this->value = 0;
             }
 
             // Extra Validation
-            if ( $this->value < $this->field['min'] ) {
-                $this->value = intval( $this->field['min'] );
-            } else if ( $this->value > $this->field['max'] ) {
-                $this->value = intval( $this->field['max'] );
+            if ($this->value < $this->field['min']) {
+                $this->value = intval($this->field['min']);
+            } elseif ($this->value > $this->field['max']) {
+                $this->value = intval($this->field['max']);
             }
         }
 
@@ -108,8 +110,8 @@ if ( ! class_exists( 'ReduxFramework_spinner' ) ) {
          *
          * @since ReduxFramework 3.0.0
          */
-        function enqueue() {
-
+        public function enqueue()
+        {
             wp_enqueue_script(
                 'redux-field-spinner-custom-js',
                 ReduxFramework::$_url . 'inc/fields/spinner/vendor/spinner_custom.js',

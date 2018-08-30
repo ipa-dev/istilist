@@ -65,7 +65,8 @@ abstract class PHPParser_PrettyPrinterAbstract
     protected $noIndentToken;
     protected $canUseSemicolonNamespaces;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->noIndentToken = uniqid('_NO_INDENT_');
     }
 
@@ -76,7 +77,8 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return string Pretty printed nodes
      */
-    public function prettyPrint(array $nodes) {
+    public function prettyPrint(array $nodes)
+    {
         $this->preprocessNodes($nodes);
 
         return str_replace("\n" . $this->noIndentToken, "\n", $this->pStmts($nodes, false));
@@ -89,7 +91,8 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return string Pretty printed node
      */
-    public function prettyPrintExpr(PHPParser_Node_Expr $node) {
+    public function prettyPrintExpr(PHPParser_Node_Expr $node)
+    {
         return str_replace("\n" . $this->noIndentToken, "\n", $this->p($node));
     }
 
@@ -98,7 +101,8 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @param PHPParser_Node[] $nodes Array of nodes
      */
-    protected function preprocessNodes(array $nodes) {
+    protected function preprocessNodes(array $nodes)
+    {
         /* We can use semicolon-namespaces unless there is a global namespace declaration */
         $this->canUseSemicolonNamespaces = true;
         foreach ($nodes as $node) {
@@ -116,7 +120,8 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return string Pretty printed statements
      */
-    protected function pStmts(array $nodes, $indent = true) {
+    protected function pStmts(array $nodes, $indent = true)
+    {
         $pNodes = array();
         foreach ($nodes as $node) {
             $pNodes[] = $this->pComments($node->getAttribute('comments', array()))
@@ -142,11 +147,13 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return string Pretty printed node
      */
-    protected function p(PHPParser_Node $node) {
+    protected function p(PHPParser_Node $node)
+    {
         return $this->{'p' . $node->getType()}($node);
     }
 
-    protected function pInfixOp($type, PHPParser_Node $leftNode, $operatorString, PHPParser_Node $rightNode) {
+    protected function pInfixOp($type, PHPParser_Node $leftNode, $operatorString, PHPParser_Node $rightNode)
+    {
         list($precedence, $associativity) = $this->precedenceMap[$type];
 
         return $this->pPrec($leftNode, $precedence, $associativity, -1)
@@ -154,12 +161,14 @@ abstract class PHPParser_PrettyPrinterAbstract
              . $this->pPrec($rightNode, $precedence, $associativity, 1);
     }
 
-    protected function pPrefixOp($type, $operatorString, PHPParser_Node $node) {
+    protected function pPrefixOp($type, $operatorString, PHPParser_Node $node)
+    {
         list($precedence, $associativity) = $this->precedenceMap[$type];
         return $operatorString . $this->pPrec($node, $precedence, $associativity, 1);
     }
 
-    protected function pPostfixOp($type, PHPParser_Node $node, $operatorString) {
+    protected function pPostfixOp($type, PHPParser_Node $node, $operatorString)
+    {
         list($precedence, $associativity) = $this->precedenceMap[$type];
         return $this->pPrec($node, $precedence, $associativity, -1) . $operatorString;
     }
@@ -176,7 +185,8 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return string The pretty printed node
      */
-    protected function pPrec(PHPParser_Node $node, $parentPrecedence, $parentAssociativity, $childPosition) {
+    protected function pPrec(PHPParser_Node $node, $parentPrecedence, $parentAssociativity, $childPosition)
+    {
         $type = $node->getType();
         if (isset($this->precedenceMap[$type])) {
             $childPrecedence = $this->precedenceMap[$type][0];
@@ -198,7 +208,8 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return string Imploded pretty printed nodes
      */
-    protected function pImplode(array $nodes, $glue = '') {
+    protected function pImplode(array $nodes, $glue = '')
+    {
         $pNodes = array();
         foreach ($nodes as $node) {
             $pNodes[] = $this->p($node);
@@ -214,7 +225,8 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return string Comma separated pretty printed nodes
      */
-    protected function pCommaSeparated(array $nodes) {
+    protected function pCommaSeparated(array $nodes)
+    {
         return $this->pImplode($nodes, ', ');
     }
 
@@ -225,11 +237,13 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return mixed String marked with $this->noIndentToken's.
      */
-    protected function pNoIndent($string) {
+    protected function pNoIndent($string)
+    {
         return str_replace("\n", "\n" . $this->noIndentToken, $string);
     }
 
-    protected function pComments(array $comments) {
+    protected function pComments(array $comments)
+    {
         $result = '';
 
         foreach ($comments as $comment) {

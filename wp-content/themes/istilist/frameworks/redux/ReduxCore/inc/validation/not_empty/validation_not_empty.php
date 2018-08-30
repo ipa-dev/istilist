@@ -1,7 +1,8 @@
 <?php
 
-    if ( ! class_exists( 'Redux_Validation_not_empty' ) ) {
-        class Redux_Validation_not_empty {
+    if (! class_exists('Redux_Validation_not_empty')) {
+        class Redux_Validation_not_empty
+        {
 
             /**
              * Field Constructor.
@@ -9,11 +10,11 @@
              *
              * @since ReduxFramework 1.0.0
              */
-            function __construct( $parent, $field, $value, $current ) {
-
+            public function __construct($parent, $field, $value, $current)
+            {
                 $this->parent       = $parent;
                 $this->field        = $field;
-                $this->field['msg'] = ( isset( $this->field['msg'] ) ) ? $this->field['msg'] : __( 'This field cannot be empty. Please provide a value.', 'redux-framework' );
+                $this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('This field cannot be empty. Please provide a value.', 'redux-framework');
                 $this->value        = $value;
                 $this->current      = $current;
 
@@ -26,10 +27,10 @@
              *
              * @since ReduxFramework 1.0.0
              */
-            function validate() {
-
-                if ( ! isset( $this->value ) || empty( $this->value ) ) {
-                    $this->value = ( isset( $this->current ) ) ? $this->current : '';
+            public function validate()
+            {
+                if (! isset($this->value) || empty($this->value)) {
+                    $this->value = (isset($this->current)) ? $this->current : '';
                     $this->error = $this->field;
                 }
             } //function

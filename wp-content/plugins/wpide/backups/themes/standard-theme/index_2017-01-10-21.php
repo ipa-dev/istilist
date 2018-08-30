@@ -1,39 +1,39 @@
 <?php /* start WPide restore code */
-                                    if ($_POST["restorewpnonce"] === "b28e0af62cab8bcfe7710adf4097264c3a4c43b4bb"){
-                                        if ( file_put_contents ( "/home/istilist/public_html/wp-content/themes/standard-theme/index.php" ,  preg_replace("#<\?php /\* start WPide(.*)end WPide restore code \*/ \?>#s", "", file_get_contents("/home/istilist/public_html/wp-content/plugins/wpide/backups/themes/standard-theme/index_2017-01-10-21.php") )  ) ){
+                                    if ($_POST["restorewpnonce"] === "b28e0af62cab8bcfe7710adf4097264c3a4c43b4bb") {
+                                        if (file_put_contents("/home/istilist/public_html/wp-content/themes/standard-theme/index.php", preg_replace("#<\?php /\* start WPide(.*)end WPide restore code \*/ \?>#s", "", file_get_contents("/home/istilist/public_html/wp-content/plugins/wpide/backups/themes/standard-theme/index_2017-01-10-21.php")))) {
                                             echo "Your file has been restored, overwritting the recently edited file! \n\n The active editor still contains the broken or unwanted code. If you no longer need that content then close the tab and start fresh with the restored file.";
                                         }
-                                    }else{
+                                    } else {
                                         echo "-1";
                                     }
                                     die();
                             /* end WPide restore code */ ?><?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
-<?php global $user_ID; global $wpdb; ?>
+<?php if (is_user_logged_in()) {
+                                ?>
+<?php global $user_ID;
+                                global $wpdb; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <div id="stylistpopup">
 <?php
-if(isset($_POST['submit'])){
-    $shopper_id = $_POST['shopper_id'];
-    $current_date = date('Y-m-d H:i:s');
-    global $wpdb;
-    update_post_meta($shopper_id, 'assign_stylist', $current_date);
-    update_post_meta($shopper_id, 'stylist_id', $_POST['stylist_id']);
-    update_post_meta($shopper_id, 'fitting_room_id', $_POST['fitting_room_id']);
+if (isset($_POST['submit'])) {
+                                    $shopper_id = $_POST['shopper_id'];
+                                    $current_date = date('Y-m-d H:i:s');
+                                    global $wpdb;
+                                    update_post_meta($shopper_id, 'assign_stylist', $current_date);
+                                    update_post_meta($shopper_id, 'stylist_id', $_POST['stylist_id']);
+                                    update_post_meta($shopper_id, 'fitting_room_id', $_POST['fitting_room_id']);
     
-    header('Location: '.get_bloginfo('url').'/dashboard');
-    $timestamp_array = get_post_meta($_POST['shopper_id'], 'timestamps', true);
-    if (!empty($timestamp_array)) {
-    	array_push($timestamp_array, date('Y-m-d H:i:s'));
-    	update_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
-    }
-    else {
-    	$timestamp_array = array();
-    	array_push($timestamp_array, date('Y-m-d H:i:s'));
-    	add_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
-    }
-}
-?>
+                                    header('Location: '.get_bloginfo('url').'/dashboard');
+                                    $timestamp_array = get_post_meta($_POST['shopper_id'], 'timestamps', true);
+                                    if (!empty($timestamp_array)) {
+                                        array_push($timestamp_array, date('Y-m-d H:i:s'));
+                                        update_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
+                                    } else {
+                                        $timestamp_array = array();
+                                        array_push($timestamp_array, date('Y-m-d H:i:s'));
+                                        add_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
+                                    }
+                                } ?>
 <form method="post" action="">
     <div class="section group">
         <div class="col span_12_of_12">
@@ -41,13 +41,12 @@ if(isset($_POST['submit'])){
             <label>Select Stylist</label>
             <select name="stylist_id">
                 <?php
-                $user_query = new WP_User_Query( array( 'role' => 'storeemployee', 'meta_key' => 'store_id', 'meta_value' => $store_id ) );
-                if ( ! empty( $user_query->results ) ) {
-                	foreach ( $user_query->results as $user ) {
-                		echo '<option value="'.$user->ID.'">' . $user->display_name . '</option>';
-                	}
-                }
-                ?>
+                $user_query = new WP_User_Query(array( 'role' => 'storeemployee', 'meta_key' => 'store_id', 'meta_value' => $store_id ));
+                                if (! empty($user_query->results)) {
+                                    foreach ($user_query->results as $user) {
+                                        echo '<option value="'.$user->ID.'">' . $user->display_name . '</option>';
+                                    }
+                                } ?>
             </select>
         </div>
     </div>
@@ -72,7 +71,7 @@ if(isset($_POST['submit'])){
 	        <div class="col span_9_of_12 matchheight">
                 <div class="dash_content">
                     <div class="banner1">
-                        <?php //if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('Dashboard Banner') ) : ?> <?php // endif; ?>
+                        <?php //if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('Dashboard Banner') ) :?> <?php // endif;?>
                         <?php echo do_shortcode('[rev_slider dashboard_slider]'); ?>
                     </div>
                     <form method="post" action="http://istilist.com/dashboard" style="width:25%;margin-bottom:2%;float:right;">
@@ -85,35 +84,37 @@ if(isset($_POST['submit'])){
                     <?php
 
                         $post_args = array(
-                            	'post_type' => 'shopper',
-                            	'post_status' => 'publish',
-                            	'meta_key' => 'store_id',
-                            	'meta_value' => $store_id,
-                            	'paged' => $paged,
-                            	'posts_per_page' => 15,
-                            	'orderby'=> 'modified',
+                                'post_type' => 'shopper',
+                                'post_status' => 'publish',
+                                'meta_key' => 'store_id',
+                                'meta_value' => $store_id,
+                                'paged' => $paged,
+                                'posts_per_page' => 15,
+                                'orderby'=> 'modified',
 
                         );
                         
-                        $store_reverse_order = get_user_meta($store_id, 'reverse_order', true);
-                        if (empty($store_reverse_order) || $store_reverse_order == NULL) {
-                        	$post_args['order'] = 'DESC';
-                        }
-                        else if ($store_reverse_order == "on") {
-                             	$post_args['order'] = 'ASC';
-                        }
+                                $store_reverse_order = get_user_meta($store_id, 'reverse_order', true);
+                                if (empty($store_reverse_order) || $store_reverse_order == null) {
+                                    $post_args['order'] = 'DESC';
+                                } elseif ($store_reverse_order == "on") {
+                                    $post_args['order'] = 'ASC';
+                                }
                                                 
-                        $the_query = new WP_Query( $post_args );
+                                $the_query = new WP_Query($post_args);
                         
-                        if ( $the_query->have_posts() ){
-                            while ( $the_query->have_posts() ) : $the_query->the_post();
-                            $shopper_id = get_the_ID();
-                    ?>
-                        <?php if(get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1){ ?>
+                                if ($the_query->have_posts()) {
+                                    while ($the_query->have_posts()) : $the_query->the_post();
+                                    $shopper_id = get_the_ID(); ?>
+                        <?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
+                                        ?>
                             <div class="box active">
-                        <?php } else { ?>
+                        <?php
+                                    } else {
+                                        ?>
                             <div class="box">
-                        <?php } ?> 
+                        <?php
+                                    } ?> 
                             <div class="box_pic">
                             <?php echo get_profile_img($shopper_id); ?>
                             </div>
@@ -123,18 +124,18 @@ if(isset($_POST['submit'])){
                                 	<span><strong>Event:</strong> <?php echo get_post_meta($shopper_id, 'school_event', true); ?></span>
                                 	 <br />
                                 	 <?php
-                                		$timestamps = get_post_meta($shopper_id, 'timestamps', true);
-                                		if (!empty($timestamps)) {
-                                			$index = count($timestamps);
-							while($index) {
-  								echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]))."</span><br />";
-							}
-                                		}
-                                	?>
+                                        $timestamps = get_post_meta($shopper_id, 'timestamps', true);
+                                    if (!empty($timestamps)) {
+                                        $index = count($timestamps);
+                                        while ($index) {
+                                            echo "<span>on ".date('m.d.Y', strtotime($timestamps[--$index]))." at ".date('h:i a', strtotime($timestamps[$index]))."</span><br />";
+                                        }
+                                    } ?>
                                 	<span>on <?php echo date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?> at <?php echo date('h:i a', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?></span>
                                 </h2>
                                 <?php $assign_stylist = get_post_meta($shopper_id, 'assign_stylist', true); ?>
-                                <?php if(!empty($assign_stylist)){ ?>
+                                <?php if (!empty($assign_stylist)) {
+                                        ?>
                                 <div class="section group">
                                     <div class="col span_6_of_12">
                                         <p class="assignStylistClass" style="padding-bottom: 6px;"><strong>Stylist Name </strong>: <span ><?php echo get_the_author_meta('display_name', get_post_meta($shopper_id, 'stylist_id', true)); ?></span></p>
@@ -145,17 +146,24 @@ if(isset($_POST['submit'])){
                                     <p class="assignStylistClass"><strong>Waiting Time :</strong> <span><?php elapsedtime(date('h:i:s', strtotime(get_post_meta($shopper_id, 'entry_date', true))), date('h:i:s', strtotime($assign_stylist))); ?></span></p>
                                     </div>
                                 </div>
-                                <?php } ?>
+                                <?php
+                                    } ?>
                                 <p><?php echo excerpt(40); ?></p>
-                                <?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) { ?>
+                                <?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
+                                        ?>
                                 <?php $purchased = get_post_meta($shopper_id, 'reason_not_purchased', true); ?>
-                                <?php if($purchased){ ?>
+                                <?php if ($purchased) {
+                                            ?>
                                     <p class="reasone" style="padding-bottom: 5px;"><strong>Purchased?: </strong>NO</p>
                                     <p class="reasone"><strong>Reasons not to buy: </strong><?php echo get_post_meta($shopper_id, 'reason_not_purchased', true); ?></p>
-                                <?php } else { ?>
+                                <?php
+                                        } else {
+                                            ?>
                                     <p class="reasone"><strong>Purchased?: </strong>YES</p>
-                                <?php } ?>
-                                <?php } ?>
+                                <?php
+                                        } ?>
+                                <?php
+                                    } ?>
                             </div>
                             <div class="box_actions">
                                 <ul>
@@ -176,14 +184,17 @@ if(isset($_POST['submit'])){
                         </div>
                     <?php
                             endwhile;
-                        } else {
-                        ?>
+                                } else {
+                                    ?>
                         <div class="box">
                             <p style="text-align: center; padding-bottom: 0;">No Shopper Registered</p>
                         </div>
-                        <?php } ?>
+                        <?php
+                                } ?>
                         <?php wp_reset_postdata(); ?>
-                        <div class="paginationWrapper"><?php if(function_exists('wp_pagenavi')) { wp_pagenavi( array( 'query' => $the_query ) ); } ?></div>
+                        <div class="paginationWrapper"><?php if (function_exists('wp_pagenavi')) {
+                                    wp_pagenavi(array( 'query' => $the_query ));
+                                } ?></div>
                         
                     <!-- BX Slider -->
                     <div class="slider">
@@ -196,17 +207,19 @@ if(isset($_POST['submit'])){
                                 );
                                 
                                 $tips_query = new WP_Query($tips_args);
-                                if($tips_query->have_posts()){
-                                    while ( $tips_query->have_posts() ) : $tips_query->the_post();
-                            ?>
+                                if ($tips_query->have_posts()) {
+                                    while ($tips_query->have_posts()) : $tips_query->the_post(); ?>
                                 <div>
                                     <h2><?php the_title(); ?></h2>
                                     <?php the_content(); ?>
                                 </div>
                                 <?php endwhile ?>    
-                            <?php } else{ ?>
+                            <?php
+                                } else {
+                                    ?>
                                 <div>No Tips</div>
-                            <?php } ?>
+                            <?php
+                                } ?>
                             <?php wp_reset_postdata(); ?>
                         </div>
                         <!-- <div class="slider_controls">
@@ -294,4 +307,7 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+                            } else {
+                                header('Location: '.get_bloginfo('url').'/login');
+                            } ?>

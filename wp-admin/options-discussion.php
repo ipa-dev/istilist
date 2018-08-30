@@ -6,34 +6,35 @@
  * @subpackage Administration
  */
 /** WordPress Administration Bootstrap */
-require_once( dirname( __FILE__ ) . '/admin.php' );
+require_once(dirname(__FILE__) . '/admin.php');
 
-if ( ! current_user_can( 'manage_options' ) )
-	wp_die( __( 'Sorry, you are not allowed to manage options for this site.' ) );
+if (! current_user_can('manage_options')) {
+    wp_die(__('Sorry, you are not allowed to manage options for this site.'));
+}
 
 $title = __('Discussion Settings');
 $parent_file = 'options-general.php';
 
-add_action( 'admin_print_footer_scripts', 'options_discussion_add_js' );
+add_action('admin_print_footer_scripts', 'options_discussion_add_js');
 
-get_current_screen()->add_help_tab( array(
-	'id'      => 'overview',
-	'title'   => __('Overview'),
-	'content' => '<p>' . __('This screen provides many options for controlling the management and display of comments and links to your posts/pages. So many, in fact, they won&#8217;t all fit here! :) Use the documentation links to get information on what each discussion setting does.') . '</p>' .
-		'<p>' . __('You must click the Save Changes button at the bottom of the screen for new settings to take effect.') . '</p>',
-) );
+get_current_screen()->add_help_tab(array(
+    'id'      => 'overview',
+    'title'   => __('Overview'),
+    'content' => '<p>' . __('This screen provides many options for controlling the management and display of comments and links to your posts/pages. So many, in fact, they won&#8217;t all fit here! :) Use the documentation links to get information on what each discussion setting does.') . '</p>' .
+        '<p>' . __('You must click the Save Changes button at the bottom of the screen for new settings to take effect.') . '</p>',
+));
 
 get_current_screen()->set_help_sidebar(
-	'<p><strong>' . __('For more information:') . '</strong></p>' .
-	'<p>' . __('<a href="https://codex.wordpress.org/Settings_Discussion_Screen">Documentation on Discussion Settings</a>') . '</p>' .
-	'<p>' . __('<a href="https://wordpress.org/support/">Support Forums</a>') . '</p>'
+    '<p><strong>' . __('For more information:') . '</strong></p>' .
+    '<p>' . __('<a href="https://codex.wordpress.org/Settings_Discussion_Screen">Documentation on Discussion Settings</a>') . '</p>' .
+    '<p>' . __('<a href="https://wordpress.org/support/">Support Forums</a>') . '</p>'
 );
 
-include( ABSPATH . 'wp-admin/admin-header.php' );
+include(ABSPATH . 'wp-admin/admin-header.php');
 ?>
 
 <div class="wrap">
-<h1><?php echo esc_html( $title ); ?></h1>
+<h1><?php echo esc_html($title); ?></h1>
 
 <form method="post" action="options.php">
 <?php settings_fields('discussion'); ?>
@@ -54,7 +55,7 @@ include( ABSPATH . 'wp-admin/admin-header.php' );
 <input name="default_comment_status" type="checkbox" id="default_comment_status" value="open" <?php checked('open', get_option('default_comment_status')); ?> />
 <?php _e('Allow people to post comments on new articles'); ?></label>
 <br />
-<p class="description"><?php echo '(' . __( 'These settings may be overridden for individual articles.' ) . ')'; ?></p>
+<p class="description"><?php echo '(' . __('These settings may be overridden for individual articles.') . ')'; ?></p>
 </fieldset></td>
 </tr>
 <tr>
@@ -65,22 +66,24 @@ include( ABSPATH . 'wp-admin/admin-header.php' );
 <label for="comment_registration">
 <input name="comment_registration" type="checkbox" id="comment_registration" value="1" <?php checked('1', get_option('comment_registration')); ?> />
 <?php _e('Users must be registered and logged in to comment'); ?>
-<?php if ( !get_option( 'users_can_register' ) && is_multisite() ) echo ' ' . __( '(Signup has been disabled. Only members of this site can comment.)' ); ?>
+<?php if (!get_option('users_can_register') && is_multisite()) {
+    echo ' ' . __('(Signup has been disabled. Only members of this site can comment.)');
+} ?>
 </label>
 <br />
 
 <label for="close_comments_for_old_posts">
 <input name="close_comments_for_old_posts" type="checkbox" id="close_comments_for_old_posts" value="1" <?php checked('1', get_option('close_comments_for_old_posts')); ?> />
 <?php printf(
-	__( 'Automatically close comments on articles older than %s days' ),
-	'</label> <label for="close_comments_days_old"><input name="close_comments_days_old" type="number" min="0" step="1" id="close_comments_days_old" value="' . esc_attr( get_option( 'close_comments_days_old' ) ) . '" class="small-text" />'
+    __('Automatically close comments on articles older than %s days'),
+    '</label> <label for="close_comments_days_old"><input name="close_comments_days_old" type="number" min="0" step="1" id="close_comments_days_old" value="' . esc_attr(get_option('close_comments_days_old')) . '" class="small-text" />'
 ); ?>
 </label>
 <br />
 
 <label for="show_comments_cookies_opt_in">
-<input name="show_comments_cookies_opt_in" type="checkbox" id="show_comments_cookies_opt_in" value="1" <?php checked( '1', get_option( 'show_comments_cookies_opt_in' ) ); ?> />
-<?php _e( 'Show comments cookies opt-in checkbox.' ); ?>
+<input name="show_comments_cookies_opt_in" type="checkbox" id="show_comments_cookies_opt_in" value="1" <?php checked('1', get_option('show_comments_cookies_opt_in')); ?> />
+<?php _e('Show comments cookies opt-in checkbox.'); ?>
 </label>
 <br />
 
@@ -94,45 +97,55 @@ include( ABSPATH . 'wp-admin/admin-header.php' );
  *
  * @param int $max_depth The maximum depth of threaded comments. Default 10.
  */
-$maxdeep = (int) apply_filters( 'thread_comments_depth_max', 10 );
+$maxdeep = (int) apply_filters('thread_comments_depth_max', 10);
 
 $thread_comments_depth = '</label> <label for="thread_comments_depth"><select name="thread_comments_depth" id="thread_comments_depth">';
-for ( $i = 2; $i <= $maxdeep; $i++ ) {
-	$thread_comments_depth .= "<option value='" . esc_attr($i) . "'";
-	if ( get_option('thread_comments_depth') == $i ) $thread_comments_depth .= " selected='selected'";
-	$thread_comments_depth .= ">$i</option>";
+for ($i = 2; $i <= $maxdeep; $i++) {
+    $thread_comments_depth .= "<option value='" . esc_attr($i) . "'";
+    if (get_option('thread_comments_depth') == $i) {
+        $thread_comments_depth .= " selected='selected'";
+    }
+    $thread_comments_depth .= ">$i</option>";
 }
 $thread_comments_depth .= '</select>';
 
-printf( __('Enable threaded (nested) comments %s levels deep'), $thread_comments_depth );
+printf(__('Enable threaded (nested) comments %s levels deep'), $thread_comments_depth);
 
 ?></label>
 <br />
 <label for="page_comments">
-<input name="page_comments" type="checkbox" id="page_comments" value="1" <?php checked( '1', get_option( 'page_comments' ) ); ?> />
+<input name="page_comments" type="checkbox" id="page_comments" value="1" <?php checked('1', get_option('page_comments')); ?> />
 <?php
 $default_comments_page = '</label> <label for="default_comments_page"><select name="default_comments_page" id="default_comments_page"><option value="newest"';
-if ( 'newest' == get_option('default_comments_page') ) $default_comments_page .= ' selected="selected"';
+if ('newest' == get_option('default_comments_page')) {
+    $default_comments_page .= ' selected="selected"';
+}
 $default_comments_page .= '>' . __('last') . '</option><option value="oldest"';
-if ( 'oldest' == get_option('default_comments_page') ) $default_comments_page .= ' selected="selected"';
+if ('oldest' == get_option('default_comments_page')) {
+    $default_comments_page .= ' selected="selected"';
+}
 $default_comments_page .= '>' . __('first') . '</option></select>';
 printf(
-	/* translators: 1: Form field control for number of top level comments per page, 2: Form field control for the 'first' or 'last' page */
-	__( 'Break comments into pages with %1$s top level comments per page and the %2$s page displayed by default' ),
-	'</label> <label for="comments_per_page"><input name="comments_per_page" type="number" step="1" min="0" id="comments_per_page" value="' . esc_attr( get_option( 'comments_per_page' ) ) . '" class="small-text" />',
-	$default_comments_page
+    /* translators: 1: Form field control for number of top level comments per page, 2: Form field control for the 'first' or 'last' page */
+    __('Break comments into pages with %1$s top level comments per page and the %2$s page displayed by default'),
+    '</label> <label for="comments_per_page"><input name="comments_per_page" type="number" step="1" min="0" id="comments_per_page" value="' . esc_attr(get_option('comments_per_page')) . '" class="small-text" />',
+    $default_comments_page
 );
 ?></label>
 <br />
 <label for="comment_order"><?php
 
 $comment_order = '<select name="comment_order" id="comment_order"><option value="asc"';
-if ( 'asc' == get_option('comment_order') ) $comment_order .= ' selected="selected"';
+if ('asc' == get_option('comment_order')) {
+    $comment_order .= ' selected="selected"';
+}
 $comment_order .= '>' . __('older') . '</option><option value="desc"';
-if ( 'desc' == get_option('comment_order') ) $comment_order .= ' selected="selected"';
+if ('desc' == get_option('comment_order')) {
+    $comment_order .= ' selected="selected"';
+}
 $comment_order .= '>' . __('newer') . '</option></select>';
 
-printf( __('Comments should be displayed with the %s comments at the top of each page'), $comment_order );
+printf(__('Comments should be displayed with the %s comments at the top of each page'), $comment_order);
 
 ?></label>
 </fieldset></td>
@@ -162,11 +175,11 @@ printf( __('Comments should be displayed with the %s comments at the top of each
 <tr>
 <th scope="row"><?php _e('Comment Moderation'); ?></th>
 <td><fieldset><legend class="screen-reader-text"><span><?php _e('Comment Moderation'); ?></span></legend>
-<p><label for="comment_max_links"><?php printf(__('Hold a comment in the queue if it contains %s or more links. (A common characteristic of comment spam is a large number of hyperlinks.)'), '<input name="comment_max_links" type="number" step="1" min="0" id="comment_max_links" value="' . esc_attr(get_option('comment_max_links')) . '" class="small-text" />' ); ?></label></p>
+<p><label for="comment_max_links"><?php printf(__('Hold a comment in the queue if it contains %s or more links. (A common characteristic of comment spam is a large number of hyperlinks.)'), '<input name="comment_max_links" type="number" step="1" min="0" id="comment_max_links" value="' . esc_attr(get_option('comment_max_links')) . '" class="small-text" />'); ?></label></p>
 
 <p><label for="moderation_keys"><?php _e('When a comment contains any of these words in its content, name, URL, email, or IP address, it will be held in the <a href="edit-comments.php?comment_status=moderated">moderation queue</a>. One word or IP address per line. It will match inside words, so &#8220;press&#8221; will match &#8220;WordPress&#8221;.'); ?></label></p>
 <p>
-<textarea name="moderation_keys" rows="10" cols="50" id="moderation_keys" class="large-text code"><?php echo esc_textarea( get_option( 'moderation_keys' ) ); ?></textarea>
+<textarea name="moderation_keys" rows="10" cols="50" id="moderation_keys" class="large-text code"><?php echo esc_textarea(get_option('moderation_keys')); ?></textarea>
 </p>
 </fieldset></td>
 </tr>
@@ -175,7 +188,7 @@ printf( __('Comments should be displayed with the %s comments at the top of each
 <td><fieldset><legend class="screen-reader-text"><span><?php _e('Comment Blacklist'); ?></span></legend>
 <p><label for="blacklist_keys"><?php _e('When a comment contains any of these words in its content, name, URL, email, or IP address, it will be put in the trash. One word or IP address per line. It will match inside words, so &#8220;press&#8221; will match &#8220;WordPress&#8221;.'); ?></label></p>
 <p>
-<textarea name="blacklist_keys" rows="10" cols="50" id="blacklist_keys" class="large-text code"><?php echo esc_textarea( get_option( 'blacklist_keys' ) ); ?></textarea>
+<textarea name="blacklist_keys" rows="10" cols="50" id="blacklist_keys" class="large-text code"><?php echo esc_textarea(get_option('blacklist_keys')); ?></textarea>
 </p>
 </fieldset></td>
 </tr>
@@ -189,7 +202,7 @@ printf( __('Comments should be displayed with the %s comments at the top of each
 <?php
 // the above would be a good place to link to codex documentation on the gravatar functions, for putting it in themes. anything like that?
 
-$show_avatars = get_option( 'show_avatars' );
+$show_avatars = get_option('show_avatars');
 ?>
 
 <table class="form-table">
@@ -197,35 +210,39 @@ $show_avatars = get_option( 'show_avatars' );
 <th scope="row"><?php _e('Avatar Display'); ?></th>
 <td><fieldset><legend class="screen-reader-text"><span><?php _e('Avatar Display'); ?></span></legend>
 	<label for="show_avatars">
-		<input type="checkbox" id="show_avatars" name="show_avatars" value="1" <?php checked( $show_avatars, 1 ); ?> />
-		<?php _e( 'Show Avatars' ); ?>
+		<input type="checkbox" id="show_avatars" name="show_avatars" value="1" <?php checked($show_avatars, 1); ?> />
+		<?php _e('Show Avatars'); ?>
 	</label>
 </fieldset></td>
 </tr>
-<tr class="avatar-settings<?php if ( ! $show_avatars ) echo ' hide-if-js'; ?>">
+<tr class="avatar-settings<?php if (! $show_avatars) {
+    echo ' hide-if-js';
+} ?>">
 <th scope="row"><?php _e('Maximum Rating'); ?></th>
 <td><fieldset><legend class="screen-reader-text"><span><?php _e('Maximum Rating'); ?></span></legend>
 
 <?php
 $ratings = array(
-	/* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
-	'G' => __('G &#8212; Suitable for all audiences'),
-	/* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
-	'PG' => __('PG &#8212; Possibly offensive, usually for audiences 13 and above'),
-	/* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
-	'R' => __('R &#8212; Intended for adult audiences above 17'),
-	/* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
-	'X' => __('X &#8212; Even more mature than above')
+    /* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
+    'G' => __('G &#8212; Suitable for all audiences'),
+    /* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
+    'PG' => __('PG &#8212; Possibly offensive, usually for audiences 13 and above'),
+    /* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
+    'R' => __('R &#8212; Intended for adult audiences above 17'),
+    /* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
+    'X' => __('X &#8212; Even more mature than above')
 );
 foreach ($ratings as $key => $rating) :
-	$selected = (get_option('avatar_rating') == $key) ? 'checked="checked"' : '';
-	echo "\n\t<label><input type='radio' name='avatar_rating' value='" . esc_attr($key) . "' $selected/> $rating</label><br />";
+    $selected = (get_option('avatar_rating') == $key) ? 'checked="checked"' : '';
+    echo "\n\t<label><input type='radio' name='avatar_rating' value='" . esc_attr($key) . "' $selected/> $rating</label><br />";
 endforeach;
 ?>
 
 </fieldset></td>
 </tr>
-<tr class="avatar-settings<?php if ( ! $show_avatars ) echo ' hide-if-js'; ?>">
+<tr class="avatar-settings<?php if (! $show_avatars) {
+    echo ' hide-if-js';
+} ?>">
 <th scope="row"><?php _e('Default Avatar'); ?></th>
 <td class="defaultavatarpicker"><fieldset><legend class="screen-reader-text"><span><?php _e('Default Avatar'); ?></span></legend>
 
@@ -233,13 +250,13 @@ endforeach;
 
 <?php
 $avatar_defaults = array(
-	'mystery' => __('Mystery Person'),
-	'blank' => __('Blank'),
-	'gravatar_default' => __('Gravatar Logo'),
-	'identicon' => __('Identicon (Generated)'),
-	'wavatar' => __('Wavatar (Generated)'),
-	'monsterid' => __('MonsterID (Generated)'),
-	'retro' => __('Retro (Generated)')
+    'mystery' => __('Mystery Person'),
+    'blank' => __('Blank'),
+    'gravatar_default' => __('Gravatar Logo'),
+    'identicon' => __('Identicon (Generated)'),
+    'wavatar' => __('Wavatar (Generated)'),
+    'monsterid' => __('MonsterID (Generated)'),
+    'retro' => __('Retro (Generated)')
 );
 /**
  * Filters the default avatars.
@@ -251,22 +268,22 @@ $avatar_defaults = array(
  *
  * @param array $avatar_defaults Array of default avatars.
  */
-$avatar_defaults = apply_filters( 'avatar_defaults', $avatar_defaults );
-$default = get_option( 'avatar_default', 'mystery' );
+$avatar_defaults = apply_filters('avatar_defaults', $avatar_defaults);
+$default = get_option('avatar_default', 'mystery');
 $avatar_list = '';
 
 // Force avatars on to display these choices
-add_filter( 'pre_option_show_avatars', '__return_true', 100 );
+add_filter('pre_option_show_avatars', '__return_true', 100);
 
-foreach ( $avatar_defaults as $default_key => $default_name ) {
-	$selected = ($default == $default_key) ? 'checked="checked" ' : '';
-	$avatar_list .= "\n\t<label><input type='radio' name='avatar_default' id='avatar_{$default_key}' value='" . esc_attr($default_key) . "' {$selected}/> ";
-	$avatar_list .= get_avatar( $user_email, 32, $default_key, '', array( 'force_default' => true ) );
-	$avatar_list .= ' ' . $default_name . '</label>';
-	$avatar_list .= '<br />';
+foreach ($avatar_defaults as $default_key => $default_name) {
+    $selected = ($default == $default_key) ? 'checked="checked" ' : '';
+    $avatar_list .= "\n\t<label><input type='radio' name='avatar_default' id='avatar_{$default_key}' value='" . esc_attr($default_key) . "' {$selected}/> ";
+    $avatar_list .= get_avatar($user_email, 32, $default_key, '', array( 'force_default' => true ));
+    $avatar_list .= ' ' . $default_name . '</label>';
+    $avatar_list .= '<br />';
 }
 
-remove_filter( 'pre_option_show_avatars', '__return_true', 100 );
+remove_filter('pre_option_show_avatars', '__return_true', 100);
 
 /**
  * Filters the HTML output of the default avatar list.
@@ -275,7 +292,7 @@ remove_filter( 'pre_option_show_avatars', '__return_true', 100 );
  *
  * @param string $avatar_list HTML markup of the avatar list.
  */
-echo apply_filters( 'default_avatar_select', $avatar_list );
+echo apply_filters('default_avatar_select', $avatar_list);
 ?>
 
 </fieldset></td>
@@ -289,4 +306,4 @@ echo apply_filters( 'default_avatar_select', $avatar_list );
 </form>
 </div>
 
-<?php include( ABSPATH . 'wp-admin/admin-footer.php' ); ?>
+<?php include(ABSPATH . 'wp-admin/admin-footer.php'); ?>

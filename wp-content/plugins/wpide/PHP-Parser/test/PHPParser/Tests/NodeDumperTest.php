@@ -6,13 +6,15 @@ class PHPParser_Tests_NodeDumperTest extends PHPUnit_Framework_TestCase
      * @dataProvider provideTestDump
      * @covers PHPParser_NodeDumper::dump
      */
-    public function testDump($node, $dump) {
+    public function testDump($node, $dump)
+    {
         $dumper = new PHPParser_NodeDumper;
 
         $this->assertEquals($dump, $dumper->dump($node));
     }
 
-    public function provideTestDump() {
+    public function provideTestDump()
+    {
         return array(
             array(
                 array(),
@@ -59,7 +61,8 @@ class PHPParser_Tests_NodeDumperTest extends PHPUnit_Framework_TestCase
      * @expectedException        InvalidArgumentException
      * @expectedExceptionMessage Can only dump nodes and arrays.
      */
-    public function testError() {
+    public function testError()
+    {
         $dumper = new PHPParser_NodeDumper;
         $dumper->dump(new stdClass);
     }

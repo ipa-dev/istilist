@@ -9,73 +9,74 @@
  */
 class IXR_Message
 {
-    var $message     = false;
-    var $messageType = false;  // methodCall / methodResponse / fault
-    var $faultCode   = false;
-    var $faultString = false;
-    var $methodName  = '';
-    var $params      = array();
+    public $message     = false;
+    public $messageType = false;  // methodCall / methodResponse / fault
+    public $faultCode   = false;
+    public $faultString = false;
+    public $methodName  = '';
+    public $params      = array();
 
     // Current variable stacks
-    var $_arraystructs = array();   // The stack used to keep track of the current array/struct
-    var $_arraystructstypes = array(); // Stack keeping track of if things are structs or array
-    var $_currentStructName = array();  // A stack as well
-    var $_param;
-    var $_value;
-    var $_currentTag;
-    var $_currentTagContents;
+    public $_arraystructs = array();   // The stack used to keep track of the current array/struct
+    public $_arraystructstypes = array(); // Stack keeping track of if things are structs or array
+    public $_currentStructName = array();  // A stack as well
+    public $_param;
+    public $_value;
+    public $_currentTag;
+    public $_currentTagContents;
     // The XML parser
-    var $_parser;
+    public $_parser;
 
-	/**
-	 * PHP5 constructor.
-	 */
-    function __construct( $message )
+    /**
+     * PHP5 constructor.
+     */
+    public function __construct($message)
     {
         $this->message =& $message;
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Message( $message ) {
-		self::__construct( $message );
-	}
-
-    function parse()
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Message($message)
     {
-        if ( ! function_exists( 'xml_parser_create' ) ) {
-            trigger_error( __( "PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension." ) );
+        self::__construct($message);
+    }
+
+    public function parse()
+    {
+        if (! function_exists('xml_parser_create')) {
+            trigger_error(__("PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension."));
             return false;
         }
 
         // first remove the XML declaration
         // merged from WP #10698 - this method avoids the RAM usage of preg_replace on very large messages
-        $header = preg_replace( '/<\?xml.*?\?'.'>/s', '', substr( $this->message, 0, 100 ), 1 );
-        $this->message = trim( substr_replace( $this->message, $header, 0, 100 ) );
-        if ( '' == $this->message ) {
+        $header = preg_replace('/<\?xml.*?\?'.'>/s', '', substr($this->message, 0, 100), 1);
+        $this->message = trim(substr_replace($this->message, $header, 0, 100));
+        if ('' == $this->message) {
             return false;
         }
 
         // Then remove the DOCTYPE
-        $header = preg_replace( '/^<!DOCTYPE[^>]*+>/i', '', substr( $this->message, 0, 200 ), 1 );
-        $this->message = trim( substr_replace( $this->message, $header, 0, 200 ) );
-        if ( '' == $this->message ) {
+        $header = preg_replace('/^<!DOCTYPE[^>]*+>/i', '', substr($this->message, 0, 200), 1);
+        $this->message = trim(substr_replace($this->message, $header, 0, 200));
+        if ('' == $this->message) {
             return false;
         }
 
         // Check that the root tag is valid
-        $root_tag = substr( $this->message, 0, strcspn( substr( $this->message, 0, 20 ), "> \t\r\n" ) );
-        if ( '<!DOCTYPE' === strtoupper( $root_tag ) ) {
+        $root_tag = substr($this->message, 0, strcspn(substr($this->message, 0, 20), "> \t\r\n"));
+        if ('<!DOCTYPE' === strtoupper($root_tag)) {
             return false;
         }
-        if ( ! in_array( $root_tag, array( '<methodCall', '<methodResponse', '<fault' ) ) ) {
+        if (! in_array($root_tag, array( '<methodCall', '<methodResponse', '<fault' ))) {
             return false;
         }
 
         // Bail if there are too many elements to parse
         $element_limit = 30000;
-        if ( function_exists( 'apply_filters' ) ) {
+        if (function_exists('apply_filters')) {
             /**
              * Filters the number of elements to parse in an XML-RPC response.
              *
@@ -83,9 +84,9 @@ class IXR_Message
              *
              * @param int $element_limit Default elements limit.
              */
-            $element_limit = apply_filters( 'xmlrpc_element_limit', $element_limit );
+            $element_limit = apply_filters('xmlrpc_element_limit', $element_limit);
         }
-        if ( $element_limit && 2 * $element_limit < substr_count( $this->message, '<' ) ) {
+        if ($element_limit && 2 * $element_limit < substr_count($this->message, '<')) {
             return false;
         }
 
@@ -107,7 +108,7 @@ class IXR_Message
          *
          * @param int $chunk_size Chunk size to parse in bytes.
          */
-        $chunk_size = apply_filters( 'xmlrpc_chunk_parsing_size', $chunk_size );
+        $chunk_size = apply_filters('xmlrpc_chunk_parsing_size', $chunk_size);
 
         $final = false;
         do {
@@ -133,11 +134,11 @@ class IXR_Message
         return true;
     }
 
-    function tag_open($parser, $tag, $attr)
+    public function tag_open($parser, $tag, $attr)
     {
         $this->_currentTagContents = '';
         $this->currentTag = $tag;
-        switch($tag) {
+        switch ($tag) {
             case 'methodCall':
             case 'methodResponse':
             case 'fault':
@@ -155,15 +156,15 @@ class IXR_Message
         }
     }
 
-    function cdata($parser, $cdata)
+    public function cdata($parser, $cdata)
     {
         $this->_currentTagContents .= $cdata;
     }
 
-    function tag_close($parser, $tag)
+    public function tag_close($parser, $tag)
     {
         $valueFlag = false;
-        switch($tag) {
+        switch ($tag) {
             case 'int':
             case 'i4':
                 $value = (int)trim($this->_currentTagContents);

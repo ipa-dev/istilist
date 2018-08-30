@@ -40,7 +40,8 @@ class SetupTest extends \PHPUnit_Framework_TestCase
         mkdir(TESTS_REPO_PATH_1, 0777, true);
         mkdir(TESTS_REPO_PATH_2, 0777, true);
 
-        exec(sprintf('cd %s && %s init',
+        exec(sprintf(
+            'cd %s && %s init',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY
         ));
@@ -122,4 +123,3 @@ class SetupTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('TQ\Git\Repository\Repository', $c);
     }
 }
-

@@ -3,8 +3,8 @@
  * Table Creator Options array `$this->component_options` scheme
  * [
  * 'id' => @string is element id [optional] For default is `cdbtTableCreatorBody`
- * 'targetTable' => @string [optional] 
- * 'columnDefinitions' => @string [optional] 
+ * 'targetTable' => @string [optional]
+ * 'columnDefinitions' => @string [optional]
  * ]
  */
 
@@ -15,23 +15,23 @@
 
 // `id` section
 if (isset($this->component_options['id']) && !empty($this->component_options['id'])) {
-  $tcb_id = esc_attr__($this->component_options['id']);
+    $tcb_id = esc_attr__($this->component_options['id']);
 } else {
-  $tcb_id = 'cdbtTableCreatorBody';
+    $tcb_id = 'cdbtTableCreatorBody';
 }
 
 // `targetTable` section
 if (isset($this->component_options['targetTable']) && !empty($this->component_options['targetTable'])) {
-  $tcb_table = esc_attr__($this->component_options['targetTable']);
+    $tcb_table = esc_attr__($this->component_options['targetTable']);
 } else {
-  $tcb_table = '';
+    $tcb_table = '';
 }
 
 // `columnDefinition` section
 if (isset($this->component_options['columnDefinition']) && !empty($this->component_options['columnDefinition'])) {
-  $tcb_columns = esc_attr__($this->component_options['columnDefinition']);
+    $tcb_columns = esc_attr__($this->component_options['columnDefinition']);
 } else {
-  $tcb_columns = [];
+    $tcb_columns = [];
 }
 
 /**
@@ -40,65 +40,66 @@ if (isset($this->component_options['columnDefinition']) && !empty($this->compone
  */
 
 $index_row_definitions = [
-  'col_order'		=> [ 'label' => '<i class="fa fa-hand-rock-o"></i>', 'placeholder' => '', 'size' => [20, 20] ], 
-  'col_name'		=> [ 'label' => __('Column Name', CDBT), 'placeholder' => __('Enter the column name', CDBT), 'size' => [140, 240] ], 
-  'type_format'		=> [ 'label' => __('Type Format', CDBT), 'placeholder' => __('Choose or enter the column type', CDBT), 'size' => [128, 150] ], 
-  'length'			=> [ 'label' => __('Sizing/Define Values', CDBT), 'placeholder' => __('Edit Define Values', CDBT), 'size' => [190,200] ], 
-  'not_null'			=> [ 'label' => __('Not Null', CDBT), 'placeholder' => '', 'size' => [60, 60] ], 
-  'default'			=> [ 'label' => __('Default Value', CDBT), 'placeholder' => __('Enter the default value', CDBT), 'size' => [110, 200] ], 
-  'attributes'		=> [ 'label' => __('Attributes', CDBT), 'placeholder' => __('Choose or enter the attribute', CDBT), 'size' => [125, 140] ], 
-  'auto_increment'	=> [ 'label' => __('Auto Incr.', CDBT), 'placeholder' => '', 'size' => [60, 60] ], 
-  'key_index'		=> [ 'label' => __('Key/Index', CDBT), 'placeholder' => __('Choose or enter the key or index', CDBT), 'size' => [140, 150] ], 
-  'extra'			=> [ 'label' => __('Extra', CDBT), 'placeholder' => __('Enter the other definitions', CDBT), 'size' => [120, 200] ], 
-  'comment'		=> [ 'label' => __('Comment', CDBT), 'placeholder' => __('Enter the comment', CDBT), 'size' => [120, 240] ], 
-  'controll'			=> [ 'label' => '', 'placeholder' => '', 'size' => [40, 40] ], 
+  'col_order'		=> [ 'label' => '<i class="fa fa-hand-rock-o"></i>', 'placeholder' => '', 'size' => [20, 20] ],
+  'col_name'		=> [ 'label' => __('Column Name', CDBT), 'placeholder' => __('Enter the column name', CDBT), 'size' => [140, 240] ],
+  'type_format'		=> [ 'label' => __('Type Format', CDBT), 'placeholder' => __('Choose or enter the column type', CDBT), 'size' => [128, 150] ],
+  'length'			=> [ 'label' => __('Sizing/Define Values', CDBT), 'placeholder' => __('Edit Define Values', CDBT), 'size' => [190,200] ],
+  'not_null'			=> [ 'label' => __('Not Null', CDBT), 'placeholder' => '', 'size' => [60, 60] ],
+  'default'			=> [ 'label' => __('Default Value', CDBT), 'placeholder' => __('Enter the default value', CDBT), 'size' => [110, 200] ],
+  'attributes'		=> [ 'label' => __('Attributes', CDBT), 'placeholder' => __('Choose or enter the attribute', CDBT), 'size' => [125, 140] ],
+  'auto_increment'	=> [ 'label' => __('Auto Incr.', CDBT), 'placeholder' => '', 'size' => [60, 60] ],
+  'key_index'		=> [ 'label' => __('Key/Index', CDBT), 'placeholder' => __('Choose or enter the key or index', CDBT), 'size' => [140, 150] ],
+  'extra'			=> [ 'label' => __('Extra', CDBT), 'placeholder' => __('Enter the other definitions', CDBT), 'size' => [120, 200] ],
+  'comment'		=> [ 'label' => __('Comment', CDBT), 'placeholder' => __('Enter the comment', CDBT), 'size' => [120, 240] ],
+  'controll'			=> [ 'label' => '', 'placeholder' => '', 'size' => [40, 40] ],
 ];
 
 $index_row_base = '<tr class="index-row ui-state-disabled">%s</tr>';
 $index_row_cols = [];
 foreach ($index_row_definitions as $_col_slug => $_col_attr) {
-  $index_row_cols[] = sprintf('<th class="%s" style="min-width: %dpx; max-width: %dpx;">%s</th>', $_col_slug, $_col_attr['size'][0], $_col_attr['size'][1], $_col_attr['label']);
+    $index_row_cols[] = sprintf('<th class="%s" style="min-width: %dpx; max-width: %dpx;">%s</th>', $_col_slug, $_col_attr['size'][0], $_col_attr['size'][1], $_col_attr['label']);
 }
 $index_row = sprintf($index_row_base, implode("\n", $index_row_cols));
 
 $preset_col_types = $this->get_column_types();
 $col_type_options = '';
 foreach ($preset_col_types as $_key => $_val) {
-  $default_value = is_array($_val['default']) ? implode(',', $_val['default']) : $_val['default'];
-  $col_type_options .= sprintf('<li data-value="%s"><a href="#">%s</a></li>', $default_value, $_key);
+    $default_value = is_array($_val['default']) ? implode(',', $_val['default']) : $_val['default'];
+    $col_type_options .= sprintf('<li data-value="%s"><a href="#">%s</a></li>', $default_value, $_key);
 }
 
 $define_values_definition = [
-  'label' => __('Define Values', CDBT), 
-  'content' => '', 
+  'label' => __('Define Values', CDBT),
+  'content' => '',
 ];
 
 $preset_attributes = [];
 foreach ($preset_col_types as $_key => $_val) {
-  if (is_array($_val['atts']) && !empty($_val['atts'])) 
-    $preset_attributes = array_merge($preset_attributes, $_val['atts']);
+    if (is_array($_val['atts']) && !empty($_val['atts'])) {
+        $preset_attributes = array_merge($preset_attributes, $_val['atts']);
+    }
 }
 $preset_attributes = array_unique($preset_attributes);
 $preset_attribute_list = '';
 foreach ($preset_attributes as $_attribute) {
-  $preset_attribute_list .= sprintf('<li data-value="%s"><a href="#">%s</a></li>', $_attribute, strtoupper($_attribute));
+    $preset_attribute_list .= sprintf('<li data-value="%s"><a href="#">%s</a></li>', $_attribute, strtoupper($_attribute));
 }
 
 $preset_key_indexes = [
-  'primary_key' => 'Primary Key', 
-  'index' => 'Index', 
-  'unique' => 'Unique', 
-  'fulltext' => 'Fulltext', 
-  'foreign_key' => 'Foreign Key', 
+  'primary_key' => 'Primary Key',
+  'index' => 'Index',
+  'unique' => 'Unique',
+  'fulltext' => 'Fulltext',
+  'foreign_key' => 'Foreign Key',
 ];
 $preset_key_index_list = '';
 foreach ($preset_key_indexes as $_slug => $_label) {
-  $preset_key_index_list .= sprintf('<li data-value="%s"><a href="#">%s</a></li>', $_slug, strtoupper($_label));
+    $preset_key_index_list .= sprintf('<li data-value="%s"><a href="#">%s</a></li>', $_slug, strtoupper($_label));
 }
 
 $controll_buttons = [
-  'add_column' => __('Add New Column', CDBT), 
-  'delete_column' => __('Remove Column', CDBT), 
+  'add_column' => __('Add New Column', CDBT),
+  'delete_column' => __('Remove Column', CDBT),
 ];
 
 $body_row_base = '<tr class="ui-state-default tbl_cols preset">%s</tr>';

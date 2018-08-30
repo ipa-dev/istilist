@@ -1,7 +1,8 @@
 <?php
 
-    if ( ! class_exists( 'Redux_Validation_html' ) ) {
-        class Redux_Validation_html {
+    if (! class_exists('Redux_Validation_html')) {
+        class Redux_Validation_html
+        {
 
             /**
              * Field Constructor.
@@ -9,8 +10,8 @@
              *
              * @since ReduxFramework 1.0.0
              */
-            function __construct( $parent, $field, $value, $current ) {
-
+            public function __construct($parent, $field, $value, $current)
+            {
                 $this->parent  = $parent;
                 $this->field   = $field;
                 $this->value   = $value;
@@ -25,9 +26,9 @@
              *
              * @since ReduxFramework 1.0.0
              */
-            function validate() {
-
-                $this->value = wp_kses_post( $this->value );
+            public function validate()
+            {
+                $this->value = wp_kses_post($this->value);
             } //function
         } //class
     }

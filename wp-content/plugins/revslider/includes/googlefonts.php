@@ -7,7 +7,9 @@
  * @lastfetch 16.03.2018
  */
  
-if( !defined( 'ABSPATH') ) exit();
+if (!defined('ABSPATH')) {
+    exit();
+}
 
 /**
 *** CREATED WITH SCRIPT SNIPPET AND DATA TAKEN FROM https://www.googleapis.com/webfonts/v1/webfonts?sort=popularity&fields=items(family%2Csubsets%2Cvariants%2Ccategory)&key={YOUR_API_KEY}
@@ -17,22 +19,22 @@ $list = $list['items'];
 
 echo '<pre>';
 foreach($list as $l){
-	echo "'".$l['family'] ."' => array("."\n";
-	echo "'variants' => array(";
-	foreach($l['variants'] as $k => $v){
-		if($k > 0) echo ", ";
-		if($v == 'regular') $v = '400';
-		echo "'".$v."'";
-	}
-	echo "),\n";
-	echo "'subsets' => array(";
-	foreach($l['subsets'] as $k => $v){
-		if($k > 0) echo ", ";
-		echo "'".$v."'";
-	}
-	echo "),\n";
-	echo "'category' => '". $l['category'] ."'";
-	echo "\n),\n";
+    echo "'".$l['family'] ."' => array("."\n";
+    echo "'variants' => array(";
+    foreach($l['variants'] as $k => $v){
+        if($k > 0) echo ", ";
+        if($v == 'regular') $v = '400';
+        echo "'".$v."'";
+    }
+    echo "),\n";
+    echo "'subsets' => array(";
+    foreach($l['subsets'] as $k => $v){
+        if($k > 0) echo ", ";
+        echo "'".$v."'";
+    }
+    echo "),\n";
+    echo "'category' => '". $l['category'] ."'";
+    echo "\n),\n";
 }
 echo '</pre>';
 **/
@@ -4329,5 +4331,3 @@ $googlefonts = array(
 'category' => 'display'
 )
 );
-
-?>

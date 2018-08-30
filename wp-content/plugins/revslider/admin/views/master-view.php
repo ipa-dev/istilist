@@ -1,13 +1,16 @@
 <?php
-if( !defined( 'ABSPATH') ) exit();
+if (!defined('ABSPATH')) {
+    exit();
+}
 
 global $revSliderVersion;
 
 $wrapperClass = "";
-if(RevSliderGlobals::$isNewVersion == false)
-	$wrapperClass = " oldwp";
+if (RevSliderGlobals::$isNewVersion == false) {
+    $wrapperClass = " oldwp";
+}
 
-$wrapperClass = apply_filters( 'rev_overview_wrapper_class_filter', $wrapperClass );
+$wrapperClass = apply_filters('rev_overview_wrapper_class_filter', $wrapperClass);
 
 $nonce = wp_create_nonce("revslider_actions");
 
@@ -17,8 +20,8 @@ $glval = $rsop->getGeneralSettingsValues();
 
 <?php
 $waitstyle = '';
-if(isset($_REQUEST['update_shop'])){
-	$waitstyle = 'display:block';
+if (isset($_REQUEST['update_shop'])) {
+    $waitstyle = 'display:block';
 }
 
 
@@ -76,19 +79,19 @@ $tp_color_picker_presets = TPColorpicker::get_color_presets();
 <?php
 /*
 <script type="text/javascript">
-	<span class="rs-shop">SHOP</span>
-	jQuery(document).ready(function(){
-		jQuery('.rs-shop').click(function(){
-			
-		});
-	});
+    <span class="rs-shop">SHOP</span>
+    jQuery(document).ready(function(){
+        jQuery('.rs-shop').click(function(){
+
+        });
+    });
 </script>
 */
 ?>
 <div id="rs-shop-overview">
 	<?php
-	$shop_data = get_option('tp-shop');
-	?>
+    $shop_data = get_option('tp-shop');
+    ?>
 </div>
 
 <div id="rs-preview-wrapper" style="display: none;">
@@ -209,14 +212,14 @@ $tp_color_picker_presets = TPColorpicker::get_color_presets();
 			<h3><i class="big_diamond"></i><?php _e('Cache Plugins Installed on your Server', 'revslider'); ?></h3>
 			<ul>				
 				<?php
-					$cache_plugins = $rsop->get_installed_cache_plugins();
-					if(!empty($cache_plugins)){
-						foreach($cache_plugins as $name => $url){
-							?>
+                    $cache_plugins = $rsop->get_installed_cache_plugins();
+                    if (!empty($cache_plugins)) {
+                        foreach ($cache_plugins as $name => $url) {
+                            ?>
 							<li><a href="<?php echo esc_url($url); ?>" target="_blank"><?php echo esc_html($name); ?></a></li><?php
-						}
-					}
-					?>
+                        }
+                    }
+                    ?>
 			</ul>
 		</div>
 		
@@ -342,8 +345,8 @@ $tp_color_picker_presets = TPColorpicker::get_color_presets();
 <?php
 $cvc = get_option('rs_cache_overlay', RevSliderGlobals::SLIDER_REVISION);
 
-if(version_compare(RevSliderGlobals::SLIDER_REVISION, $cvc, '>')){
-	?>
+if (version_compare(RevSliderGlobals::SLIDER_REVISION, $cvc, '>')) {
+    ?>
 	<div id="rs-cache-info-dialog" title="">
 		
 		
@@ -358,15 +361,15 @@ if(version_compare(RevSliderGlobals::SLIDER_REVISION, $cvc, '>')){
 		});				
 	</script>
 	<?php 
-	$cvc = RevSliderGlobals::SLIDER_REVISION;
+    $cvc = RevSliderGlobals::SLIDER_REVISION;
 }
 update_option('rs_cache_overlay', $cvc);
 ?>
 
 <script type="text/javascript">
     <?php
-	$validated = get_option('revslider-valid', 'false');
-	?>
+    $validated = get_option('revslider-valid', 'false');
+    ?>
 	rs_plugin_validated = <?php echo ($validated == 'true') ? 'true' : 'false'; ?>;
 	
     jQuery('body').on('click','.rs-preview-device_selector_prev', function() {

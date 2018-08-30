@@ -11,7 +11,8 @@ class PHPParser_Node_Scalar_DNumber extends PHPParser_Node_Scalar
      * @param float $value      Value of the number
      * @param array $attributes Additional attributes
      */
-    public function __construct($value = 0.0, array $attributes = array()) {
+    public function __construct($value = 0.0, array $attributes = array())
+    {
         parent::__construct(
             array(
                 'value' => $value
@@ -27,7 +28,8 @@ class PHPParser_Node_Scalar_DNumber extends PHPParser_Node_Scalar
      *
      * @return float The parsed number
      */
-    public static function parse($str) {
+    public static function parse($str)
+    {
         // if string contains any of .eE just cast it to float
         if (false !== strpbrk($str, '.eE')) {
             return (float) $str;

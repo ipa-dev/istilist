@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\StreamWrapper\FileBuffer\Factory;
+
 use TQ\Git\StreamWrapper\PathInformation;
 
 /**
@@ -54,7 +55,7 @@ interface Factory
      * @param   string              $mode   The mode used to open the file
      * @return  boolean                     True if this factory can handle the path
      */
-    function canHandle(PathInformation $path, $mode);
+    public function canHandle(PathInformation $path, $mode);
 
     /**
      * Returns the file stream to handle the requested path
@@ -63,6 +64,5 @@ interface Factory
      * @param   string              $mode   The mode used to open the path
      * @return  FileBuffer                  The file buffer to handle the path
      */
-    function createFileBuffer(PathInformation $path, $mode);
-
+    public function createFileBuffer(PathInformation $path, $mode);
 }

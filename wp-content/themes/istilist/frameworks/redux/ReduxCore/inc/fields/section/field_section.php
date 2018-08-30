@@ -18,19 +18,20 @@
      */
 
 // Exit if accessed directly
-    if ( ! defined( 'ABSPATH' ) ) {
+    if (! defined('ABSPATH')) {
         exit;
     }
 
 // Don't duplicate me!
-    if ( ! class_exists( 'ReduxFramework_section' ) ) {
+    if (! class_exists('ReduxFramework_section')) {
 
         /**
          * Main ReduxFramework_heading class
          *
          * @since       1.0.0
          */
-        class ReduxFramework_section {
+        class ReduxFramework_section
+        {
 
             /**
              * Field Constructor.
@@ -40,7 +41,8 @@
              * @access        public
              * @return        void
              */
-            public function __construct( $field = array(), $value = '', $parent ) {
+            public function __construct($field = array(), $value = '', $parent)
+            {
                 $this->parent = $parent;
                 $this->field  = $field;
                 $this->value  = $value;
@@ -54,7 +56,8 @@
              * @access        public
              * @return        void
              */
-            public function render() {
+            public function render()
+            {
 
                 // No errors please
                 $defaults    = array(
@@ -64,14 +67,14 @@
                     'title'    => '',
                     'subtitle' => '',
                 );
-                $this->field = wp_parse_args( $this->field, $defaults );
+                $this->field = wp_parse_args($this->field, $defaults);
 
                 $guid = uniqid();
 
                 $add_class = '';
-                if ( isset( $this->field['indent'] ) &&  true === $this->field['indent'] ) {
+                if (isset($this->field['indent']) &&  true === $this->field['indent']) {
                     $add_class = ' form-table-section-indented';
-                } elseif( !isset( $this->field['indent'] ) || ( isset( $this->field['indent'] ) && false !== $this->field['indent'] ) ) {
+                } elseif (!isset($this->field['indent']) || (isset($this->field['indent']) && false !== $this->field['indent'])) {
                     $add_class = " hide";
                 }
 
@@ -79,18 +82,17 @@
 
                 echo '<div id="section-' . $this->field['id'] . '" class="redux-section-field redux-field ' . $this->field['style'] . ' ' . $this->field['class'] . '">';
 
-                if ( ! empty( $this->field['title'] ) ) {
+                if (! empty($this->field['title'])) {
                     echo '<h3>' . $this->field['title'] . '</h3>';
                 }
 
-                if ( ! empty( $this->field['subtitle'] ) ) {
+                if (! empty($this->field['subtitle'])) {
                     echo '<div class="redux-section-desc">' . $this->field['subtitle'] . '</div>';
                 }
 
                 echo '</div><table id="section-table-' . $this->field['id'] . '" data-id="' . $this->field['id'] . '" class="form-table form-table-section no-border' . $add_class . '"><tbody><tr><th></th><td id="' . $guid . '">';
 
-                // delete the tr afterwards
-                ?>
+                // delete the tr afterwards ?>
                 <script type="text/javascript">
                     jQuery( document ).ready(
                         function() {
@@ -112,11 +114,11 @@
                     );
                 </script>
             <?php
-
             }
 
-            public function enqueue() {
-                if ( $this->parent->args['dev_mode'] ) {
+            public function enqueue()
+            {
+                if ($this->parent->args['dev_mode']) {
                     wp_enqueue_style(
                         'redux-field-section-css',
                         ReduxFramework::$_url . 'inc/fields/section/field_section.css',

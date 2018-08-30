@@ -16,167 +16,172 @@
  * @since  1.0.0
  * @access public
  */
-final class Members_Admin_Roles {
+final class Members_Admin_Roles
+{
 
-	/**
-	 * Sets up some necessary actions/filters.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function __construct() {
+    /**
+     * Sets up some necessary actions/filters.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function __construct()
+    {
 
-		// Set up some page options for the current screen.
-		add_action( 'current_screen', array( $this, 'current_screen' ) );
+        // Set up some page options for the current screen.
+        add_action('current_screen', array( $this, 'current_screen' ));
 
-		// Set up the role list table columns.
-		add_filter( 'manage_users_page_roles_columns', array( $this, 'manage_roles_columns' ), 5 );
+        // Set up the role list table columns.
+        add_filter('manage_users_page_roles_columns', array( $this, 'manage_roles_columns' ), 5);
 
-		// Add help tabs.
-		add_action( 'members_load_manage_roles', array( $this, 'add_help_tabs' ) );
-	}
+        // Add help tabs.
+        add_action('members_load_manage_roles', array( $this, 'add_help_tabs' ));
+    }
 
-	/**
-	 * Modifies the current screen object.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function current_screen( $screen ) {
+    /**
+     * Modifies the current screen object.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function current_screen($screen)
+    {
+        if ('users_page_roles' === $screen->id) {
+            $screen->add_option('per_page', array( 'default' => 20 ));
+        }
+    }
 
-		if ( 'users_page_roles' === $screen->id )
-			$screen->add_option( 'per_page', array( 'default' => 20 ) );
-	}
+    /**
+     * Sets up the roles column headers.
+     *
+     * @since  1.0.0
+     * @access public
+     * @param  array  $columns
+     * @return array
+     */
+    public function manage_roles_columns($columns)
+    {
+        $columns = array(
+            'cb'            => '<input type="checkbox" />',
+            'title'         => esc_html__('Role Name', 'members'),
+            'role'          => esc_html__('Role', 'members'),
+            'users'         => esc_html__('Users', 'members'),
+            'granted_caps'  => esc_html__('Granted', 'members'),
+            'denied_caps'   => esc_html__('Denied', 'members')
+        );
 
-	/**
-	 * Sets up the roles column headers.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  array  $columns
-	 * @return array
-	 */
-	public function manage_roles_columns( $columns ) {
+        return apply_filters('members_manage_roles_columns', $columns);
+    }
 
-		$columns = array(
-			'cb'            => '<input type="checkbox" />',
-			'title'         => esc_html__( 'Role Name', 'members' ),
-			'role'          => esc_html__( 'Role',      'members' ),
-			'users'         => esc_html__( 'Users',     'members' ),
-			'granted_caps'  => esc_html__( 'Granted',   'members' ),
-			'denied_caps'   => esc_html__( 'Denied',    'members' )
-		);
+    /**
+     * Runs on the `load-{$page}` hook.  This is the handler for form submissions and requests.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function load()
+    {
 
-		return apply_filters( 'members_manage_roles_columns', $columns );
-	}
+        // Get the current action if sent as request.
+        $action = isset($_REQUEST['action']) ? sanitize_key($_REQUEST['action']) : false;
 
-	/**
-	 * Runs on the `load-{$page}` hook.  This is the handler for form submissions and requests.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function load() {
+        // Get the current action if posted.
+        if ((isset($_POST['action']) && 'delete' == $_POST['action']) || (isset($_POST['action2']) && 'delete' == $_POST['action2'])) {
+            $action = 'bulk-delete';
+        }
 
-		// Get the current action if sent as request.
-		$action = isset( $_REQUEST['action'] ) ? sanitize_key( $_REQUEST['action'] ) : false;
+        // Bulk delete role handler.
+        if ('bulk-delete' === $action) {
 
-		// Get the current action if posted.
-		if ( ( isset( $_POST['action'] ) && 'delete' == $_POST['action'] ) || ( isset( $_POST['action2'] ) && 'delete' == $_POST['action2'] ) )
-			$action = 'bulk-delete';
+            // If roles were selected, let's delete some roles.
+            if (current_user_can('delete_roles') && isset($_POST['roles']) && is_array($_POST['roles'])) {
 
-		// Bulk delete role handler.
-		if ( 'bulk-delete' === $action ) {
+                // Verify the nonce. Nonce created via `WP_List_Table::display_tablenav()`.
+                check_admin_referer('bulk-roles');
 
-			// If roles were selected, let's delete some roles.
-			if ( current_user_can( 'delete_roles' ) && isset( $_POST['roles'] ) && is_array( $_POST['roles'] ) ) {
+                // Loop through each of the selected roles.
+                foreach ($_POST['roles'] as $role) {
+                    $role = members_sanitize_role($role);
 
-				// Verify the nonce. Nonce created via `WP_List_Table::display_tablenav()`.
-				check_admin_referer( 'bulk-roles' );
+                    if (members_role_exists($role)) {
+                        members_delete_role($role);
+                    }
+                }
 
-				// Loop through each of the selected roles.
-				foreach ( $_POST['roles'] as $role ) {
+                // Add roles deleted message.
+                add_settings_error('members_roles', 'roles_deleted', esc_html__('Selected roles deleted.', 'members'), 'updated');
+            }
 
-					$role = members_sanitize_role( $role );
+            // Delete single role handler.
+        } elseif ('delete' === $action) {
 
-					if ( members_role_exists( $role ) )
-						members_delete_role( $role );
-				}
+            // Make sure the current user can delete roles.
+            if (current_user_can('delete_roles')) {
 
-				// Add roles deleted message.
-				add_settings_error( 'members_roles', 'roles_deleted', esc_html__( 'Selected roles deleted.', 'members' ), 'updated' );
-			}
+                // Verify the referer.
+                check_admin_referer('delete_role', 'members_delete_role_nonce');
 
-		// Delete single role handler.
-		} else if ( 'delete' === $action ) {
+                // Get the role we want to delete.
+                $role = members_sanitize_role($_GET['role']);
 
-			// Make sure the current user can delete roles.
-			if ( current_user_can( 'delete_roles' ) ) {
+                // Check that we have a role before attempting to delete it.
+                if (members_role_exists($role)) {
 
-				// Verify the referer.
-				check_admin_referer( 'delete_role', 'members_delete_role_nonce' );
+                    // Add role deleted message.
+                    add_settings_error('members_roles', 'role_deleted', sprintf(esc_html__('%s role deleted.', 'members'), members_get_role_name($role)), 'updated');
 
-				// Get the role we want to delete.
-				$role = members_sanitize_role( $_GET['role'] );
+                    // Delete the role.
+                    members_delete_role($role);
+                }
+            }
+        }
 
-				// Check that we have a role before attempting to delete it.
-				if ( members_role_exists( $role ) ) {
+        // Load page hook.
+        do_action('members_load_manage_roles');
+    }
 
-					// Add role deleted message.
-					add_settings_error( 'members_roles', 'role_deleted', sprintf( esc_html__( '%s role deleted.', 'members' ), members_get_role_name( $role ) ), 'updated' );
+    /**
+     * Enqueue scripts/styles.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function enqueue()
+    {
+        wp_enqueue_style('members-admin');
+        wp_enqueue_script('members-edit-role');
+    }
 
-					// Delete the role.
-					members_delete_role( $role );
-				}
-			}
-		}
-
-		// Load page hook.
-		do_action( 'members_load_manage_roles' );
-	}
-
-	/**
-	 * Enqueue scripts/styles.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function enqueue() {
-
-		wp_enqueue_style(  'members-admin'     );
-		wp_enqueue_script( 'members-edit-role' );
-	}
-
-	/**
-	 * Displays the page content.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function page() {
-
-		require_once( members_plugin()->admin_dir . 'class-role-list-table.php' ); ?>
+    /**
+     * Displays the page content.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function page()
+    {
+        require_once(members_plugin()->admin_dir . 'class-role-list-table.php'); ?>
 
 		<div class="wrap">
 
 			<h1>
-				<?php esc_html_e( 'Roles', 'members' ); ?>
+				<?php esc_html_e('Roles', 'members'); ?>
 
-				<?php if ( current_user_can( 'create_roles' ) ) : ?>
-					<a href="<?php echo esc_url( members_get_new_role_url() ); ?>" class="page-title-action"><?php esc_html_e( 'Add New', 'members' ); ?></a>
+				<?php if (current_user_can('create_roles')) : ?>
+					<a href="<?php echo esc_url(members_get_new_role_url()); ?>" class="page-title-action"><?php esc_html_e('Add New', 'members'); ?></a>
 				<?php endif; ?>
 			</h1>
 
-			<?php settings_errors( 'members_roles' ); ?>
+			<?php settings_errors('members_roles'); ?>
 
 			<div id="poststuff">
 
-				<form id="roles" action="<?php echo esc_url( members_get_edit_roles_url() ); ?>" method="post">
+				<form id="roles" action="<?php echo esc_url(members_get_edit_roles_url()); ?>" method="post">
 
 					<?php $table = new Members_Role_List_Table(); ?>
 					<?php $table->prepare_items(); ?>
@@ -187,125 +192,139 @@ final class Members_Admin_Roles {
 			</div><!-- #poststuff -->
 
 		</div><!-- .wrap -->
-	<?php }
+	<?php
+    }
 
-	/**
-	 * Adds help tabs.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function add_help_tabs() {
+    /**
+     * Adds help tabs.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function add_help_tabs()
+    {
 
-		// Get the current screen.
-		$screen = get_current_screen();
+        // Get the current screen.
+        $screen = get_current_screen();
 
-		// Add overview help tab.
-		$screen->add_help_tab(
-			array(
-				'id'       => 'overview',
-				'title'    => esc_html__( 'Overview', 'members' ),
-				'callback' => array( $this, 'help_tab_overview' )
-			)
-		);
+        // Add overview help tab.
+        $screen->add_help_tab(
+            array(
+                'id'       => 'overview',
+                'title'    => esc_html__('Overview', 'members'),
+                'callback' => array( $this, 'help_tab_overview' )
+            )
+        );
 
-		// Add screen content help tab.
-		$screen->add_help_tab(
-			array(
-				'id'       => 'screen-content',
-				'title'    => esc_html__( 'Screen Content', 'members' ),
-				'callback' => array( $this, 'help_tab_screen_content' )
-			)
-		);
+        // Add screen content help tab.
+        $screen->add_help_tab(
+            array(
+                'id'       => 'screen-content',
+                'title'    => esc_html__('Screen Content', 'members'),
+                'callback' => array( $this, 'help_tab_screen_content' )
+            )
+        );
 
-		// Add available actions help tab.
-		$screen->add_help_tab(
-			array(
-				'id'       => 'row-actions',
-				'title'    => esc_html__( 'Available Actions', 'members' ),
-				'callback' => array( $this, 'help_tab_row_actions' )
-			)
-		);
+        // Add available actions help tab.
+        $screen->add_help_tab(
+            array(
+                'id'       => 'row-actions',
+                'title'    => esc_html__('Available Actions', 'members'),
+                'callback' => array( $this, 'help_tab_row_actions' )
+            )
+        );
 
-		// Add bulk actions help tab.
-		$screen->add_help_tab(
-			array(
-				'id'       => 'bulk-actions',
-				'title'    => esc_html__( 'Bulk Actions', 'members' ),
-				'callback' => array( $this, 'help_tab_bulk_actions' )
-			)
-		);
+        // Add bulk actions help tab.
+        $screen->add_help_tab(
+            array(
+                'id'       => 'bulk-actions',
+                'title'    => esc_html__('Bulk Actions', 'members'),
+                'callback' => array( $this, 'help_tab_bulk_actions' )
+            )
+        );
 
-		// Set the help sidebar.
-		$screen->set_help_sidebar( members_get_help_sidebar_text() );
-	}
+        // Set the help sidebar.
+        $screen->set_help_sidebar(members_get_help_sidebar_text());
+    }
 
-	/**
-	 * Overview help tab callback function.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function help_tab_overview() { ?>
-
-		<p>
-			<?php esc_html_e( 'This screen provides access to all of your user roles. Roles are a method of grouping users. They are made up of capabilities (caps), which give permission to users to perform specific actions on the site.' ); ?>
-		<p>
-	<?php }
-
-	/**
-	 * Screen content help tab callback function.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function help_tab_screen_content() { ?>
+    /**
+     * Overview help tab callback function.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function help_tab_overview()
+    {
+        ?>
 
 		<p>
-			<?php esc_html_e( 'You can customize the display of this screen&#8216;s contents in a number of ways:', 'members' ); ?>
+			<?php esc_html_e('This screen provides access to all of your user roles. Roles are a method of grouping users. They are made up of capabilities (caps), which give permission to users to perform specific actions on the site.'); ?>
+		<p>
+	<?php
+    }
+
+    /**
+     * Screen content help tab callback function.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function help_tab_screen_content()
+    {
+        ?>
+
+		<p>
+			<?php esc_html_e('You can customize the display of this screen&#8216;s contents in a number of ways:', 'members'); ?>
 		</p>
 
 		<ul>
-			<li><?php esc_html_e( 'You can hide/display columns based on your needs and decide how many roles to list per screen using the Screen Options tab.', 'members' ); ?></li>
-			<li><?php esc_html_e( 'You can filter the list of roles by types using the text links in the upper left. The default view is to show all roles.', 'members' ); ?></li>
+			<li><?php esc_html_e('You can hide/display columns based on your needs and decide how many roles to list per screen using the Screen Options tab.', 'members'); ?></li>
+			<li><?php esc_html_e('You can filter the list of roles by types using the text links in the upper left. The default view is to show all roles.', 'members'); ?></li>
 		</ul>
-	<?php }
+	<?php
+    }
 
-	/**
-	 * Row actions help tab callback function.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function help_tab_row_actions() { ?>
+    /**
+     * Row actions help tab callback function.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function help_tab_row_actions()
+    {
+        ?>
 
 		<p>
-			<?php esc_html_e( 'Hovering over a row in the roles list will display action links that allow you to manage your role. You can perform the following actions:', 'members' ); ?>
+			<?php esc_html_e('Hovering over a row in the roles list will display action links that allow you to manage your role. You can perform the following actions:', 'members'); ?>
 		</p>
 
 		<ul>
-			<li><?php _e( '<strong>Edit</strong> takes you to the editing screen for that role. You can also reach that screen by clicking on the role name.', 'members' ); ?></li>
-			<li><?php _e( '<strong>Delete</strong> removes your role from this list and permanently deletes it.', 'members' ); ?></li>
-			<li><?php _e( '<strong>Clone</strong> copies the role and takes you to the new role screen to further edit it.', 'members' ); ?></li>
-			<li><?php _e( '<strong>Users</strong> takes you to the users screen and lists the users that have that role.', 'members' ); ?></li>
+			<li><?php _e('<strong>Edit</strong> takes you to the editing screen for that role. You can also reach that screen by clicking on the role name.', 'members'); ?></li>
+			<li><?php _e('<strong>Delete</strong> removes your role from this list and permanently deletes it.', 'members'); ?></li>
+			<li><?php _e('<strong>Clone</strong> copies the role and takes you to the new role screen to further edit it.', 'members'); ?></li>
+			<li><?php _e('<strong>Users</strong> takes you to the users screen and lists the users that have that role.', 'members'); ?></li>
 		</ul>
-	<?php }
+	<?php
+    }
 
-	/**
-	 * Bulk actions help tab callback function.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function help_tab_bulk_actions() { ?>
+    /**
+     * Bulk actions help tab callback function.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function help_tab_bulk_actions()
+    {
+        ?>
 
 		<p>
-			<?php esc_html_e( 'You can permanently delete multiple roles at once. Select the roles you want to act on using the checkboxes, then select the action you want to take from the Bulk Actions menu and click Apply.', 'members' ); ?>
+			<?php esc_html_e('You can permanently delete multiple roles at once. Select the roles you want to act on using the checkboxes, then select the action you want to take from the Bulk Actions menu and click Apply.', 'members'); ?>
 		</p>
-	<?php }
+	<?php
+    }
 }

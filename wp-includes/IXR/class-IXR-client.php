@@ -9,23 +9,23 @@
  */
 class IXR_Client
 {
-    var $server;
-    var $port;
-    var $path;
-    var $useragent;
-    var $response;
-    var $message = false;
-    var $debug = false;
-    var $timeout;
-    var $headers = array();
+    public $server;
+    public $port;
+    public $path;
+    public $useragent;
+    public $response;
+    public $message = false;
+    public $debug = false;
+    public $timeout;
+    public $headers = array();
 
     // Storage place for an error message
-    var $error = false;
+    public $error = false;
 
-	/**
-	 * PHP5 constructor.
-	 */
-    function __construct( $server, $path = false, $port = 80, $timeout = 15 )
+    /**
+     * PHP5 constructor.
+     */
+    public function __construct($server, $path = false, $port = 80, $timeout = 15)
     {
         if (!$path) {
             // Assume we have been given a URL instead
@@ -39,7 +39,7 @@ class IXR_Client
                 $this->path = '/';
             }
 
-            if ( ! empty( $bits['query'] ) ) {
+            if (! empty($bits['query'])) {
                 $this->path .= '?' . $bits['query'];
             }
         } else {
@@ -51,14 +51,15 @@ class IXR_Client
         $this->timeout = $timeout;
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Client( $server, $path = false, $port = 80, $timeout = 15 ) {
-		self::__construct( $server, $path, $port, $timeout );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Client($server, $path = false, $port = 80, $timeout = 15)
+    {
+        self::__construct($server, $path, $port, $timeout);
+    }
 
-    function query()
+    public function query()
     {
         $args = func_get_args();
         $method = array_shift($args);
@@ -74,7 +75,7 @@ class IXR_Client
         $this->headers['User-Agent']    = $this->useragent;
         $this->headers['Content-Length']= $length;
 
-        foreach( $this->headers as $header => $value ) {
+        foreach ($this->headers as $header => $value) {
             $request .= "{$header}: {$value}{$r}";
         }
         $request .= $r;
@@ -114,11 +115,11 @@ class IXR_Client
                 $gettingHeaders = false;
             }
             if (!$gettingHeaders) {
-            	// merged from WP #12559 - remove trim
+                // merged from WP #12559 - remove trim
                 $contents .= $line;
             }
             if ($this->debug) {
-            	$debugContents .= $line;
+                $debugContents .= $line;
             }
         }
         if ($this->debug) {
@@ -143,23 +144,23 @@ class IXR_Client
         return true;
     }
 
-    function getResponse()
+    public function getResponse()
     {
         // methodResponses can only have one param - return that
         return $this->message->params[0];
     }
 
-    function isError()
+    public function isError()
     {
         return (is_object($this->error));
     }
 
-    function getErrorCode()
+    public function getErrorCode()
     {
         return $this->error->code;
     }
 
-    function getErrorMessage()
+    public function getErrorMessage()
     {
         return $this->error->message;
     }

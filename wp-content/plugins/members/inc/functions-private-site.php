@@ -13,22 +13,22 @@
  */
 
 # Redirects users to the login page.
-add_action( 'template_redirect', 'members_please_log_in', 0 );
+add_action('template_redirect', 'members_please_log_in', 0);
 
 # Disable content in feeds if the feed should be private.
-add_filter( 'the_content_feed', 'members_private_feed', 95 );
-add_filter( 'the_excerpt_rss',  'members_private_feed', 95 );
-add_filter( 'comment_text_rss', 'members_private_feed', 95 );
+add_filter('the_content_feed', 'members_private_feed', 95);
+add_filter('the_excerpt_rss', 'members_private_feed', 95);
+add_filter('comment_text_rss', 'members_private_feed', 95);
 
 # Filters for the feed error message.
-add_filter( 'members_feed_error_message', array( $GLOBALS['wp_embed'], 'run_shortcode' ),   5 );
-add_filter( 'members_feed_error_message', array( $GLOBALS['wp_embed'], 'autoembed'     ),   5 );
-add_filter( 'members_feed_error_message',                              'wptexturize',       10 );
-add_filter( 'members_feed_error_message',                              'convert_smilies',   15 );
-add_filter( 'members_feed_error_message',                              'convert_chars',     20 );
-add_filter( 'members_feed_error_message',                              'wpautop',           25 );
-add_filter( 'members_feed_error_message',                              'do_shortcode',      30 );
-add_filter( 'members_feed_error_message',                              'shortcode_unautop', 35 );
+add_filter('members_feed_error_message', array( $GLOBALS['wp_embed'], 'run_shortcode' ), 5);
+add_filter('members_feed_error_message', array( $GLOBALS['wp_embed'], 'autoembed'     ), 5);
+add_filter('members_feed_error_message', 'wptexturize', 10);
+add_filter('members_feed_error_message', 'convert_smilies', 15);
+add_filter('members_feed_error_message', 'convert_chars', 20);
+add_filter('members_feed_error_message', 'wpautop', 25);
+add_filter('members_feed_error_message', 'do_shortcode', 30);
+add_filter('members_feed_error_message', 'shortcode_unautop', 35);
 
 /**
  * Conditional tag to see if we have a private blog.
@@ -37,8 +37,9 @@ add_filter( 'members_feed_error_message',                              'shortcod
  * @access public
  * @return bool
  */
-function members_is_private_blog() {
-	return members_get_setting( 'private_blog' );
+function members_is_private_blog()
+{
+    return members_get_setting('private_blog');
 }
 
 /**
@@ -48,8 +49,9 @@ function members_is_private_blog() {
  * @access public
  * @return bool
  */
-function members_is_private_feed() {
-	return members_get_setting( 'private_feed' );
+function members_is_private_feed()
+{
+    return members_get_setting('private_feed');
 }
 
 /**
@@ -59,19 +61,21 @@ function members_is_private_feed() {
  * @access public
  * @return void
  */
-function members_please_log_in() {
+function members_please_log_in()
+{
 
-	// Check if the private blog feature is active and if the user is not logged in.
-	if ( members_is_private_blog() && ! is_user_logged_in() ) {
+    // Check if the private blog feature is active and if the user is not logged in.
+    if (members_is_private_blog() && ! is_user_logged_in()) {
 
-		// If using BuddyPress and on the register/activate page, don't do anything.
-		if ( function_exists( 'bp_is_current_component' ) && ( bp_is_current_component( 'register' ) || bp_is_current_component( 'activate' ) ) )
-			return;
+        // If using BuddyPress and on the register/activate page, don't do anything.
+        if (function_exists('bp_is_current_component') && (bp_is_current_component('register') || bp_is_current_component('activate'))) {
+            return;
+        }
 
-		// Redirect to the login page.
-		auth_redirect();
-		exit;
-	}
+        // Redirect to the login page.
+        auth_redirect();
+        exit;
+    }
 }
 
 /**
@@ -82,9 +86,9 @@ function members_please_log_in() {
  * @param  string  $content
  * @return string
  */
-function members_private_feed( $content ) {
-
-	return members_is_private_feed() ? members_get_private_feed_message() : $content;
+function members_private_feed($content)
+{
+    return members_is_private_feed() ? members_get_private_feed_message() : $content;
 }
 
 /**
@@ -94,7 +98,7 @@ function members_private_feed( $content ) {
  * @access public
  * @return string
  */
-function members_get_private_feed_message() {
-
-	return apply_filters( 'members_feed_error_message', members_get_setting( 'private_feed_error' ) );
+function members_get_private_feed_message()
+{
+    return apply_filters('members_feed_error_message', members_get_setting('private_feed_error'));
 }

@@ -5,7 +5,9 @@
  * @copyright 2015 ThemePunch
  */
 
-if( !defined( 'ABSPATH') ) exit();
+if (!defined('ABSPATH')) {
+    exit();
+}
 
 $folderIncludes = dirname(__FILE__)."/";
 
@@ -21,4 +23,3 @@ require_once($folderIncludes . 'plugin-update.class.php');
 require_once($folderIncludes . 'addon-admin.class.php');
 require_once($folderIncludes . 'colorpicker.class.php');
 require_once($folderIncludes . 'loadbalancer.class.php');
-?>

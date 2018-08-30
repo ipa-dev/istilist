@@ -19,7 +19,8 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt
      * @param PHPParser_Node[]         $stmts      Statements
      * @param array                    $attributes Additional attributes
      */
-    public function __construct(PHPParser_Node_Name $name = null, $stmts = array(), array $attributes = array()) {
+    public function __construct(PHPParser_Node_Name $name = null, $stmts = array(), array $attributes = array())
+    {
         parent::__construct(
             array(
                 'name'  => $name,
@@ -41,7 +42,8 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt
         }
     }
 
-    public static function postprocess(array $stmts) {
+    public static function postprocess(array $stmts)
+    {
         // null = not in namespace, false = semicolon style, true = bracket style
         $bracketed = null;
 
@@ -67,7 +69,7 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt
                     if ($hasNotAllowedStmts) {
                         throw new PHPParser_Error('Namespace declaration statement has to be the very first statement in the script', $stmt->getLine());
                     }
-                // otherwise ensure that the style of the current namespace matches the style of
+                    // otherwise ensure that the style of the current namespace matches the style of
                 // namespaceing used before in this document
                 } elseif ($bracketed !== $currentBracketed) {
                     throw new PHPParser_Error('Cannot mix bracketed namespace declarations with unbracketed namespace declarations', $stmt->getLine());
@@ -77,7 +79,7 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt
                 if (!$bracketed) {
                     $nsOffsets[] = $i;
                 }
-            // declare() and __halt_compiler() are the only valid statements outside of namespace declarations
+                // declare() and __halt_compiler() are the only valid statements outside of namespace declarations
             } elseif (!$stmt instanceof PHPParser_Node_Stmt_Declare
                       && !$stmt instanceof PHPParser_Node_Stmt_HaltCompiler
             ) {
@@ -110,7 +112,7 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt
                     if (end($nsStmt->stmts) instanceof PHPParser_Node_Stmt_HaltCompiler) {
                         $newStmts[] = array_pop($nsStmt->stmts);
                     }
-                // and all the others take all statements between the current and the following one
+                    // and all the others take all statements between the current and the following one
                 } else {
                     $nsStmt->stmts = array_slice($stmts, $nsOffsets[$i] + 1, $nsOffsets[$i + 1] - $nsOffsets[$i] - 1);
                 }

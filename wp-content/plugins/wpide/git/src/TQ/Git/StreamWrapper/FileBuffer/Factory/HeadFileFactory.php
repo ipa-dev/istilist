@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\StreamWrapper\FileBuffer\Factory;
+
 use TQ\Git\StreamWrapper\PathInformation;
 use TQ\Git\StreamWrapper\FileBuffer\StreamBuffer;
 
@@ -71,5 +72,4 @@ class HeadFileFactory implements Factory
     {
         return new StreamBuffer($path->getFullPath(), $mode);
     }
-
 }

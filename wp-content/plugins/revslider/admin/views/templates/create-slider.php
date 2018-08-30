@@ -6,7 +6,9 @@
  */
 
  
-if( !defined( 'ABSPATH') ) exit();
+if (!defined('ABSPATH')) {
+    exit();
+}
 
 $is_edit = false;
 

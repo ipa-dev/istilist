@@ -1,12 +1,13 @@
 <?php
 
 // Exit if accessed directly
-    if ( ! defined( 'ABSPATH' ) ) {
+    if (! defined('ABSPATH')) {
         exit;
     }
 
-    if ( ! class_exists( 'ReduxFramework_raw' ) ) {
-        class ReduxFramework_raw {
+    if (! class_exists('ReduxFramework_raw')) {
+        class ReduxFramework_raw
+        {
 
             /**
              * Field Constructor.
@@ -14,7 +15,8 @@
              *
              * @since ReduxFramework 3.0.4
              */
-            function __construct( $field = array(), $value = '', $parent ) {
+            public function __construct($field = array(), $value = '', $parent)
+            {
                 $this->parent = $parent;
                 $this->field  = $field;
                 $this->value  = $value;
@@ -26,24 +28,23 @@
              *
              * @since ReduxFramework 1.0.0
              */
-            function render() {
-
-                if ( ! empty( $this->field['include'] ) && file_exists( $this->field['include'] ) ) {
-                    require_once( $this->field['include'] );
+            public function render()
+            {
+                if (! empty($this->field['include']) && file_exists($this->field['include'])) {
+                    require_once($this->field['include']);
                 }
 
-                if ( ! empty( $this->field['content'] ) && isset( $this->field['content'] ) ) {
-                    if ( isset( $this->field['markdown'] ) && $this->field['markdown'] == true ) {
-                        require_once dirname( __FILE__ ) . "/parsedown.php";
+                if (! empty($this->field['content']) && isset($this->field['content'])) {
+                    if (isset($this->field['markdown']) && $this->field['markdown'] == true) {
+                        require_once dirname(__FILE__) . "/parsedown.php";
                         $Parsedown = new Parsedown();
-                        echo $Parsedown->text( $this->field['content'] );
+                        echo $Parsedown->text($this->field['content']);
                     } else {
                         echo $this->field['content'];
                     }
                 }
 
-                do_action( 'redux-field-raw-' . $this->parent->args['opt_name'] . '-' . $this->field['id'] );
-
+                do_action('redux-field-raw-' . $this->parent->args['opt_name'] . '-' . $this->field['id']);
             }
         }
     }

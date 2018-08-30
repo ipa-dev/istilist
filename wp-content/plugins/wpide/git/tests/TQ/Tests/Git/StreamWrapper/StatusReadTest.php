@@ -40,7 +40,8 @@ class StatusReadTest extends \PHPUnit_Framework_TestCase
         mkdir(TESTS_TMP_PATH, 0777, true);
         mkdir(TESTS_REPO_PATH_1, 0777, true);
 
-        exec(sprintf('cd %s && %s init',
+        exec(sprintf(
+            'cd %s && %s init',
             escapeshellarg(TESTS_REPO_PATH_1),
             GIT_BINARY
         ));
@@ -70,8 +71,8 @@ class StatusReadTest extends \PHPUnit_Framework_TestCase
         return Repository::open(TESTS_REPO_PATH_1, new Binary(GIT_BINARY));
     }
 
-    public function testReadCommit() {
-
+    public function testReadCommit()
+    {
         $c          = $this->getRepository();
         $commits    = array();
         for ($i = 0; $i < 5; $i++) {
@@ -88,8 +89,8 @@ class StatusReadTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testReadLog() {
-
+    public function testReadLog()
+    {
         $c          = $this->getRepository();
         $commits    = array();
         for ($i = 0; $i < 5; $i++) {
@@ -133,4 +134,3 @@ class StatusReadTest extends \PHPUnit_Framework_TestCase
         }
     }
 }
-

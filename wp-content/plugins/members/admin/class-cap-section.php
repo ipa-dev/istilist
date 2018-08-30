@@ -16,102 +16,105 @@
  * @since  1.0.0
  * @access public
  */
-final class Members_Cap_Section {
+final class Members_Cap_Section
+{
 
-	/**
-	 * Stores the cap tabs object.
-	 *
-	 * @see    Members_Cap_Tabs
-	 * @since  1.0.0
-	 * @access public
-	 * @var    object
-	 */
-	public $manager;
+    /**
+     * Stores the cap tabs object.
+     *
+     * @see    Members_Cap_Tabs
+     * @since  1.0.0
+     * @access public
+     * @var    object
+     */
+    public $manager;
 
-	/**
-	 * ID of the section.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    string
-	 */
-	public $section = '';
+    /**
+     * ID of the section.
+     *
+     * @since  1.0.0
+     * @access public
+     * @var    string
+     */
+    public $section = '';
 
-	/**
-	 * Dashicons icon for the section.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    string
-	 */
-	public $icon = 'dashicons-admin-generic';
+    /**
+     * Dashicons icon for the section.
+     *
+     * @since  1.0.0
+     * @access public
+     * @var    string
+     */
+    public $icon = 'dashicons-admin-generic';
 
-	/**
-	 * Label for the section.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    string
-	 */
-	public $label = '';
+    /**
+     * Label for the section.
+     *
+     * @since  1.0.0
+     * @access public
+     * @var    string
+     */
+    public $label = '';
 
-	/**
-	 * Array of data to pass as a json object to the Underscore template.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    array
-	 */
-	public $json = array();
+    /**
+     * Array of data to pass as a json object to the Underscore template.
+     *
+     * @since  1.0.0
+     * @access public
+     * @var    array
+     */
+    public $json = array();
 
-	/**
-	 * Creates a new section object.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  object  $manager
-	 * @param  string  $section
-	 * @param  array   $args
-	 * @return void
-	 */
-	public function __construct( $manager, $section, $args = array() ) {
+    /**
+     * Creates a new section object.
+     *
+     * @since  1.0.0
+     * @access public
+     * @param  object  $manager
+     * @param  string  $section
+     * @param  array   $args
+     * @return void
+     */
+    public function __construct($manager, $section, $args = array())
+    {
+        foreach (array_keys(get_object_vars($this)) as $key) {
+            if (isset($args[ $key ])) {
+                $this->$key = $args[ $key ];
+            }
+        }
 
-		foreach ( array_keys( get_object_vars( $this ) ) as $key ) {
+        $this->manager = $manager;
+        $this->section = $section;
+    }
 
-			if ( isset( $args[ $key ] ) )
-				$this->$key = $args[ $key ];
-		}
+    /**
+     * Returns the json array.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return array
+     */
+    public function json()
+    {
+        $this->to_json();
+        return $this->json;
+    }
 
-		$this->manager = $manager;
-		$this->section = $section;
-	}
+    /**
+     * Adds custom data to the json array. This data is passed to the Underscore template.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function to_json()
+    {
 
-	/**
-	 * Returns the json array.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return array
-	 */
-	public function json() {
-		$this->to_json();
-		return $this->json;
-	}
+        // Is the role editable?
+        $is_editable = $this->manager->role ? members_is_role_editable($this->manager->role->name) : true;
 
-	/**
-	 * Adds custom data to the json array. This data is passed to the Underscore template.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function to_json() {
-
-		// Is the role editable?
-		$is_editable = $this->manager->role ? members_is_role_editable( $this->manager->role->name ) : true;
-
-		// Set up the ID and class.
-		$this->json['id']    = $this->section;
-		$this->json['class'] = 'members-tab-content' . ( $is_editable ? ' editable-role' : '' );
-	}
+        // Set up the ID and class.
+        $this->json['id']    = $this->section;
+        $this->json['class'] = 'members-tab-content' . ($is_editable ? ' editable-role' : '');
+    }
 }

@@ -21,19 +21,20 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if ( ! class_exists( 'ReduxFramework_date' ) ) {
+if (! class_exists('ReduxFramework_date')) {
 
     /**
      * Main ReduxFramework_date class
      *
      * @since       1.0.0
      */
-    class ReduxFramework_date {
+    class ReduxFramework_date
+    {
 
         /**
          * Field Constructor.
@@ -43,7 +44,8 @@ if ( ! class_exists( 'ReduxFramework_date' ) ) {
          * @access        public
          * @return        void
          */
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
             $this->parent = $parent;
             $this->field  = $field;
             $this->value  = $value;
@@ -57,8 +59,9 @@ if ( ! class_exists( 'ReduxFramework_date' ) ) {
          * @access        public
          * @return        void
          */
-        public function render() {
-            $placeholder = ( isset( $this->field['placeholder'] ) ) ? ' placeholder="' . esc_attr( $this->field['placeholder'] ) . '" ' : '';
+        public function render()
+        {
+            $placeholder = (isset($this->field['placeholder'])) ? ' placeholder="' . esc_attr($this->field['placeholder']) . '" ' : '';
 
             echo '<input data-id="' . $this->field['id'] . '" type="text" id="' . $this->field['id'] . '-date" name="' . $this->field['name'] . $this->field['name_suffix'] . '"' . $placeholder . 'value="' . $this->value . '" class="redux-datepicker ' . $this->field['class'] . '" />';
         }
@@ -71,8 +74,8 @@ if ( ! class_exists( 'ReduxFramework_date' ) ) {
          * @access        public
          * @return        void
          */
-        public function enqueue() {
-
+        public function enqueue()
+        {
             if ($this->parent->args['dev_mode']) {
                 wp_enqueue_style(
                     'redux-field-date-css',

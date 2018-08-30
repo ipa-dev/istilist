@@ -2,11 +2,13 @@
 
 class PHPParser_Tests_Builder_MethodTest extends PHPUnit_Framework_TestCase
 {
-    public function createMethodBuilder($name) {
+    public function createMethodBuilder($name)
+    {
         return new PHPParser_Builder_Method($name);
     }
 
-    public function testModifiers() {
+    public function testModifiers()
+    {
         $node = $this->createMethodBuilder('test')
             ->makePublic()
             ->makeAbstract()
@@ -51,7 +53,8 @@ class PHPParser_Tests_Builder_MethodTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testReturnByRef() {
+    public function testReturnByRef()
+    {
         $node = $this->createMethodBuilder('test')
             ->makeReturnByRef()
             ->getNode()
@@ -65,7 +68,8 @@ class PHPParser_Tests_Builder_MethodTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testParams() {
+    public function testParams()
+    {
         $param1 = new PHPParser_Node_Param('test1');
         $param2 = new PHPParser_Node_Param('test2');
         $param3 = new PHPParser_Node_Param('test3');
@@ -84,7 +88,8 @@ class PHPParser_Tests_Builder_MethodTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testStmts() {
+    public function testStmts()
+    {
         $stmt1 = new PHPParser_Node_Expr_Print(new PHPParser_Node_Scalar_String('test1'));
         $stmt2 = new PHPParser_Node_Expr_Print(new PHPParser_Node_Scalar_String('test2'));
         $stmt3 = new PHPParser_Node_Expr_Print(new PHPParser_Node_Scalar_String('test3'));
@@ -107,7 +112,8 @@ class PHPParser_Tests_Builder_MethodTest extends PHPUnit_Framework_TestCase
      * @expectedException LogicException
      * @expectedExceptionMessage Cannot add statements to an abstract method
      */
-    public function testAddStmtToAbstractMethodError() {
+    public function testAddStmtToAbstractMethodError()
+    {
         $this->createMethodBuilder('test')
             ->makeAbstract()
             ->addStmt(new PHPParser_Node_Expr_Print(new PHPParser_Node_Scalar_String('test')))
@@ -118,7 +124,8 @@ class PHPParser_Tests_Builder_MethodTest extends PHPUnit_Framework_TestCase
      * @expectedException LogicException
      * @expectedExceptionMessage Cannot make method with statements abstract
      */
-    public function testMakeMethodWithStmtsAbstractError() {
+    public function testMakeMethodWithStmtsAbstractError()
+    {
         $this->createMethodBuilder('test')
             ->addStmt(new PHPParser_Node_Expr_Print(new PHPParser_Node_Scalar_String('test')))
             ->makeAbstract()
@@ -129,7 +136,8 @@ class PHPParser_Tests_Builder_MethodTest extends PHPUnit_Framework_TestCase
      * @expectedException LogicException
      * @expectedExceptionMessage Expected parameter node, got "Name"
      */
-    public function testInvalidParamError() {
+    public function testInvalidParamError()
+    {
         $this->createMethodBuilder('test')
             ->addParam(new PHPParser_Node_Name('foo'))
         ;

@@ -1,20 +1,20 @@
 <?php /* start WPide restore code */
-                                    if ($_POST["restorewpnonce"] === "b28e0af62cab8bcfe7710adf4097264c15b915b079"){
-                                        if ( file_put_contents ( "/home/istilist/public_html/wp-content/themes/standard-theme/header.php" ,  preg_replace("#<\?php /\* start WPide(.*)end WPide restore code \*/ \?>#s", "", file_get_contents("/home/istilist/public_html/wp-content/plugins/wpide/backups/themes/standard-theme/header_2017-01-10-17.php") )  ) ){
+                                    if ($_POST["restorewpnonce"] === "b28e0af62cab8bcfe7710adf4097264c15b915b079") {
+                                        if (file_put_contents("/home/istilist/public_html/wp-content/themes/standard-theme/header.php", preg_replace("#<\?php /\* start WPide(.*)end WPide restore code \*/ \?>#s", "", file_get_contents("/home/istilist/public_html/wp-content/plugins/wpide/backups/themes/standard-theme/header_2017-01-10-17.php")))) {
                                             echo "Your file has been restored, overwritting the recently edited file! \n\n The active editor still contains the broken or unwanted code. If you no longer need that content then close the tab and start fresh with the restored file.";
                                         }
-                                    }else{
+                                    } else {
                                         echo "-1";
                                     }
                                     die();
                             /* end WPide restore code */ ?><?php ob_start(); ?>
 <?php session_start(); ?>
 <?php
-if(is_user_logged_in()){
-    global $user_ID;
-    $timezone = get_user_meta($user_ID, 'selecttimezone', true);
-    date_default_timezone_set($timezone);
-}
+if (is_user_logged_in()) {
+                                global $user_ID;
+                                $timezone = get_user_meta($user_ID, 'selecttimezone', true);
+                                date_default_timezone_set($timezone);
+                            }
 ?>
 <!DOCTYPE html>
 <!--[if IE 6]>
@@ -49,12 +49,14 @@ bloginfo('name');
 
 // Add the blog description for the home/front page.
 $site_description = get_bloginfo('description', 'display');
-if ($site_description && (is_home() || is_front_page()))
+if ($site_description && (is_home() || is_front_page())) {
     echo " | $site_description";
+}
 
 // Add a page number if necessary:
-if ($paged >= 2 || $page >= 2)
+if ($paged >= 2 || $page >= 2) {
     echo ' | ' . sprintf(__('Page %s', 'twentyeleven'), max($paged, $page));
+}
 
 ?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -63,24 +65,25 @@ if ($paged >= 2 || $page >= 2)
 <link rel="stylesheet" media="only screen and (max-width: 1024px) and (min-width: 769px)" href="<?php bloginfo('template_directory'); ?>/css/1024.css">
 <link rel="stylesheet" media="only screen and (max-width: 768px) and (min-width: 481px)" href="<?php bloginfo('template_directory'); ?>/css/768.css">
 <link rel="stylesheet" media="only screen and (max-width: 480px)" href="<?php bloginfo('template_directory'); ?>/css/480.css">
-<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('stylesheet_url'); ?>?ver=<?php echo(mt_rand(10,100)); ?>" />
+<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('stylesheet_url'); ?>?ver=<?php echo(mt_rand(10, 100)); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"</script>
 <![endif]-->
 
 <!-- Custom Responsive Stylesheets -->
-<link rel="stylesheet" media="only screen and (max-width: 1024px) and (min-width: 993px)" href="<?php bloginfo('template_directory'); ?>/css/mediaquerycss/styleMax1024.css?ver=<?php echo(mt_rand(10,100)); ?>">
-<link rel="stylesheet" media="only screen and (max-width: 992px) and (min-width: 769px)" href="<?php bloginfo('template_directory'); ?>/css/mediaquerycss/styleMax992.css?ver=<?php echo(mt_rand(10,100)); ?>">
-<link rel="stylesheet" media="only screen and (max-width: 768px) and (min-width: 481px)" href="<?php bloginfo('template_directory'); ?>/css/mediaquerycss/styleMax768.css?ver=<?php echo(mt_rand(10,100)); ?>">
-<link rel="stylesheet" media="only screen and (max-width: 480px)" href="<?php bloginfo('template_directory'); ?>/css/mediaquerycss/styleMax480.css?ver=<?php echo(mt_rand(10,100)); ?>">
+<link rel="stylesheet" media="only screen and (max-width: 1024px) and (min-width: 993px)" href="<?php bloginfo('template_directory'); ?>/css/mediaquerycss/styleMax1024.css?ver=<?php echo(mt_rand(10, 100)); ?>">
+<link rel="stylesheet" media="only screen and (max-width: 992px) and (min-width: 769px)" href="<?php bloginfo('template_directory'); ?>/css/mediaquerycss/styleMax992.css?ver=<?php echo(mt_rand(10, 100)); ?>">
+<link rel="stylesheet" media="only screen and (max-width: 768px) and (min-width: 481px)" href="<?php bloginfo('template_directory'); ?>/css/mediaquerycss/styleMax768.css?ver=<?php echo(mt_rand(10, 100)); ?>">
+<link rel="stylesheet" media="only screen and (max-width: 480px)" href="<?php bloginfo('template_directory'); ?>/css/mediaquerycss/styleMax480.css?ver=<?php echo(mt_rand(10, 100)); ?>">
 
 <?php
 /* We add some JavaScript to pages with the comment form
 * to support sites with threaded comments (when in use).
 */
-if (is_singular() && get_option('thread_comments'))
+if (is_singular() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');
+}
 
 /* Always have wp_head() just before the closing </head>
 * tag of your theme, or you will break many plugins, which
@@ -197,12 +200,14 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-<?php if(is_page(array('analytics-reporting', 'analytics-htmltopdf'))){ ?>
+<?php if (is_page(array('analytics-reporting', 'analytics-htmltopdf'))) {
+    ?>
 <script type="text/javascript" src="https://www.google.com/jsapi" defer></script>
 <script>
 google.load('visualization', '1', {packages: ['corechart', 'line', 'bar']});
 </script>
-<?php } ?>
+<?php
+} ?>
 
 <link href="<?php bloginfo('template_directory'); ?>/frameworks/footable/footable.core.css" rel="stylesheet" type="text/css" />
 <link href="<?php bloginfo('template_directory'); ?>/frameworks/footable/footable.standalone.min.css" rel="stylesheet" type="text/css" />
@@ -266,12 +271,17 @@ jQuery(document).ready(function(){
 
 </head>
 <?php global $options; ?>
-<?php if(is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) { ?>
+<?php if (is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {
+        ?>
 <body <?php body_class(); ?> style="background: url(<?php echo $options['general-background']['url']; ?>);">
-<?php } else { ?>
+<?php
+    } else {
+        ?>
 <body <?php body_class(); ?>>
-<?php } ?>
-<?php if(!is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) { ?>
+<?php
+    } ?>
+<?php if (!is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {
+        ?>
 <div id="header">
 	<div class="maincontent noPadding">
 	    <div class="section group">
@@ -279,7 +289,8 @@ jQuery(document).ready(function(){
                 <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a> <span style="font-size: 20px;">Beta Test</span></h1>                          
 	        </div>
 	        <div class="col span_6_of_12">
-                <?php if(is_user_logged_in()){ ?>
+                <?php if (is_user_logged_in()) {
+            ?>
                 <?php global $user_ID; ?>
                 <div class="unav">
                     <ul>
@@ -298,16 +309,20 @@ jQuery(document).ready(function(){
                         </li>
                     </ul>
                 </div>
-                <?php } else { ?>
+                <?php
+        } else {
+            ?>
                 <div class="unav notunav">
                     <ul>
                         <li><a href="<?php bloginfo('url'); ?>/register">Register</a></li>
                         <li><a href="<?php bloginfo('url'); ?>/login">Login</a></li>
                     </ul>
                 </div>
-                <?php } ?>                          
+                <?php
+        } ?>                          
 	        </div>
 	    </div>
 	</div>
 </div>
-<?php } ?>
+<?php
+    } ?>

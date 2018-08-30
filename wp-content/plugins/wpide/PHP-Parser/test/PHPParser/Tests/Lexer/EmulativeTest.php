@@ -5,14 +5,16 @@ class PHPParser_Tests_Lexer_EmulativeTest extends PHPUnit_Framework_TestCase
     /** @var PHPParser_Lexer_Emulative */
     protected $lexer;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->lexer = new PHPParser_Lexer_Emulative;
     }
 
     /**
      * @dataProvider provideTestReplaceKeywords
      */
-    public function testReplaceKeywords($keyword, $expectedToken) {
+    public function testReplaceKeywords($keyword, $expectedToken)
+    {
         $this->lexer->startLexing('<?php ' . $keyword);
 
         $this->assertEquals($expectedToken, $this->lexer->getNextToken());
@@ -22,7 +24,8 @@ class PHPParser_Tests_Lexer_EmulativeTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTestReplaceKeywords
      */
-    public function testNoReplaceKeywordsAfterObjectOperator($keyword) {
+    public function testNoReplaceKeywordsAfterObjectOperator($keyword)
+    {
         $this->lexer->startLexing('<?php ->' . $keyword);
 
         $this->assertEquals(PHPParser_Parser::T_OBJECT_OPERATOR, $this->lexer->getNextToken());
@@ -30,7 +33,8 @@ class PHPParser_Tests_Lexer_EmulativeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $this->lexer->getNextToken());
     }
 
-    public function provideTestReplaceKeywords() {
+    public function provideTestReplaceKeywords()
+    {
         return array(
             // PHP 5.5
             array('finally',       PHPParser_Parser::T_FINALLY),
@@ -53,7 +57,8 @@ class PHPParser_Tests_Lexer_EmulativeTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTestLexNewFeatures
      */
-    public function testLexNewFeatures($code, array $expectedTokens) {
+    public function testLexNewFeatures($code, array $expectedTokens)
+    {
         $this->lexer->startLexing('<?php ' . $code);
 
         foreach ($expectedTokens as $expectedToken) {
@@ -67,7 +72,8 @@ class PHPParser_Tests_Lexer_EmulativeTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTestLexNewFeatures
      */
-    public function testLeaveStuffAloneInStrings($code) {
+    public function testLeaveStuffAloneInStrings($code)
+    {
         $stringifiedToken = '"' . addcslashes($code, '"\\') . '"';
         $this->lexer->startLexing('<?php ' . $stringifiedToken);
 
@@ -76,7 +82,8 @@ class PHPParser_Tests_Lexer_EmulativeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $this->lexer->getNextToken());
     }
 
-    public function provideTestLexNewFeatures() {
+    public function provideTestLexNewFeatures()
+    {
         return array(
             array('0b1010110', array(
                 array(PHPParser_Parser::T_LNUMBER, '0b1010110'),

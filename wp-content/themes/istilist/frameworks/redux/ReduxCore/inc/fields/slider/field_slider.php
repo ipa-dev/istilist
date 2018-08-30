@@ -19,12 +19,13 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-if ( ! class_exists( 'ReduxFramework_slider' ) ) {
-    class ReduxFramework_slider {
+if (! class_exists('ReduxFramework_slider')) {
+    class ReduxFramework_slider
+    {
 
         /**
          * Field Constructor.
@@ -37,7 +38,8 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
         private $display_text = 2;
         private $display_select = 3;
 
-        function __construct( $field = array(), $value = '', $parent ) {
+        public function __construct($field = array(), $value = '', $parent)
+        {
 
             //parent::__construct( $parent->sections, $parent->args );
             $this->parent = $parent;
@@ -53,10 +55,10 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
                 'forced'        => true
             );
 
-            $this->field = wp_parse_args( $this->field, $defaults );
+            $this->field = wp_parse_args($this->field, $defaults);
 
             // Sanitize float mark
-            switch ( $this->field['float_mark'] ) {
+            switch ($this->field['float_mark']) {
                 case ',':
                 case '.':
                     break;
@@ -66,10 +68,10 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
             }
 
             // Sanitize resolution value
-            $this->field['resolution'] = $this->cleanVal( $this->field['resolution'] );
+            $this->field['resolution'] = $this->cleanVal($this->field['resolution']);
 
             // Sanitize handle value
-            switch ( $this->field['handles'] ) {
+            switch ($this->field['handles']) {
                 case 0:
                 case 1:
                     $this->field['handles'] = 1;
@@ -80,7 +82,7 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
             }
 
             // Sanitize display value
-            switch ( $this->field['display_value'] ) {
+            switch ($this->field['display_value']) {
                 case 'label':
                     $this->field['display_value'] = $this->display_label;
                     break;
@@ -97,64 +99,67 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
             }
         }
 
-        private function cleanVal( $var ) {
-            if ( is_float( $var ) ) {
-                $cleanVar = floatval( $var );
+        private function cleanVal($var)
+        {
+            if (is_float($var)) {
+                $cleanVar = floatval($var);
             } else {
-                $cleanVar = intval( $var );
+                $cleanVar = intval($var);
             }
 
             return $cleanVar;
         }
 
-        private function cleanDefault( $val ) {
-            if ( empty( $val ) && ! empty( $this->field['default'] ) && $this->cleanVal( $this->field['min'] ) >= 1 ) {
-                $val = $this->cleanVal( $this->field['default'] );
+        private function cleanDefault($val)
+        {
+            if (empty($val) && ! empty($this->field['default']) && $this->cleanVal($this->field['min']) >= 1) {
+                $val = $this->cleanVal($this->field['default']);
             }
 
-            if ( empty( $val ) && $this->cleanVal( $this->field['min'] ) >= 1 ) {
-                $val = $this->cleanVal( $this->field['min'] );
+            if (empty($val) && $this->cleanVal($this->field['min']) >= 1) {
+                $val = $this->cleanVal($this->field['min']);
             }
 
-            if ( empty( $val ) ) {
+            if (empty($val)) {
                 $val = 0;
             }
 
             // Extra Validation
-            if ( $val < $this->field['min'] ) {
-                $val = $this->cleanVal( $this->field['min'] );
-            } else if ( $val > $this->field['max'] ) {
-                $val = $this->cleanVal( $this->field['max'] );
+            if ($val < $this->field['min']) {
+                $val = $this->cleanVal($this->field['min']);
+            } elseif ($val > $this->field['max']) {
+                $val = $this->cleanVal($this->field['max']);
             }
 
             return $val;
         }
 
-        private function cleanDefaultArray( $val ) {
+        private function cleanDefaultArray($val)
+        {
             $one = $this->value[1];
             $two = $this->value[2];
 
-            if ( empty( $one ) && ! empty( $this->field['default'][1] ) && $this->cleanVal( $this->field['min'] ) >= 1 ) {
-                $one = $this->cleanVal( $this->field['default'][1] );
+            if (empty($one) && ! empty($this->field['default'][1]) && $this->cleanVal($this->field['min']) >= 1) {
+                $one = $this->cleanVal($this->field['default'][1]);
             }
 
-            if ( empty( $one ) && $this->cleanVal( $this->field['min'] ) >= 1 ) {
-                $one = $this->cleanVal( $this->field['min'] );
+            if (empty($one) && $this->cleanVal($this->field['min']) >= 1) {
+                $one = $this->cleanVal($this->field['min']);
             }
 
-            if ( empty( $one ) ) {
+            if (empty($one)) {
                 $one = 0;
             }
 
-            if ( empty( $two ) && ! empty( $this->field['default'][2] ) && $this->cleanVal( $this->field['min'] ) >= 1 ) {
-                $two = $this->cleanVal( $this->field['default'][1] + 1 );
+            if (empty($two) && ! empty($this->field['default'][2]) && $this->cleanVal($this->field['min']) >= 1) {
+                $two = $this->cleanVal($this->field['default'][1] + 1);
             }
 
-            if ( empty( $two ) && $this->cleanVal( $this->field['min'] ) >= 1 ) {
-                $two = $this->cleanVal( $this->field['default'][1] + 1 );
+            if (empty($two) && $this->cleanVal($this->field['min']) >= 1) {
+                $two = $this->cleanVal($this->field['default'][1] + 1);
             }
 
-            if ( empty( $two ) ) {
+            if (empty($two)) {
                 $two = $this->field['default'][1] + 1;
             }
 
@@ -170,42 +175,42 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
          *
          * @since Redux_Framework 3.1.8
          */
-        function clean() {
+        public function clean()
+        {
 
             // Set min to 0 if no value is set.
-            $this->field['min'] = empty( $this->field['min'] ) ? 0 : $this->cleanVal( $this->field['min'] );
+            $this->field['min'] = empty($this->field['min']) ? 0 : $this->cleanVal($this->field['min']);
 
             // Set max to min + 1 if empty.
-            $this->field['max'] = empty( $this->field['max'] ) ? $this->field['min'] + 1 : $this->cleanVal( $this->field['max'] );
+            $this->field['max'] = empty($this->field['max']) ? $this->field['min'] + 1 : $this->cleanVal($this->field['max']);
 
             // Set step to 1 if step is empty ot step > max.
-            $this->field['step'] = empty( $this->field['step'] ) || $this->field['step'] > $this->field['max'] ? 1 : $this->cleanVal( $this->field['step'] );
+            $this->field['step'] = empty($this->field['step']) || $this->field['step'] > $this->field['max'] ? 1 : $this->cleanVal($this->field['step']);
 
-            if ( 2 == $this->field['handles'] ) {
-                if ( ! is_array( $this->value ) ) {
+            if (2 == $this->field['handles']) {
+                if (! is_array($this->value)) {
                     $this->value[1] = 0;
                     $this->value[2] = 1;
                 }
-                $this->value = $this->cleanDefaultArray( $this->value );
+                $this->value = $this->cleanDefaultArray($this->value);
             } else {
-                if ( is_array( $this->value ) ) {
+                if (is_array($this->value)) {
                     $this->value = 0;
                 }
-                $this->value = $this->cleanDefault( $this->value );
+                $this->value = $this->cleanDefault($this->value);
             }
 
             // More dummy checks
             //if ( ! is_array( $this->field['default'] ) && 2 == $this->field['handles'] ) {
-            if ( ! is_array( $this->value ) && 2 == $this->field['handles'] ) {
+            if (! is_array($this->value) && 2 == $this->field['handles']) {
                 $this->value[0] = $this->field['min'];
                 $this->value[1] = $this->field['min'] + 1;
             }
 
             //if ( is_array( $this->field['default'] ) && 1 == $this->field['handles'] ) {
-            if ( is_array( $this->value ) && 1 == $this->field['handles'] ) {
+            if (is_array($this->value) && 1 == $this->field['handles']) {
                 $this->value = $this->field['min'];
             }
-
         }
 
         /**
@@ -214,11 +219,11 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
          *
          * @since ReduxFramework 3.1.8
          */
-        function enqueue() {
-
+        public function enqueue()
+        {
             $min = Redux_Functions::isMin();
 
-            wp_enqueue_style( 'select2-css' );
+            wp_enqueue_style('select2-css');
 
             wp_enqueue_style(
                 'redux-nouislider-css',
@@ -263,8 +268,8 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
          *
          * @since ReduxFramework 0.0.4
          */
-        function render() {
-
+        public function render()
+        {
             $this->clean();
 
             $fieldID   = $this->field['id'];
@@ -273,12 +278,12 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
 
             // Set handle number variable.
             $twoHandles = false;
-            if ( 2 == $this->field['handles'] ) {
+            if (2 == $this->field['handles']) {
                 $twoHandles = true;
             }
 
             // Set default values(s)
-            if ( true == $twoHandles ) {
+            if (true == $twoHandles) {
                 $valOne = $this->value[0];
                 $valTwo = $this->value[1];
 
@@ -308,7 +313,7 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
             $showSelect = false;
 
             // TEXT output
-            if ( $this->display_text == $this->field['display_value'] ) {
+            if ($this->display_text == $this->field['display_value']) {
                 $showInput = true;
                 echo '<input type="text"
                          name="' . $nameOne . '"
@@ -317,7 +322,7 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
                          class="redux-slider-input redux-slider-input-one-' . $fieldID . ' ' . $this->field['class'] . '"/>';
 
             // LABEL output
-            } elseif ( $this->display_label == $this->field['display_value'] ) {
+            } elseif ($this->display_label == $this->field['display_value']) {
                 $showLabel = true;
 
                 $labelNum = $twoHandles ? '-one' : '';
@@ -328,12 +333,12 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
                   </div>';
 
             // SELECT output
-            } elseif ( $this->display_select == $this->field['display_value'] ) {
+            } elseif ($this->display_select == $this->field['display_value']) {
                 $showSelect = true;
 
-                if ( isset( $this->field['select2'] ) ) { // if there are any let's pass them to js
-                    $select2_params = json_encode( $this->field['select2'] );
-                    $select2_params = htmlspecialchars( $select2_params, ENT_QUOTES );
+                if (isset($this->field['select2'])) { // if there are any let's pass them to js
+                    $select2_params = json_encode($this->field['select2']);
+                    $select2_params = htmlspecialchars($select2_params, ENT_QUOTES);
 
                     echo '<input type="hidden" class="select2_params" value="' . $select2_params . '">';
                 }
@@ -346,7 +351,7 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
             }
 
             // DIV output
-            echo 
+            echo
             '<div
                 class="redux-slider-container ' . $this->field['class'] . '"
                 id="' . $fieldID . '"
@@ -363,10 +368,10 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
             </div>';
 
             // Double slider output
-            if ( true == $twoHandles ) {
+            if (true == $twoHandles) {
 
                 // TEXT
-                if ( true == $showInput ) {
+                if (true == $showInput) {
                     echo '<input type="text"
                              name="' . $nameTwo . '"
                              id="' . $idTwo . '"
@@ -375,7 +380,7 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
                 }
 
                 // LABEL
-                if ( true == $showLabel ) {
+                if (true == $showLabel) {
                     echo '<div class="redux-slider-label-two"
                            id="redux-slider-label-two-' . $fieldID . '"
                            name="' . $nameTwo . '">
@@ -383,17 +388,16 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
                 }
 
                 // SELECT
-                if ( true == $showSelect ) {
+                if (true == $showSelect) {
                     echo '<select class="redux-slider-select-two redux-slider-select-two-' . $fieldID . ' ' . $this->field['class'] . '"
                               name="' . $nameTwo . '"
                               id="' . $idTwo . '">
                      </select>';
-
                 }
             }
 
             // NO output (input hidden)
-            if ( $this->display_none == $this->field['display_value'] || $this->display_label == $this->field['display_value'] ) {
+            if ($this->display_none == $this->field['display_value'] || $this->display_label == $this->field['display_value']) {
                 echo '<input type="hidden"
                          class="redux-slider-value-one-' . $fieldID . ' ' . $this->field['class'] . '"
                          name="' . $nameOne . '"
@@ -401,7 +405,7 @@ if ( ! class_exists( 'ReduxFramework_slider' ) ) {
                          value="' . $valOne . '"/>';
 
                 // double slider hidden output
-                if ( true == $twoHandles ) {
+                if (true == $twoHandles) {
                     echo '<input type="hidden"
                              class="redux-slider-value-two-' . $fieldID . ' ' . $this->field['class'] . '"
                              name="' . $nameTwo . '"

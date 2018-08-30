@@ -33,7 +33,8 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt
      *                                'stmts'      => array(): Statements
      * @param array       $attributes Additional attributes
      */
-    public function __construct($name, array $subNodes = array(), array $attributes = array()) {
+    public function __construct($name, array $subNodes = array(), array $attributes = array())
+    {
         parent::__construct(
             $subNodes + array(
                 'type'       => 0,
@@ -60,15 +61,18 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt
         }
     }
 
-    public function isAbstract() {
+    public function isAbstract()
+    {
         return (bool) ($this->type & self::MODIFIER_ABSTRACT);
     }
 
-    public function isFinal() {
+    public function isFinal()
+    {
         return (bool) ($this->type & self::MODIFIER_FINAL);
     }
 
-    public function getMethods() {
+    public function getMethods()
+    {
         $methods = array();
         foreach ($this->stmts as $stmt) {
             if ($stmt instanceof PHPParser_Node_Stmt_ClassMethod) {
@@ -78,7 +82,8 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt
         return $methods;
     }
 
-    public static function verifyModifier($a, $b) {
+    public static function verifyModifier($a, $b)
+    {
         if ($a & 7 && $b & 7) {
             throw new PHPParser_Error('Multiple access type modifiers are not allowed');
         }

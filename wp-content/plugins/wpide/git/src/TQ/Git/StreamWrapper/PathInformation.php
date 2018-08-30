@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\StreamWrapper;
+
 use TQ\Git\Repository\Repository;
 use TQ\Git\Cli\Binary;
 

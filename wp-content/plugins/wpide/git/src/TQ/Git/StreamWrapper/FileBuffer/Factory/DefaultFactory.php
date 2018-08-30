@@ -34,6 +34,7 @@
  * @namespace
  */
 namespace TQ\Git\StreamWrapper\FileBuffer\Factory;
+
 use TQ\Git\StreamWrapper\PathInformation;
 use TQ\Git\StreamWrapper\FileBuffer\StringBuffer;
 
@@ -74,5 +75,4 @@ class DefaultFactory implements Factory
         $objectInfo = $repo->getObjectInfo($path->getLocalPath(), $path->getRef());
         return new StringBuffer($buffer, $objectInfo, 'r');
     }
-
 }

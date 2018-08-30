@@ -8,15 +8,15 @@
  */
 class IXR_Server
 {
-    var $data;
-    var $callbacks = array();
-    var $message;
-    var $capabilities;
+    public $data;
+    public $callbacks = array();
+    public $message;
+    public $capabilities;
 
-	/**
-	 * PHP5 constructor.
-	 */
-    function __construct( $callbacks = false, $data = false, $wait = false )
+    /**
+     * PHP5 constructor.
+     */
+    public function __construct($callbacks = false, $data = false, $wait = false)
     {
         $this->setCapabilities();
         if ($callbacks) {
@@ -28,20 +28,21 @@ class IXR_Server
         }
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Server( $callbacks = false, $data = false, $wait = false ) {
-		self::__construct( $callbacks, $data, $wait );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Server($callbacks = false, $data = false, $wait = false)
+    {
+        self::__construct($callbacks, $data, $wait);
+    }
 
-    function serve($data = false)
+    public function serve($data = false)
     {
         if (!$data) {
             if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] !== 'POST') {
-                if ( function_exists( 'status_header' ) ) {
-                    status_header( 405 ); // WP #20986
-                    header( 'Allow: POST' );
+                if (function_exists('status_header')) {
+                    status_header(405); // WP #20986
+                    header('Allow: POST');
                 }
                 header('Content-Type: text/plain'); // merged from WP #9093
                 die('XML-RPC server accepts POST requests only.');
@@ -86,11 +87,11 @@ class IXR_Server
 </methodResponse>
 
 EOD;
-      // Send it
-      $this->output($xml);
+        // Send it
+        $this->output($xml);
     }
 
-    function call($methodname, $args)
+    public function call($methodname, $args)
     {
         if (!$this->hasMethod($methodname)) {
             return new IXR_Error(-32601, 'server error. requested method '.$methodname.' does not exist.');
@@ -119,7 +120,7 @@ EOD;
                 if (!is_callable(array($method[0], $method[1]))) {
                     return new IXR_Error(-32601, 'server error. requested object method "'.$method[1].'" does not exist.');
                 }
-            } else if (!function_exists($method)) {
+            } elseif (!function_exists($method)) {
                 return new IXR_Error(-32601, 'server error. requested function "'.$method.'" does not exist.');
             }
 
@@ -129,7 +130,7 @@ EOD;
         return $result;
     }
 
-    function error($error, $message = false)
+    public function error($error, $message = false)
     {
         // Accepts either an error object or an error code and message
         if ($message && !is_object($error)) {
@@ -138,30 +139,32 @@ EOD;
         $this->output($error->getXml());
     }
 
-    function output($xml)
+    public function output($xml)
     {
         $charset = function_exists('get_option') ? get_option('blog_charset') : '';
-        if ($charset)
+        if ($charset) {
             $xml = '<?xml version="1.0" encoding="'.$charset.'"?>'."\n".$xml;
-        else
+        } else {
             $xml = '<?xml version="1.0"?>'."\n".$xml;
+        }
         $length = strlen($xml);
         header('Connection: close');
-        if ($charset)
+        if ($charset) {
             header('Content-Type: text/xml; charset='.$charset);
-        else
+        } else {
             header('Content-Type: text/xml');
+        }
         header('Date: '.date('r'));
         echo $xml;
         exit;
     }
 
-    function hasMethod($method)
+    public function hasMethod($method)
     {
         return in_array($method, array_keys($this->callbacks));
     }
 
-    function setCapabilities()
+    public function setCapabilities()
     {
         // Initialises capabilities array
         $this->capabilities = array(
@@ -180,26 +183,26 @@ EOD;
         );
     }
 
-    function getCapabilities($args)
+    public function getCapabilities($args)
     {
         return $this->capabilities;
     }
 
-    function setCallbacks()
+    public function setCallbacks()
     {
         $this->callbacks['system.getCapabilities'] = 'this:getCapabilities';
         $this->callbacks['system.listMethods'] = 'this:listMethods';
         $this->callbacks['system.multicall'] = 'this:multiCall';
     }
 
-    function listMethods($args)
+    public function listMethods($args)
     {
         // Returns a list of methods - uses array_reverse to ensure user defined
         // methods are listed before server defined methods
         return array_reverse(array_keys($this->callbacks));
     }
 
-    function multiCall($methodcalls)
+    public function multiCall($methodcalls)
     {
         // See http://www.xmlrpc.com/discuss/msgReader$1208
         $return = array();

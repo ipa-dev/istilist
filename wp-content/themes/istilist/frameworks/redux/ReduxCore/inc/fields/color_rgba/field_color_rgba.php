@@ -21,19 +21,20 @@
  */
 
 // Exit if accessed directly
-if( !defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
 // Don't duplicate me!
-if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
+if (!class_exists('ReduxFramework_color_rgba')) {
 
     /**
      * Main ReduxFramework_color_rgba class
      *
      * @since       1.0.0
      */
-    class ReduxFramework_color_rgba {
+    class ReduxFramework_color_rgba
+    {
     
       /**
        * Class Constructor. Defines the args for the extions class
@@ -45,7 +46,8 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
        * @param       array $parent Parent object.
        * @return      void
        */
-        public function __construct( $field = array(), $value ='', $parent ) {
+        public function __construct($field = array(), $value ='', $parent)
+        {
 
             // Set required variables
             $this->parent   = $parent;
@@ -58,7 +60,7 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
                 'rgba'      => ''
             );
 
-            $this->value = wp_parse_args( $this->value, $defaults );
+            $this->value = wp_parse_args($this->value, $defaults);
 
             $this->field['options']['show_input']              = isset($this->field['options']['show_input']) ? $this->field['options']['show_input'] : true;
             $this->field['options']['show_initial']            = isset($this->field['options']['show_initial']) ? $this->field['options']['show_initial'] : false;
@@ -91,8 +93,8 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
          * @access      public
          * @return      void
          */
-        public function render() {
-            
+        public function render()
+        {
             $field_id = $this->field['id'];
             
             // Color picker container
@@ -122,9 +124,9 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
                 $color = '';
             } else {
                 $color = Redux_Helpers::hex2rgba($this->value['color'], $this->value['alpha']);
-            }            
+            }
 
-            if ($this->value['rgba'] == ''){
+            if ($this->value['rgba'] == '') {
                 $this->value['rgba'] = Redux_Helpers::hex2rgba($this->value['color'], $this->value['alpha']);
             }
             
@@ -139,7 +141,7 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
                         data-current-color="' . $this->value['color'] . '"
                         data-block-id="' . $field_id . '"
                         data-output-transparent="' . $this->field['output_transparent'] . '"
-                      />';            
+                      />';
 
             echo '<input
                         type="hidden"
@@ -147,7 +149,7 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
                         data-id="' . $field_id . '-color"
                         id="' . $field_id . '-color"
                         value="' . $this->value['color'] . '"
-                      />';            
+                      />';
 
             // Hidden input for alpha channel
             echo '<input
@@ -167,7 +169,7 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
                         name="' . $opt_name . '[' . $field_id . '][rgba]' .  '"
                         id="' . $field_id . '-rgba"
                         value="' . $this->value['rgba'] . '"
-                      />';             
+                      />';
             
             echo '</div>';
         }
@@ -181,29 +183,30 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
          * @access      public
          * @return      void
          */
-        public function enqueue() {
+        public function enqueue()
+        {
             
             // Set up min files for dev_mode = false.
             $min = Redux_Functions::isMin();
 
             // Field dependent JS
-            if (!wp_script_is ( 'redux-field-color-rgba-js' )) {
+            if (!wp_script_is('redux-field-color-rgba-js')) {
                 wp_enqueue_script(
-                    'redux-field-color-rgba-js', 
+                    'redux-field-color-rgba-js',
                     ReduxFramework::$_url . 'inc/fields/color_rgba/field_color_rgba' . Redux_Functions::isMin() . '.js',
-                    array('jquery', 'redux-spectrum-js'), 
-                    time(), 
+                    array('jquery', 'redux-spectrum-js'),
+                    time(),
                     true
                 );
             }
             
             // Spectrum CSS
-            if (!wp_style_is ( 'redux-spectrum-css' )) {
+            if (!wp_style_is('redux-spectrum-css')) {
                 wp_enqueue_style('redux-spectrum-css');
             }
             
             if ($this->parent->args['dev_mode']) {
-                if (!wp_style_is ( 'redux-field-color-rgba-css' )) {
+                if (!wp_style_is('redux-field-color-rgba-css')) {
                     wp_enqueue_style(
                         'redux-field-color-rgba-css',
                         ReduxFramework::$_url . 'inc/fields/color_rgba/field_color_rgba.css',
@@ -223,8 +226,9 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
          * @since       1.0.0
          * @access      private
          * @return      string
-         */        
-        private function getColorVal(){
+         */
+        private function getColorVal()
+        {
             
             // No notices
             $color  = '';
@@ -235,7 +239,7 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
             if (is_array($this->value)) {
 
                 // Enum array to parse values
-                foreach($this->value as $id => $val) {
+                foreach ($this->value as $id => $val) {
 
                     // Sanitize alpha
                     if ($id == 'alpha') {
@@ -249,7 +253,7 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
                 }
                 
                 // Only build rgba output if alpha ia less than 1
-                if ( $alpha < 1 && $alpha <> '' ) {
+                if ($alpha < 1 && $alpha <> '') {
                     $color = $rgba;
                 }
             }
@@ -265,24 +269,25 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
          * @since       1.0.0
          * @access      public
          * @return      void
-         */        
-        public function output() {
+         */
+        public function output()
+        {
             if (!empty($this->value)) {
                 $style = '';
                 
-                $mode = ( isset( $this->field['mode'] ) && ! empty( $this->field['mode'] ) ? $this->field['mode'] : 'color' );
+                $mode = (isset($this->field['mode']) && ! empty($this->field['mode']) ? $this->field['mode'] : 'color');
                 
                 $color_val = $this->getColorVal();
                 
                 $style .= $mode . ':' . $color_val . ';';
                 
-                if ( ! empty( $this->field['output'] ) && is_array( $this->field['output'] ) ) {
-                    $css = Redux_Functions::parseCSS( $this->field['output'], $style, $color_val );
+                if (! empty($this->field['output']) && is_array($this->field['output'])) {
+                    $css = Redux_Functions::parseCSS($this->field['output'], $style, $color_val);
                     $this->parent->outputCSS .= $css;
                 }
 
-                if ( ! empty( $this->field['compiler'] ) && is_array( $this->field['compiler'] ) ) {
-                    $css = Redux_Functions::parseCSS( $this->field['compiler'], $style, $color_val );
+                if (! empty($this->field['compiler']) && is_array($this->field['compiler'])) {
+                    $css = Redux_Functions::parseCSS($this->field['compiler'], $style, $color_val);
                     $this->parent->compilerCSS .= $css ;
                 }
             }

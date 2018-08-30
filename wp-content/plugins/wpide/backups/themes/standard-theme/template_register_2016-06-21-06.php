@@ -1,9 +1,9 @@
 <?php /* start WPide restore code */
-                                    if ($_POST["restorewpnonce"] === "d242dc55a31b587e1cf9e71eeb502d7a0f03720f17"){
-                                        if ( file_put_contents ( "/home/istilist/public_html/wp-content/themes/standard-theme/template_register.php" ,  preg_replace("#<\?php /\* start WPide(.*)end WPide restore code \*/ \?>#s", "", file_get_contents("/home/istilist/public_html/wp-content/plugins/wpide/backups/themes/standard-theme/template_register_2016-06-21-06.php") )  ) ){
+                                    if ($_POST["restorewpnonce"] === "d242dc55a31b587e1cf9e71eeb502d7a0f03720f17") {
+                                        if (file_put_contents("/home/istilist/public_html/wp-content/themes/standard-theme/template_register.php", preg_replace("#<\?php /\* start WPide(.*)end WPide restore code \*/ \?>#s", "", file_get_contents("/home/istilist/public_html/wp-content/plugins/wpide/backups/themes/standard-theme/template_register_2016-06-21-06.php")))) {
                                             echo "Your file has been restored, overwritting the recently edited file! \n\n The active editor still contains the broken or unwanted code. If you no longer need that content then close the tab and start fresh with the restored file.";
                                         }
-                                    }else{
+                                    } else {
                                         echo "-1";
                                     }
                                     die();
@@ -21,7 +21,7 @@
                         
                         
                         <?php
-                        if(isset($_POST['register'])){
+                        if (isset($_POST['register'])) {
                             require_once(TEMPLATEPATH.'/smtp/class.phpmailer.php');
                             /*function smtpmailer($to, $from, $from_name, $subject, $body) {
                             	$mail = new PHPMailer();  // create a new object
@@ -33,7 +33,7 @@
                             	$mail->Host = $options['smtp-host'];
                             	$mail->Port = $options['smtp-port'];
                             	$mail->Username = $options['smtp-username'];
-                            	$mail->Password = $options['smtp-password'];   
+                            	$mail->Password = $options['smtp-password'];
                             	$mail->SetFrom($from, $from_name);
                             	$mail->Subject = $subject;
                                 $mail->IsHTML(true);
@@ -47,9 +47,9 @@
                             }*/
                             
                             global $wpdb;
-                            $email_addr = explode(',',$_POST['email_address']);
+                            $email_addr = explode(',', $_POST['email_address']);
                             $email_addr[0];
-                            if(email_exists($email_addr[0])){
+                            if (email_exists($email_addr[0])) {
                                 $errorCode = 1;
                             } else {
                                 $new_user_id = wp_insert_user(
@@ -63,25 +63,25 @@
                                         'user_registered'	=> date('Y-m-d H:i:s')
                                     )
                                 );
-                                add_user_meta($new_user_id,'contact_name', $_POST['contact_name']);
-                                add_user_meta($new_user_id,'address', $_POST['address']);
-                                add_user_meta($new_user_id,'phone_number', $_POST['phone_number']);
-                                add_user_meta($new_user_id,'mobile_number', $_POST['mobile_number']);
-                                add_user_meta($new_user_id,'website', $_POST['website']);
-                                add_user_meta($new_user_id,'security_questions', $_POST['security_questions']);
-                                add_user_meta($new_user_id,'security_answer', $_POST['security_answer']);
-                                add_user_meta($new_user_id,'city', $_POST['city']);
-                                add_user_meta($new_user_id,'state', $_POST['state']);
-                                add_user_meta($new_user_id,'zipcode', $_POST['zipcode']);
-                                add_user_meta($new_user_id,'mobile_number_optin', $_POST['mobile_number_optin']);
-                                add_user_meta($new_user_id,'reporting', $_POST['email_address']);
-                                add_user_meta($new_user_id,'store_id', $new_user_id);
-                                add_user_meta($new_user_id,'store_name', $_POST['store_name']);
+                                add_user_meta($new_user_id, 'contact_name', $_POST['contact_name']);
+                                add_user_meta($new_user_id, 'address', $_POST['address']);
+                                add_user_meta($new_user_id, 'phone_number', $_POST['phone_number']);
+                                add_user_meta($new_user_id, 'mobile_number', $_POST['mobile_number']);
+                                add_user_meta($new_user_id, 'website', $_POST['website']);
+                                add_user_meta($new_user_id, 'security_questions', $_POST['security_questions']);
+                                add_user_meta($new_user_id, 'security_answer', $_POST['security_answer']);
+                                add_user_meta($new_user_id, 'city', $_POST['city']);
+                                add_user_meta($new_user_id, 'state', $_POST['state']);
+                                add_user_meta($new_user_id, 'zipcode', $_POST['zipcode']);
+                                add_user_meta($new_user_id, 'mobile_number_optin', $_POST['mobile_number_optin']);
+                                add_user_meta($new_user_id, 'reporting', $_POST['email_address']);
+                                add_user_meta($new_user_id, 'store_id', $new_user_id);
+                                add_user_meta($new_user_id, 'store_name', $_POST['store_name']);
                                                                                         
                                 $key = $wpdb->get_var($wpdb->prepare("SELECT user_activation_key FROM $wpdb->users WHERE user_login = %s", $email_addr[0]));
-                                if(empty($key)) {
-                            	    $key = wp_generate_password(20, false);
-                            		$wpdb->update($wpdb->users, array('user_activation_key' => $key), array('user_login' => $email_addr[0]));
+                                if (empty($key)) {
+                                    $key = wp_generate_password(20, false);
+                                    $wpdb->update($wpdb->users, array('user_activation_key' => $key), array('user_login' => $email_addr[0]));
                                     
                                     $table_name = $wpdb->prefix.'folloup_messages';
                                     
@@ -98,42 +98,42 @@
                                 }
                                 // mail to user
                                 $to1 = $email_addr[0];
-                                if($options['smtp-active'] == 1){
+                                if ($options['smtp-active'] == 1) {
                                     $from1 = $options['smtp-from-email'];
                                 } else {
                                     $from1 = "info@istilist.com";
                                 }
-                            	
-                            	$headers1 = 'From: '.$from1. "\r\n";
+                                
+                                $headers1 = 'From: '.$from1. "\r\n";
                                 $headers1 .= "Reply-To: ".get_option('admin_email')."\r\n";
-                                $headers1 .= "MIME-Version: 1.0\n"; 
+                                $headers1 .= "MIME-Version: 1.0\n";
                                 $headers1 .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                            	$subject1 = "Activate your account"; 
+                                $subject1 = "Activate your account";
                                 $msg1 = 'Welcome to '.get_bloginfo('name').'! Please click on the link to complete the registration process<br><br>Activation Link :<a href="'.get_site_url().'/activation?key='.$key.'" target="_blank">'.get_site_url().'/activation?key='.$key.'</a><br><br>Regards,<br>'.$admin_name;
                                 
-                                if($options['smtp-active'] != 1){
-                                    wp_mail( $to1, $subject1, $msg1, $headers1 );
+                                if ($options['smtp-active'] != 1) {
+                                    wp_mail($to1, $subject1, $msg1, $headers1);
                                 } else {
                                     //smtpmailer($to1, $from1, $options['smtp-from-name'], $subject1, $msg1);
-                                    if (($error = smtpmailer($to1, $from1, $options['smtp-from-name'], $subject1, $msg1)) === true){
-                                         echo 'Email send';
+                                    if (($error = smtpmailer($to1, $from1, $options['smtp-from-name'], $subject1, $msg1)) === true) {
+                                        echo 'Email send';
                                     } else {
                                         echo $error;
                                     }
                                 }
-                            	//
+                                //
                                 
                                 
                                 
                                 // Mail to admin
                                 $admin_name = get_bloginfo('name');
                                 $to = get_option('admin_email');
-                            	$from = "info@istilist.com";
-                            	$headers = 'From: '.$from . "\r\n";
+                                $from = "info@istilist.com";
+                                $headers = 'From: '.$from . "\r\n";
                                 $headers .= "Reply-To: ".get_option('admin_email')."\r\n";
-                                $headers .= "MIME-Version: 1.0\n"; 
+                                $headers .= "MIME-Version: 1.0\n";
                                 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                            	$subject = "New User registered"; 
+                                $subject = "New User registered";
                                 $msg ='<strong>New User registered</strong><br><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                           <tr>
                                             <td width="45%"><strong>Store Name : </strong></td>
@@ -169,24 +169,26 @@
                                           </tr>
                                         </table><br><br>Regards,<br>'.$admin_name;
                                         
-                                        if($options['smtp-active'] != 1){
-                                            wp_mail( $to, $subject, $msg, $headers );
-                                        } else {
-                                            smtpmailer($to, $from, $options['smtp-from-name'], $subject, $msg);
-                                            if (($error = smtpmailer($to, $from, $options['smtp-from-name'], $subject, $msg)) === true){
-                                                 echo 'Email send';
-                                            } else {
-                                                echo $error;
-                                            }
-                                        }
-                            	//
+                                if ($options['smtp-active'] != 1) {
+                                    wp_mail($to, $subject, $msg, $headers);
+                                } else {
+                                    smtpmailer($to, $from, $options['smtp-from-name'], $subject, $msg);
+                                    if (($error = smtpmailer($to, $from, $options['smtp-from-name'], $subject, $msg)) === true) {
+                                        echo 'Email send';
+                                    } else {
+                                        echo $error;
+                                    }
+                                }
+                                //
                                 header("Location: ".get_bloginfo('home')."/thank-you/?action=".encripted('registration'));
                             }
                         }
                         ?>
-                        <?php if($errorCode == 1){ ?>
+                        <?php if ($errorCode == 1) {
+                            ?>
                             <div class="errorMsg">Email address already exists. Please select different valid email address.</div>
-                        <?php }?>
+                        <?php
+                        }?>
                         <div class="commonForm">
                             <form id="forms" method="post" action="">
                                 <div>

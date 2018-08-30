@@ -20,62 +20,63 @@
 
 // `id` section
 if (isset($this->component_options['id']) && !empty($this->component_options['id'])) {
-  $wizard_id = esc_attr__($this->component_options['id']);
+    $wizard_id = esc_attr__($this->component_options['id']);
 } else {
-  return;
+    return;
 }
 
 // `defaultStep` section
 if (isset($this->component_options['defaultStep']) && intval($this->component_options['defaultStep']) > 0) {
-  $default_step = intval($this->component_options['defaultStep']);
+    $default_step = intval($this->component_options['defaultStep']);
 } else {
-  $default_step = 1;
+    $default_step = 1;
 }
 
 // `currentStep` section
 if (isset($this->component_options['currentStep']) && intval($this->component_options['currentStep']) > 0) {
-  $current_step = intval($this->component_options['currentStep']);
+    $current_step = intval($this->component_options['currentStep']);
 } else {
-  $current_step = 1;
+    $current_step = 1;
 }
 
 // `displayMaxStep` section
 if (isset($this->component_options['displayMaxStep']) && intval($this->component_options['displayMaxStep']) >= 1) {
-  $display_max_step = intval($this->component_options['displayMaxStep']);
+    $display_max_step = intval($this->component_options['displayMaxStep']);
 } else {
-  $display_max_step = 1;
+    $display_max_step = 1;
 }
 
 // `stepLabels` section
 $wizard_steps = [];
 for ($i=0; $i<$display_max_step; $i++) {
-  $wizard_steps[$i] = [ 'label' => sprintf( __('Step%d', CDBT), ($i + 1) ) ];
+    $wizard_steps[$i] = [ 'label' => sprintf(__('Step%d', CDBT), ($i + 1)) ];
 }
 if (isset($this->component_options['stepLabels']) && !empty($this->component_options['stepLabels'])) {
-  foreach ($this->component_options['stepLabels'] as $i => $label) {
-    $wizard_steps[$i] = [ 'label' => $label ];
-  }
+    foreach ($this->component_options['stepLabels'] as $i => $label) {
+        $wizard_steps[$i] = [ 'label' => $label ];
+    }
 }
 
 // `stepContents` section
 if (isset($this->component_options['stepContents']) && is_array($this->component_options['stepContents']) && !empty($this->component_options['stepContents'])) {
-  foreach ($wizard_steps as $step_num => $step_values) {
-    if (isset($this->component_options['stepContents'][$step_num]) && is_array($this->component_options['stepContents'][$step_num])) 
-      $wizard_steps[$step_num] = array_merge($step_values, $this->component_options['stepContents'][$step_num]);
-  }
+    foreach ($wizard_steps as $step_num => $step_values) {
+        if (isset($this->component_options['stepContents'][$step_num]) && is_array($this->component_options['stepContents'][$step_num])) {
+            $wizard_steps[$step_num] = array_merge($step_values, $this->component_options['stepContents'][$step_num]);
+        }
+    }
 }
 
 // `splitRendering` section
 $is_split = false;
 if (isset($this->component_options['splitRendering']) && !empty($this->component_options['splitRendering']) && in_array($this->component_options['splitRendering'], [ 'before', 'after' ])) {
-  $is_split = true;
-  $render_part = $this->component_options['splitRendering'];
+    $is_split = true;
+    $render_part = $this->component_options['splitRendering'];
 }
 
 // `disablePreviousStep` section
 $disable_previous_step = 'false';
 if (isset($this->component_options['disablePreviousStep']) && !empty($this->component_options['disablePreviousStep'])) {
-  $disable_previous_step = $this->component_options['disablePreviousStep'] ? 'true' : 'false';
+    $disable_previous_step = $this->component_options['disablePreviousStep'] ? 'true' : 'false';
 }
 
 
@@ -93,7 +94,9 @@ if (!$is_split) :
       <ul class="steps" style="margin-left: 0">
       <?php foreach ($wizard_steps as $i => $step_values) : ?>
         <?php if ($i < $display_max_step) : ?>
-        <li data-step="<?php echo $i+1; ?>" data-name="cdbt-step-<?php echo $i+1; ?>"<?php if ($current_step === $i+1) echo ' class="active"'; ?>><span class="badge"><?php echo $i+1; ?></span><?php echo $step_values['label']; ?><span class="chevron"></span></li>
+        <li data-step="<?php echo $i+1; ?>" data-name="cdbt-step-<?php echo $i+1; ?>"<?php if ($current_step === $i+1) {
+    echo ' class="active"';
+} ?>><span class="badge"><?php echo $i+1; ?></span><?php echo $step_values['label']; ?><span class="chevron"></span></li>
         <?php endif; ?>
       <?php endforeach; ?>
       </ul>
@@ -105,7 +108,11 @@ if (!$is_split) :
     <div class="step-content">
     <?php foreach ($wizard_steps as $i => $step_values) : ?>
       <?php if ($i < $display_max_step) : ?>
-      <div class="step-pane <?php if (isset($step_values['bgcolor'])) echo $step_values['bgcolor'] . ' '; ?><?php if ($current_step === $i+1) echo 'active '; ?>alert" data-step="<?php echo $i+1; ?>">
+      <div class="step-pane <?php if (isset($step_values['bgcolor'])) {
+    echo $step_values['bgcolor'] . ' ';
+} ?><?php if ($current_step === $i+1) {
+    echo 'active ';
+} ?>alert" data-step="<?php echo $i+1; ?>">
         <h4><?php echo isset($step_values['title']) ? $step_values['title'] : $step_values['label']; ?></h4>
         <?php if (isset($step_values['content'])) : ?>
         <p><?php echo $step_values['content']; ?><p>
@@ -133,7 +140,9 @@ var wizard = function() {
       <ul class="steps">
       <?php foreach ($wizard_steps as $i => $step_values) : ?>
         <?php if ($i < $display_max_step) : ?>
-        <li data-step="<?php echo $i+1; ?>" data-name="cdbt-step-<?php echo $i+1; ?>"<?php if ($current_step === $i+1) echo ' class="active"'; ?>><span class="badge"><?php echo $i+1; ?></span><?php echo $step_values['label']; ?><span class="chevron"></span></li>
+        <li data-step="<?php echo $i+1; ?>" data-name="cdbt-step-<?php echo $i+1; ?>"<?php if ($current_step === $i+1) {
+    echo ' class="active"';
+} ?>><span class="badge"><?php echo $i+1; ?></span><?php echo $step_values['label']; ?><span class="chevron"></span></li>
         <?php endif; ?>
       <?php endforeach; ?>
       </ul>

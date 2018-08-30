@@ -1,42 +1,46 @@
 <?php ob_start(); ?>
 <?php
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
     global $wpdb;
     $username = $wpdb->escape($_POST['email_id']);
-	$pwd = $wpdb->escape($_POST['pwd']);
-	$user_status = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->users WHERE user_login = %s", $username));
-    if($user_status[0]->user_status == 1){
-		$login_data = array();
-		$login_data['user_login'] = $username;
-		$login_data['user_password'] = $pwd;
-		$login_data['remember'] = 'false';
-		$user_verify = wp_signon( $login_data, true );
-		if ( is_wp_error($user_verify) ){
-            $user_verify->get_error_message(); 
+    $pwd = $wpdb->escape($_POST['pwd']);
+    $user_status = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->users WHERE user_login = %s", $username));
+    if ($user_status[0]->user_status == 1) {
+        $login_data = array();
+        $login_data['user_login'] = $username;
+        $login_data['user_password'] = $pwd;
+        $login_data['remember'] = 'false';
+        $user_verify = wp_signon($login_data, true);
+        if (is_wp_error($user_verify)) {
+            $user_verify->get_error_message();
             $errorCode = 1;
-		} else {
-		    global $user_ID;
-            if(!empty($_SESSION) && !empty($user_ID)){
-                foreach ($_SESSION as $key=>$val){
-                    if(!update_user_meta( $user_ID, $key, $val )){
-                    	add_user_meta( $user_ID, $key, $val, true );
+        } else {
+            global $user_ID;
+            if (!empty($_SESSION) && !empty($user_ID)) {
+                foreach ($_SESSION as $key=>$val) {
+                    if (!update_user_meta($user_ID, $key, $val)) {
+                        add_user_meta($user_ID, $key, $val, true);
                     }
                 }
             }
             header('Location: '.get_bloginfo('home').'/dashboard');
-		}
-		//exit();
-	} else {
-		$errorCode = 2; // invalid login details
-	}
+        }
+        //exit();
+    } else {
+        $errorCode = 2; // invalid login details
+    }
 }
 ?>
-<?php if($errorCode == 1){ ?>
+<?php if ($errorCode == 1) {
+    ?>
     <div class="errorMsg">Incorrect login details...Please try again.</div>
-<?php } ?>
-<?php if($errorCode == 2){ ?>
+<?php
+} ?>
+<?php if ($errorCode == 2) {
+        ?>
     <div class="errorMsg">Your account is not activated...Please check your mail and activate your account.</div>
-<?php } ?>
+<?php
+    } ?>
 <div class="commonForm">
     <h2 style="text-align: center;">Login</h2>
     <form id="forms" action="" method="POST">

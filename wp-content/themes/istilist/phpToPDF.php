@@ -24,18 +24,18 @@ function phptopdf($pdf_options)
         )
     );
     $context                = stream_context_create($post_array);
-    if(isset($pdf_options['ssl']) && $pdf_options['ssl'] == 'yes') {
+    if (isset($pdf_options['ssl']) && $pdf_options['ssl'] == 'yes') {
         $result                 = file_get_contents(PHPTOPDF_URL_SSL, false, $context);
-    } else if(isset($pdf_options['beta']) && $pdf_options['beta'] == 'yes') {
+    } elseif (isset($pdf_options['beta']) && $pdf_options['beta'] == 'yes') {
         $result                 = file_get_contents(PHPTOPDF_URL_BETA, false, $context);
-    } else if($pdf_options['ssl'] == 'yes' && $pdf_options['beta'] == 'yes') {
+    } elseif ($pdf_options['ssl'] == 'yes' && $pdf_options['beta'] == 'yes') {
         $result                 = file_get_contents("https://phptopdf.com/generatePDF_beta.php", false, $context);
     } else {
         $result = file_get_contents(PHPTOPDF_URL, false, $context);
     }
 
     $action = preg_replace('!\s+!', '', $pdf_options['action']);
-    if(isset($action) && !empty($action)) {
+    if (isset($action) && !empty($action)) {
         switch ($action) {
             case 'view':
                 header('Content-type: application/pdf');
