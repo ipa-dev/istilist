@@ -16,7 +16,7 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'istilist_staging');
+define('DB_NAME', 'istilist_wpdb');
 
 /** MySQL database username */
 define('DB_USER', 'istilist_wpadmin');

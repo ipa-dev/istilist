@@ -46,7 +46,8 @@ $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 $subject = $result2->subject;
 $msg = $msg_body2;
 
-
+//echo $from;
+//exit();
 if(!empty($store_name)){
     if(!empty($from)){
         wp_mail( $shopper_email, $subject, $msg, $headers);

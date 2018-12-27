@@ -50,3 +50,29 @@
 [06-Feb-2018 11:19:35 America/Denver] PHP Fatal error:  Call to undefined function is_page() in /home/istilist/public_html/wp-content/themes/standard-theme/footer.php on line 1
 [06-Feb-2018 11:19:42 America/Denver] PHP Fatal error:  Call to undefined function is_page() in /home/istilist/public_html/wp-content/themes/standard-theme/footer.php on line 1
 [06-Feb-2018 11:19:43 America/Denver] PHP Fatal error:  Call to undefined function is_page() in /home/istilist/public_html/wp-content/themes/standard-theme/footer.php on line 1
+[16-Dec-2018 22:04:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/istilist/archive.php:1
+Stack trace:
+#0 {main}
+  thrown in /home/istilist/public_html/wp-content/themes/istilist/archive.php on line 1
+[16-Dec-2018 22:04:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/istilist/template_dashboard.php:2
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/index.php(1): require_once()
+#1 {main}
+  thrown in /home/istilist/public_html/wp-content/themes/istilist/template_dashboard.php on line 2
+[16-Dec-2018 22:04:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function is_user_logged_in() in /home/istilist/public_html/wp-content/themes/istilist/header.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/istilist/public_html/wp-content/themes/istilist/header.php on line 9
+[16-Dec-2018 22:04:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/istilist/archive.php:1
+Stack trace:
+#0 {main}
+  thrown in /home/istilist/public_html/wp-content/themes/istilist/archive.php on line 1
+[16-Dec-2018 22:04:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/istilist/template_dashboard.php:2
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/index.php(1): require_once()
+#1 {main}
+  thrown in /home/istilist/public_html/wp-content/themes/istilist/template_dashboard.php on line 2
+[16-Dec-2018 22:04:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function is_user_logged_in() in /home/istilist/public_html/wp-content/themes/istilist/header.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/istilist/public_html/wp-content/themes/istilist/header.php on line 9

@@ -39,7 +39,7 @@ define('WPMS_SMTP_PASS', 'password'); // SMTP authentication password, only used
 // Array of options and their default values
 global $wpms_options; // This is horrible, should be cleaned up at some point
 $wpms_options = array (
-	'mail_from' => '',
+	'mail_from' => 'info@istilist.com',
 	'mail_from_name' => '',
 	'mailer' => 'smtp',
 	'mail_set_return_path' => 'false',
@@ -118,7 +118,7 @@ function phpmailer_init_smtp($phpmailer) {
 		
 		// Set the mailer type as per config above, this overrides the already called isMail method
 		$phpmailer->Mailer = get_option('mailer');
-		
+		$phpmailer->From = 'info@istilist.com';
 		// Set the Sender (return-path) if required
 		if (get_option('mail_set_return_path'))
 			$phpmailer->Sender = $phpmailer->From;

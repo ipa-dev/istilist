@@ -13,6 +13,17 @@
                     <h1><?php the_title(); ?></h1>
                     <div class="box addnewshoppers">
                         <?php
+                        if(isset($_POST['update_shopper_order'])){
+	                        global $wpdb;
+	                        //$time = current_time('mysql');
+	                        $post_arg = array(
+		                        'ID' => $shopper_id,
+		                        'post_date'     => date('Y-m-d H:i:s'),
+		                        'post_date_gmt' => date('Y-m-d H:i:s')
+	                        );
+	                        wp_update_post( $post_arg );
+	                        header('Location: '.get_bloginfo('url').'/dashboard/');
+                        }
                             if(isset($_POST['update_shopper'])){
                                 global $wpdb;
                                 $post_arg = array(
@@ -316,6 +327,9 @@
                             <div class="section group">
                                 <div class="col span_12_of_12">
                                     <div style="text-align: right; float: right;">
+                                        <input class="fa-input" type="submit" name="update_shopper_order" value="Update &#xf0fe" />
+                                    </div>
+                                    <div style="text-align: right; float: right; margin-right: 1%;">
                                         <input type="submit" name="update_shopper" value="Update" />
                                     </div>
                                     <div id="delete_shopper" class="" style="float: right; margin-right: 1%;">

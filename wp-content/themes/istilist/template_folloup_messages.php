@@ -133,11 +133,27 @@
                         </form>
                     </div>
                     <div class="reportBox">
-                      <h3>Send Email to all Shoppers</h3>
-                      <form name='shopper_email_form' id='shopper_email_form' method='post' action='<?php bloginfo('url'); ?>/send-all-shoppers-email'>
+                      <h3>Send Email to Shoppers/Stylist/Employees</h3>
+	                    <?php
+	                    $sql1 = "SELECT * FROM $table_name WHERE message_type = 'shoppers-stylist-employees' and store_id = $store_id";
+	                    $result1 = $wpdb->get_row($sql1);
+	                    ?>
+                      <form name='shopper_email_form' id='shopper_email_form' method='post' action='<?php bloginfo('url'); ?>/send-mails/'>
+                        <div class="section group">
+                          <div class="col span_2_of_12">Email to</div>
+                          <div class="col span_10_of_12">
+                              <select name="emailto" autocomplete="off">
+                                  <option value="NULL" selected="selected">- Select -</option>
+                                  <option value="all-shoppers">All Shoppers</option>
+                                  <option value="purchased">Purchased Shoppers</option>
+                                  <option value="not-purchased">Not Purchased Shoppers</option>
+                                  <option value="stylist-employees">Stylist/Employees</option>
+                              </select>
+                          </div>
+                        </div>
                         <div class="section group">
                             <div class="col span_2_of_12">Subject</div>
-                            <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value=""/></div>
+                            <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value="<?php echo $result1->subject; ?>"/></div>
                         </div>
                         <div class="section group">
                             <div class="col span_2_of_12">Email Body</div>
@@ -159,7 +175,7 @@
                                 );
                             ?>
 
-                            <?php wp_editor('', 'shopper_email_body', $settings3); ?>
+                            <?php wp_editor($result1->body, 'shopper_email_body', $settings3); ?>
                             <div class="allowedtag">
                                 <em>{Shopper's Name}</em> for auto generated shopper's name<br />
                                 <em>{Stylist's Name}</em> for auto generated stylist's name
@@ -169,14 +185,155 @@
                         <div class="section group">
                             <div class="col span_12_of_12">
                                 <div class="alignright">
-                                    <input type="submit" name="shopper_email_template" value="Send Test E-mail" />
-                                    <input type="submit" name="shopper_email_template" value="Send E-mail" />
+                                    <input type="submit" name="send_test_mail" value="Send Test E-mail" />
+                                    <input type="submit" name="send_email" value="Send E-mail" />
                                 </div>
                             </div>
                         </div>
-
                       </form>
                     </div>
+                    <!--<div class="reportBox">
+                        <h3>Send Email to Purchased Shoppers</h3>
+	                    <?php
+/*	                    $sql7 = "SELECT * FROM $table_name WHERE message_type = 'purchased-shoppers' and store_id = $store_id";
+	                    $result7 = $wpdb->get_row($sql7);
+	                    */?>
+                        <form name='purchased_shopper_email_form' enctype="multipart/form-data" id='purchased_shopper_email_form' method='post' action='<?php /*bloginfo('url'); */?>/send-mail-purchased-shoppers'>
+                            <div class="section group">
+                                <div class="col span_2_of_12">Subject</div>
+                                <div class="col span_10_of_12"><input type="text" name="purchased_shopper_subject" value="<?php /*echo $result7->subject; */?>" /></div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_2_of_12">Email Body</div>
+                                <div class="col span_10_of_12">
+                                <?php
+/*                                    $settings7 = array(
+                                        'wpautop' => true,
+                                        'media_buttons' => true,
+                                        'textarea_name' => 'purchased_shopper_email_body',
+                                        'textarea_rows' => 40,
+                                        'tabindex' => '',
+                                        'editor_css' => '',
+                                        'editor_class' => 'msgClass',
+                                        'teeny' => false,
+                                        'dfw' => true,
+                                        'tinymce' => true,
+                                        'quicktags' => true,
+                                        'drag_drop_upload' => true
+                                    );
+                                */?>
+                                <?php /*wp_editor($result7->body, 'purchased_shopper_email_body', $settings7); */?>
+                                <div class="allowedtag">
+                                    <em>{Shopper's Name}</em> for auto generated shopper's name
+                                </div>
+                                </div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_12_of_12">
+                                    <div class="alignright">
+                                        <input type="submit" name="purchased_shopper_test_email" value="Send Test E-mail" />
+                                        <input type="submit" name="purchased_shopper_send" value="Send E-mail" />
+                                        <input type="submit" name="purchased_shopper_save" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                      </form>
+                    </div>
+                    <div class="reportBox">
+                        <h3>Send Email to Non Purchased Shoppers</h3>
+		                <?php
+/*		                $sql8 = "SELECT * FROM $table_name WHERE message_type = 'non-purchased-shoppers' and store_id = $store_id";
+		                $result8 = $wpdb->get_row($sql8);
+		                */?>
+                        <form name='non_purchased_shopper_email_form' enctype="multipart/form-data" id='non_purchased_shopper_email_form' method='post' action='<?php /*bloginfo('url'); */?>/send-mail-non-purchased-shoppers'>
+                            <div class="section group">
+                                <div class="col span_2_of_12">Subject</div>
+                                <div class="col span_10_of_12"><input type="text" name="non_purchased_shopper_subject" value="<?php /*echo $result8->subject; */?>" /></div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_2_of_12">Email Body</div>
+                                <div class="col span_10_of_12">
+					                <?php
+/*					                $settings8 = array(
+						                'wpautop' => true,
+						                'media_buttons' => true,
+						                'textarea_name' => 'non_purchased_shopper_email_body',
+						                'textarea_rows' => 40,
+						                'tabindex' => '',
+						                'editor_css' => '',
+						                'editor_class' => 'msgClass',
+						                'teeny' => false,
+						                'dfw' => true,
+						                'tinymce' => true,
+						                'quicktags' => true,
+						                'drag_drop_upload' => true
+					                );
+					                */?>
+					                <?php /*wp_editor($result8->body, 'non_purchased_shopper_email_body', $settings8); */?>
+                                    <div class="allowedtag">
+                                        <em>{Shopper's Name}</em> for auto generated shopper's name
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_12_of_12">
+                                    <div class="alignright">
+                                        <input type="submit" name="non_purchased_shopper_test_email" value="Send Test E-mail" />
+                                        <input type="submit" name="non_purchased_shopper_send" value="Send E-mail" />
+                                        <input type="submit" name="non_purchased_shopper_save" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="reportBox">
+                        <h3>Send Email to Stylists/Employees</h3>
+		                <?php
+/*		                $sql9 = "SELECT * FROM $table_name WHERE message_type = 'stylist-employees' and store_id = $store_id";
+		                $result9 = $wpdb->get_row($sql9);
+		                */?>
+                        <form name='send_mail_stylist_employees_form' enctype="multipart/form-data" id='send_mail_stylist_employees_form' method='post' action='<?php /*bloginfo('url'); */?>/send-mail-stylist-employees'>
+                            <div class="section group">
+                                <div class="col span_2_of_12">Subject</div>
+                                <div class="col span_10_of_12"><input type="text" name="stylist_employees_subject" value="<?php /*echo $result9->subject; */?>" /></div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_2_of_12">Email Body</div>
+                                <div class="col span_10_of_12">
+					                <?php
+/*					                $settings9 = array(
+						                'wpautop' => true,
+						                'media_buttons' => true,
+						                'textarea_name' => 'stylist_employees_email_body',
+						                'textarea_rows' => 40,
+						                'tabindex' => '',
+						                'editor_css' => '',
+						                'editor_class' => 'msgClass',
+						                'teeny' => false,
+						                'dfw' => true,
+						                'tinymce' => true,
+						                'quicktags' => true,
+						                'drag_drop_upload' => true
+					                );
+					                */?>
+					                <?php /*wp_editor($result9->body, 'stylist_employees_email_body', $settings9); */?>
+                                    <div class="allowedtag">
+                                        <em>{Stylist-Employee's Name}</em> for auto generated Stylist/Employee's name
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_12_of_12">
+                                    <div class="alignright">
+                                        <input type="submit" name="stylist_employees_test_email" value="Send Test E-mail" />
+                                        <input type="submit" name="stylist_employees_send" value="Send E-mail" />
+                                        <input type="submit" name="stylist_employees_save" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>-->
+                    <br><br><br>
                     <div class="reportBox">
                         <h3>Thank You Text Template</h3>
                         <?php
@@ -248,10 +405,45 @@
                             </div>
                         </form>
                     </div>
+                    <div class="reportBox">
+                        <h3>Send Text to Shoppers/Stylist/Employees</h3>
+                        <form id="all_shoppers_text" method="post" action="<?php bloginfo('url'); ?>/send-text/">
+                            <div class="section group">
+                                <div class="col span_2_of_12">Text to</div>
+                                <div class="col span_10_of_12">
+                                    <select name="textto" autocomplete="off">
+                                        <option value="NULL" selected="selected">- Select -</option>
+                                        <option value="all-shoppers">All Shoppers</option>
+                                        <option value="purchased">Purchased Shoppers</option>
+                                        <option value="not-purchased">Not Purchased Shoppers</option>
+                                        <option value="stylist-employees">Stylist/Employees</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_2_of_12">Message Body</div>
+                                <div class="col span_10_of_12">
+                                    <textarea form='all_shoppers_text' name='message_text'></textarea>
+                                </div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_12_of_12">
+                                    <div class="alignright">
+                                        <input type="submit" name="send_text" value="Send Text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <?php get_footer(); ?>
 	        </div>
 	    </div>
 	</div>
 </div>
+<style>
+    .switch-html{
+        display: none !important;
+    }
+</style>
 <?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>

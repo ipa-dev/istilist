@@ -1,56 +1,622 @@
-[06-Sep-2016 14:49:06 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/process_delete_employee.php on line 7
-[06-Sep-2016 14:52:02 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/process_delete_employee.php on line 7
-[06-Sep-2016 14:53:19 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/process_delete_employee.php on line 7
-[06-Sep-2016 14:54:12 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/process_delete_employee.php on line 7
-[06-Sep-2016 14:55:13 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/process_delete_employee.php on line 7
-[06-Sep-2016 15:00:43 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/delete_employee.php on line 7
-[06-Sep-2016 15:01:06 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/delete_employee.php on line 7
-[06-Sep-2016 15:03:11 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/delete_employee.php on line 7
-[06-Sep-2016 15:09:30 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/delete_employee.php on line 7
-[06-Sep-2016 15:16:34 America/Denver] PHP Fatal error:  Call to undefined function wp_delete_user() in /home/istilist/public_html/wp-content/themes/standard-theme/delete_employee.php on line 7
-[19-Sep-2016 14:38:07 America/Denver] PHP Fatal error:  Call to a member function get_row() on a non-object in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 4
-[19-Sep-2016 14:38:44 America/Denver] PHP Fatal error:  Call to a member function get_row() on a non-object in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 4
-[19-Sep-2016 14:41:42 America/Denver] PHP Fatal error:  Call to a member function get_row() on a non-object in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 4
-[19-Sep-2016 14:42:36 America/Denver] PHP Fatal error:  Call to a member function get_row() on a non-object in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 12
-[19-Sep-2016 14:44:03 America/Denver] PHP Fatal error:  Call to a member function get_row() on a non-object in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 12
-[19-Sep-2016 14:44:05 America/Denver] PHP Fatal error:  Call to a member function get_row() on a non-object in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 12
-[19-Sep-2016 14:45:17 America/Denver] PHP Fatal error:  Call to a member function get_row() on a non-object in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 12
-[19-Sep-2016 14:45:18 America/Denver] PHP Fatal error:  Call to a member function get_row() on a non-object in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 12
-[19-Sep-2016 14:48:51 America/Denver] PHP Warning:  Creating default object from empty value in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 11
-[19-Sep-2016 14:48:51 America/Denver] PHP Fatal error:  Call to undefined method stdClass::get_row() in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 13
-[19-Sep-2016 14:51:41 America/Denver] PHP Warning:  Creating default object from empty value in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 11
-[19-Sep-2016 14:51:41 America/Denver] PHP Fatal error:  Call to undefined method stdClass::get_row() in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 13
-[19-Sep-2016 14:51:43 America/Denver] PHP Warning:  Creating default object from empty value in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 11
-[19-Sep-2016 14:51:43 America/Denver] PHP Fatal error:  Call to undefined method stdClass::get_row() in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 13
-[19-Sep-2016 14:52:34 America/Denver] PHP Warning:  Creating default object from empty value in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 11
-[19-Sep-2016 14:52:34 America/Denver] PHP Fatal error:  Call to undefined method stdClass::get_row() in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 13
-[19-Sep-2016 14:52:35 America/Denver] PHP Warning:  Creating default object from empty value in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 11
-[19-Sep-2016 14:52:35 America/Denver] PHP Fatal error:  Call to undefined method stdClass::get_row() in /home/istilist/public_html/wp-content/themes/standard-theme/test.php on line 13
-[25-Sep-2017 22:52:04 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[25-Sep-2017 22:52:04 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[29-Sep-2017 21:44:23 America/Denver] PHP Fatal error:  Call to undefined function is_user_logged_in() in /home/istilist/public_html/wp-content/themes/standard-theme/header.php on line 4
-[29-Sep-2017 21:44:23 America/Denver] PHP Fatal error:  Call to undefined function is_user_logged_in() in /home/istilist/public_html/wp-content/themes/standard-theme/header.php on line 4
-[04-Oct-2017 00:55:53 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[04-Oct-2017 00:55:53 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[04-Oct-2017 10:20:52 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[04-Oct-2017 10:20:52 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[08-Oct-2017 03:39:27 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[08-Oct-2017 03:39:27 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[09-Oct-2017 12:41:12 America/Denver] PHP Fatal error:  Call to undefined function is_user_logged_in() in /home/istilist/public_html/wp-content/themes/standard-theme/header.php on line 4
-[09-Oct-2017 12:41:12 America/Denver] PHP Fatal error:  Call to undefined function is_user_logged_in() in /home/istilist/public_html/wp-content/themes/standard-theme/header.php on line 4
-[09-Oct-2017 21:32:52 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[09-Oct-2017 21:32:52 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/archive.php on line 1
-[15-Oct-2017 03:19:57 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/index.php on line 1
-[15-Oct-2017 03:19:57 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/index.php on line 1
-[16-Oct-2017 15:48:34 America/Denver] PHP Fatal error:  Call to undefined function is_user_logged_in() in /home/istilist/public_html/wp-content/themes/standard-theme/header.php on line 4
-[16-Oct-2017 15:48:34 America/Denver] PHP Fatal error:  Call to undefined function is_user_logged_in() in /home/istilist/public_html/wp-content/themes/standard-theme/header.php on line 4
-[18-Oct-2017 15:00:17 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/index.php on line 1
-[18-Oct-2017 15:00:17 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/istilist/public_html/wp-content/themes/standard-theme/index.php on line 1
-[06-Feb-2018 11:19:34 America/Denver] PHP Fatal error:  Call to undefined function is_page() in /home/istilist/public_html/wp-content/themes/standard-theme/footer.php on line 1
-[06-Feb-2018 11:19:35 America/Denver] PHP Fatal error:  Call to undefined function is_page() in /home/istilist/public_html/wp-content/themes/standard-theme/footer.php on line 1
-[06-Feb-2018 11:19:42 America/Denver] PHP Fatal error:  Call to undefined function is_page() in /home/istilist/public_html/wp-content/themes/standard-theme/footer.php on line 1
-[06-Feb-2018 11:19:43 America/Denver] PHP Fatal error:  Call to undefined function is_page() in /home/istilist/public_html/wp-content/themes/standard-theme/footer.php on line 1
-[27-Aug-2018 14:13:28 US/Eastern] PHP Warning:  Invalid argument supplied for foreach() in /home/istilist/public_html/staging/wp-content/themes/istilist/template_dashboard.php on line 372
-[27-Aug-2018 14:13:28 US/Eastern] PHP Warning:  Invalid argument supplied for foreach() in /home/istilist/public_html/staging/wp-content/themes/istilist/template_dashboard.php on line 372
-[27-Aug-2018 14:31:38 US/Eastern] PHP Warning:  Invalid argument supplied for foreach() in /home/istilist/public_html/staging/wp-content/themes/istilist/template_dashboard.php on line 372
-[27-Aug-2018 14:31:38 US/Eastern] PHP Warning:  Invalid argument supplied for foreach() in /home/istilist/public_html/staging/wp-content/themes/istilist/template_dashboard.php on line 372
+[10-Dec-2018 12:13:16 UTC] PHP Fatal error:  Uncaught Twilio\Exceptions\RestException: [HTTP 400] Unable to create record: The 'To' number +11234567890 is not a valid phone number. in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php:85
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php(207): Twilio\Version->exception(Object(Twilio\Http\Response), 'Unable to creat...')
+#1 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Rest/Api/V2010/Account/MessageList.php(64): Twilio\Version->create('POST', '/Accounts/ACdb9...', Array, Array)
+#2 /home/istilist/public_html/wp-content/themes/istilist/template_send_text.php(135): Twilio\Rest\Api\V2010\Account\MessageList->create('+11234567890', Object(Twilio\Values))
+#3 /home/istilist/public_html/wp-includes/template-loader.php(74): include('/home/istilist/...')
+#4 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#5 /home/istilist/public_html/index.php(17): r in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php on line 85
+[10-Dec-2018 12:22:59 UTC] PHP Fatal error:  Uncaught Twilio\Exceptions\RestException: [HTTP 400] Unable to create record: The 'To' number +1123457890 is not a valid phone number. in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php:85
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php(207): Twilio\Version->exception(Object(Twilio\Http\Response), 'Unable to creat...')
+#1 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Rest/Api/V2010/Account/MessageList.php(64): Twilio\Version->create('POST', '/Accounts/ACdb9...', Array, Array)
+#2 /home/istilist/public_html/wp-content/themes/istilist/template_send_text.php(108): Twilio\Rest\Api\V2010\Account\MessageList->create('+1123457890', Object(Twilio\Values))
+#3 /home/istilist/public_html/wp-includes/template-loader.php(74): include('/home/istilist/...')
+#4 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#5 /home/istilist/public_html/index.php(17): req in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php on line 85
+[10-Dec-2018 15:02:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[11-Dec-2018 02:43:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[11-Dec-2018 14:37:52 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[11-Dec-2018 11:28:50 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[11-Dec-2018 11:32:32 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[11-Dec-2018 11:34:48 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[11-Dec-2018 12:46:33 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[11-Dec-2018 14:48:41 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[11-Dec-2018 15:11:24 US/Eastern] PHP Fatal error:  Uncaught Twilio\Exceptions\RestException: [HTTP 400] Unable to create record: The 'To' number +1843446 is not a valid phone number. in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php:85
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php(207): Twilio\Version->exception(Object(Twilio\Http\Response), 'Unable to creat...')
+#1 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Rest/Api/V2010/Account/MessageList.php(64): Twilio\Version->create('POST', '/Accounts/ACdb9...', Array, Array)
+#2 /home/istilist/public_html/wp-content/themes/istilist/template_add_new_shopper.php(76): Twilio\Rest\Api\V2010\Account\MessageList->create('+1843446', Object(Twilio\Values))
+#3 /home/istilist/public_html/wp-includes/template-loader.php(74): include('/home/istilist/...')
+#4 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#5 /home/istilist/public_html/index.php(17): requ in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php on line 85
+[11-Dec-2018 15:58:39 US/Eastern] PHP Fatal error:  Uncaught Twilio\Exceptions\RestException: [HTTP 400] Unable to create record: The 'To' number +1 is not a valid phone number. in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php:85
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php(207): Twilio\Version->exception(Object(Twilio\Http\Response), 'Unable to creat...')
+#1 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Rest/Api/V2010/Account/MessageList.php(64): Twilio\Version->create('POST', '/Accounts/ACdb9...', Array, Array)
+#2 /home/istilist/public_html/wp-content/themes/istilist/template_add_new_shopper.php(76): Twilio\Rest\Api\V2010\Account\MessageList->create('+1', Object(Twilio\Values))
+#3 /home/istilist/public_html/wp-includes/template-loader.php(74): include('/home/istilist/...')
+#4 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#5 /home/istilist/public_html/index.php(17): require('/home/i in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php on line 85
+[11-Dec-2018 16:07:43 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[11-Dec-2018 16:07:52 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[11-Dec-2018 22:44:30 UTC] PHP Warning:  require(/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php): failed to open stream: No such file or directory in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:44:30 UTC] PHP Fatal error:  require(): Failed opening required '/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:44:33 UTC] PHP Warning:  require(/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php): failed to open stream: No such file or directory in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:44:33 UTC] PHP Fatal error:  require(): Failed opening required '/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:44:38 UTC] PHP Warning:  require(/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php): failed to open stream: No such file or directory in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:44:38 UTC] PHP Fatal error:  require(): Failed opening required '/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:44:45 UTC] PHP Warning:  require(/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php): failed to open stream: No such file or directory in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:44:45 UTC] PHP Fatal error:  require(): Failed opening required '/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:45:29 UTC] PHP Warning:  require(/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php): failed to open stream: No such file or directory in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:45:29 UTC] PHP Fatal error:  require(): Failed opening required '/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:45:33 UTC] PHP Warning:  require(/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php): failed to open stream: No such file or directory in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[11-Dec-2018 22:45:33 UTC] PHP Fatal error:  require(): Failed opening required '/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[12-Dec-2018 02:37:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[12-Dec-2018 14:43:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[12-Dec-2018 15:43:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[12-Dec-2018 16:49:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[12-Dec-2018 17:52:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[12-Dec-2018 19:06:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[12-Dec-2018 20:46:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[12-Dec-2018 21:48:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[12-Dec-2018 22:59:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[13-Dec-2018 00:45:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[13-Dec-2018 02:10:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[13-Dec-2018 03:22:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[13-Dec-2018 15:04:16 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[13-Dec-2018 13:20:27 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[13-Dec-2018 13:20:28 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[13-Dec-2018 13:20:41 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[13-Dec-2018 16:00:19 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[13-Dec-2018 16:45:35 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[14-Dec-2018 02:51:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[14-Dec-2018 14:38:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[14-Dec-2018 13:33:22 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[14-Dec-2018 13:33:43 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[14-Dec-2018 13:46:18 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[14-Dec-2018 15:50:09 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[14-Dec-2018 15:50:10 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[14-Dec-2018 16:09:07 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[14-Dec-2018 16:09:30 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[14-Dec-2018 16:10:22 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[14-Dec-2018 16:10:51 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[14-Dec-2018 16:47:28 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[15-Dec-2018 03:24:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[15-Dec-2018 15:16:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[15-Dec-2018 11:13:26 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[15-Dec-2018 13:28:18 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[15-Dec-2018 13:29:17 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[15-Dec-2018 13:31:04 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[15-Dec-2018 14:04:25 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[15-Dec-2018 14:04:39 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[15-Dec-2018 14:09:47 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[15-Dec-2018 14:22:58 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[15-Dec-2018 14:22:59 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[15-Dec-2018 15:14:02 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[16-Dec-2018 00:17:41 UTC] PHP Warning:  require(/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php): failed to open stream: No such file or directory in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[16-Dec-2018 00:17:41 UTC] PHP Fatal error:  require(): Failed opening required '/home/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/istilist/public_html/wp-content/themes/istilist/process_test_promo_text.php on line 3
+[15-Dec-2018 19:18:49 US/Eastern] PHP Warning:  mysqli_real_escape_string() expects parameter 2 to be string, object given in /home/istilist/public_html/wp-includes/wp-db.php on line 1102
+[15-Dec-2018 19:19:36 US/Eastern] PHP Warning:  mysqli_real_escape_string() expects parameter 2 to be string, object given in /home/istilist/public_html/wp-includes/wp-db.php on line 1102
+[16-Dec-2018 02:43:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[16-Dec-2018 06:08:40 UTC] PHP Warning:  array_merge(): Argument #2 is not an array in /home/istilist/public_html/wp-content/plugins/custom-database-tables/lib/utils.php on line 668
+[16-Dec-2018 06:08:43 UTC] PHP Warning:  array_merge(): Argument #2 is not an array in /home/istilist/public_html/wp-content/plugins/custom-database-tables/lib/utils.php on line 668
+[16-Dec-2018 15:38:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[17-Dec-2018 02:55:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[17-Dec-2018 13:06:43 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''subject', 'body', 'message_type') VALUES('test', 'jhg jhgjhg jhgjh jhjhj', 'sho' at line 1 for query INSERT INTO shoppers_folloup_messages ('subject', 'body', 'message_type') VALUES('test', 'jhg jhgjhg jhgjh jhjhj', 'shoppers-stylist-employees') made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_send_mails.php')
+[17-Dec-2018 13:08:29 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''subject', 'body', 'message_type', 'store_id') VALUES('test', 'jhg jhgjhg jhgjh ' at line 1 for query INSERT INTO shoppers_folloup_messages ('subject', 'body', 'message_type', 'store_id') VALUES('test', 'jhg jhgjhg jhgjh jhjhj', 'shoppers-stylist-employees', 22) made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_send_mails.php')
+[17-Dec-2018 14:37:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[17-Dec-2018 17:48:01 UTC] PHP Warning:  array_merge(): Argument #2 is not an array in /home/istilist/public_html/wp-content/plugins/custom-database-tables/lib/utils.php on line 668
+[17-Dec-2018 17:48:07 UTC] PHP Warning:  array_merge(): Argument #2 is not an array in /home/istilist/public_html/wp-content/plugins/custom-database-tables/lib/utils.php on line 668
+[18-Dec-2018 01:06:46 UTC] PHP Warning:  array_merge(): Argument #2 is not an array in /home/istilist/public_html/wp-content/plugins/custom-database-tables/lib/utils.php on line 668
+[18-Dec-2018 01:06:48 UTC] PHP Warning:  array_merge(): Argument #2 is not an array in /home/istilist/public_html/wp-content/plugins/custom-database-tables/lib/utils.php on line 668
+[18-Dec-2018 02:38:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[18-Dec-2018 15:23:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[18-Dec-2018 13:01:14 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[18-Dec-2018 15:31:01 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[18-Dec-2018 15:33:50 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[18-Dec-2018 16:09:58 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[18-Dec-2018 16:10:23 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[19-Dec-2018 03:19:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[19-Dec-2018 14:37:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[19-Dec-2018 10:29:47 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[19-Dec-2018 10:31:08 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[19-Dec-2018 18:33:12 UTC] PHP Warning:  Error while sending QUERY packet. PID=15329 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[19-Dec-2018 18:33:12 UTC] PHP Warning:  Error while sending QUERY packet. PID=8063 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[19-Dec-2018 19:00:08 UTC] PHP Warning:  Error while sending QUERY packet. PID=6796 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[19-Dec-2018 19:00:08 UTC] PHP Warning:  Error while sending QUERY packet. PID=21303 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[19-Dec-2018 19:00:08 UTC] PHP Warning:  Error while sending QUERY packet. PID=8278 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[19-Dec-2018 19:00:08 UTC] PHP Warning:  Error while sending QUERY packet. PID=5386 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[19-Dec-2018 19:00:08 UTC] PHP Warning:  Error while sending QUERY packet. PID=19797 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[19-Dec-2018 19:00:08 UTC] PHP Warning:  Error while sending QUERY packet. PID=14037 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[19-Dec-2018 19:00:08 UTC] PHP Warning:  Error while sending QUERY packet. PID=22442 in /home/istilist/public_html/wp-includes/wp-db.php on line 1924
+[20-Dec-2018 03:14:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[20-Dec-2018 15:25:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[20-Dec-2018 13:18:40 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[20-Dec-2018 12:29:11 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 12:30:43 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 12:30:46 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 14:56:54 US/Eastern] PHP Warning:  mysqli_real_escape_string() expects parameter 2 to be string, object given in /home/istilist/public_html/wp-includes/wp-db.php on line 1102
+[20-Dec-2018 15:03:10 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 15:30:31 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[20-Dec-2018 16:11:03 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 16:13:45 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 16:56:00 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 16:59:04 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 17:48:47 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 17:48:55 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[20-Dec-2018 17:49:16 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 17:01:02 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[21-Dec-2018 13:22:58 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 13:24:47 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 13:29:00 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 13:31:07 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 13:32:13 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 13:40:58 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 14:10:18 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 14:10:55 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 14:11:56 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 14:12:42 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 14:49:38 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[21-Dec-2018 15:15:05 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[21-Dec-2018 15:15:05 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[21-Dec-2018 15:15:23 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[21-Dec-2018 15:53:41 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 15:56:45 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 15:17:31 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[21-Dec-2018 16:52:30 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[22-Dec-2018 02:38:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[22-Dec-2018 14:50:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[22-Dec-2018 11:43:37 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[22-Dec-2018 12:48:50 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[22-Dec-2018 12:51:02 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[22-Dec-2018 13:22:52 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[22-Dec-2018 13:58:10 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[22-Dec-2018 14:17:15 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[22-Dec-2018 14:34:27 US/Central] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[23-Dec-2018 03:31:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[23-Dec-2018 15:04:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[24-Dec-2018 03:07:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[24-Dec-2018 15:01:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[25-Dec-2018 02:42:29 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[25-Dec-2018 14:39:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[26-Dec-2018 03:51:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[26-Dec-2018 14:38:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[26-Dec-2018 13:05:48 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[27-Dec-2018 00:04:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_real_escape_string() in /home/istilist/public_html/wp-content/themes/istilist/template_autocomplete_school.php:4
+Stack trace:
+#0 /home/istilist/public_html/wp-includes/template-loader.php(74): include()
+#1 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#2 /home/istilist/public_html/index.php(17): require('/home/istilist/...')
+#3 {main}
+  thrown in /home/istilist/public_html/wp-content/themes/istilist/template_autocomplete_school.php on line 4
+[27-Dec-2018 00:04:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_real_escape_string() in /home/istilist/public_html/wp-content/themes/istilist/template_autocomplete_school.php:4
+Stack trace:
+#0 /home/istilist/public_html/wp-includes/template-loader.php(74): include()
+#1 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#2 /home/istilist/public_html/index.php(17): require('/home/istilist/...')
+#3 {main}
+  thrown in /home/istilist/public_html/wp-content/themes/istilist/template_autocomplete_school.php on line 4
+[27-Dec-2018 02:44:29 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[27-Dec-2018 14:43:28 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function request_filesystem_credentials() in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php:93
+Stack trace:
+#0 /home/istilist/public_html/wp-admin/includes/class-automatic-upgrader-skin.php(47): WP_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#1 /home/istilist/public_html/wp-admin/includes/class-wp-automatic-updater.php(144): Automatic_Upgrader_Skin->request_filesystem_credentials(false, '/home/istilist/...', false)
+#2 /home/istilist/public_html/wp-admin/includes/update.php(85): WP_Automatic_Updater->should_update('core', Object(stdClass), '/home/istilist/...')
+#3 /home/istilist/public_html/wp-includes/update.php(215): find_core_auto_update()
+#4 /home/istilist/public_html/wp-includes/class-wp-hook.php(286): wp_version_check()
+#5 /home/istilist/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/istilist/public_html/wp-includes/plugin.php(515): WP_Hook->do_action(Array)
+#7 /hom in /home/istilist/public_html/wp-admin/includes/class-wp-upgrader-skin.php on line 93
+[27-Dec-2018 11:42:14 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[27-Dec-2018 11:42:21 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[27-Dec-2018 11:47:01 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[27-Dec-2018 11:54:26 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[27-Dec-2018 12:09:28 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[27-Dec-2018 12:09:31 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[27-Dec-2018 12:09:56 US/Eastern] PHP Warning:  Parameter 2 to name_filter() expected to be a reference, value given in /home/istilist/public_html/wp-includes/class-wp-hook.php on line 286
+[27-Dec-2018 12:20:43 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[27-Dec-2018 12:34:24 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[27-Dec-2018 12:36:04 US/Eastern] PHP Fatal error:  Uncaught Twilio\Exceptions\RestException: [HTTP 400] Unable to create record: The 'To' number +12824216226 is not a valid phone number. in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php:85
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php(207): Twilio\Version->exception(Object(Twilio\Http\Response), 'Unable to creat...')
+#1 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Rest/Api/V2010/Account/MessageList.php(64): Twilio\Version->create('POST', '/Accounts/ACdb9...', Array, Array)
+#2 /home/istilist/public_html/wp-content/themes/istilist/template_add_new_shopper.php(76): Twilio\Rest\Api\V2010\Account\MessageList->create('+12824216226', Object(Twilio\Values))
+#3 /home/istilist/public_html/wp-includes/template-loader.php(74): include('/home/istilist/...')
+#4 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#5 /home/istilist/public_html/index.php(1 in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php on line 85
+[27-Dec-2018 12:36:37 US/Eastern] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND is_custom = 1 ORDER BY id' at line 1 for query SELECT * FROM shoppers_dynamic_form WHERE store_owner_id =  AND is_custom = 1 ORDER BY id made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/istilist/template_selfregistration.php')
+[27-Dec-2018 17:59:52 UTC] PHP Fatal error:  Uncaught Twilio\Exceptions\RestException: [HTTP 400] Unable to create record: The 'To' number +12824216226 is not a valid phone number. in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php:85
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php(207): Twilio\Version->exception(Object(Twilio\Http\Response), 'Unable to creat...')
+#1 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Rest/Api/V2010/Account/MessageList.php(64): Twilio\Version->create('POST', '/Accounts/ACdb9...', Array, Array)
+#2 /home/istilist/public_html/wp-content/themes/istilist/notify_shopper.php(19): Twilio\Rest\Api\V2010\Account\MessageList->create('+12824216226', Object(Twilio\Values))
+#3 /home/istilist/public_html/wp-includes/template-loader.php(74): include('/home/istilist/...')
+#4 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#5 /home/istilist/public_html/index.php(17): requir in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php on line 85
+[27-Dec-2018 18:02:44 UTC] PHP Fatal error:  Uncaught Twilio\Exceptions\RestException: [HTTP 400] Unable to create record: The 'To' number +12824216226 is not a valid phone number. in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php:85
+Stack trace:
+#0 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php(207): Twilio\Version->exception(Object(Twilio\Http\Response), 'Unable to creat...')
+#1 /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Rest/Api/V2010/Account/MessageList.php(64): Twilio\Version->create('POST', '/Accounts/ACdb9...', Array, Array)
+#2 /home/istilist/public_html/wp-content/themes/istilist/notify_shopper.php(19): Twilio\Rest\Api\V2010\Account\MessageList->create('+12824216226', Object(Twilio\Values))
+#3 /home/istilist/public_html/wp-includes/template-loader.php(74): include('/home/istilist/...')
+#4 /home/istilist/public_html/wp-blog-header.php(19): require_once('/home/istilist/...')
+#5 /home/istilist/public_html/index.php(17): requir in /home/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/Version.php on line 85

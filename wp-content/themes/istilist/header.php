@@ -123,6 +123,17 @@ wp_head();
         	openEffect	: 'none',
         	closeEffect	: 'none'
         });
+        jQuery(".popupform").fancybox({
+            maxWidth	: 300,
+            maxHeight	: 172,
+            fitToView	: false,
+            width		: '90%',
+            height		: '90%',
+            autoSize	: false,
+            closeClick	: false,
+            openEffect	: 'none',
+            closeEffect	: 'none'
+        });
 	});
 </script>
 
@@ -275,7 +286,62 @@ jQuery(document).ready(function(){
 	<div class="maincontent noPadding">
 	    <div class="section group">
 	        <div class="col span_6_of_12">
-                <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a></h1>                          
+                <?php if(is_page('self-registration')){ ?>
+                    <div id="setpasswordpopup" style="display: none;">
+                        <h4>Enter Account Password</h4>
+                        <form id="forms_recheck_pass" method="post" action="">
+                            <div class="section group">
+                                <div class="col span_12_of_12">
+                                    <input id="recheck_pass" type="password" name="recheck_pass" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="section group">
+                                <div class="col span_12_of_12">
+                                    <div style="text-align: center;padding-top: 30px;">
+                                        <input id="user_check" type="button" name="user_check" value="Submit">
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                jQuery(document).ready(function(){
+                                    jQuery("#forms_recheck_pass").validate({
+                                        rules: {
+                                            recheck_pass:{
+                                                required: true,
+                                                minlength: 6
+                                            }
+                                        }
+                                    });
+
+                                    jQuery('#user_check').on('click', function() {
+                                        var status = jQuery("#forms_recheck_pass").valid();
+                                        if(status){
+                                            //window.location.href = 'http://istilist.com/'
+                                            var recheck_pass = jQuery('#recheck_pass').val();
+                                            jQuery.ajax({
+                                                url: "<?php echo get_bloginfo('url'); ?>/ajax-recheck-pass/",
+                                                type: "post",
+                                                cache: false,
+                                                data: {"recheck_pass": recheck_pass},
+                                                success: function(response){
+                                                    if(response == 1){
+                                                        window.location.href = "<?php echo get_bloginfo('url'); ?>";
+                                                    }
+                                                },
+                                                error:function(response){
+                                                    console.log(response);
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            </script>
+                        </form>
+                    </div>
+                    <h1><a href="#setpasswordpopup" class="popupform"><?php echo $options['general-logo']; ?></a></h1>
+                <?php } else { ?>
+                    <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a></h1>
+                <?php } ?>
 	        </div>
 	        <div class="col span_6_of_12">
                 <?php if(is_user_logged_in()){ ?>

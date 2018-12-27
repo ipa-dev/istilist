@@ -17,8 +17,7 @@ if ($_POST['shopper_email_template'] == 'Send Test E-mail') {
   $user_info = get_userdata($user_ID);
   $deliv = wp_mail( $user_info->user_email, $_POST['shopper_email_subject'],
     $_POST['shopper_email_body'], $headers);
-}
-else {
+} else {
   $unique_shopper_emails = get_unique_post_meta_values('store_id',
     $store_id, 'publish', 'shopper', 'customer_email');
   foreach ($unique_shopper_emails as $unique_shopper_email) {

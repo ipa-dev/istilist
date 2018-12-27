@@ -3,3 +3,7 @@
 [19-Jan-2018 17:42:17 America/Denver] PHP Fatal error:  Call to undefined function _deprecated_file() in /home/istilist/public_html/wp-includes/locale.php on line 10
 [14-Mar-2018 15:49:22 America/Denver] PHP Fatal error:  Class 'Walker' not found in /home/istilist/public_html/wp-includes/class-walker-nav-menu.php on line 17
 [23-Mar-2018 00:55:51 America/Denver] PHP Fatal error:  Call to undefined function _deprecated_file() in /home/istilist/public_html/wp-includes/locale.php on line 10
+[20-Nov-2018 00:53:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function is_robots() in /home/istilist/public_html/wp-includes/template-loader.php:28
+Stack trace:
+#0 {main}
+  thrown in /home/istilist/public_html/wp-includes/template-loader.php on line 28

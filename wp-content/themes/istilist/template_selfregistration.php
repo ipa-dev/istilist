@@ -1,6 +1,10 @@
 <?php /* Template Name: Self Registration */ ?>
 <?php //a lot of duplicate code from add new shopper ?>
 <?php get_header(); ?>
+<?php
+require ("twilio-php-master/Twilio/autoload.php");
+use Twilio\Rest\Client;
+?>
 <?php if(is_user_logged_in()){ ?>
 <?php global $user_ID; global $wpdb; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
@@ -42,26 +46,22 @@
                 add_post_meta($new_post_id, 'store_id', get_user_meta($user_ID, 'store_id', true));
                 add_post_meta($new_post_id, 'hit_plus', 'false');
 
-                if ($_POST['sms_agreement'] == 'yes' && isset($_POST['customer_phone'])) {
+	            $store_name = get_user_meta($user_ID, 'store_name', TRUE);
+
+                /*if ($_POST['sms_agreement'] == 'yes' && isset($_POST['customer_phone'])) {
 
                     $sid = 'ACdb92d82faf7befbb1538a208224133a4';
                     $token = '1859b70bd4b570f6c8ff702b1ffd005d';
                     $client = new Client($sid, $token);
                     $sms = $client->account->messages->create(
-
-                        // the number we are sending to - Any phone number
                         '+1'.$_POST['customer_phone'],
-
                         array(
-                            // Step 6: Change the 'From' number below to be a valid Twilio number
-                            // that you've purchased
                             'from' => get_option('twilio_number'),
-
-                            // the sms body
-                            'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".get_user_meta($user_ID, 'store_name', TRUE).".Text YES to get messages from us."
+                            'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".$store_name.".Text YES to get messages from us.",
+                            "statusCallback" => "http://postb.in/1234abcd"
                         )
                     );
-                }
+                }*/
 
                 $store_id = get_user_meta($user_ID, 'store_id', true);
                 $table_name3 = $wpdb->prefix.'dynamic_form';
@@ -100,13 +100,42 @@
                 } else { wp_die('No image was uploaded.'); }
               }
 
+
+	            if ($_POST['sms_agreement'] == 'yes' && isset($_POST['customer_phone'])) {
+		            $sid = 'ACdb92d82faf7befbb1538a208224133a4';
+		            $token = '1859b70bd4b570f6c8ff702b1ffd005d';
+		            //$sid = 'AC6310d4e8ab308c5661c709326350ad74';
+		            //$token = '0469500ff5039f5f9243bd22881c845c';
+		            $client = new Client($sid, $token);
+		            $sms = $client->account->messages->create(
+		            '+1'.$_POST['customer_phone'],
+			            array(
+				            'from' => get_option('twilio_number'),
+				            'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".get_user_meta($user_ID, 'store_name', TRUE).".Text YES to get messages from us."
+			            )
+		            );
+	            }
                 if(!$new_post_id) {
                     echo '<p class="errorMsg">Sorry, your information is not updated.</p>';
                 }
           ?>
-            <div class="col span_8_of_12">
-              <p class="successMsg">Thank you for your valuable time and information!</p>
-              <a style="justify-content:center" href="<?php bloginfo('url'); ?>/self-registration">New user? Register!</a>
+            <script>
+                jQuery(window).load(function(){
+                    swal({
+                        title: "Thank You!",
+                        text: "Thank you for your valuable time and information!",
+                        type: 'success'
+                    },function(){
+                        //jQuery("#successmsg").show();
+                        window.location.href = "<?php bloginfo('url'); ?>/self-registration";
+                    });
+                })
+            </script>
+            <div id="successmsg" style="display: none;">
+                <div class="col span_8_of_12">
+                  <p class="successMsg">Thank you for your valuable time and information!</p>
+                  <a style="justify-content:center" href="<?php bloginfo('url'); ?>/self-registration">New user? Register!</a>
+                </div>
             </div>
           <?php } else { ?>
 	        <div class="col span_8_of_12 matchheight">
@@ -189,7 +218,7 @@
                       <div class="section group">
                           <div class="col span_12_of_12">
                               <input type="checkbox" name="sms_agreement" value="yes" /> Yes, I want istilist texts!<br /><br />
-                              <p>Up to 6 autodialed msgs/mo.  Consent not required to purchase. Msg&data rates may apply. Text STOP to stop, HELP for help. Terms:<a href="internationalprom.com/privacy-policy">internationalprom.com</a></p>
+                              <p>Check the "Yes, I want istilist texts!" above to receive a text message when your fitting room is available. Up to 6 autodialed msgs/mo. Consent not required to purchase. Msg&data rates may apply. Text STOP to stop, HELP for help.  Terms: <a href="http://internationalprom.com/privacy-policy" target="_blank">internationalprom.com</a></p>
                           </div>
                       </div>
                       <?php } ?>

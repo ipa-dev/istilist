@@ -251,7 +251,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus
     border-color: #999;
     outline: none;
 }
-input[type="submit"]{
+input[type="submit"], input[type="button"]{
     background: #14b9d6;
     border-radius: 5px;
     color: #ffffff;
@@ -492,7 +492,7 @@ label.error{
     color: #7f8891;
 }
 .box .box_actions {
-    width: 31%;
+    width: auto;
     float: left;
     text-align: center;
     padding: 18px 0;
@@ -778,9 +778,9 @@ span.h1inlinelink a{
 #search_btn{
     position: absolute;
     font-family: FontAwesome;
-    top: 13%;
+    top: 0px;
     right: 0;
-    padding: 1.55% 12px;
+    padding: 9px 12px;
     border-radius: 0;
 }
 .numbers{
@@ -868,26 +868,24 @@ input[type="submit"].submitbtnimg{
     text-align: center;
     width: 37px;
 }
-
-
 .reasone strong{
     color: #14b9d6;
     font-size: 14px;
     font-weight: 600;
 }
-
 #bulkActionForm {
 	display: inline;
 	float: right;
 	width: 54%;
 }
-
-div.submit {
-	50px;
-}
-
 #bulk_select {
 	width: 20%;
 	display: inline;
 	float: left;
+}
+input[type="submit"].fa-input {
+    font-family: "open_sanssemibold", FontAwesome;
+}
+#setpasswordpopup{
+    z-index: 99999;
 }
