@@ -9,7 +9,7 @@
         $sid = 'ACdb92d82faf7befbb1538a208224133a4';
         $token = '1859b70bd4b570f6c8ff702b1ffd005d';
         $client = new Client($sid, $token);
-        echo get_post_meta(get_the_ID(), 'store_id', true);
+        echo get_the_ID();
         exit();
         $sms = $client->account->messages->create(
             // the number we are sending to
