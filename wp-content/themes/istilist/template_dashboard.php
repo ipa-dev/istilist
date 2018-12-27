@@ -338,14 +338,14 @@
                     <div class="banner1">
 						<?php echo do_shortcode('[rev_slider home]'); ?>
                     </div>
-                    <form method="get" action="http://istilist.com/dashboard" style="width:25%;margin-bottom:2%;float:right;">
+                    <form method="get" action="https://istilist.com/dashboard" style="width:25%;margin-bottom:2%;float:right;">
                         <div class="searchForm">
                             <input type="text" id="search_query" name="search_query" value="<?php echo $_GET['search_query']; ?>"/>
                             <input type="submit" id="search_btn" name="search_btn" value="&#xf002"/>
                         </div>
                     </form>
                     <div class="bullkActionsForm">
-                        <form method="post" action="http://istilist.com/dashboard" id="bulkActionForm" style="">
+                        <form method="post" action="https://istilist.com/dashboard" id="bulkActionForm" style="">
                             <!--<input type="submit" name="bulk_btn" value="Submit" style=""/>-->
                             <div class="submit" style="width:50px;" onclick="confirmation();">Submit</div>
                         </form>
@@ -887,7 +887,7 @@
                 if (is_phone == 'TRUE') {
                     //Send AJAX request to PHP script that sends text message to shopper
                     jQuery.ajax({
-                        url: "http://istilist.com/notify-shopper/",
+                        url: "https://istilist.com/notify-shopper/",
                         method: "POST",
                         data: {shopperID: shopper_id},
                         success: function (e) {
