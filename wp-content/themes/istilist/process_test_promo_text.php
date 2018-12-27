@@ -1,6 +1,6 @@
 <?php /* Template Name: Test Promo Text */ ?>
 <?php
-    require("/home3/istilist/public_html/wp-content/themes/standard-theme/twilio-php-master/Twilio/autoload.php");
+    require_once '../twilio-php-master/Twilio/autoload.php';
     use Twilio\Rest\Client;
 
     $body = get_user_meta(get_post_meta(get_the_ID(), 'store_id', true), 'daily_promo_text', true);
