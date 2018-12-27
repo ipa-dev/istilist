@@ -3,49 +3,78 @@
  * Plugin Name: WP Users Media
  * Plugin URI: -
  * Description: WP Users Media is a WordPress plugin that displays only the current users media files and attachments in WP Admin.
- * Version: 3.0.3
+ * Version: 4.0.2
  * Author: Damir Calusic
  * Author URI: https://www.damircalusic.com/
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
-
 /*  Copyright (C) 2014  Damir Calusic (email : damir@damircalusic.com)
-	
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as 
 	published by the Free Software Foundation.
-	
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
-	
 	You should have received a copy of the GNU General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-/* Define the version of the plugin */
-define('WPUSERSMEDIA_VERSION', '3.0.3');
+/** 
+ * 	Define the version of the plugin 
+ * 
+ * 	@since 1.0.0
+ */
+define('WPUSERSMEDIA_VERSION', '4.0.2');
 
-/* Load plugin languages */
-load_plugin_textdomain('wpusme', false, basename( dirname( __FILE__ ) ) . '/languages');
+/**
+ *	Load plugin languages 
+ *
+ * 	@since 1.0.0
+ */
+load_plugin_textdomain('wpusme', false, basename(dirname(__FILE__)).'/languages');
 
-/* Add menu items to the WP Admin menues */
+/** 
+*	Add menu items to the WP Admin menues 
+*	
+*	@since 2.0.0
+*/
 function wpusersmedia_menu() {
 	add_action('admin_init', 'register_wpusme_settings');
 	add_submenu_page('options-general.php', 'WP Users Media', 'WP Users Media', 'manage_options', 'wpusme_settings_page', 'wpusme_settings_page');
 }
 
-/* Register option settings for the plugin */
+/**
+ * 	Register option settings for the plugin 
+ * 
+ * 	@since 2.0.0
+ */
 function register_wpusme_settings() {
+	global $wp_roles;
+	$roles = wpusme_check_if_object_isset($wp_roles->get_names());
+	
 	register_setting('wpusme-settings-group', 'wpusmesidemenu');
 	register_setting('wpusme-settings-group', 'wpusmeadminself');
+	
+	if(is_array($roles)){
+		foreach($roles as $role => $name){
+			if($role !== 'administrator'){
+				register_setting('wpusme-settings-group', 'wpusme'.$role.'self');
+			}
+		}
+	}
 }
 
-/* Display the options/settings page for the site user */
+/** 
+ *	Display the options/settings page for the site user
+ *
+ * 	@since 3.0.0
+ */
 function wpusme_settings_page() {
+	global $wp_roles;
+	$roles = wpusme_check_if_object_isset($wp_roles->get_names());
 ?>
     <form method="post" action="options.php" style="width:98%;color:rgba(128,128,128,1) !important;">
         <?php settings_fields('wpusme-settings-group'); ?>
@@ -69,11 +98,10 @@ function wpusme_settings_page() {
         	<div id="dashboard-widgets" class="metabox-holder">
             	
                 <div id="postbox-container-1" class="postbox-container">
-                    <div id="normal-sortables" class="meta-box-sortables ui-sortable">
-                    
-                    	<div id="wpcore" class="postbox">
-                        	<div class="handlediv" data-src="wpcore" title="<?php _e('Toggle content','wpusme'); ?>"><br></div>
-                            <h3 class="hndle"><span><?php _e('Options','wpusme'); ?></span></h3>
+                	<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+                    	<div id="generellt" class="postbox">
+                        	<button type="button" class="handlediv button-link" aria-expanded="true"><span class="toggle-indicator" data-src="generellt" aria-hidden="true"></span></button>   
+                        	<h2 class="hndle ui-sortable-handle"><span><?php _e('General Options','wpusme'); ?></span></h2>
 							<div class="inside">
 								<div class="main">
                                     <ul>
@@ -93,56 +121,108 @@ function wpusme_settings_page() {
                                  </div>
                           	</div>
 						</div>
-                
+                        <div id="userroles" class="postbox">
+                        	<button type="button" class="handlediv button-link" aria-expanded="true"><span class="toggle-indicator" data-src="userroles" aria-hidden="true"></span></button>   
+                        	<h2 class="hndle ui-sortable-handle"><span><?php _e('User Roles','wpusme'); ?></span></h2>
+							<div class="inside">
+								<div class="main">
+                                	<p><?php _e('Show the own attachments only for the users with following roles listed below. To display own attachments for all roles below just leave them unchecked.','wpusme'); ?></p>
+                                    <ul>
+										<?php  
+										if(is_array($roles)){
+											foreach($roles as $role => $name){
+												if($role !== 'administrator'){
+										?>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpusme<?php echo $role; ?>self" value="1" <?php echo checked(1, get_option('wpusme'.$role.'self'), false); ?> />
+                                                <?php echo $name; ?>
+                                            </label>
+                                        </li>
+										<?php 
+												}
+											}
+										}
+										?>
+                                    </ul>
+                                 </div>
+                          	</div>
+						</div>
                     </div>
             	</div>
-            
+                
             </div>
         </div>
-        
     </form>
-    <script>
-		jQuery(document).ready(function( $ ) {
-			$('.handlediv').click(function() {
-				var div = $(this).attr("data-src");
-				if($("#" + div).hasClass("closed")){
-					$("#" + div).removeClass("closed");
-				}
-				else{
-					$("#" + div).addClass("closed");
-				}
-			});
-		});
-	</script>
+    <script>jQuery(document).ready(function( $ ) { $('.handlediv span').click(function() { $("#" + $(this).attr("data-src")).toggleClass("closed"); }); });</script>
 <?php 
-}  
-
-/* Add shortcut to the main menu */
-function wpusme_shortcut(){ 
-	add_menu_page('WP Users Media', 'WP Users Media', 'manage_options', __FILE__, 'wpusme_settings_page', 'dashicons-images-alt2', 75);
 }
 
-/* Filter attachments for the specific user */
-function um_filter_media_files($wp_query){
-	global $current_user;
-	$wp_query = $wp_query;
-	
-	// Check so the $wp_query->query['post_type'] isset
-	if(isset($wp_query->query['post_type'])){
-		if(get_option('wpusmeadminself') == '1'){
-			if(current_user_can('manage_options') && (is_admin() && $wp_query->query['post_type'] === 'attachment')){
-				$wp_query->set('author', $current_user->ID);
+/** 
+ * 	Add shortcut to the main menu
+ * 
+ * 	@since 2.0.0
+ */
+function wpusme_shortcut(){ 
+	if(get_option('wpusmesidemenu') == '1'){ 
+		add_menu_page('WP Users Media', 'WP Users Media', 'manage_options', __FILE__, 'wpusme_settings_page', 'dashicons-images-alt', 15);
+	}
+}
+
+/**
+ * 	Filter attachments for the specific user
+ * 
+ * 	@since 3.0.0 
+ */
+function wpusme_filter_media_files($wp_query){
+	// Make sure the user is logged in first
+	if(is_user_logged_in()){
+		global $current_user;
+		global $wp_roles;
+		$wp_query = $wp_query;
+		$roles = wpusme_check_if_object_isset($wp_roles->get_names());
+
+		// Check so the $wp_query->query['post_type'] isset and that we are on the attachment page in admin
+		if(isset($wp_query->query['post_type']) && (is_admin() && $wp_query->query['post_type'] === 'attachment')){
+			
+			//  Display the admins attachments only for the admin self.
+			if(get_option('wpusmeadminself') == '1'){
+				if(current_user_can('manage_options')){
+					$wp_query->set('author', $current_user->ID);
+				}
 			}
-		}
-	
-		if(!current_user_can('manage_options') && (is_admin() && $wp_query->query['post_type'] === 'attachment')){
-			$wp_query->set('author', $current_user->ID);
+			
+			// Check if we have checked a role and display attachments only for the users in the role only
+			if(!current_user_can('manage_options')){
+				$count_roles = 0;
+				
+				if(is_array($roles)){
+					foreach($roles as $role => $name){
+						if(get_option('wpusme'.$role.'self') !== null && get_option('wpusme'.$role.'self') == 1){
+							$count_roles++;
+							
+							if($role == $current_user->roles[0]){
+								$wp_query->set('author', $current_user->ID);
+							}
+						}
+					}
+				}
+			
+				// Default setting; All users can view only their own attachments except Admin
+				if($count_roles == 0){
+					$wp_query->set('author', $current_user->ID);
+				}
+			}
 		}
 	}
 }
 
-/* Recount attachments for the specific user */
-function um_recount_attachments($counts_in){
+/** 
+ * 	Recount attachments for the specific user 
+ * 	
+ * 	@since 2.0.0
+ */
+function wpusme_recount_attachments($counts_in){
 	global $wpdb;
 	global $current_user;
 
@@ -156,14 +236,24 @@ function um_recount_attachments($counts_in){
 	}
 
 	$counts['trash'] = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = 'attachment' AND post_author = {$current_user->ID} AND post_status = 'trash' $and");
-	
+
 	return $counts;
 };
 
+/**	
+ * 	Checks if the object isset
+ * 	
+ * 	@since 4.0.2 
+ */
+function wpusme_check_if_object_isset($object){
+	return ($object !== null) ? $object : '';
+}
+
 /* Add actions */
 add_action('admin_menu', 'wpusersmedia_menu');
-add_action('pre_get_posts', 'um_filter_media_files');
-if(get_option('wpusmesidemenu') == '1'){ add_action('admin_menu', 'wpusme_shortcut'); }
+add_action('pre_get_posts', 'wpusme_filter_media_files');
+add_action('admin_menu', 'wpusme_shortcut');
 
 /* Add Filters*/
-add_filter('wp_count_attachments', 'um_recount_attachments');
+//add_filter('wp_count_attachments', 'wpusme_recount_attachments');
+//return apply_filters( 'wp_count_attachments', (object) $counts, $mime_type );

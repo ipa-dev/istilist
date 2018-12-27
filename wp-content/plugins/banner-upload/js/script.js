@@ -1,6 +1,6 @@
 var image_field;
 jQuery(function($){
-    jQuery(document).on('click', 'input.select-img', function(evt){
+    jQuery(document).on('click', 'button.select-img', function(evt){
         image_field = $(this).siblings('.img');
         tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
         return false;

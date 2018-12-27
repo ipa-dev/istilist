@@ -3,7 +3,7 @@ Contributors: New Nine
 Author URI: https://www.newnine.com
 Tags: menus, font awesome, navigation, responsive, nav menu, wp_nav_menu
 Requires at least: 3
-Tested up to: 4.5.3
+Tested up to: 4.6.1
 Stable tag: trunk
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -81,6 +81,9 @@ If you uninstall the plugin, Font Awesome 4 Menus cleans up after itself by remo
 
 == Upgrade Notice ==
 
+= 4.7.0 =
+Updates to Font Awesome 4.7 with 41 shiny new icons!
+
 = 4.6.3.3 =
 Fixes an error experienced by some users when menu items are not arrays
 
@@ -118,6 +121,9 @@ Update to Font Awesome 4.2 which includes another 40 icons
 This upgrade allows you to load Font Awesome from a CDN or prevent double-loading of the stylesheet. It also adds the ability to remove the space in your menus for finer style control.
 
 == Changelog ==
+
+= 4.7.0 =
+Updates to Font Awesome 4.7 with 41 shiny new icons!
 
 = 4.6.3.3 =
 * Adds fix to errors generated when menu items are not arrays

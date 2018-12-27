@@ -389,6 +389,7 @@ class CdbtDB extends CdbtConfig {
    * Get table status
    *
    * @since 2.0.0
+   * @since 2.1.34 Updated
    *
    * @param string $table_name [require]
    * @param mixed $state_name [optional] Array of some table state name, or string of single state name
@@ -397,40 +398,39 @@ class CdbtDB extends CdbtConfig {
   public function get_table_status( $table_name=null, $state_name=null ) {
     static $message = '';
     
-    if (empty($table_name)) 
+    if ( empty( $table_name ) ) 
       $message = sprintf( $this->common_error_messages[0], __FUNCTION__ );
     
-    if (!$this->check_table_exists($table_name)) 
-      $message = __('No specified table.', CDBT);
+    if ( ! $this->check_table_exists( $table_name ) ) 
+      $message = __( 'No specified table.', CDBT );
     
-    $result = $this->array_flatten($this->wpdb->get_results( $this->wpdb->prepare( 'SHOW TABLE STATUS LIKE %s;', esc_sql($table_name) ), ARRAY_A ));
-    $_values = array_values($result);
-    if (!is_array($result) || empty($result) || empty($_values)) 
+    $result = $this->array_flatten( $this->wpdb->get_results( $this->wpdb->prepare( 'SHOW TABLE STATUS LIKE %s;', $table_name ), ARRAY_A ) );
+    if ( ! is_array( $result ) || empty( $result ) ) 
       $message = __('No table status.', CDBT);
     
-    if (!empty($message)) {
+    if ( ! empty( $message ) ) {
       $this->logger( $message );
       return false;
     }
     
-    if (empty($state_name)) 
+    if ( empty( $state_name ) ) 
       return $result;
     
-    if (is_array($state_name)) {
+    if ( is_array( $state_name ) ) {
       $custom_result = [];
-      foreach ($state_name as $state) {
-        if (array_key_exists($state, $result)) 
+      foreach ( $state_name as $state ) {
+        if ( array_key_exists( $state, $result ) ) 
           $custom_result[$state] = $result[$state];
       }
-      if (!empty($custom_result)) 
+      if ( ! empty( $custom_result ) ) 
         return  $custom_result;
     }
     
-    if (is_string($state_name)) {
+    if ( is_string( $state_name ) ) {
       $custom_result = false;
-      if (array_key_exists($state_name, $result)) 
+      if ( array_key_exists( $state_name, $result ) ) 
         $custom_result = $result[$state_name];
-      if (false !== $custom_result) 
+      if ( false !== $custom_result ) 
         return $custom_result;
     }
     
@@ -521,7 +521,8 @@ class CdbtDB extends CdbtConfig {
    * Truncate all data in table for emptying
    *
    * @since 1.0.0
-   * @since 2.0.0 Have refactored logic.
+   * @since 2.0.0 Have refactored logic
+   * @since 2.1.34 Supported foreign key
    *
    * @param string $table_name [require]
    * @return boolean
@@ -534,6 +535,11 @@ class CdbtDB extends CdbtConfig {
     
     if (!$this->check_table_exists($table_name)) 
       $message = __('No specified table.', CDBT);
+    
+    // Fire before truncating table
+    // 
+    // @since 2.1.34
+    do_action( 'cdbt_before_truncate_table', $table_name );
     
     $result = $this->wpdb->query( sprintf( 'TRUNCATE TABLE `%s`;', esc_sql($table_name) ) );
     $retvar = $this->strtobool($result);
@@ -775,6 +781,7 @@ class CdbtDB extends CdbtConfig {
    * @since 1.0.0
    * @since 2.0.0 Refactored logic.
    * @since 2.1.33 Deprecated UNION query
+   * @since 2.1.34 Enhanced concat filter
    *
    * Locate the appropriate data by extracting the best column from the schema information of the table for the search keyword. 
    * Same behavior as get_data() If there is no schema of the table argument is.
@@ -851,11 +858,25 @@ class CdbtDB extends CdbtConfig {
       $limit_clause .= ! empty( $offset ) ? intval( $offset ) .', '. intval( $limit ) : intval( $limit );
     }
     
+    // Filter whether to concat columns or not
+    // 
+    // @since 2.1.33
+    $is_concat = apply_filters( 'cdbt_find_concat_columns', false, $table_name );
+    
+    // Filter the separator string for concat query
+    // 
+    // @since 2.1.34
+    $concat_separator = apply_filters( 'cdbt_find_concat_separator', 'CHAR(0)', $table_name );
+    
     if ( is_array( $search_key ) ) {
       $keywords = $search_key;
     } else {
       $search_key = preg_replace( '/[\s　]+/u', ' ', trim( $search_key ), -1 );
-      $keywords = preg_split( '/[\s]/', $search_key, 0, PREG_SPLIT_NO_EMPTY );
+//      if ( ! $is_concat ) {
+        $keywords = preg_split( '/[\s]/', $search_key, 0, PREG_SPLIT_NO_EMPTY );
+//      } else {
+//        $keywords = [ $search_key ];
+//      }
     }
     if ( ! empty( $keywords ) ) {
       $primary_key_name = null;
@@ -887,14 +908,14 @@ class CdbtDB extends CdbtConfig {
         }
       }
       if ( ! empty( $target_columns ) ) {
-        // Filter whether to concat columns or not
-        // 
-        // @since 2.1.33
-        $is_concat = apply_filters( 'cdbt_find_concat_columns', false, $table_name );
         $_conditions = [];
         foreach ( $keywords as $value ) {
           if ( $is_concat ) {
-            $_conditions[] = 'CONCAT_WS(char(0),`'. implode( '`,`', $target_columns ) ."`) LIKE '%%". $value ."%%'";
+            // Filter the search value for concat
+            // 
+            // @since 2.1.34
+            $search_value = apply_filters( 'cdbt_find_concat_value', "'%%". $value ."%%'", $value, $table_name );
+            $_conditions[] = 'CONCAT_WS('. $concat_separator .',`'. implode( '`,`', $target_columns ) .'`) LIKE '. $search_value;
           } else {
             $_child_cond = [];
             foreach ( $target_columns as $target_column_name ) {
@@ -904,6 +925,7 @@ class CdbtDB extends CdbtConfig {
           }
         }
         $operator = in_array( strtolower( $operator ), [ 'and', 'or' ] ) ? strtoupper( $operator ) : 'AND';
+        $operator = $is_concat ? 'AND' : $operator;
         $where_clause = 'WHERE '. implode( " $operator ", $_conditions ) .' ';
         $_select_statements = sprintf( 'SELECT %s FROM `%s` %s ', $select_clause, $table_name, $where_clause );
       } else {
@@ -1033,7 +1055,7 @@ class CdbtDB extends CdbtConfig {
       
       if ('' === $value || is_null($value)) {
         if ($table_schema[$column]['not_null']) {
-          if ('' === $table_schema[$column]['default'] || is_null($table_schema[$column]['default'])) {
+          if ( is_null( $table_schema[$column]['default'] ) ) {
             $insert_data = [];
             break;
           } else {
@@ -1577,18 +1599,19 @@ class CdbtDB extends CdbtConfig {
    *
    * @since 1.1.0
    * @since 2.0.0 Have refactored logic.
+   * @since 2.1.34 Updated
    *
    * @param string $narrow_type For default `all`, `enable` can get the currently manageable tables on this plugin. As other is `unreserved` and `unmanageable`.
    * @return mixed Array is if find, or return `false`.
    */
   public function get_table_list( $narrow_type='all' ) {
-    $all_tables = $this->wpdb->get_results('SHOW TABLES', 'ARRAY_N');
-    $all_tables = $this->array_flatten($all_tables);
-    $unreserved_tables = array_diff($all_tables, $this->core_tables);
+    $all_tables = $this->wpdb->get_results( 'SHOW TABLES', 'ARRAY_N' );
+    $all_tables = $this->array_flatten( $all_tables );
+    $unreserved_tables = array_diff( $all_tables, $this->core_tables );
     
     $manageable_tables = [];
-    foreach ($this->options['tables'] as $table) {
-      if ( !in_array($table['table_type'], [ 'template' ]) ) 
+    foreach ( $this->options['tables'] as $table ) {
+      if ( ! in_array( $table['table_type'], [ 'template' ] ) && ! empty( $table['table_name'] ) ) 
         $manageable_tables[] = $table['table_name'];
     }
     
@@ -1596,16 +1619,16 @@ class CdbtDB extends CdbtConfig {
     
     $return_tables = false;
     
-    if ('all' === $narrow_type && !empty($all_tables)) 
+    if ( 'all' === $narrow_type && ! empty( $all_tables ) ) 
       $return_tables = $all_tables;
     
-    if ('enable' === $narrow_type && !empty($manageable_tables)) 
+    if ( 'enable' === $narrow_type && ! empty( $manageable_tables ) ) 
       $return_tables = $manageable_tables;
     
-    if ('unreserved' === $narrow_type && !empty($unreserved_tables)) 
+    if ( 'unreserved' === $narrow_type && ! empty( $unreserved_tables ) ) 
       $return_tables = $unreserved_tables;
     
-    if ('unmanageable' === $narrow_type && !empty($unmanageable_tables)) 
+    if ( 'unmanageable' === $narrow_type && ! empty( $unmanageable_tables ) ) 
       $return_tables = $unmanageable_tables;
     
     return $return_tables;

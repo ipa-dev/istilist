@@ -2,15 +2,15 @@
 /*
 Plugin Name: Font Awesome 4 Menus
 Plugin URI: https://www.newnine.com/plugins/font-awesome-4-menus
-Description: Join the retina/responsive revolution by easily adding Font Awesome 4.6.3 icons to your WordPress menus and anywhere else on your site! No programming necessary.
-Version: 4.6.3.3
+Description: Join the retina/responsive revolution by easily adding Font Awesome 4.7.0 icons to your WordPress menus and anywhere else on your site! No programming necessary.
+Version: 4.7.0
 Author: New Nine Media
 Author URI: https://www.newnine.com
 License: GPLv2 or later
 */
 
 /*
-    Copyright 2013  NEW NINE MEDIA  (tel : +1-800-288-9699)
+    Copyright 2013-2016  NEW NINE MEDIA  (tel : +1-800-288-9699)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -29,10 +29,10 @@ License: GPLv2 or later
 class FontAwesomeFour {
 
     public static $defaults = array(
-        'maxcdn_location' => '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css',
+        'maxcdn_location' => 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
         'spacing' => 1,
         'stylesheet' => 'local',
-        'version' => '4.6.3'
+        'version' => '4.7.0'
     );
 
     function __construct(){
