@@ -57,7 +57,7 @@ if ($paged >= 2 || $page >= 2) {
 }
 
 ?></title>
-<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="profile" href="https://gmpg.org/xfn/11" />
 <link rel="icon" 
       type="image/ico" 
       href="https://istilist.com/wp-content/uploads/2018/12/istilist-favicon.png">
@@ -96,7 +96,7 @@ if (is_singular() && get_option('thread_comments')) {
 wp_head();
 ?>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" defer></script>
 
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/css/jquery.fancybox.css" />
 <script src="<?php bloginfo('template_directory'); ?>/js/modernizr-2.8.2-min.js" defer></script>
