@@ -10,6 +10,7 @@
         $token = '1859b70bd4b570f6c8ff702b1ffd005d';
         $client = new Client($sid, $token);
         echo get_user_meta($user_ID, 'mobile_number', true);
+        exit();
         $sms = $client->account->messages->create(
             // the number we are sending to
             '+1'.get_user_meta($user_ID, 'mobile_number', true),
