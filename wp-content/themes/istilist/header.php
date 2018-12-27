@@ -58,6 +58,9 @@ if ($paged >= 2 || $page >= 2) {
 
 ?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="icon" 
+      type="image/ico" 
+      href="http://istilist.com/wp-content/uploads/2018/12/istilist-favicon.png">
 <!-- Responsive Stylesheets -->
 <link rel="stylesheet" media="all" href="<?php bloginfo('template_directory'); ?>/css/commoncssloader.css" />
 <link rel="stylesheet" media="only screen and (max-width: 1024px) and (min-width: 769px)" href="<?php bloginfo('template_directory'); ?>/css/1024.css">
