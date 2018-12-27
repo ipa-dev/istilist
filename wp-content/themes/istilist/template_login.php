@@ -41,7 +41,6 @@
                 } ?>
                         <?php if ($errorCode == 2) {
                     ?>
-                            <!-- <div class="errorMsg">Your account is not activated...Please check your mail and activate your account.</div> -->
                             <div class="infoMsg">Your istilist user account has not been activated. Please check your inbox and spam/junk folder for your approval email.</div>
                         <?php
                 } ?>

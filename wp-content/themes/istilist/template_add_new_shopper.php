@@ -20,7 +20,7 @@ if (is_user_logged_in()) {
 			<div class="col span_9_of_12 matchheight">
 				<div class="dash_content">
 					<?php
-                    if (('storeowner' == $use_role) || ('storesupervisor' == $user_role)) {
+                    if (('storeowner' == $user_role) || ('storesupervisor' == $user_role)) {
                         ?>
 						<h1><?php the_title(); ?> <span class="h1inlinelink"><a href="<?php bloginfo('url'); ?>/edit-shoppers-form">Edit This Form</a></span></h1>
 						<?php
