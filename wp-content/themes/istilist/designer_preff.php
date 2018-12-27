@@ -4,31 +4,31 @@ global $user_ID;
 $store_id = get_user_meta($user_ID, 'store_id', true);
 $table_name1 = $wpdb->prefix.'shoppers';
 
-if(!empty($_GET['ar'])){
+if (!empty($_GET['ar'])) {
     $active_section = decripted($_GET['ar']);
 } else {
     $active_section = 'tf-today';
 }
 
-if(!empty($_GET['sp'])){
+if (!empty($_GET['sp'])) {
     $sp_active_section = decripted($_GET['sp']);
 } else {
     $sp_active_section = 'sp-today';
 }
 
-if(!empty($_GET['st'])){
+if (!empty($_GET['st'])) {
     $st_active_section = decripted($_GET['st']);
 } else {
     $st_active_section = 'st-today';
 }
 
-if(!empty($_GET['cl'])){
+if (!empty($_GET['cl'])) {
     $cl_active_section = decripted($_GET['cl']);
 } else {
     $cl_active_section = 'cl-today';
 }
 
-if(!empty($_GET['sz'])){
+if (!empty($_GET['sz'])) {
     $sz_active_section = decripted($_GET['sz']);
 } else {
     $sz_active_section = 'sz-today';
@@ -36,17 +36,30 @@ if(!empty($_GET['sz'])){
 ?>
 <div class="timeframe">
     <ul>
-        <li class="<?php if($sp_active_section == 'sp-year'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-year'); ?>">Year</a></li>
-        <li class="<?php if($sp_active_section == 'sp-lastmonth'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-lastmonth'); ?>">Last Month</a></li>
-        <li class="<?php if($sp_active_section == 'sp-thismonth'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-thismonth'); ?>">This Month</a></li>
-        <li class="<?php if($sp_active_section == 'sp-7days'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-7days'); ?>">Last 7 Days</a></li>
-        <li class="<?php if($sp_active_section == 'sp-today'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-today'); ?>">Today</a></li>
-        <li class="<?php if($sp_active_section == 'sp-custom'){ echo 'activeSection'; } ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-custom'); ?>">Custom</a></li>
+        <li class="<?php if ($sp_active_section == 'sp-year') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-year'); ?>">Year</a></li>
+        <li class="<?php if ($sp_active_section == 'sp-lastmonth') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-lastmonth'); ?>">Last Month</a></li>
+        <li class="<?php if ($sp_active_section == 'sp-thismonth') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-thismonth'); ?>">This Month</a></li>
+        <li class="<?php if ($sp_active_section == 'sp-7days') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-7days'); ?>">Last 7 Days</a></li>
+        <li class="<?php if ($sp_active_section == 'sp-today') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-today'); ?>">Today</a></li>
+        <li class="<?php if ($sp_active_section == 'sp-custom') {
+    echo 'activeSection';
+} ?>"><a href="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-custom'); ?>">Custom</a></li>
     </ul>
 </div>
 
 <!-- Generate Report -->
-<?php if($sp_active_section == 'sp-year'){ ?>
+<?php if ($sp_active_section == 'sp-year') {
+    ?>
 <script>
 // code for year
 google.setOnLoadCallback(designer_preff_year);
@@ -59,7 +72,7 @@ function designer_preff_year(){
     data.addRows([
         <?php
         $year = date('Y');
-        $designer_pref_args = array(
+    $designer_pref_args = array(
             'post_type' => 'designer_pref',
             'post_status' => 'publish',
             'posts_per_page' => -1,
@@ -68,11 +81,11 @@ function designer_preff_year(){
             'orderby' => 'title',
             'order' => 'ASC'
         );
-        $designer_pref = new WP_Query($designer_pref_args);
-        if ( $designer_pref->have_posts() ) {
-            while ( $designer_pref->have_posts() ) : $designer_pref->the_post();
-                $designer_name = get_the_title();
-                $arg1 = array(
+    $designer_pref = new WP_Query($designer_pref_args);
+    if ($designer_pref->have_posts()) {
+        while ($designer_pref->have_posts()) : $designer_pref->the_post();
+        $designer_name = get_the_title();
+        $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_key' => 'store_id',
@@ -87,13 +100,12 @@ function designer_preff_year(){
                     'year' => $year,
                 );
                 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-                echo "['$designer_name', $user_count],";
-            endwhile;
-            wp_reset_postdata();
-        }
-        ?>
+        $the_query1 = new WP_Query($arg1);
+        $user_count = $the_query1->found_posts;
+        echo "['$designer_name', $user_count],";
+        endwhile;
+        wp_reset_postdata();
+    } ?>
     ]);
     
     var options = {
@@ -132,11 +144,13 @@ else {
 
 <!-- Chart to PNG -->
 <div id="chart_to_png_designer_preff_year" style="display: none;"></div>
-<?php } ?>
+<?php
+} ?>
 <!--  -->
 
 
-<?php if($sp_active_section == 'sp-lastmonth'){ ?>
+<?php if ($sp_active_section == 'sp-lastmonth') {
+        ?>
 <script>
 // code for last month
 google.setOnLoadCallback(designer_preff_lastmonth);
@@ -161,10 +175,10 @@ function designer_preff_lastmonth(){
             'order' => 'ASC'
         );
         $designer_pref = new WP_Query($designer_pref_args);
-        if ( $designer_pref->have_posts() ) {
-            while ( $designer_pref->have_posts() ) : $designer_pref->the_post();
-                $designer_name = get_the_title();
-                $arg1 = array(
+        if ($designer_pref->have_posts()) {
+            while ($designer_pref->have_posts()) : $designer_pref->the_post();
+            $designer_name = get_the_title();
+            $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_key' => 'store_id',
@@ -180,13 +194,12 @@ function designer_preff_lastmonth(){
                     'monthnum' => $month,
                 );
                 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-                echo "['$designer_name', $user_count],";
+            $the_query1 = new WP_Query($arg1);
+            $user_count = $the_query1->found_posts;
+            echo "['$designer_name', $user_count],";
             endwhile;
             wp_reset_postdata();
-        }
-        ?>
+        } ?>
     ]);
     
     var options = {
@@ -225,11 +238,13 @@ else {
 
 <!-- Chart to PNG -->
 <div id="chart_to_png_designer_preff_lastmonth" style="display: none;"></div>
-<?php } ?>
+<?php
+    } ?>
 <!--  -->
 
 
-<?php if($sp_active_section == 'sp-thismonth'){ ?>
+<?php if ($sp_active_section == 'sp-thismonth') {
+        ?>
 <script>
 // code for this month
 google.setOnLoadCallback(designer_preff_thismonth);
@@ -254,10 +269,10 @@ function designer_preff_thismonth(){
             'order' => 'ASC'
         );
         $designer_pref = new WP_Query($designer_pref_args);
-        if ( $designer_pref->have_posts() ) {
-            while ( $designer_pref->have_posts() ) : $designer_pref->the_post();
-                $designer_name = get_the_title();
-                $arg1 = array(
+        if ($designer_pref->have_posts()) {
+            while ($designer_pref->have_posts()) : $designer_pref->the_post();
+            $designer_name = get_the_title();
+            $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_key' => 'store_id',
@@ -273,13 +288,12 @@ function designer_preff_thismonth(){
                     'monthnum' => $month,
                 );
                 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-                echo "['$designer_name', $user_count],";
+            $the_query1 = new WP_Query($arg1);
+            $user_count = $the_query1->found_posts;
+            echo "['$designer_name', $user_count],";
             endwhile;
             wp_reset_postdata();
-        }
-        ?>
+        } ?>
     ]);
     
     var options = {
@@ -318,11 +332,13 @@ else {
 
 <!-- Chart to PNG -->
 <div id="chart_to_png_designer_preff_thismonth" style="display: none;"></div>
-<?php } ?>
+<?php
+    } ?>
 <!--  -->
 
 
-<?php if($sp_active_section == 'sp-7days'){ ?>
+<?php if ($sp_active_section == 'sp-7days') {
+        ?>
 <script>
 // code for last 7 days
 google.setOnLoadCallback(designer_preff_7days);
@@ -349,10 +365,10 @@ function designer_preff_7days(){
             'order' => 'ASC'
         );
         $designer_pref = new WP_Query($designer_pref_args);
-        if ( $designer_pref->have_posts() ) {
-            while ( $designer_pref->have_posts() ) : $designer_pref->the_post();
-                $designer_name = get_the_title();
-                $arg1 = array(
+        if ($designer_pref->have_posts()) {
+            while ($designer_pref->have_posts()) : $designer_pref->the_post();
+            $designer_name = get_the_title();
+            $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_key' => 'store_id',
@@ -371,13 +387,12 @@ function designer_preff_7days(){
                     )
                 );
                 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-                echo "['$designer_name', $user_count],";
+            $the_query1 = new WP_Query($arg1);
+            $user_count = $the_query1->found_posts;
+            echo "['$designer_name', $user_count],";
             endwhile;
             wp_reset_postdata();
-        }
-        ?>
+        } ?>
     ]);
     
     var options = {
@@ -416,11 +431,13 @@ else {
 
 <!-- Chart to PNG -->
 <div id="chart_to_png_designer_preff_7days" style="display: none;"></div>
-<?php } ?>
+<?php
+    } ?>
 <!--  -->
 
 
-<?php if($sp_active_section == 'sp-today'){ ?>
+<?php if ($sp_active_section == 'sp-today') {
+        ?>
 <script>
 // code for today
 google.setOnLoadCallback(designer_preff_today);
@@ -446,10 +463,10 @@ function designer_preff_today(){
             'order' => 'ASC'
         );
         $designer_pref = new WP_Query($designer_pref_args);
-        if ( $designer_pref->have_posts() ) {
-            while ( $designer_pref->have_posts() ) : $designer_pref->the_post();
-                $designer_name = get_the_title();
-                $arg1 = array(
+        if ($designer_pref->have_posts()) {
+            while ($designer_pref->have_posts()) : $designer_pref->the_post();
+            $designer_name = get_the_title();
+            $arg1 = array(
                     'post_type' => 'shopper',
                     'post_status' => 'publish',
                     'meta_key' => 'store_id',
@@ -466,13 +483,12 @@ function designer_preff_today(){
                     'day' => $date
                 );
                 
-                $the_query1 = new WP_Query( $arg1 );
-                $user_count = $the_query1->found_posts;
-                echo "['$designer_name', $user_count],";
+            $the_query1 = new WP_Query($arg1);
+            $user_count = $the_query1->found_posts;
+            echo "['$designer_name', $user_count],";
             endwhile;
             wp_reset_postdata();
-        }
-        ?>
+        } ?>
     ]);
     
     var options = {
@@ -511,11 +527,13 @@ else {
 
 <!-- Chart to PNG -->
 <div id="chart_to_png_designer_preff_today" style="display: none;"></div>
-<?php } ?>
+<?php
+    } ?>
 <!--  -->
 
 
-<?php if($sp_active_section == 'sp-custom'){ ?>
+<?php if ($sp_active_section == 'sp-custom') {
+        ?>
 <div class="daterange">
     <form method="post" action="<?php bloginfo('url'); ?>/analytics-reporting/?sp=<?php echo encripted('sp-custom'); ?>">
         <table>
@@ -529,7 +547,8 @@ else {
         </table>
     </form>
 </div>
-<?php if(isset($_POST['designer_preff_showreport'])){ ?>
+<?php if (isset($_POST['designer_preff_showreport'])) {
+            ?>
 <script>
 // code for custom
 google.setOnLoadCallback(designer_preff_custom);
@@ -543,24 +562,24 @@ function designer_preff_custom(){
         <?php
         $date1 = explode('-', $_POST['designer_preff_startdate']);
             
-        $startDate_month = $date1[0];
-        $startDate_year = $date1[2];
-        $startDate_date = $date1[1];
+            $startDate_month = $date1[0];
+            $startDate_year = $date1[2];
+            $startDate_date = $date1[1];
         
-        $startDate = strtotime($startDate_year.'-'.$startDate_month.'-'.$startDate_date); 
+            $startDate = strtotime($startDate_year.'-'.$startDate_month.'-'.$startDate_date);
         
-        $date2 = explode('-', $_POST['designer_preff_enddate']);
+            $date2 = explode('-', $_POST['designer_preff_enddate']);
         
-        $endDate_month = $date2[0];
-        $endDate_year = $date2[2];
-        $endDate_date = $date2[1];
+            $endDate_month = $date2[0];
+            $endDate_year = $date2[2];
+            $endDate_date = $date2[1];
         
-        $endDate = strtotime($endDate_year.'-'.$endDate_month.'-'.$endDate_date);
+            $endDate = strtotime($endDate_year.'-'.$endDate_month.'-'.$endDate_date);
         
-        $startDate1 = date('d-m-Y 00:01:00', $startDate);
-        $endDate1 = date('d-m-Y 23:59:59', $endDate);
+            $startDate1 = date('d-m-Y 00:01:00', $startDate);
+            $endDate1 = date('d-m-Y 23:59:59', $endDate);
         
-        $designer_pref_args = array(
+            $designer_pref_args = array(
             'post_type' => 'designer_pref',
             'post_status' => 'publish',
             'posts_per_page' => -1,
@@ -569,9 +588,9 @@ function designer_preff_custom(){
             'orderby' => 'title',
             'order' => 'ASC'
         );
-        $designer_pref = new WP_Query($designer_pref_args);
-        if ( $designer_pref->have_posts() ) {
-            while ( $designer_pref->have_posts() ) : $designer_pref->the_post();
+            $designer_pref = new WP_Query($designer_pref_args);
+            if ($designer_pref->have_posts()) {
+                while ($designer_pref->have_posts()) : $designer_pref->the_post();
                 $designer_name = get_the_title();
                 $arg1 = array(
                     'post_type' => 'shopper',
@@ -589,18 +608,17 @@ function designer_preff_custom(){
                         array(
                             'after' => "$startDate1",
                             'before' => "$endDate1",
-                			'inclusive' => true,
+                            'inclusive' => true,
                         )
                     )
                 );
                 
-                $the_query1 = new WP_Query( $arg1 );
+                $the_query1 = new WP_Query($arg1);
                 $user_count = $the_query1->found_posts;
                 echo "['$designer_name', $user_count],";
-            endwhile;
-            wp_reset_postdata();
-        }
-        ?>
+                endwhile;
+                wp_reset_postdata();
+            } ?>
     ]);
     
     var options = {
@@ -639,6 +657,8 @@ else {
 
 <!-- Chart to PNG -->
 <div id="chart_to_png_designer_preff_custom" style="display: none;"></div>
-<?php } ?>
-<?php } ?>
+<?php
+        } ?>
+<?php
+    } ?>
 <!--  -->

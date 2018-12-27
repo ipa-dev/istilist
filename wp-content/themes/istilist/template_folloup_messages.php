@@ -1,15 +1,16 @@
 <?php /* Template Name: Folloup Messages */ ?>
 <?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
-<?php global $user_ID; global $wpdb; ?>
+<?php if (is_user_logged_in()) {
+    ?>
+<?php global $user_ID;
+    global $wpdb; ?>
 <?php $store_owner_id = get_user_meta($user_ID, 'store_id', true); ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <?php $user_role = get_user_role($user_ID); ?>
 <?php
   require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-?>
+    require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/media.php'); ?>
 
 <?php $table_name = $wpdb->prefix.'folloup_messages'; ?>
 <div id="dashboard">
@@ -22,18 +23,17 @@
                     <div class="reportBox">
                         <h3>Thank You Email Template</h3>
                         <?php
-                            if(isset($_POST['thankyou_template'])){
+                            if (isset($_POST['thankyou_template'])) {
                                 $update_query = "UPDATE $table_name SET subject = '".$_POST['thankyou_subject']."', body = '".nl2br($_POST['thankyou_email_body'])."' WHERE message_type = 'thankyou' and store_id = $store_id";
                                 $update = $wpdb->query($update_query);
-                                if($update == 1){
+                                if ($update == 1) {
                                     echo '<p class="successMsg">Your email template is updated successfully.</p>';
                                 } else {
                                     echo '<p class="successMsg">Some thing goes wrong.</p>';
                                 }
                             }
-                            $sql1 = "SELECT * FROM $table_name WHERE message_type = 'thankyou' and store_id = $store_id";
-                            $result1 = $wpdb->get_row($sql1);
-                        ?>
+    $sql1 = "SELECT * FROM $table_name WHERE message_type = 'thankyou' and store_id = $store_id";
+    $result1 = $wpdb->get_row($sql1); ?>
                         <form method="post" action="" enctype="multipart/form-data">
                             <div class="section group">
                                 <div class="col span_2_of_12">Subject</div>
@@ -58,8 +58,7 @@
                                         'drag_drop_upload' => true
                                     );
 
-                                    wp_editor($result1->body, 'thankyou_email_body', $settings1);
-                                ?>
+    wp_editor($result1->body, 'thankyou_email_body', $settings1); ?>
                                 <div class="allowedtag">
                                     <em>{Shopper's Name}</em> for auto generated shopper's name<br />
                                     <em>{Stylist's Name}</em> for auto generated stylist's name
@@ -79,18 +78,17 @@
                     <div class="reportBox">
                         <h3>Promo Email Template</h3>
                         <?php
-                            if(isset($_POST['promo_template'])){
+                            if (isset($_POST['promo_template'])) {
                                 $update_query = "UPDATE $table_name SET subject = '".$_POST['promo_subject']."', body = '".$_POST['promo_email_body']."' WHERE message_type = 'promo' and store_id = $store_id";
                                 $update = $wpdb->query($update_query);
-                                if($update == 1){
+                                if ($update == 1) {
                                     echo '<p class="successMsg">Your email template is updated successfully.</p>';
                                 } else {
                                     echo '<p class="successMsg">Some thing goes wrong.</p>';
                                 }
                             }
-                            $sql3 = "SELECT * FROM $table_name WHERE message_type = 'promo' and store_id = $store_id";
-                            $result3 = $wpdb->get_row($sql3);
-                        ?>
+    $sql3 = "SELECT * FROM $table_name WHERE message_type = 'promo' and store_id = $store_id";
+    $result3 = $wpdb->get_row($sql3); ?>
                         <form method="post" action="">
                             <div class="section group">
                                 <div class="col span_2_of_12">Subject</div>
@@ -113,8 +111,7 @@
                                         'tinymce' => true,
                                         'quicktags' => true,
                                         'drag_drop_upload' => true
-                                    );
-                                ?>
+                                    ); ?>
 
                                 <?php wp_editor($result3->body, 'promo_email_body', $settings3); ?>
                                 <div class="allowedtag">
@@ -135,9 +132,8 @@
                     <div class="reportBox">
                       <h3>Send Email to Shoppers/Stylist/Employees</h3>
 	                    <?php
-	                    $sql1 = "SELECT * FROM $table_name WHERE message_type = 'shoppers-stylist-employees' and store_id = $store_id";
-	                    $result1 = $wpdb->get_row($sql1);
-	                    ?>
+                        $sql1 = "SELECT * FROM $table_name WHERE message_type = 'shoppers-stylist-employees' and store_id = $store_id";
+    $result1 = $wpdb->get_row($sql1); ?>
                       <form name='shopper_email_form' id='shopper_email_form' method='post' action='<?php bloginfo('url'); ?>/send-mails/'>
                         <div class="section group">
                           <div class="col span_2_of_12">Email to</div>
@@ -172,8 +168,7 @@
                                     'tinymce' => true,
                                     'quicktags' => true,
                                     'drag_drop_upload' => true
-                                );
-                            ?>
+                                ); ?>
 
                             <?php wp_editor($result1->body, 'shopper_email_body', $settings3); ?>
                             <div class="allowedtag">
@@ -196,8 +191,8 @@
                         <h3>Send Email to Purchased Shoppers</h3>
 	                    <?php
 /*	                    $sql7 = "SELECT * FROM $table_name WHERE message_type = 'purchased-shoppers' and store_id = $store_id";
-	                    $result7 = $wpdb->get_row($sql7);
-	                    */?>
+                        $result7 = $wpdb->get_row($sql7);
+                        */?>
                         <form name='purchased_shopper_email_form' enctype="multipart/form-data" id='purchased_shopper_email_form' method='post' action='<?php /*bloginfo('url'); */?>/send-mail-purchased-shoppers'>
                             <div class="section group">
                                 <div class="col span_2_of_12">Subject</div>
@@ -243,8 +238,8 @@
                         <h3>Send Email to Non Purchased Shoppers</h3>
 		                <?php
 /*		                $sql8 = "SELECT * FROM $table_name WHERE message_type = 'non-purchased-shoppers' and store_id = $store_id";
-		                $result8 = $wpdb->get_row($sql8);
-		                */?>
+                        $result8 = $wpdb->get_row($sql8);
+                        */?>
                         <form name='non_purchased_shopper_email_form' enctype="multipart/form-data" id='non_purchased_shopper_email_form' method='post' action='<?php /*bloginfo('url'); */?>/send-mail-non-purchased-shoppers'>
                             <div class="section group">
                                 <div class="col span_2_of_12">Subject</div>
@@ -255,20 +250,20 @@
                                 <div class="col span_10_of_12">
 					                <?php
 /*					                $settings8 = array(
-						                'wpautop' => true,
-						                'media_buttons' => true,
-						                'textarea_name' => 'non_purchased_shopper_email_body',
-						                'textarea_rows' => 40,
-						                'tabindex' => '',
-						                'editor_css' => '',
-						                'editor_class' => 'msgClass',
-						                'teeny' => false,
-						                'dfw' => true,
-						                'tinymce' => true,
-						                'quicktags' => true,
-						                'drag_drop_upload' => true
-					                );
-					                */?>
+                                        'wpautop' => true,
+                                        'media_buttons' => true,
+                                        'textarea_name' => 'non_purchased_shopper_email_body',
+                                        'textarea_rows' => 40,
+                                        'tabindex' => '',
+                                        'editor_css' => '',
+                                        'editor_class' => 'msgClass',
+                                        'teeny' => false,
+                                        'dfw' => true,
+                                        'tinymce' => true,
+                                        'quicktags' => true,
+                                        'drag_drop_upload' => true
+                                    );
+                                    */?>
 					                <?php /*wp_editor($result8->body, 'non_purchased_shopper_email_body', $settings8); */?>
                                     <div class="allowedtag">
                                         <em>{Shopper's Name}</em> for auto generated shopper's name
@@ -290,8 +285,8 @@
                         <h3>Send Email to Stylists/Employees</h3>
 		                <?php
 /*		                $sql9 = "SELECT * FROM $table_name WHERE message_type = 'stylist-employees' and store_id = $store_id";
-		                $result9 = $wpdb->get_row($sql9);
-		                */?>
+                        $result9 = $wpdb->get_row($sql9);
+                        */?>
                         <form name='send_mail_stylist_employees_form' enctype="multipart/form-data" id='send_mail_stylist_employees_form' method='post' action='<?php /*bloginfo('url'); */?>/send-mail-stylist-employees'>
                             <div class="section group">
                                 <div class="col span_2_of_12">Subject</div>
@@ -302,20 +297,20 @@
                                 <div class="col span_10_of_12">
 					                <?php
 /*					                $settings9 = array(
-						                'wpautop' => true,
-						                'media_buttons' => true,
-						                'textarea_name' => 'stylist_employees_email_body',
-						                'textarea_rows' => 40,
-						                'tabindex' => '',
-						                'editor_css' => '',
-						                'editor_class' => 'msgClass',
-						                'teeny' => false,
-						                'dfw' => true,
-						                'tinymce' => true,
-						                'quicktags' => true,
-						                'drag_drop_upload' => true
-					                );
-					                */?>
+                                        'wpautop' => true,
+                                        'media_buttons' => true,
+                                        'textarea_name' => 'stylist_employees_email_body',
+                                        'textarea_rows' => 40,
+                                        'tabindex' => '',
+                                        'editor_css' => '',
+                                        'editor_class' => 'msgClass',
+                                        'teeny' => false,
+                                        'dfw' => true,
+                                        'tinymce' => true,
+                                        'quicktags' => true,
+                                        'drag_drop_upload' => true
+                                    );
+                                    */?>
 					                <?php /*wp_editor($result9->body, 'stylist_employees_email_body', $settings9); */?>
                                     <div class="allowedtag">
                                         <em>{Stylist-Employee's Name}</em> for auto generated Stylist/Employee's name
@@ -340,15 +335,14 @@
                             if (isset($_POST['thankyou_text_template'])) {
                                 $update_query = "UPDATE $table_name SET  body = '".$_POST['thankyou_text_body']."' WHERE message_type = 'thankyoutext' and store_id = $store_id";
                                 $update = $wpdb->query($update_query);
-                                if($update == 1){
+                                if ($update == 1) {
                                     echo '<p class="successMsg">Your text template is updated successfully.</p>';
                                 } else {
                                     echo '<p class="successMsg">Some thing goes wrong.</p>';
                                 }
                             }
-                            $sql4 = "SELECT * FROM $table_name WHERE message_type='thankyoutext' AND store_id = $store_id";
-                            $result4 = $wpdb->get_row($sql4);
-                        ?>
+    $sql4 = "SELECT * FROM $table_name WHERE message_type='thankyoutext' AND store_id = $store_id";
+    $result4 = $wpdb->get_row($sql4); ?>
                         <form id='thankyou_text_form' method="post" action="">
                             <div class="section group">
                                 <div class="col span_2_of_12">Message Body</div>
@@ -375,15 +369,14 @@
                             if (isset($_POST['promo_text_template'])) {
                                 $update_query = "UPDATE $table_name SET body = '".$_POST['promo_text_body']."' WHERE message_type = 'promotext' and store_id = $store_id";
                                 $update = $wpdb->query($update_query);
-                                if($update == 1){
+                                if ($update == 1) {
                                     echo '<p class="successMsg">Your text template is updated successfully.</p>';
                                 } else {
                                     echo '<p class="successMsg">Some thing goes wrong.</p>';
                                 }
                             }
-                            $sql5 = "SELECT * FROM $table_name WHERE message_type='promotext' AND store_id = $store_id";
-                            $result5 = $wpdb->get_row($sql5);
-                        ?>
+    $sql5 = "SELECT * FROM $table_name WHERE message_type='promotext' AND store_id = $store_id";
+    $result5 = $wpdb->get_row($sql5); ?>
                         <form id="promo_text_form" method="post" action="">
                             <div class="section group">
                                 <div class="col span_2_of_12">Message Body</div>
@@ -446,4 +439,7 @@
         display: none !important;
     }
 </style>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+} else {
+        header('Location: '.get_bloginfo('url').'/login');
+    } ?>

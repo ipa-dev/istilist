@@ -1,6 +1,7 @@
 <?php /* Template Name: Store Preferences */ ?>
 <?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
+<?php if (is_user_logged_in()) {
+    ?>
 <?php global $user_ID; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <div id="dashboard">
@@ -24,8 +25,7 @@
                                     'orderby' => 'title',
                                     'order' => 'ASC'
                                 );
-                                $styles = new WP_Query($style_args);
-                            ?>
+    $styles = new WP_Query($style_args); ?>
                             <table class="footable" data-sort="false">
                                 <thead>
                                     <tr>
@@ -34,18 +34,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                            <?php if ( $styles->have_posts() ) { ?>
-                            <?php while ( $styles->have_posts() ) : $styles->the_post(); ?>
+                            <?php if ($styles->have_posts()) {
+        ?>
+                            <?php while ($styles->have_posts()) : $styles->the_post(); ?>
                                     <tr>
                                         <td><?php the_title(); ?></td>
                                         <td><div style="text-align: right;"><span class="buttonLink"><a href="<?php bloginfo('url'); ?>/edit-preferences/?id=<?php echo encripted(get_the_ID()); ?>"><i class="fa fa-pencil-square-o"></i></a></span> <span class="buttonLink"><a href="<?php bloginfo('url'); ?>/delete-preference/?id=<?php echo encripted(get_the_ID()); ?>"><i class="fa fa-trash-o"></i></a></span></div></td>
                                     </tr>
                             <?php endwhile; ?>
-                            <?php } else { ?>
+                            <?php
+    } else {
+        ?>
                                     <tr>
                                         <td colspan="2"><div style="text-align: center;">No Preferences</div></td>
                                     </tr>
-                            <?php } ?>
+                            <?php
+    } ?>
                             <?php wp_reset_postdata(); ?>
                                 </tbody>
                                 <tfoot>
@@ -72,8 +76,7 @@
                                     'orderby' => 'title',
                                     'order' => 'ASC'
                                 );
-                                $colors = new WP_Query($color_args);
-                            ?>
+    $colors = new WP_Query($color_args); ?>
                             <table class="footable" data-sort="false">
                                 <thead>
                                     <tr>
@@ -82,18 +85,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                            <?php if ( $colors->have_posts() ) { ?>
-                            <?php while ( $colors->have_posts() ) : $colors->the_post(); ?>
+                            <?php if ($colors->have_posts()) {
+        ?>
+                            <?php while ($colors->have_posts()) : $colors->the_post(); ?>
                                     <tr>
                                         <td><?php the_title(); ?></td>
                                         <td><div style="text-align: right;"><span class="buttonLink"><a href="<?php bloginfo('url'); ?>/edit-preferences/?id=<?php echo encripted(get_the_ID()); ?>"><i class="fa fa-pencil-square-o"></i></a></span> <span class="buttonLink"><a href="<?php bloginfo('url'); ?>/delete-preference/?id=<?php echo encripted(get_the_ID()); ?>"><i class="fa fa-trash-o"></i></a></span></div></td>
                                     </tr>
                             <?php endwhile; ?>
-                            <?php } else { ?>
+                            <?php
+    } else {
+        ?>
                                     <tr>
                                         <td colspan="2"><div style="text-align: center;">No Preferences</div></td>
                                     </tr>
-                            <?php } ?>
+                            <?php
+    } ?>
                             <?php wp_reset_postdata(); ?>
                                 </tbody>
                                 <tfoot>
@@ -120,8 +127,7 @@
                                     //'orderby' => 'title',
                                     //'order' => 'ASC'
                                 );
-                                $sizes = new WP_Query($size_args);
-                            ?>
+    $sizes = new WP_Query($size_args); ?>
                             <table class="footable" data-sort="false">
                                 <thead>
                                     <tr>
@@ -130,18 +136,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                            <?php if ( $sizes->have_posts() ) { ?>
-                            <?php while ( $sizes->have_posts() ) : $sizes->the_post(); ?>
+                            <?php if ($sizes->have_posts()) {
+        ?>
+                            <?php while ($sizes->have_posts()) : $sizes->the_post(); ?>
                                     <tr>
                                         <td><?php the_title(); ?></td>
                                         <td><div style="text-align: right;"><span class="buttonLink"><a href="<?php bloginfo('url'); ?>/edit-preferences/?id=<?php echo encripted(get_the_ID()); ?>"><i class="fa fa-pencil-square-o"></i></a></span> <span class="buttonLink"><a href="<?php bloginfo('url'); ?>/delete-preference/?id=<?php echo encripted(get_the_ID()); ?>"><i class="fa fa-trash-o"></i></a></span></div></td>
                                     </tr>
                             <?php endwhile; ?>
-                            <?php } else { ?>
+                            <?php
+    } else {
+        ?>
                                     <tr>
                                         <td colspan="2"><div style="text-align: center;">No Preferences</div></td>
                                     </tr>
-                            <?php } ?>
+                            <?php
+    } ?>
                             <?php wp_reset_postdata(); ?>
                                 </tbody>
                                 <tfoot>
@@ -168,8 +178,7 @@
                                     'orderby' => 'title',
                                     'order' => 'ASC'
                                 );
-                                $sizes = new WP_Query($size_args);
-                            ?>
+    $sizes = new WP_Query($size_args); ?>
                             <table class="footable" data-sort="false">
                                 <thead>
                                     <tr>
@@ -178,18 +187,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                            <?php if ( $sizes->have_posts() ) { ?>
-                            <?php while ( $sizes->have_posts() ) : $sizes->the_post(); ?>
+                            <?php if ($sizes->have_posts()) {
+        ?>
+                            <?php while ($sizes->have_posts()) : $sizes->the_post(); ?>
                                     <tr>
                                         <td><?php the_title(); ?></td>
                                         <td><div style="text-align: right;"><span class="buttonLink"><a href="<?php bloginfo('url'); ?>/edit-preferences/?id=<?php echo encripted(get_the_ID()); ?>"><i class="fa fa-pencil-square-o"></i></a></span> <span class="buttonLink"><a href="<?php bloginfo('url'); ?>/delete-preference/?id=<?php echo encripted(get_the_ID()); ?>"><i class="fa fa-trash-o"></i></a></span></div></td>
                                     </tr>
                             <?php endwhile; ?>
-                            <?php } else { ?>
+                            <?php
+    } else {
+        ?>
                                     <tr>
                                         <td colspan="2"><div style="text-align: center;">No Preferences</div></td>
                                     </tr>
-                            <?php } ?>
+                            <?php
+    } ?>
                             <?php wp_reset_postdata(); ?>
                                 </tbody>
                                 <tfoot>
@@ -208,4 +221,7 @@
 	    </div>
 	</div>
 </div>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+} else {
+        header('Location: '.get_bloginfo('url').'/login');
+    } ?>

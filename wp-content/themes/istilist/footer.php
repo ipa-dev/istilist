@@ -1,13 +1,19 @@
-<?php if(!is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) { ?>
+<?php if (!is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {
+    ?>
 <div class="footer">
 <?php global $options; ?>
-<?php if(is_user_logged_in()){ ?>
+<?php if (is_user_logged_in()) {
+        ?>
     <div class="copy"><?php echo $options['general-copyright']; ?></div>
-<?php } else { ?>
+<?php
+    } else {
+        ?>
     <div class="copy" style="text-align: center;"><?php echo $options['general-copyright']; ?></div>
-<?php } ?>
+<?php
+    } ?>
 </div>
-<?php } ?>
+<?php
+} ?>
 <script>
 jQuery(document).ready(function(){
     jQuery('#emailthisreport').click(function(){

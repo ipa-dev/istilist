@@ -6,14 +6,14 @@
             <div class="col span_4_of_12"></div>
             <div class="col span_4_of_12">
                 <?php
-                	$key = $_GET['action'];
-                	if(isset($_POST['Submit']) && !empty($key)){
-                	    $user = get_user_by( 'email', $key );
+                    $key = $_GET['action'];
+                    if (isset($_POST['Submit']) && !empty($key)) {
+                        $user = get_user_by('email', $key);
                         $pwd = $_POST['pwd1'];
-                		//$user_data = $wpdb->get_row($wpdb->prepare("SELECT ID  FROM $wpdb->users WHERE user_email = %s", $key));
-                		wp_set_password( $pwd, $user->ID );
-                		header("Location: ".get_bloginfo('home')."/thank-you/?action=".encripted('resetpassword'));
-                	}
+                        //$user_data = $wpdb->get_row($wpdb->prepare("SELECT ID  FROM $wpdb->users WHERE user_email = %s", $key));
+                        wp_set_password($pwd, $user->ID);
+                        header("Location: ".get_bloginfo('home')."/thank-you/?action=".encripted('resetpassword'));
+                    }
                 ?>
                 <div class="logo"><h1><?php echo $options['general-logo']; ?></h1></div>
                 <div class="loginSection">

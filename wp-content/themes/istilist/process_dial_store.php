@@ -8,4 +8,3 @@ $dial = $response->dial();
 $dial->number('865-475-8641');
 
 echo $response;
-?>

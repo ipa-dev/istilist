@@ -10,14 +10,14 @@
                     <div class="box">
             <?php
             $action = decripted($_GET['action']);
-            	if($action == 'registration'){
-            		echo "<p class='successMsg'>Thank you for registering for istilist!  Please check your inbox for your approval email.</p>";
-            	}
-            	if($action == 'forgotpassword'){
-            		echo "<p class='successMsg'>Please check your registered email and click on the reset password link.</p>";
-            	}
-            	if($action == 'resetpassword'){
-            	   echo '<p class="successMsg">Your password updated successfully. Please click here to <a class="alink" href="'.get_bloginfo('home').'/login">Login</a>.</p>';
+                if ($action == 'registration') {
+                    echo "<p class='successMsg'>Thank you for registering for istilist!  Please check your inbox for your approval email.</p>";
+                }
+                if ($action == 'forgotpassword') {
+                    echo "<p class='successMsg'>Please check your registered email and click on the reset password link.</p>";
+                }
+                if ($action == 'resetpassword') {
+                    echo '<p class="successMsg">Your password updated successfully. Please click here to <a class="alink" href="'.get_bloginfo('home').'/login">Login</a>.</p>';
                 }
             ?>
                     </div>

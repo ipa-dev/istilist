@@ -1,6 +1,7 @@
 <?php /* Template Name: Edit Preferences */ ?>
 <?php get_header(); ?>
-<?php if(is_user_logged_in()){ ?>
+<?php if (is_user_logged_in()) {
+    ?>
 <?php global $user_ID; ?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
@@ -12,15 +13,14 @@
                     <div class="box">
                         <?php
                             $pref_id = decripted($_GET['id']);
-                            if(isset($_POST['update_pref'])){
-                                $args = array(
-                                    'ID' => $_POST['pref_id'], 
+    if (isset($_POST['update_pref'])) {
+        $args = array(
+                                    'ID' => $_POST['pref_id'],
                                     'post_title' => $_POST['preference_title']
                                 );
-                                wp_update_post( $args );
-                                header('Location: '.get_bloginfo('url').'/store-preferences');
-                            }
-                        ?>
+        wp_update_post($args);
+        header('Location: '.get_bloginfo('url').'/store-preferences');
+    } ?>
                         <form id="forms" method="post" action="">
                             <div class="commonForm">
                                 <div>
@@ -51,4 +51,7 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php
+} else {
+        header('Location: '.get_bloginfo('url').'/login');
+    } ?>

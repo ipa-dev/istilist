@@ -6,13 +6,13 @@ global $wpdb;
 $store_id = get_user_meta($user_ID, 'store_id', true);
 ?>
 <?php get_header('report'); ?>
-<?php //if(is_user_logged_in()){ ?>
+<?php //if(is_user_logged_in()){?>
 <?php global $user_ID; ?>
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
 	    <div class="section group">
-	        <?php //get_sidebar('menu'); ?>
+	        <?php //get_sidebar('menu');?>
 	        <div class="col span_12_of_12 matchheight">
                 <div class="dash_content">
                     <h1>Analytics Report</h1>
@@ -31,4 +31,4 @@ $store_id = get_user_meta($user_ID, 'store_id', true);
 	    </div>
 	</div>
 </div>
-<?php //} else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php //} else { header('Location: '.get_bloginfo('url').'/login'); }?>
