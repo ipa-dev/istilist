@@ -11,8 +11,9 @@ define('WP_USER_ADMIN', true);
 
 require_once( dirname(dirname(__FILE__)) . '/admin.php');
 
-if ( ! is_multisite() && ! defined( 'DOING_AJAX' )) {
+if ( ! is_multisite() ) {
 	wp_redirect( admin_url() );
+	exit;
 }
 
 $redirect_user_admin_request = ( ( $current_blog->domain != $current_site->domain ) || ( $current_blog->path != $current_site->path ) );
