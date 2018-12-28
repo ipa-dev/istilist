@@ -29,7 +29,5 @@
         if (!empty($num_texts_left)) {
             update_user_meta($user_ID, 'text_credit', $num_texts_left + 1250);
         }
-        else {
-            add_user_meta($user_ID, 'text_credit', 1250, true);
-        }
+        header('Location: ' . get_bloginfo( 'url' ) . '/store-profile');
 } ?>
