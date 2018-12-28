@@ -396,9 +396,9 @@
                         <div class="box">
 							<?php
             } ?>
-                            <div class="box_pic">
+                            <!--<div class="box_pic">
 								<?php echo get_profile_img($shopper_id); ?>
-                            </div>
+                            </div>-->
                             <div class="box_description" data-shopperid="<?php echo $shopper_id; ?>">
                                 <h2>
 									<?php echo get_post_meta($shopper_id, 'customer_fname', true); ?> <?php echo get_post_meta($shopper_id, 'customer_lname', true); ?>
@@ -741,9 +741,9 @@
                             <div class="box">
 								<?php
                     } ?>
-                                <div class="box_pic noprofileimg"><img
+                                <!--<div class="box_pic noprofileimg"><img
                                             src="<?php bloginfo('template_directory'); ?>/images/noprofileimg.png"/>
-                                </div>
+                                </div>-->
                                 <div class="box_description" data-shopperid="<?php echo $shopper_id; ?>">
                                     <h2><?php echo get_post_meta($shopper_id, 'customer_fname', true); ?> <?php echo get_post_meta($shopper_id, 'customer_lname', true); ?>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><strong>Event:</strong> <?php echo get_post_meta($shopper_id, 'school_event', true); ?></span>

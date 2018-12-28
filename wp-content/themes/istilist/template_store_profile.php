@@ -79,21 +79,16 @@
                                     <label>Password</label>
                                     <input type="password" name="pwd" />
                                 </div>-->
-
                             </div>
-                            <div class="section group">
 
-
-                                <!-- User Timezone -->
-                                <?php require_once 'php_modules/template-store-profile/select-timezone.php'; ?>
-
-                            </div>
                             <div class="section group">
                                 <div class="col span_6_of_12">
                                     <label>Email ID to Shoppers</label>
                                     <input type="text" name="email_to_shopper" value="<?php echo get_user_meta($user_ID, 'email_to_shopper', true); ?>" />
                                 </div>
                                 
+                                <!-- Reverse Ordering -->
+                                <?php require_once 'php_modules/template-store-profile/reverse-order.php'; ?>
                             </div>
                             
                             <!-- Profile Picture 
@@ -101,10 +96,6 @@
                                 <?php //require_once 'php_modules/template-store-profile/profile-picture.php'; ?>
                             </div>
                             -->
-                            <!-- Reverse Ordering -->
-                            <div class="section group">
-                            	<?php require_once 'php_modules/template-store-profile/reverse-order.php'; ?>
-                            </div>
 
                             <!-- Timed Promo Text -->
                             <div class="section group">
@@ -123,6 +114,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- User Timezone HIDDEN -->
+                            <?php require_once 'php_modules/template-store-profile/select-timezone.php'; ?>
                         </form>
                     </div>
                 </div>

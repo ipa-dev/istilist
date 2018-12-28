@@ -378,7 +378,7 @@ jQuery(document).ready(function(){
                     <ul>
                         <li class="user" style="color:white;">
                            <!-- <a href="#"> -->
-                                <?php echo get_store_img($user_ID); ?>
+                                <?php //echo get_store_img($user_ID); ?>
                                 <?php echo get_the_author_meta('display_name', $user_ID); ?>
                                 <!--<i class="fa fa-chevron-down"></i>   -->
                            <!-- </a> -->
