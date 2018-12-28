@@ -107,6 +107,7 @@
                                     <input type="text" disabled name="text_credit" value="<?php echo get_user_meta($user_ID, 'text_credit', true); ?>" />
                                     <div class="divnote">Current number of subscribers:
                                         <?php 
+                                            exit();
                                             $data = new WP_Query(array(
                                                 'post_type' => 'shopper',
                                                 'post_status' => 'publish',
