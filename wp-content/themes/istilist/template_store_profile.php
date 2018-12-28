@@ -94,40 +94,40 @@
                                 
                             </div>
                             <div class="section group">
-                            <div class="col span_6_of_12">
+                            <div class="col span_4_of_12">
                                     <label>Mobile Phone</label>
                                     <input type="text" name="mobile_number" value="<?php echo get_user_meta($user_ID, 'mobile_number', true); ?>" />
                                     <input type="checkbox" name="mobile_number_optin" value="<?php echo get_user_meta($user_ID, 'mobile_number_optin', true); ?>" /> Yes, I want istilist texts!
                                 </div>
-                                <div class="col span_6_of_12">
+                                <div class="col span_4_of_12">
                                     <label>Address</label>
                                     <input type="text" name="address" value="<?php echo get_user_meta($user_ID, 'address', true); ?>" />
                                 </div>
-                                
-                            </div>
-                            <div class="section group">
-                                
-                                <div class="col span_6_of_12">
+                                <div class="col span_4_of_12">
                                     <label>Email</label>
                                     <input type="text" name="email_address" value="<?php echo get_the_author_meta('reporting', $user_ID); ?>" />
                                     <div class="divnote">Separate multiple email addresses with a comma.</div>
                                 </div>
                             </div>
                             <div class="section group">
-                                <div class="col span_6_of_12">
+                                <div class="col span_4_of_12">
                                     <label>City</label>
                                     <input type="text" name="city" value="<?php echo get_user_meta($user_ID, 'city', true); ?>" />
                                 </div>
-                                <div class="col span_6_of_12">
+                                <div class="col span_4_of_12">
                                     <label>State</label>
                                     <input type="text" name="state" value="<?php echo get_user_meta($user_ID, 'state', true); ?>" />
                                 </div>
-                            </div>
-                            <div class="section group">
-                                <div class="col span_6_of_12">
+                                <div class="col span_4_of_12">
                                     <label>Zip Code</label>
                                     <input type="text" name="zipcode" value="<?php echo get_user_meta($user_ID, 'zipcode', true); ?>" />
                                 </div>
+                            </div>
+                            <div class="section group">
+                                
+                            </div>
+                            <div class="section group">
+                                
                                 <div class="col span_6_of_12">
                                     <label>Website</label>
                                     <input type="text" name="website" value="<?php echo get_user_meta($user_ID, 'website', true); ?>" />
