@@ -3,7 +3,6 @@
 <?php if (is_user_logged_in()) {
     ?>
 <?php global $user_ID; ?>
-<?php get_header(); ?>
 <?php $user_reverse_order = get_user_meta($user_ID, 'reverse_order', true); ?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
