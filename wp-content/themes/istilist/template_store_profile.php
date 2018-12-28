@@ -13,7 +13,6 @@
                     <h1><?php the_title(); ?></h1>
                     <div class="box">
                         <?php
-                            
                             if (isset($_POST['update_store_profile'])) {
                                 wp_update_user(array( 'ID' => $user_ID, 'display_name' => $_POST['store_name'] ));
                                 update_user_meta($user_ID, 'contact_name', $_POST['contact_name']);
@@ -80,13 +79,22 @@
                             } ?>
                         <form id="forms" method="post" action="" enctype="multipart/form-data">
                             <div class="section group">
-                                <div class="col span_6_of_12">
+                                <div class="col span_3_of_12">
                                     <label>Store</label>
                                     <input type="text" name="store_name" value="<?php echo get_the_author_meta('display_name', $user_ID); ?>" />
                                 </div>
-                                <div class="col span_6_of_12">
-                                    <label>Contact</label>
+                                <div class="col span_3_of_12">
+                                    <label>Contact Name</label>
                                     <input type="text" name="contact_name" value="<?php echo get_user_meta($user_ID, 'contact_name', true); ?>" />
+                                </div>
+                                <div class="col span_3_of_12">
+                                    <label>Business Phone</label>
+                                    <input type="text" name="phone_number" value="<?php echo get_user_meta($user_ID, 'phone_number', true); ?>" />
+                                </div>
+                                <div class="col span_6_of_12">
+                                    <label>Mobile Phone</label>
+                                    <input type="text" name="mobile_number" value="<?php echo get_user_meta($user_ID, 'mobile_number', true); ?>" />
+                                    <input type="checkbox" name="mobile_number_optin" value="<?php echo get_user_meta($user_ID, 'mobile_number_optin', true); ?>" /> Yes, I want istilist texts!
                                 </div>
                             </div>
                             <div class="section group">
@@ -94,17 +102,10 @@
                                     <label>Address</label>
                                     <input type="text" name="address" value="<?php echo get_user_meta($user_ID, 'address', true); ?>" />
                                 </div>
-                                <div class="col span_6_of_12">
-                                    <label>Phone</label>
-                                    <input type="text" name="phone_number" value="<?php echo get_user_meta($user_ID, 'phone_number', true); ?>" />
-                                </div>
+                                
                             </div>
                             <div class="section group">
-                                <div class="col span_6_of_12">
-                                    <label>Mobile</label>
-                                    <input type="text" name="mobile_number" value="<?php echo get_user_meta($user_ID, 'mobile_number', true); ?>" />
-                                    <input type="checkbox" name="mobile_number_optin" value="<?php echo get_user_meta($user_ID, 'mobile_number_optin', true); ?>" /> Yes, I want istilist texts!
-                                </div>
+                                
                                 <div class="col span_6_of_12">
                                     <label>Email</label>
                                     <input type="text" name="email_address" value="<?php echo get_the_author_meta('reporting', $user_ID); ?>" />
@@ -157,11 +158,11 @@
                                 
                             </div>
                             
-                            <!-- Profile Picture --> 
+                            <!-- Profile Picture 
                             <div class="section group">
-                                <?php require_once 'php_modules/template-store-profile/profile-picture.php'; ?>
+                                <?php //require_once 'php_modules/template-store-profile/profile-picture.php'; ?>
                             </div>
-
+                            -->
                             <!-- Reverse Ordering -->
                             <div class="section group">
                             	<?php require_once 'php_modules/template-store-profile/reverse-order.php'; ?>

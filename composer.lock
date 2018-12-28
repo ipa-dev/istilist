@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e029fc472903ff37f9ac613ab3413e4f",
+    "content-hash": "1c46e07eb40f0865957477e00cf63e45",
     "packages": [
         {
             "name": "square/connect",
@@ -56,6 +56,52 @@
                 "swagger"
             ],
             "time": "2018-12-12T23:40:33+00:00"
+        },
+        {
+            "name": "twilio/sdk",
+            "version": "5.27.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/twilio-php.git",
+                "reference": "debe730c59914961e04a653567af22ed31d6588e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/debe730c59914961e04a653567af22ed31d6588e",
+                "reference": "debe730c59914961e04a653567af22ed31d6588e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "apigen/apigen": "^4.1",
+                "phpunit/phpunit": "4.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twilio\\": "Twilio/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio API Team",
+                    "email": "api@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "http://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "time": "2018-12-17T05:40:42+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

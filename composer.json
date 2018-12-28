@@ -10,6 +10,7 @@
     ],
     "require": {
         "square/connect": "^2.20181212",
-        "vlucas/phpdotenv": "^2.5"
+        "vlucas/phpdotenv": "^2.5",
+        "twilio/sdk": "^5.27"
     }
 }
