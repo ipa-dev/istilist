@@ -590,88 +590,8 @@
 						<?php if (isset($_GET['search_query'])) {
         include 'pagination.class.php';
         $current_user_store_id = get_user_meta($user_ID, 'store_id', true);
-        /*Query 2 */
-        $arg2   = array(
-                            'meta_key'       => 'customer_email',
-                            'meta_value'     => $_GET['search_query'],
-                            'post_type'      => 'shopper',
-                            'post_status'    => 'publish',
-                            'posts_per_page' => - 1
-                        );
-        $query2 = new WP_Query($arg2);
-        $ids2   = array();
-        while ($query2->have_posts()) : $query2->the_post();
-        array_push($ids2, get_the_ID());
-        endwhile;
-
-        /* Query 3 */
-        $arg3   = array(
-                            'meta_key'       => 'customer_address',
-                            'meta_value'     => $_GET['search_query'],
-                            'post_type'      => 'shopper',
-                            'post_status'    => 'publish',
-                            'posts_per_page' => - 1
-                        );
-        $query3 = new WP_Query($arg3);
-        $ids3   = array();
-        while ($query3->have_posts()) : $query3->the_post();
-        array_push($ids3, get_the_ID());
-        endwhile;
-
-        /* Query 4 */
-        $arg4   = array(
-                            'meta_key'       => 'customer_city',
-                            'meta_value'     => $_GET['search_query'],
-                            'post_type'      => 'shopper',
-                            'post_status'    => 'publish',
-                            'posts_per_page' => - 1
-                        );
-        $query4 = new WP_Query($arg4);
-        $ids4   = array();
-        while ($query4->have_posts()) : $query4->the_post();
-        array_push($ids4, get_the_ID());
-        endwhile;
-
-        /* Query 5 */
-        $arg5   = array(
-                            'meta_key'       => 'customer_state',
-                            'meta_value'     => $_GET['search_query'],
-                            'post_type'      => 'shopper',
-                            'post_status'    => 'publish',
-                            'posts_per_page' => - 1
-                        );
-        $query5 = new WP_Query($arg5);
-        $ids5   = array();
-        while ($query5->have_posts()) : $query5->the_post();
-        array_push($ids5, get_the_ID());
-        endwhile;
-
-        /* Query 6 */
-        $arg6   = array(
-                            'meta_key'       => 'customer_zip',
-                            'meta_value'     => $_GET['search_query'],
-                            'post_type'      => 'shopper',
-                            'post_status'    => 'publish',
-                            'posts_per_page' => - 1
-                        );
-        $query6 = new WP_Query($arg6);
-        $ids6   = array();
-        while ($query6->have_posts()) : $query6->the_post();
-        array_push($ids6, get_the_ID());
-        endwhile;
 
         /* Query 7 */
-        /* Code Allows for Partial Searches */
-        function name_filter($where, &$query7)
-        {
-            global $wpdb;
-            if ($search_term = $query7->get('search_shopper_name')) {
-                $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . esc_sql(like_escape($search_term)) . '%\'';
-            }
-
-            return $where;
-        }
-
         /***********************************/
         $arg7 = array(
                             'meta_key'            => 'customer_fname',
