@@ -56,7 +56,7 @@ function revslider_scripts_cleanup()
 //add_action( 'wp_enqueue_scripts', 'revslider_scripts_cleanup' );
 
 function jstimezone_scripts() {
-    wp_enqueue_script('jstz.min', '/node_modules/dist/jstimezonedetect/dist/jstz.min.js', array(), '', false);
+    wp_enqueue_script('jstz.min', '/node_modules/jstimezonedetect/dist/jstz.min.js', array(), '', false);
 }
 
 add_action( 'wp_enqueue_scripts', 'jstimezone_scripts');
