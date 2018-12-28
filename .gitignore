@@ -4,3 +4,4 @@ wp-content/uploads
 wp-config.php
 wp-config-sample.php
 .htaccess
+/vendor/

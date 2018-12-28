@@ -281,6 +281,17 @@ jQuery(document).ready(function(){
 });
 </script>
 
+<!-- link to the SqPaymentForm library -->
+<script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
+</script>
+
+<!-- link to the local SqPaymentForm initialization -->
+<script type="text/javascript" src="<?php bloginfo( 'template_directory' ); ?>/js/sqpaymentform.js">
+</script>
+
+<!-- link to the custom styles for SqPaymentForm -->
+<link rel="stylesheet" type="text/css" href="<?php bloginfo( 'template_directory' ); ?>/css/sqpaymentform.css">
+
 </head>
 <?php global $options; ?>
 <?php if (is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {

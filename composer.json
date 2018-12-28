@@ -1,0 +1,12 @@
+{
+    "name": "mkw/istilist",
+    "description": "International Prom Association Retailer Tool",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Mason Watson",
+            "email": "msn.watson@gmail.com"
+        }
+    ],
+    "require": {}
+}
