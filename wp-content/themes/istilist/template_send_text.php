@@ -19,7 +19,8 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
             'post_status' => 'publish',
             'author' => $store_id,
             'posts_per_page' => -1,
-            
+            'meta_key' => 'sms_agreement',
+            'meta_value' => 'yes',
         ));
         $shopper = true;
     }
@@ -40,7 +41,13 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
     
     if ($shopper) {
         if ($data->have_posts()) {
-            
+            if ($data->found_posts > $text_credit) {
+                header('Location: ' . get_bloginfo( 'url' ) . '/store-profile');
+                exit();
+            }
+            else {
+                update_user_meta($user_ID, 'text_credit', $text_credit - $data->found_posts);
+            }
             while ($data->have_posts()) : $data->the_post();
                 $shopper_id = get_the_ID();
                 $shopper_name = get_post_meta($shopper_id, 'customer_fname', true) . ' ' . get_post_meta($shopper_id, 'customer_lname', true);
@@ -82,6 +89,13 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
     }
     else {
         if (!empty($data->results)) {
+            if ($data->total_users > $text_credit) {
+                header('Location: ' . get_bloginfo( 'url' ) . '/store-profile');
+                exit();
+            }
+            else {
+                update_user_meta($user_ID, 'text_credit', $text_credit - $data->total_users);
+            }
             foreach ($data->results as $user) {
                 $user_status = get_the_author_meta('user_status', $user->ID);
                 $phone_number = get_user_meta($user->ID, 'phone_number', true);
