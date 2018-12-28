@@ -322,7 +322,7 @@
                             </div>
                             
                             <div class="section group">
-                                <?php require_once 'php_modules/store-profile-profile-picture'; ?>
+                                <?php require_once 'php_modules/template-store-profile/profile-picture.php'; ?>
                             </div>
                             <div class="section group">
                             	<div class="col span_6_of_12">
