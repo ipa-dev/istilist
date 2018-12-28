@@ -148,7 +148,7 @@
 
                                 <!-- User Timezone -->
                                 <?php require_once 'php_modules/template-store-profile/select-timezone.php'; ?>
-                                
+
                             </div>
                             <div class="section group">
                                 <div class="col span_6_of_12">
@@ -174,7 +174,11 @@
                             </div>
 
                             <div class="section group">
-                                <div class="col span_6_of_12"></div>
+                                <div class="col span_6_of_12">
+                                    <div style="text-align: left;">
+                                        <?php echo '<a class="custom_button" href="' . get_bloginfo( 'url' ) . '/purchase-texts">Purchase Texts</a>'; ?>
+                                    </div>
+                                </div>
                                 <div class="col span_6_of_12">
                                     <div style="text-align: right;">
                                         <input type="submit" name="update_store_profile" value="Update" />
