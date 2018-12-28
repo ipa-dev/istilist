@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="col span_1_of_12">
-                                    <?php echo '<a class="submit" href="' . get_bloginfo( 'url' ) . '/purchase-texts">Buy</a>'; ?>
+                                    <?php echo '<a class="custom_button" href="' . get_bloginfo( 'url' ) . '/purchase-texts">Buy</a>'; ?>
                                 </div>
                             </div>
 

@@ -889,3 +889,16 @@ input[type="submit"].fa-input {
 #setpasswordpopup{
     z-index: 99999;
 }
+
+.custom_button {
+    display: inline-block;
+    background: #14b9d6;
+    border-radius: 5px;
+    color: #000000;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 10px 16px;
+    text-shadow: none;
+    margin: 0 10px;
+}
