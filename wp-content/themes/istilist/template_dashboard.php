@@ -810,12 +810,12 @@
                                 </div>
                                 <div class="box_actions">
                                     <ul>
-                                        <li>
+                                        <li title="Update Shopper">
                                             <a href="<?php bloginfo('url'); ?>/edit-shoppers?id=<?php echo encripted($shopper_id); ?>"><i
                                                         class="fa fa-pencil"></i></a></li>
-                                        <li><a href="#stylistpopup" class="assignStylist"
+                                        <li title="Assign Stylist"><a href="#stylistpopup" class="assignStylist"
                                                rel="<?php echo $shopper_id; ?>"><i class="icon-clothes4"></i></a></li>
-                                        <li>
+                                        <li title="Return To Top">
                                             <form method="post" action="">
                                                 <input hidden=""
                                                        value="<?php echo get_the_modified_date('Y-m-d H:i:s'); ?>"/>
@@ -825,7 +825,7 @@
                                                        value="&#xf067;"/>
                                             </form>
                                         </li>
-                                        <li><a href="javascript:void(0);" class="dollar"
+                                        <li title="Purchased?"><a href="javascript:void(0);" class="dollar"
                                                rel="<?php echo $shopper_id; ?>"><i class="fa fa-usd"></i></a></li>
                                     </ul>
                                 </div>
