@@ -3,3 +3,4 @@ wp-content/uploads
 */.DS_Store
 wp-config.php
 wp-config-sample.php
+.htaccess
