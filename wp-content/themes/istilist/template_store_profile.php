@@ -110,7 +110,7 @@
                                             $data = new WP_Query(array(
                                                 'post_type' => 'shopper',
                                                 'post_status' => 'publish',
-                                                'author' => $user_ID,
+                                                'author' => get_user_meta($user_ID, 'store_id', true),
                                                 'posts_per_page' => -1,
                                                 'meta_key' => 'sms_agreement',
                                                 'meta_value' => 'yes',
