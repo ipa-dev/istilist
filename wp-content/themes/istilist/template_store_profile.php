@@ -79,25 +79,26 @@
                             } ?>
                         <form id="forms" method="post" action="" enctype="multipart/form-data">
                             <div class="section group">
-                                <div class="col span_3_of_12">
+                                <div class="col span_4_of_12">
                                     <label>Store</label>
                                     <input type="text" name="store_name" value="<?php echo get_the_author_meta('display_name', $user_ID); ?>" />
                                 </div>
-                                <div class="col span_3_of_12">
+                                <div class="col span_4_of_12">
                                     <label>Contact Name</label>
                                     <input type="text" name="contact_name" value="<?php echo get_user_meta($user_ID, 'contact_name', true); ?>" />
                                 </div>
-                                <div class="col span_3_of_12">
+                                <div class="col span_4_of_12">
                                     <label>Business Phone</label>
                                     <input type="text" name="phone_number" value="<?php echo get_user_meta($user_ID, 'phone_number', true); ?>" />
                                 </div>
-                                <div class="col span_6_of_12">
+                                
+                            </div>
+                            <div class="section group">
+                            <div class="col span_6_of_12">
                                     <label>Mobile Phone</label>
                                     <input type="text" name="mobile_number" value="<?php echo get_user_meta($user_ID, 'mobile_number', true); ?>" />
                                     <input type="checkbox" name="mobile_number_optin" value="<?php echo get_user_meta($user_ID, 'mobile_number_optin', true); ?>" /> Yes, I want istilist texts!
                                 </div>
-                            </div>
-                            <div class="section group">
                                 <div class="col span_6_of_12">
                                     <label>Address</label>
                                     <input type="text" name="address" value="<?php echo get_user_meta($user_ID, 'address', true); ?>" />
