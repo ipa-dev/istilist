@@ -102,19 +102,17 @@
                                 <?php require_once 'php_modules/template-store-profile/timed-promo-text.php'; ?>
                                 
                                 <!-- Text Credits -->
-                                <div class="col span_6_of_12">
+                                <div class="col span_5_of_12">
                                     <label>Text Credit</label>
-                                    <input type="text" name="text_credit" value="<?php echo get_user_meta($user_ID, 'text_credit', true); ?>" />
+                                    <input type="disabled" name="text_credit" value="<?php echo get_user_meta($user_ID, 'text_credit', true); ?>" />
                                     <div class="divnote">Current number of subscribers: ###</div>
+                                </div>
+                                <div class="col span_1_of_12">
+                                    <?php echo '<a class="submit" href="' . get_bloginfo( 'url' ) . '/purchase-texts">Buy</a>'; ?>
                                 </div>
                             </div>
 
                             <div class="section group">
-                                <div class="col span_6_of_12">
-                                    <div style="text-align: left;">
-                                        <?php echo '<a class="custom_button" href="' . get_bloginfo( 'url' ) . '/purchase-texts">Purchase Texts</a>'; ?>
-                                    </div>
-                                </div>
                                 <div class="col span_6_of_12">
                                     <div style="text-align: right;">
                                         <input type="submit" name="update_store_profile" value="Update" />
