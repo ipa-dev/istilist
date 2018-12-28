@@ -1,4 +1,4 @@
-<div class="col span_6_of_12">
+<div class="col span_4_of_12">
     <label>Security question</label>
     <select name="security_questions">
         <option value="What was your childhood nickname?">What was your childhood nickname?</option>

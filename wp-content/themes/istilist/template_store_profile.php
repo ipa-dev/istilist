@@ -94,7 +94,7 @@
                                 
                             </div>
                             <div class="section group">
-                            <div class="col span_4_of_12">
+                                <div class="col span_4_of_12">
                                     <label>Mobile Phone</label>
                                     <input type="text" name="mobile_number" value="<?php echo get_user_meta($user_ID, 'mobile_number', true); ?>" />
                                     <input type="checkbox" name="mobile_number_optin" value="<?php echo get_user_meta($user_ID, 'mobile_number_optin', true); ?>" /> Yes, I want istilist texts!
@@ -127,25 +127,27 @@
                                 
                             </div>
                             <div class="section group">
-                                
-                                <div class="col span_6_of_12">
+                                <div class="col span_4_of_12">
                                     <label>Website</label>
                                     <input type="text" name="website" value="<?php echo get_user_meta($user_ID, 'website', true); ?>" />
                                 </div>
-                            </div>
-                            <div class="section group">
-                                <div class="col span_6_of_12">
-                                    <label>Password</label>
-                                    <input type="password" name="pwd" />
-                                </div>
-
+                                
                                 <!-- Security Questions -->
                                 <?php require_once 'php_modules/template-store-profile/security-question.php'; ?>
+                                
+                                <!-- Security Question Answer -->
+                                <?php require_once 'php_modules/template-store-profile/security-question-answer.php'; ?>
+
+                            </div>
+                            <div class="section group">
+                                <!--<div class="col span_6_of_12">
+                                    <label>Password</label>
+                                    <input type="password" name="pwd" />
+                                </div>-->
+
                             </div>
                             <div class="section group">
 
-                                <!-- Security Question Answer -->
-                                <?php require_once 'php_modules/template-store-profile/security-question-answer.php'; ?>
 
                                 <!-- User Timezone -->
                                 <?php require_once 'php_modules/template-store-profile/select-timezone.php'; ?>
