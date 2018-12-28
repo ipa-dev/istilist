@@ -112,8 +112,8 @@
                                                 'post_status' => 'publish',
                                                 'author' => get_user_meta($user_ID, 'store_id', true),
                                                 'posts_per_page' => -1,
-                                                'meta_key' => 'sms_agreement',
-                                                'meta_value' => 'yes',
+                                                // 'meta_key' => 'sms_agreement',
+                                                // 'meta_value' => 'yes',
                                             ));
                                             echo $data->found_posts;
                                         ?>
