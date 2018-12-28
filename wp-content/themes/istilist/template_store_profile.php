@@ -104,7 +104,7 @@
                                 <!-- Text Credits -->
                                 <div class="col span_5_of_12">
                                     <label>Text Credit</label>
-                                    <input type="disabled" name="text_credit" value="<?php echo get_user_meta($user_ID, 'text_credit', true); ?>" />
+                                    <input type="text" disabled name="text_credit" value="<?php echo get_user_meta($user_ID, 'text_credit', true); ?>" />
                                     <div class="divnote">Current number of subscribers: ###</div>
                                 </div>
                                 <div class="col span_1_of_12">
