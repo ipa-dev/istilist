@@ -6,3 +6,4 @@ wp-config-sample.php
 .htaccess
 /vendor/
 .env
+node_modules

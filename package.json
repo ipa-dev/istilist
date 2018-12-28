@@ -1,0 +1,22 @@
+{
+  "name": "istilist",
+  "version": "1.0.0",
+  "description": "International Prom Association Retailer Tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipa-dev/istilist.git"
+  },
+  "author": "Mason Watson <msn.watson@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ipa-dev/istilist/issues"
+  },
+  "homepage": "https://github.com/ipa-dev/istilist#readme",
+  "dependencies": {
+    "jstimezonedetect": "^1.0.6"
+  }
+}
