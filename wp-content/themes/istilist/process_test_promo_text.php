@@ -1,7 +1,11 @@
 <?php /* Template Name: Test Promo Text */ ?>
+<?php get_header(); ?>
+<?  require_once "/home3/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/autoload.php";
+    use Twilio\Rest\Client; 
+?>
+<?php if (is_user_logged_in()) { ?>
 <?php
-    require("/home3/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/autoload.php");
-    use Twilio\Rest\Client;
+    
 
     global $user_ID;
     $body = get_user_meta(get_post_meta(get_the_ID(), 'store_id', true), 'daily_promo_text', true);
@@ -23,5 +27,5 @@
         );
     }
     header("Location: https://istilist.com/store-profile/");
-    
 ?>
+<?php } else { header("Location: " . get_bloginfo( 'url' ) . '/login'); } ?>
