@@ -8,5 +8,8 @@
             "email": "msn.watson@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "square/connect": "^2.20181212",
+        "vlucas/phpdotenv": "^2.5"
+    }
 }
