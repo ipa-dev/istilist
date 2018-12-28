@@ -321,30 +321,21 @@
                                 
                             </div>
                             
+                            <!-- Profile Picture --> 
                             <div class="section group">
                                 <?php require_once 'php_modules/template-store-profile/profile-picture.php'; ?>
                             </div>
+
+                            <!-- Reverse Ordering -->
                             <div class="section group">
-                            	<div class="col span_6_of_12">
-                            		<label>Check box to show shoppers in reverse order</label>
-                            		<input type="checkbox" name="reverse_order" <?php if (!empty($user_reverse_order) && $user_reverse_order=='on') {
-                                                echo 'checked="checked"';
-                                            } ?>/>
-                            	</div>
+                            	<?php require_once 'php_modules/template-store-profile/reverse-order.php'; ?>
                             </div>
+
+                            <!-- Timed Promo Text -->
                             <div class="section group">
-                                <div class="col span_6_of_12">
-                            	    <label>Type in a promo message that you want to be sent approximately 20 minutes after a shopper is registered. Type 'NA' if you do not want a daily text promo.</label>
-                                    <textarea form="forms" name="daily_promo_text" id="daily_promo_text" maxlength="160" ><?php $daily_promo_text = get_user_meta($user_ID, 'daily_promo_text', true);
-    if (!empty($daily_promo_text)) {
-        echo $daily_promo_text;
-    } else {
-        echo 'NA';
-    } ?></textarea>
-                                    <div id="textarea_feedback"></div>
-                                    <a href="http://istilist.com/test-promo-text" class="custom_button">Send Test</a>
-                            	</div>
+                                <?php require_once 'php_modules/template-store-profile/timed-promo-text.php'; ?>
                             </div>
+
                             <div class="section group">
                                 <div class="col span_6_of_12"></div>
                                 <div class="col span_6_of_12">
