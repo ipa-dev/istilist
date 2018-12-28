@@ -12,7 +12,7 @@
                     <h1><?php the_title(); ?></h1>
                     <div class="box">
                         <div id="form-container">
-                            <div id="sq-ccbox">
+                            <div id="sq-ccbox" style="position:relative; top:130px">
                                 <form id="nonce-form" novalidate action="<?php bloginfo('url'); ?>/process-card" method="post">
                                 <fieldset>
                                     <span class="label">Card Number</span>
