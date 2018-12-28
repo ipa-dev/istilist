@@ -105,7 +105,19 @@
                                 <div class="col span_5_of_12">
                                     <label>Text Credit</label>
                                     <input type="text" disabled name="text_credit" value="<?php echo get_user_meta($user_ID, 'text_credit', true); ?>" />
-                                    <div class="divnote">Current number of subscribers: ###</div>
+                                    <div class="divnote">Current number of subscribers:
+                                        <?php 
+                                            $data = new WP_Query(array(
+                                                'post_type' => 'shopper',
+                                                'post_status' => 'publish',
+                                                'author' => $store_id,
+                                                'posts_per_page' => -1,
+                                                'meta_key' => 'sms_agreement',
+                                                'meta_value' => 'yes',
+                                            ));
+                                            echo $data->post_count;
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="col span_1_of_12">
                                     <?php echo '<a class="submit" href="' . get_bloginfo( 'url' ) . '/purchase-texts">Buy</a>'; ?>

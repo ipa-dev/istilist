@@ -8,6 +8,7 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
     global $user_ID;
     global $wpdb;
     $store_id = get_user_meta($user_ID, 'store_id', true);
+    $text_credit = get_user_meta($user_ID, 'text_credit', true);
     $sid = 'ACdb92d82faf7befbb1538a208224133a4';
     $token = '1859b70bd4b570f6c8ff702b1ffd005d';
     $client = new Client($sid, $token);
@@ -17,7 +18,8 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
             'post_type' => 'shopper',
             'post_status' => 'publish',
             'author' => $store_id,
-            'posts_per_page' => -1
+            'posts_per_page' => -1,
+            
         ));
         $shopper = true;
     }
@@ -38,6 +40,7 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
     
     if ($shopper) {
         if ($data->have_posts()) {
+            
             while ($data->have_posts()) : $data->the_post();
                 $shopper_id = get_the_ID();
                 $shopper_name = get_post_meta($shopper_id, 'customer_fname', true) . ' ' . get_post_meta($shopper_id, 'customer_lname', true);
