@@ -25,11 +25,11 @@
         $chargeResult = $transactions_api->charge($locationId, $charge);
 
         //Credit the users account proper amount of text messages
-        $num_texts_left = get_user_meta($user_ID, 'num_texts', true);
+        $num_texts_left = get_user_meta($user_ID, 'text_credit', true);
         if (!empty($num_texts_left)) {
-            update_user_meta($user_ID, 'num_texts', $num_texts_left + 1250);
+            update_user_meta($user_ID, 'text_credit', $num_texts_left + 1250);
         }
         else {
-            add_user_meta($user_ID, 'num_texts', 1250, true);
+            add_user_meta($user_ID, 'text_credit', 1250, true);
         }
 } ?>

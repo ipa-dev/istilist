@@ -97,9 +97,16 @@
                             </div>
                             -->
 
-                            <!-- Timed Promo Text -->
                             <div class="section group">
+                                <!-- Timed Promo Text -->
                                 <?php require_once 'php_modules/template-store-profile/timed-promo-text.php'; ?>
+                                
+                                <!-- Text Credits -->
+                                <div class="col span_6_of_12">
+                                    <label>Text Credit</label>
+                                    <input type="text" name="text_credit" value="<?php echo get_user_meta($user_ID, 'text_credit', true); ?>" />
+                                    <div class="divnote">Current number of subscribers: ###</div>
+                                </div>
                             </div>
 
                             <div class="section group">
