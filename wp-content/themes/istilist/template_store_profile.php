@@ -119,7 +119,7 @@
                                         ?>
                                     </div>
                                 </div>
-                                <div class="col span_1_of_12">
+                                <div class="col span_1_of_12" style="margin-top:6%">
                                     <?php echo '<a class="custom_button" href="' . get_bloginfo( 'url' ) . '/purchase-texts">Buy</a>'; ?>
                                 </div>
                             </div>
