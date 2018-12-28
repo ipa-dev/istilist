@@ -27,7 +27,7 @@
                                 update_user_meta($user_ID, 'zipcode', $_POST['zipcode']);
                                 update_user_meta($user_ID, 'reporting', $_POST['email_address']);
                                 update_user_meta($user_ID, 'selecttimezone', $_POST['selecttimezone']);
-                                echo $_POST['selecttimezone'];
+                                var_dump($_POST['selecttimezone']);
                                 update_user_meta($user_ID, 'profile_pic_on_off', $_POST['profile_pic_on_off']);
                                 update_user_meta($user_ID, 'email_to_shopper', $_POST['email_to_shopper']);
                                 
