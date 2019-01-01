@@ -96,52 +96,40 @@
                             <a href="javascript:void(0)" 
                             id="<?= $shopper_id ?>-bell"
                             class="notifyShopper <?= is_active($shopper_id, "notified") ?>"
-                            onClick="sendTextNotification(<?= get_post_meta($shopper_id, "customer_phone", true) ?>)"
-                            rel="<?= $shopper_id ?>">;
+                            onClick="sendTextNotification(<?= $shopper_id, "customer_phone"?>)"
+                            rel="<?= $shopper_id ?>">
                                 <i class="fa fa-bell"></i>
                             </a>
                         </li>
                         <li>
-                            <?php
-                                echo '<a href="#stylistpopup" 
-                                         class="assignStylist {is_active($shopper_id, "assign_stylist")}"
-                                         rel="{$shopper_id}">';
-                            ?>
+                                <a href="#stylistpopup" 
+                                         class="assignStylist <?= is_active($shopper_id, "assign_stylist") ?>"
+                                         rel="<?= $shopper_id ?>">'
                                 <i class="icon-clothes4"></i>
                             </a>
                         </li>
                         <li>
                             <form method="post" action="">
                                 <input hidden=""
-                                        value="<?php echo get_the_modified_date('Y-m-d H:i:s'); ?>"/>
-                                <input type="hidden" name="shopper_id" value="<?php echo $shopper_id; ?>"/>
-                                <input class="submitbtnimg" 
-                                    <?php 
-                                        $timestamps = get_post_meta($shopper_id, 'timestamps', true);
-                                        if (! empty($timestamps)) {
-                                            echo "style='color:#14b9d6'";
-                                        } 
-                                    ?> type="submit" name="plusbtn" value="&#xf067;"/>
-                                        </form>
+                                        value="<?= get_the_modified_date('Y-m-d H:i:s'); ?>"/>
+                                <input type="hidden" name="shopper_id" value="<?= $shopper_id ?>"/>
+                                <input class="submitbtnimg <?= is_active($shopper_id, "timestamps"); ?>" 
+                                       type="submit" name="plusbtn" value="&#xf067;"/>
+                            </form>
                         </li>
                         <li>
-                            <?php
-                                echo '<a href="javascript:void(0)" 
-                                         class="dollar {is_active($shopper_id, "dollar_button_clicked")}"
-                                        rel="{$shopper_id}">';
-                            ?> 
+                                <a href="javascript:void(0)" 
+                                         class="dollar <?= is_active($shopper_id, "dollar_button_clicked"); ?>"
+                                        rel="<?= $shopper_id ?>">'
                                 <i class="fa fa-usd"></i>
                             </a>
                         </li>
                         <li>
-                            <?php
-                                echo '<a href="javascript:void(0);" onclick="check({$shopper_id});"
-                                         id="checkBox{$shopper_id}"></a>';
-                            ?>
+                               <a href="javascript:void(0);" onclick="check(<?= $shopper_id ?>);"
+                                         id="checkBox<?= $shopper_id ?>"></a>';
                         </li>
-                        <?php echo '<input type="hidden" value="no" form="bulkActionForm"
-                                           id="checkInput{$shopper_id}" name="{$shopper_id}"/>';
-                        ?>
+                       <input type="hidden" value="no" form="bulkActionForm"
+                                           id="checkInput<?= $shopper_id ?>" name="<?= $shopper_id ?>"/>';
                     </ul>
                 </div>
                 <div style="clear: both;"></div>

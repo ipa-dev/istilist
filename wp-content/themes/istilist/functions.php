@@ -529,11 +529,9 @@ function is_active($shopper_id, $shopper_field) {
     if (! empty($field_value) && ($field_value || $field_value == 'true')) {
         return 'active';
     }
+    if (! empty($field_value) && $field_value == 'timestamps') {
+        return 'active';
+    }
     return '';
 }
-
-function print_stylist($shopper_id) {
-    
-}
 ?>
-
