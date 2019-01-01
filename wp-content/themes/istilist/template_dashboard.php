@@ -587,12 +587,9 @@
         } ?></div>
 						<?php
     } ?>
-						<?php if (isset($_GET['search_query'])) {
+		<?php if (isset($_GET['search_query'])) {
         include 'pagination.class.php';
         $current_user_store_id = get_user_meta($user_ID, 'store_id', true);
-
-        /* Query 7 */
-        /***********************************/
 
         add_filter('posts_where', 'name_filter', 10, 2); //added code for partial searches
         $query = new WP_Query(array(
@@ -602,18 +599,15 @@
             'posts_per_page'      => - 1
         ));
         remove_filter('posts_where', 'name_filter', 10, 2); //added code for partial searches
-        $ids = array();
+        
+        $storeposts = array();
         while ($query->have_posts()) : $query->the_post();
-        array_push($ids, get_the_ID());
+            $shopper_store_id = get_post_meta(get_the_ID(), 'store_id', true);
+            if ($shopper_store_id == $current_user_store_id) {
+                array_push($storeposts, get_the_ID());
+            }
         endwhile;
 
-        $storeposts  = array();
-        foreach ($ids as $i) {
-            $shopper_store_id = get_post_meta($i, 'store_id', true);
-            if ($shopper_store_id == $current_user_store_id) {
-                array_push($storeposts, $i);
-            }
-        }
 		if (count($storeposts)) {
             
 			$pagination = new pagination($storeposts, (isset($_GET['pageno']) ? $_GET['pageno'] : 1), 5);
