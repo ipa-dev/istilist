@@ -609,9 +609,9 @@
 
         $storeposts  = array();
         foreach ($ids as $i) {
-            $shopper_store_id = get_post_meta($ids[ $i ], 'store_id', true);
+            $shopper_store_id = get_post_meta($i, 'store_id', true);
             if ($shopper_store_id == $current_user_store_id) {
-                array_push($storeposts, $ids[ $i ]);
+                array_push($storeposts, $i);
             }
         }
 		if (count($storeposts)) {
