@@ -471,5 +471,40 @@ function name_filter($where, &$query7)
 
     return $where;
 }
+
+function print_timestamps($shopper_id) {
+    $timestamps = get_post_meta($shopper_id, 'timestamps', true);
+    $purchases  = get_post_meta($shopper_id, 'purchase_array', true);
+    $entry_date = get_post_meta($shopper_id, 'entry_date', true);
+    if (! empty($timestamps)) {
+        $index = count($timestamps);
+        while ($index) {
+            echo "<span>on " . date('m.d.Y', strtotime($timestamps[ -- $index ])) . " at " . date('h:i a', strtotime($timestamps[ $index ]));
+            if ($index != (count($timestamps) - 1)) {
+                if ($purchases[ $index - 1 ] == 'true') {
+                    echo "\tPurchase";
+                } else {
+                    echo "\tNo Purchase";
+                }
+            }
+            echo "</span><br />";
+        }
+    } 
+    echo '<span><' . date('m.d.Y', strtotime($entry_date)) . 
+         'at' . date('h:i a', strtotime($entry_date)) . ' - '; 
+    
+    $stylist_id = get_post_meta($shopper_id, 'stylist_id', true);
+    if (! empty($stylist_id)) {
+    echo get_the_author_meta('display_name', get_post_meta($shopper_id, 'stylist_id', true));
+    }
+    if (! empty($purchases)) {
+        if ($purchases[0] == 'true') {
+            echo "\t - YES";
+        } else {
+            echo "\t - NO";
+        }
+    } 
+    echo '</span>';
+}
 ?>
 

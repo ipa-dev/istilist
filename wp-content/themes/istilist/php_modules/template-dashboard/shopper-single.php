@@ -1,40 +1,3 @@
-<?php
-function print_timestamps() {
-    $timestamps = get_post_meta($shopper_id, 'timestamps', true);
-    $purchases  = get_post_meta($shopper_id, 'purchase_array', true);
-    $entry_date = get_post_meta($shopper_id, 'entry_date', true);
-    if (! empty($timestamps)) {
-        $index = count($timestamps);
-        while ($index) {
-            echo "<span>on " . date('m.d.Y', strtotime($timestamps[ -- $index ])) . " at " . date('h:i a', strtotime($timestamps[ $index ]));
-            if ($index != (count($timestamps) - 1)) {
-                if ($purchases[ $index - 1 ] == 'true') {
-                    echo "\tPurchase";
-                } else {
-                    echo "\tNo Purchase";
-                }
-            }
-            echo "</span><br />";
-        }
-    } 
-    echo '<span><' . date('m.d.Y', strtotime($entry_date)) . 
-         'at' . date('h:i a', strtotime($entry_date)) . ' - '; 
-    
-    $stylist_id = get_post_meta($shopper_id, 'stylist_id', true);
-    if (! empty($stylist_id)) {
-    echo get_the_author_meta('display_name', get_post_meta($shopper_id, 'stylist_id', true));
-    }
-    if (! empty($purchases)) {
-        if ($purchases[0] == 'true') {
-            echo "\t - YES";
-        } else {
-            echo "\t - NO";
-        }
-    } 
-    echo '</span>';
-}
-?>
-
 <?php 
     if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
         echo '<div class="box active">'; 
@@ -50,7 +13,7 @@ function print_timestamps() {
                         <?php echo get_post_meta($shopper_id, 'customer_fname', true) . ' ' . get_post_meta($shopper_id, 'customer_lname', true); ?>
                         <span style="margin-left:30px"><strong>Event:</strong> <?php echo get_post_meta($shopper_id, 'school_event', true); ?></span>
                         <br/>
-                        <?php print_timestamps(); ?>
+                        <?php print_timestamps($shopper_id); ?>
                     </h2>
 								<?php $assign_stylist = get_post_meta($shopper_id, 'assign_stylist', true); ?>
 								<?php if (! empty($assign_stylist)) {
