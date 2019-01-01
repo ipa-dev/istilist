@@ -581,7 +581,6 @@
             function sendTextNotification(shopper_id, is_phone) {
                 /*
 					Send AJAX notification if customer_phone meta is set
-
 				*/
                 if (is_phone == 'TRUE') {
                     //Send AJAX request to PHP script that sends text message to shopper

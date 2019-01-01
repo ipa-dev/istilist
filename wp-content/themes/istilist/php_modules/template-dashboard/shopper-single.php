@@ -93,13 +93,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)" id="<?php echo $shopper_id; ?>-bell" <?php if (get_post_meta($shopper_id, 'notified', true) == 'true') {echo "style='color:#14b9d6'"; } ?>
-                               onClick="sendTextNotification(<?php $customer_phone = get_post_meta($shopper_id, 'customer_phone', true);
-                                if (! empty($customer_phone)) {
-                                    echo $shopper_id . ', \'TRUE\'';
-                                } else {
-                                    echo $shopper_id . ', \'FALSE\'';
-                                } ?>)">
+                            <?php
+                                echo '<a href="javascript:void(0)" 
+                                         id="{shopper_id}-bell"
+                                         class="notifyShopper{is_active($shopper_id, "notified")}"
+                                         onClick="sendTextNotification({get_post_meta($shopper_id, "customer_phone", true)})"
+                                         rel="{$shopper_id}">';
+                            ?>
                                 <i class="fa fa-bell"></i>
                             </a>
                         </li>

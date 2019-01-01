@@ -531,5 +531,9 @@ function is_active($shopper_id, $shopper_field) {
     }
     return '';
 }
+
+function print_stylist($shopper_id) {
+    
+}
 ?>
 
