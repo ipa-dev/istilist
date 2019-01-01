@@ -608,7 +608,7 @@
         endwhile;
 
         $storeposts  = array();
-        for ($i = 0; $i < count($ids); $i ++) {
+        foreach ($ids as $i) {
             $shopper_store_id = get_post_meta($ids[ $i ], 'store_id', true);
             if ($shopper_store_id == $current_user_store_id) {
                 array_push($storeposts, $ids[ $i ]);
@@ -616,7 +616,7 @@
         }
 		if (count($storeposts)) {
             
-			$pagination = new pagination($uniqueposts, (isset($_GET['pageno']) ? $_GET['pageno'] : 1), 5);
+			$pagination = new pagination($storeposts, (isset($_GET['pageno']) ? $_GET['pageno'] : 1), 5);
             $pagination->setShowFirstAndLast(false);
             $pagination->setMainSeperator('  ');
             $productPages = $pagination->getResults();
