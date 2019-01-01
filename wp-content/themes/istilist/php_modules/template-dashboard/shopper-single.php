@@ -96,7 +96,7 @@
                             <a href="javascript:void(0)" 
                             id="<?= $shopper_id ?>-bell"
                             class="notifyShopper <?= is_active($shopper_id, "notified") ?>"
-                            onClick="sendTextNotification(<?= $shopper_id, "customer_phone"?>)"
+                            onClick="sendTextNotification(<?= $shopper_id ?>)"
                             rel="<?= $shopper_id ?>">
                                 <i class="fa fa-bell"></i>
                             </a>

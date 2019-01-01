@@ -578,44 +578,35 @@
             </div>
         </div>
         <script>
-            function sendTextNotification(shopper_id, is_phone) {
+            function sendTextNotification(shopper_id) {
                 /*
 					Send AJAX notification if customer_phone meta is set
 				*/
-                if (is_phone == 'TRUE') {
-                    //Send AJAX request to PHP script that sends text message to shopper
-                    jQuery.ajax({
-                        url: "https://istilist.com/notify-shopper/",
-                        method: "POST",
-                        data: {shopperID: shopper_id},
-                        success: function (e) {
-                            if (e == 'na') {
-                                swal({
-                                    title: "Error",
-                                    text: "This shopper did not authorize text messages.",
-                                    type: "info"
-                                });
-                            }
-                        },
-                        error: function (e) {
-                            if (e == 'na') {
-                                swal({
-                                    title: "Error",
-                                    text: "This shopper did not authorize text messages.",
-                                    type: "info"
-                                });
-                            }
+                //Send AJAX request to PHP script that sends text message to shopper
+                jQuery.ajax({
+                    url: "https://istilist.com/notify-shopper/",
+                    method: "POST",
+                    data: {shopperID: shopper_id},
+                    success: function (e) {
+                        if (e == 'na') {
+                            swal({
+                                title: "Error",
+                                text: "This shopper did not authorize text messages.",
+                                type: "info"
+                            });
                         }
-                    });
-                }
-                else {
-                    //Do swal and let user know that phone number is not set
-                    swal({
-                        title: "Error",
-                        text: "This shopper does not have a phone number listed.",
-                        type: 'info'
-                    });
-                }
+                    },
+                    error: function (e) { //TODO: Make this error message if there is no phone number for customer
+                        if (e == 'na') {
+                            swal({
+                                title: "Error",
+                                text: "This shopper did not authorize text messages.",
+                                type: "info"
+                            });
+                        }
+                    }
+                });
+                
                 jQuery('#' + shopper_id + '-bell').css('color', '#14b9d6');
             }
 
