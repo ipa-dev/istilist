@@ -93,13 +93,11 @@
                             </a>
                         </li>
                         <li>
-                            <?php
-                                echo '<a href="javascript:void(0)" 
-                                         id="{shopper_id}-bell"
-                                         class="notifyShopper{is_active($shopper_id, "notified")}"
-                                         onClick="sendTextNotification({get_post_meta($shopper_id, "customer_phone", true)})"
-                                         rel="{$shopper_id}">';
-                            ?>
+                            <a href="javascript:void(0)" 
+                            id="<?= $shopper_id ?>-bell"
+                            class="notifyShopper <?= is_active($shopper_id, "notified") ?>"
+                            onClick="sendTextNotification(<?= get_post_meta($shopper_id, "customer_phone", true) ?>)"
+                            rel="<?= $shopper_id ?>">;
                                 <i class="fa fa-bell"></i>
                             </a>
                         </li>
