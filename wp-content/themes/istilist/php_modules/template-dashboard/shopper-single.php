@@ -1,40 +1,35 @@
-<?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
-                ?>
-                    <div class="box active">
+<?php 
+    if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
+        echo '<div class="box active">'; 
+    } else {
+        echo '<div class="box">';
+    } 
+?>
+                <!--<div class="box_pic">
+                    <?php echo get_profile_img($shopper_id); ?>
+                </div>-->
+                <div class="box_description" data-shopperid="<?php echo $shopper_id; ?>">
+                    <h2>
+                        <?php echo get_post_meta($shopper_id, 'customer_fname', true) . ' ' . get_post_meta($shopper_id, 'customer_lname', true); ?>
+                        <span><strong>Event:</strong> <?php echo get_post_meta($shopper_id, 'school_event', true); ?></span>
+                        <br/>
 						<?php
-            } else {
-                ?>
-                        <div class="box">
-							<?php
-            } ?>
-                            <!--<div class="box_pic">
-								<?php echo get_profile_img($shopper_id); ?>
-                            </div>-->
-                            <div class="box_description" data-shopperid="<?php echo $shopper_id; ?>">
-                                <h2>
-									<?php echo get_post_meta($shopper_id, 'customer_fname', true); ?> <?php echo get_post_meta($shopper_id, 'customer_lname', true); ?>
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span><strong>Event:</strong> <?php echo get_post_meta($shopper_id, 'school_event', true); ?></span>
-                                    <br/>
-									<?php
-                                    $timestamps = get_post_meta($shopper_id, 'timestamps', true);
-            $purchases  = get_post_meta($shopper_id, 'purchase_array', true);
-            if (! empty($timestamps)) {
-                $index = count($timestamps);
-                while ($index) {
-                    echo "<span>on " . date('m.d.Y', strtotime($timestamps[ -- $index ])) . " at " . date('h:i a', strtotime($timestamps[ $index ]));
-                    if ($index != (count($timestamps) - 1)) {
-                        if ($purchases[ $index - 1 ] == 'true') {
-                            echo "\tPurchase";
-                        } else {
-                            echo "\tNo Purchase";
-                        }
-                    }
-
-                    echo "</span><br />";
-                }
-            } ?>
+                            $timestamps = get_post_meta($shopper_id, 'timestamps', true);
+                            $purchases  = get_post_meta($shopper_id, 'purchase_array', true);
+                            if (! empty($timestamps)) {
+                                $index = count($timestamps);
+                                while ($index) {
+                                    echo "<span>on " . date('m.d.Y', strtotime($timestamps[ -- $index ])) . " at " . date('h:i a', strtotime($timestamps[ $index ]));
+                                    if ($index != (count($timestamps) - 1)) {
+                                        if ($purchases[ $index - 1 ] == 'true') {
+                                            echo "\tPurchase";
+                                        } else {
+                                            echo "\tNo Purchase";
+                                        }
+                                    }
+                                    echo "</span><br />";
+                                }
+                            } ?>
                                     <span><?php echo date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?>
                                         at <?php echo date('h:i a', strtotime(get_post_meta($shopper_id, 'entry_date', true))); ?>
                                         - <?php $stylist_id = get_post_meta($shopper_id, 'stylist_id', true);
