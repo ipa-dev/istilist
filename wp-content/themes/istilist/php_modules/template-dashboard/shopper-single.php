@@ -40,13 +40,14 @@
                                         <span>
                                             <?php
                                                 // TODO: WORK ON THIS LOGIC
+                                                $entry_date = date('h:i:s', strtotime(get_post_meta($shopper_id, 'entry_date', true)));
                                                 if (empty($timestamps)) {
-                                                    elapsedtime(date('h:i:s', strtotime(get_post_meta($shopper_id, 'entry_date', true))), date('h:i:s', strtotime($assign_stylist)));
+                                                    elapsedtime($entry_date, date('h:i:s', strtotime($assign_stylist)));
                                                 } 
                                                 elseif (count($timestamps) == 1 && get_post_meta($shopper_id, 'hit_plus', true) == 'false') {
-                                                    elapsedtime(date('h:i:s', strtotime(get_post_meta($shopper_id, 'entry_date', true))), date('h:i:s', strtotime($assign_stylist)));
+                                                    elapsedtime($entry_date, date('h:i:s', strtotime($assign_stylist)));
                                                 } 
-                                                elseif (! get_post_meta($shopper_id, 'hit_plus', true) == 'false') {
+                                                elseif (get_post_meta($shopper_id, 'hit_plus', true) == 'false') {
                                                     elapsedtime(date('h:i:s', strtotime($timestamps[ count($timestamps) - 2 ])), date('h:i:s', strtotime($assign_stylist)));
                                                 } 
                                                 elseif (get_post_meta($shopper_id, 'hit_plus', true) == 'true') {
