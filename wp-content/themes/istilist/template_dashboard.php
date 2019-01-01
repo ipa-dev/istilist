@@ -595,7 +595,7 @@
         /***********************************/
 
         $arg7 = array(
-                            'meta_key'            => 'customer_fname',
+                            // 'meta_key'            => 'customer_fname',
                             'search_shopper_name' => $_GET['search_query'], // added code for partial searches
                             'post_type'           => 'shopper',
                             'post_status'         => 'publish',
@@ -624,9 +624,9 @@
         endwhile;
 
         /* Marge IDs and get Unique IDs*/
-        $mergedposts = array_merge($ids7, $ids8);
+        // $mergedposts = array_merge($ids7, $ids8);
         $postids     = array();
-        foreach ($mergedposts as $item) {
+        foreach ($ids7 as $item) {
             array_push($postids, $item);
         }
         $uniqueposts1 = array_unique($postids);
