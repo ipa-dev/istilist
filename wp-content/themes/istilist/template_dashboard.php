@@ -593,19 +593,9 @@
 
         /* Query 7 */
         /***********************************/
-        /* Code Allows for Partial Searches */
-        function name_filter($where, &$query7)
-        {
-            global $wpdb;
-            if ($search_term = $query7->get('search_shopper_name')) {
-                $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . esc_sql(like_escape($search_term)) . '%\'';
-            }
 
-            return $where;
-        }
         $arg7 = array(
                             'meta_key'            => 'customer_fname',
-                            //'meta_value' => $_POST['search_query'], //original code
                             'search_shopper_name' => $_GET['search_query'], // added code for partial searches
                             'post_type'           => 'shopper',
                             'post_status'         => 'publish',
