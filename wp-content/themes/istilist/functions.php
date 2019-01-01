@@ -461,15 +461,6 @@ function get_unique_post_meta_values($searchkey = '', $searchvalue = '', $status
     return $res;
 }
 
-/* Code Allows for Partial Searches */
-function name_filter($where, &$query7)
-{
-    global $wpdb;
-    if ($search_term = $query7->get('search_shopper_name')) {
-        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . esc_sql(like_escape($search_term)) . '%\'';
-    }
 
-    return $where;
-}
 ?>
 
