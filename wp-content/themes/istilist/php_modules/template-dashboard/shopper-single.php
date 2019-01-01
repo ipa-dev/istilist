@@ -104,34 +104,47 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#stylistpopup" class="assignStylist" <?php $assign_stylist = get_post_meta($shopper_id, 'assign_stylist', true);
-                            if (! empty($assign_stylist)) {
-                                echo "style='color:#14b9d6'";
-                            } ?> rel="<?php echo $shopper_id; ?>">
+                            <?php
+                                echo '<a href="#stylistpopup" 
+                                         class="assignStylist {is_active($shopper_id, "assign_stylist")}"
+                                         rel="{$shopper_id}">';
+                            ?>
                                 <i class="icon-clothes4"></i>
                             </a>
                         </li>
                         <li>
-                                        <form method="post" action="">
-                                            <input hidden=""
-                                                   value="<?php echo get_the_modified_date('Y-m-d H:i:s'); ?>"/>
-                                            <input type="hidden" name="shopper_id" value="<?php echo $shopper_id; ?>"/>
-                                            <input class="submitbtnimg" <?php $timestamps = get_post_meta($shopper_id, 'timestamps', true);
-            if (! empty($timestamps)) {
-                echo "style='color:#14b9d6'";
-            } ?> type="submit" name="plusbtn" value="&#xf067;"/>
+                            <form method="post" action="">
+                                <input hidden=""
+                                        value="<?php echo get_the_modified_date('Y-m-d H:i:s'); ?>"/>
+                                <input type="hidden" name="shopper_id" value="<?php echo $shopper_id; ?>"/>
+                                <input class="submitbtnimg" 
+                                    <?php 
+                                        $timestamps = get_post_meta($shopper_id, 'timestamps', true);
+                                        if (! empty($timestamps)) {
+                                            echo "style='color:#14b9d6'";
+                                        } 
+                                    ?> type="submit" name="plusbtn" value="&#xf067;"/>
                                         </form>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" <?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
-                echo "style='color:#14b9d6'";
-            } ?> class="dollar" rel="<?php echo $shopper_id; ?>"><i
-                                                    class="fa fa-usd"></i></a></li>
-                                    <li><a href="javascript:void(0);" onclick="check(<?php echo $shopper_id; ?>);"
-                                           id="checkBox<?php echo $shopper_id; ?>"></a></li>
-                                    <input type="hidden" value="no" form="bulkActionForm"
-                                           id="checkInput<?php echo $shopper_id; ?>" name="<?php echo $shopper_id; ?>"/>
-                                </ul>
-                            </div>
-                            <div style="clear: both;"></div>
-                        </div>
+                        </li>
+                        <li>
+                            <?php
+                                echo '<a href="javascript:void(0)" 
+                                         class="dollar {is_active($shopper_id, "dollar_button_clicked")}"
+                                        rel="{$shopper_id}">';
+                            ?> 
+                                <i class="fa fa-usd"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <?php
+                                echo '<a href="javascript:void(0);" onclick="check({$shopper_id});"
+                                         id="checkBox{$shopper_id}"></a>';
+                            ?>
+                        </li>
+                        <?php echo '<input type="hidden" value="no" form="bulkActionForm"
+                                           id="checkInput{$shopper_id}" name="{$shopper_id}"/>';
+                        ?>
+                    </ul>
+                </div>
+                <div style="clear: both;"></div>
+            </div>

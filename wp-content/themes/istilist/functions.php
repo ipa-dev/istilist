@@ -522,5 +522,14 @@ function print_fitting_room_rounds($shopper_id) {
         echo "<p class='daily_rounds'>Fitting Room Rounds: " . $daily_count . "</p>";
     } 
 }
+
+function is_active($shopper_id, $shopper_field) {
+    //TODO: What is behavior if $shopper_field or $shopper_id are invalid values??
+    $field_value = get_post_meta($shopper_id, $shopper_field, true);
+    if (! empty($field_value) && ($field_value || $field_value == 'true')) {
+        return 'active';
+    }
+    return '';
+}
 ?>
 
