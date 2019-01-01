@@ -490,8 +490,7 @@ function print_timestamps($shopper_id) {
             echo "</span><br />";
         }
     } 
-    echo '<span>' . date('m.d.Y at h:i a', strtotime($entry_date)) . 
-         'at' . date('h:i a', strtotime($entry_date)) . ' - '; 
+    echo '<span>' . date('m.d.Y \a\t h:i a', strtotime($entry_date)) . ' - '; 
     
     $stylist_id = get_post_meta($shopper_id, 'stylist_id', true);
     if (! empty($stylist_id)) {
