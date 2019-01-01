@@ -634,7 +634,7 @@
         endwhile;
 
         /* Marge IDs and get Unique IDs*/
-        $mergedposts = array_merge($ids2, $ids3, $ids4, $ids5, $ids6, $ids7, $ids8);
+        $mergedposts = array_merge($ids7, $ids8);
         $postids     = array();
         foreach ($mergedposts as $item) {
             array_push($postids, $item);
