@@ -505,5 +505,22 @@ function print_timestamps($shopper_id) {
     } 
     echo '</span>';
 }
+
+function print_fitting_room_rounds($shopper_id) {
+    $daily_count = 0;
+    if (date('m.d.Y', strtotime(get_post_meta($shopper_id, 'entry_date', true))) == date('m.d.Y')) {
+        $daily_count ++;
+    }
+    if (!empty($timestamps)) {
+        foreach ($timestamps as $timestamp) {
+            if (date('m.d.Y', strtotime($timestamp)) == date('m.d.Y')) {
+                $daily_count ++;
+            }
+        }
+    }
+    if ($daily_count > 1) {
+        echo "<p class='daily_rounds'>Fitting Room Rounds: " . $daily_count . "</p>";
+    } 
+}
 ?>
 

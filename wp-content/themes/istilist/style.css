@@ -649,6 +649,11 @@ label.error{
     font-weight: normal;
     color: #899097 !important;
 }
+
+.assignStylistClass {
+    padding-bottom: 6px;
+}
+
 #stylistpopup{
     display: none;
 }
