@@ -594,73 +594,43 @@
         /* Query 7 */
         /***********************************/
 
-        $arg7 = array(
-                            // 'meta_key'            => 'customer_fname',
-                            'search_shopper_name' => $_GET['search_query'], // added code for partial searches
-                            'post_type'           => 'shopper',
-                            'post_status'         => 'publish',
-                            'posts_per_page'      => - 1
-                        );
         add_filter('posts_where', 'name_filter', 10, 2); //added code for partial searches
-        $query7 = new WP_Query($arg7);
+        $query = new WP_Query(array(
+            'search_shopper_name' => $_GET['search_query'],
+            'post_type'           => 'shopper',
+            'post_status'         => 'publish',
+            'posts_per_page'      => - 1
+        ));
         remove_filter('posts_where', 'name_filter', 10, 2); //added code for partial searches
-        $ids7 = array();
-        while ($query7->have_posts()) : $query7->the_post();
-        array_push($ids7, get_the_ID());
+        $ids = array();
+        while ($query->have_posts()) : $query->the_post();
+        array_push($ids, get_the_ID());
         endwhile;
 
-        /* Query 8 */
-        $arg8   = array(
-                            'meta_key'       => 'customer_lname',
-                            'meta_value'     => $_GET['search_query'],
-                            'post_type'      => 'shopper',
-                            'post_status'    => 'publish',
-                            'posts_per_page' => - 1
-                        );
-        $query8 = new WP_Query($arg8);
-        $ids8   = array();
-        while ($query8->have_posts()) : $query8->the_post();
-        array_push($ids8, get_the_ID());
-        endwhile;
-
-        /* Marge IDs and get Unique IDs*/
-        // $mergedposts = array_merge($ids7, $ids8);
-        $postids     = array();
-        foreach ($ids7 as $item) {
-            array_push($postids, $item);
-        }
-        $uniqueposts1 = array_unique($postids);
-        $uniqueposts  = array();
-        //print_r($uniqueposts);
-        for ($i = 0; $i < count($uniqueposts1); $i ++) {
-            $shopper_store_id = get_post_meta($uniqueposts1[ $i ], 'store_id', true);
+        $storeposts  = array();
+        for ($i = 0; $i < count($ids); $i ++) {
+            $shopper_store_id = get_post_meta($ids[ $i ], 'store_id', true);
             if ($shopper_store_id == $current_user_store_id) {
-                array_push($uniqueposts, $uniqueposts1[ $i ]);
+                array_push($storeposts, $ids[ $i ]);
             }
-        } ?>
-					<?php if (count($uniqueposts)) {
-            ?>
-					<?php $pagination = new pagination($uniqueposts, (isset($_GET['pageno']) ? $_GET['pageno'] : 1), 5); ?>
-					<?php
-                    $pagination->setShowFirstAndLast(false);
+        }
+		if (count($storeposts)) {
+            
+			$pagination = new pagination($uniqueposts, (isset($_GET['pageno']) ? $_GET['pageno'] : 1), 5);
+            $pagination->setShowFirstAndLast(false);
             $pagination->setMainSeperator('  ');
             $productPages = $pagination->getResults();
             if (count($productPages) != 0) {
-                $pageNumbers = '<div class="numbers">' . $pagination->getLinks($_GET) . '</div>'; ?>
-					<?php foreach ($productPages
-
-                    as $shopper_id) {
-                    ?>
-					<?php //foreach($uniqueposts as $shopper_id){?>
-					<?php if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
-                        ?>
+                $pageNumbers = '<div class="numbers">' . $pagination->getLinks($_GET) . '</div>';
+					foreach ($productPages as $shopper_id) {
+					if (get_post_meta($shopper_id, 'dollar_button_clicked', true) == 1) {
+        ?>
                         <div class="box active">
-							<?php
+		<?php
                     } else {
-                        ?>
+        ?>
                             <div class="box">
-								<?php
-                    } ?>
+		<?php       } ?>
                                 <!--<div class="box_pic noprofileimg"><img
                                             src="<?php bloginfo('template_directory'); ?>/images/noprofileimg.png"/>
                                 </div>-->
