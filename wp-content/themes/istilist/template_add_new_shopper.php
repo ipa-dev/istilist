@@ -6,7 +6,6 @@
 		$dotenv = new Dotenv\Dotenv('/home3/istilist/public_html/');
 		$dotenv->load();
 
-        require 'twilio-php-master/Twilio/autoload.php';
         use Twilio\Rest\Client;
 
         ?>
@@ -71,7 +70,7 @@ if (is_user_logged_in()) {
                                 add_post_meta($new_post_id, 'hit_plus', 'false');
 
                                 if ($_POST['sms_agreement'] == 'yes' && isset($_POST['customer_phone'])) {
-                                    $sid = 'ACdb92d82faf7befbb1538a208224133a4';
+                                    $sid = getenv("TWILIO_SID");
 									$token = getenv("TWILIO_AUTH_KEY");
                                     $client = new Client($sid, $token);
                                     $sms = $client->account->messages->create(

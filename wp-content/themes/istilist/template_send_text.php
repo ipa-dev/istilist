@@ -14,7 +14,7 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
     global $wpdb;
     $store_id = get_user_meta($user_ID, 'store_id', true);
     $text_credit = get_user_meta($user_ID, 'text_credit', true);
-    $sid = 'ACdb92d82faf7befbb1538a208224133a4';
+    $sid = getenv("TWILIO_SID");
     $token = getenv("TWILIO_AUTH_KEY");
     $client = new Client($sid, $token);
 

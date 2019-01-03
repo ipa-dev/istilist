@@ -40,7 +40,7 @@ if ($shopper_data->have_posts()) {
     $shopper_id = get_the_ID();
     $body = get_user_meta(get_post_meta($shopper_id, 'store_id', true), 'daily_promo_text', true);
     if (trim(strtolower($body)) != 'na') {
-        $sid = 'ACdb92d82faf7befbb1538a208224133a4';
+        $sid = getenv("TWILIO_SID");
         $token = getenv("TWILIO_AUTH_KEY");
         $client = new Client($sid, $token);
         try {

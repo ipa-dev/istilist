@@ -8,7 +8,7 @@
     use Twilio\Rest\Client;
 
     if (get_post_meta($_POST['shopperID'], 'sms_agreement', true) == 'yes') {
-        $sid = 'ACdb92d82faf7befbb1538a208224133a4';
+        $sid = getenv('TWILIO_SID');
         $token = getenv('TWILIO_AUTH_KEY');
 
         $client = new Client($sid, $token);

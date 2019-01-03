@@ -71,7 +71,7 @@ if (!empty($shopper_phone) && $sms_agreement == 'yes') {
         $msg_body2 = str_replace("{Stylist's Name}", $stylist_name, $msg_body1);
 
 
-        $sid = 'ACdb92d82faf7befbb1538a208224133a4';
+        $sid = getenv('TWILIO_SID');
         $token = getenv('TWILIO_AUTH_KEY');
         $client = new Client($sid, $token);
         $sms = $client->account->messages->create(

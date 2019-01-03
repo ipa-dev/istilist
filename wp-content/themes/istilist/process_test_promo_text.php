@@ -16,7 +16,7 @@
     global $user_ID;
     $body = get_user_meta($user_ID, 'daily_promo_text', true);
     if (trim(strtolower($body)) != 'na') {
-        $sid = 'ACdb92d82faf7befbb1538a208224133a4';
+        $sid = getenv("TWILIO_SID");
         $token = getenv("TWILIO_AUTH_KEY");
         $client = new Client($sid, $token);
         echo get_the_ID();
