@@ -1,12 +1,11 @@
 <?php /* Template Name: Timed Promo Text */ ?>
 <?php
 
-require("/home3/istilist/public_html/vendor/autoload.php");
+require_once "/home3/istilist/public_html/vendor/autoload.php";
 
 $dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
 $dotenv->load();
 
-require("twilio-php-master/Twilio/autoload.php");
 use Twilio\Rest\Client;
 
 $shopper_args = array(

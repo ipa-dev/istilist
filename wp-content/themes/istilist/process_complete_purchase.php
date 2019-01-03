@@ -5,12 +5,11 @@ global $user_ID;
 $store_id = $_POST['store_id'];
 $shopper_id = $_POST['shopper_id'];
 
-require("/home3/istilist/public_html/vendor/autoload.php");
+require_once "/home3/istilist/public_html/vendor/autoload.php";
 
 $dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
 $dotenv->load();
 
-require("twilio-php-master/Twilio/autoload.php");
 use Twilio\Rest\Client;
 
 update_post_meta($shopper_id, 'complete_purchase', 1);

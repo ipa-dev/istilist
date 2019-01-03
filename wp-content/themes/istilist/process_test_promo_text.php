@@ -1,12 +1,11 @@
 <?php /* Template Name: Test Promo Text */ ?>
 <?php get_header(); ?>
 <?  
-    require("/home3/istilist/public_html/vendor/autoload.php");
+    require_once "/home3/istilist/public_html/vendor/autoload.php";
 
     $dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
     $dotenv->load();
 
-    require_once "/home3/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/autoload.php";
     use Twilio\Rest\Client; 
 ?>
 <?php if (is_user_logged_in()) { ?>

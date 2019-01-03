@@ -1,7 +1,6 @@
 <?php /* Template Name: Send Text */ ?>
 <?php
-require("twilio-php-master/Twilio/autoload.php");
-require("/home3/istilist/public_html/vendor/autoload.php");
+require_once "/home3/istilist/public_html/vendor/autoload.php";
 
 $dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
 $dotenv->load();
