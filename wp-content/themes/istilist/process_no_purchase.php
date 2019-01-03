@@ -5,6 +5,11 @@ $store_id = $_POST['store_id'];
 $shopper_id = $_POST['shopper_id'];
 $reason = $_POST['reason'];
 
+require("../../../vendor/autoload.php");
+
+$dotenv = Dotenv\Dotenv::create("../../../");
+$dotenv->load();
+
 require("twilio-php-master/Twilio/autoload.php");
 use Twilio\Rest\Client;
 
@@ -69,7 +74,7 @@ if (!empty($shopper_phone) && $sms_agreement == 'yes') {
 
 
         $sid = 'ACdb92d82faf7befbb1538a208224133a4';
-        $token = 'c6481d599afc5bedced939b8c53fbf5f';
+        $token = getenv("TWILIO_AUTH_KEY");
         $client = new Client($sid, $token);
         $sms = $client->account->messages->create(
 
