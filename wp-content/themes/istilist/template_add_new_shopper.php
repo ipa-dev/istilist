@@ -73,8 +73,6 @@ if (is_user_logged_in()) {
                                 if ($_POST['sms_agreement'] == 'yes' && isset($_POST['customer_phone'])) {
                                     $sid = 'ACdb92d82faf7befbb1538a208224133a4';
 									$token = getenv("TWILIO_AUTH_KEY");
-									var_dump($token);
-									exit();
                                     $client = new Client($sid, $token);
                                     $sms = $client->account->messages->create(
 
