@@ -876,7 +876,8 @@ input[type="submit"].submitbtnimg{
 	display: inline;
 }
 #bulk_select {
-	display: inline;
+    float: left;
+    width: 120px;
 }
 input[type="submit"].fa-input {
     font-family: "open_sanssemibold", FontAwesome;
@@ -884,7 +885,6 @@ input[type="submit"].fa-input {
 #setpasswordpopup{
     z-index: 99999;
 }
-
 .custom_button {
     display: inline-block;
     background: #14b9d6;
@@ -896,7 +896,9 @@ input[type="submit"].fa-input {
     text-shadow: none;
     margin: 0 10px;
 }
-
+.custom_button:hover {
+    text-decoration: none;
+}
 .active {
     color: #14b9d6;
 }
