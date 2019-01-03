@@ -3,8 +3,6 @@
 <?php
 if (is_user_logged_in()) {
     global $user_ID;
-    $store_owner_id = get_user_meta($user_ID, 'store_id', true);
-    $store_id = get_user_meta($user_ID, 'store_id', true);
     $user_role = get_user_role($user_ID);
     if (isset($_POST['add_new_shopper'])) {
         global $wpdb;
@@ -66,6 +64,8 @@ if (is_user_logged_in()) {
             }
         }
 
+
+        /* Profile Picture - No Longer Used 
         require_once(ABSPATH . "wp-admin" . '/includes/image.php');
         require_once(ABSPATH . "wp-admin" . '/includes/file.php');
         require_once(ABSPATH . "wp-admin" . '/includes/media.php');
@@ -92,6 +92,7 @@ if (is_user_logged_in()) {
                 wp_die('No image was uploaded.');
             }
         }
+          End Profile Picture */
 
         if ($new_post_id) {
             echo '<p class="successMsg">Thank you for your valuable time and information.</p>';
