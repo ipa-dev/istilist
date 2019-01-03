@@ -99,7 +99,6 @@
   font-weight: normal !important;
   font-variant: normal !important;
   text-transform: none !important;
-  speak: none;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -112,7 +111,6 @@
   font-weight: normal !important;
   font-variant: normal !important;
   text-transform: none !important;
-  speak: none;
   line-height: 1;
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
@@ -718,7 +716,6 @@ select.attachment-filters {
     width: auto;
 }
 span.h1inlinelink{
-    display: inline-block;
     float: right;
 }
 span.h1inlinelink a{
@@ -753,9 +750,6 @@ span.h1inlinelink a{
 .form_list .col:nth-child(2n+1){
     margin-left: 0;
 }
-.switch-button-label.off{
-
-}
 .switch-button-label.on{
     color: green !important;
 }
@@ -785,7 +779,7 @@ span.h1inlinelink a{
     font-family: FontAwesome;
     top: 0px;
     right: 0;
-    padding: 9px 12px;
+    padding: 8px 10px;
     border-radius: 0;
 }
 .numbers{
@@ -880,13 +874,9 @@ input[type="submit"].submitbtnimg{
 }
 #bulkActionForm {
 	display: inline;
-	float: right;
-	width: 54%;
 }
 #bulk_select {
-	width: 20%;
 	display: inline;
-	float: left;
 }
 input[type="submit"].fa-input {
     font-family: "open_sanssemibold", FontAwesome;
