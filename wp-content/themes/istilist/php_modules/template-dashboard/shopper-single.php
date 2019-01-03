@@ -118,18 +118,18 @@
                             </form>
                         </li>
                         <li>
-                                <a href="javascript:void(0)" 
-                                         class="dollar <?= is_active($shopper_id, "dollar_button_clicked"); ?>"
-                                        rel="<?= $shopper_id ?>">
+                            <a href="javascript:void(0)" 
+                                class="dollar <?= is_active($shopper_id, "dollar_button_clicked"); ?>"
+                                rel="<?= $shopper_id ?>">
                                 <i class="fa fa-usd"></i>
                             </a>
                         </li>
                         <li>
-                               <a href="javascript:void(0);" onclick="check(<?= $shopper_id ?>);"
-                                         id="checkBox<?= $shopper_id ?>"></a>
+                            <a href="javascript:void(0);" onclick="check(<?= $shopper_id ?>);"
+                                id="checkBox<?= $shopper_id ?>"></a>
                         </li>
                        <input type="hidden" value="no" form="bulkActionForm"
-                                           id="checkInput<?= $shopper_id ?>" name="<?= $shopper_id ?>"/>
+                                id="checkInput<?= $shopper_id ?>" name="<?= $shopper_id ?>"/>
                     </ul>
                 </div>
                 <div style="clear: both;"></div>
