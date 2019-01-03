@@ -22,18 +22,16 @@ if (is_user_logged_in()) {
 			<?php get_sidebar('menu'); ?>
 			<div class="col span_9_of_12 matchheight">
 				<div class="dash_content">
-					<?php
-                    if (('storeowner' == $user_role) || ('storesupervisor' == $user_role)) {
-                        ?>
-						<h1><?php the_title(); ?> <span class="h1inlinelink"><a href="<?php bloginfo('url'); ?>/edit-shoppers-form">Edit This Form</a></span></h1>
-						<?php
-                    } ?>
-
-					<?php if ($user_role == 'storeemployee') {
-                        ?>
-					<h1><?php the_title(); ?></h1>
-					<?php
-                    } ?>
+					<h1> 
+						<?php // TITLE INFORMATION
+							echo get_the_title();
+							if (('storeowner' == $user_role) || ('storesupervisor' == $user_role)) {
+								echo '<span class="h1inlinelink">
+										<a href="' . get_bloginfo('url') . '/edit-shoppers-form">Edit this Form</a>
+									  </span>';
+							}
+						?>
+					</h1>
 					<div class="box addnewshoppers">
 						<?php
                             if (isset($_POST['add_new_shopper'])) {
@@ -74,15 +72,11 @@ if (is_user_logged_in()) {
                                     $client = new Client($sid, $token);
                                     $sms = $client->account->messages->create(
 
-                                        // the number we are sending to - Any phone number
                                         '+1'.$_POST['customer_phone'],
 
                                         array(
-                                            // Step 6: Change the 'From' number below to be a valid Twilio number
-                                            // that you've purchased
                                             'from' => getenv('TWILIO_DEFAULT_NUMBER'),
 
-                                            // the sms body
                                             'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".get_user_meta($user_ID, 'store_name', true)."! Text YES to receive alerts and special offers (Up to 6 autodialed msgs/mo. Consent not required to purchase. Msg&data rates may apply. Text STOP to stop)."
                                         )
                                     );
