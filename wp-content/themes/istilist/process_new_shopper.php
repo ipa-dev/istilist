@@ -93,13 +93,7 @@ if (is_user_logged_in()) {
             }
         }
           End Profile Picture */
-
-        if ($new_post_id) {
-            echo '<p class="successMsg">Thank you for your valuable time and information.</p>';
-            header("Location: ".get_bloginfo('home')."/dashboard");
-        } else {
-            echo '<p class="errorMsg">Sorry, your information is not updated.</p>';
-        }
+          
         header('Location: ' .get_bloginfo('url') . '/dashboard');
     }
 }
