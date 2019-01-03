@@ -889,7 +889,7 @@ input[type="submit"].fa-input {
     display: inline-block;
     background: #14b9d6;
     border-radius: 5px;
-    color: #fff;
+    color: #fff !important;
     font-weight: 400;
     font-size: 18px;
     padding: 10px 16px;
