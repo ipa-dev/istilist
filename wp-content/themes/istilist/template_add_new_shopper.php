@@ -3,8 +3,7 @@
 <?php
     	require("/home3/istilist/public_html/vendor/autoload.php");
 
-		use Dotenv\Dotenv\create;
-		// $dotenv = Dotenv\Dotenv::create("/home3/istilist/public_html/");
+		$dotenv = Dotenv\Dotenv::create(__DIR__);
 		// $dotenv->load();
 
         require 'twilio-php-master/Twilio/autoload.php';
