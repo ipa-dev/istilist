@@ -3,7 +3,7 @@
 <?  
     require("/home3/istilist/public_html/vendor/autoload.php");
 
-    $dotenv = Dotenv\Dotenv::create("../../../");
+    $dotenv = Dotenv\Dotenv::create("/home3/istilist/public_html/");
     $dotenv->load();
 
     require_once "/home3/istilist/public_html/wp-content/themes/istilist/twilio-php-master/Twilio/autoload.php";
