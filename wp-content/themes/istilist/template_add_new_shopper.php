@@ -140,7 +140,7 @@
 							<?php
                             } ?>
 							<div class="section group form_list">
-								<?php if (check_is_active('design_preferences') == 1) {
+								<?php if (check_is_active('design_preferences')) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>Designer Preference</label>
@@ -156,19 +156,18 @@
                                                 'orderby' => 'title',
                                                 'order' => 'ASC'
                                             );
-                                $sizes = new WP_Query($size_args);
-                                if ($sizes->have_posts()) {
-                                    while ($sizes->have_posts()) : $sizes->the_post(); ?>
-										<!-- <input type="checkbox" name="design_preferences[]" value="<?php the_title(); ?>" /> <?php the_title(); ?>&nbsp;&nbsp; -->
-										<option value="<?php the_title(); ?>"><?php the_title(); ?></option>
-										<?php endwhile; ?>
-										<?php
-                                } ?>
+											$sizes = new WP_Query($size_args);
+											if ($sizes->have_posts()) {
+												while ($sizes->have_posts()) : 
+													$sizes->the_post();
+													echo '<option value="' . get_the_title() . '">' . get_the_title() . '</option>';
+												endwhile;
+											} 
+										?>
 									</select>
 								</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('style_preferences') == 1) {
+                           		}  if (check_is_active('style_preferences')) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>Style Preference</label>
@@ -184,20 +183,17 @@
                                             'orderby' => 'title',
                                             'order' => 'ASC'
                                         );
-                                $sizes = new WP_Query($size_args);
-                                if ($sizes->have_posts()) {
-                                    while ($sizes->have_posts()) : $sizes->the_post(); ?>
-									<!-- <input type="checkbox" name="style_preferences[]" value="<?php the_title(); ?>" /> <?php the_title(); ?>&nbsp;&nbsp; -->
-										<option value="<?php the_title(); ?>"><?php the_title(); ?></option>
-									<?php endwhile; ?>
-										<?php
-                                } ?>
+										$sizes = new WP_Query($size_args);
+										if ($sizes->have_posts()) {
+											while ($sizes->have_posts()) : 
+												$sizes->the_post();
+												echo '<option value="' . get_the_title() .'">' . get_the_title() . '</option>';
+											endwhile;
+										}
+									?>
 									</select>
 								</div>
-								<?php
-                            } ?>
-								<?php if (check_is_active('color_preferences') == 1) {
-                                ?>
+								<?php } if (check_is_active('color_preferences')) { ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>Color Preferences</label>
 									<select name="color_preferences">
@@ -212,14 +208,13 @@
                                             'orderby' => 'title',
                                             'order' => 'ASC'
                                         );
-                                $colors = new WP_Query($color_args);
-                                if ($colors->have_posts()) {
-                                    while ($colors->have_posts()) : $colors->the_post(); ?>
-									<!-- <input type="checkbox" name="color_preferences[]" value="<?php the_title(); ?>" /> <?php the_title(); ?>&nbsp;&nbsp; -->
-									<option value="<?php the_title(); ?>"><?php the_title(); ?></option>
-									<?php endwhile; ?>
-										<?php
-                                } ?>
+										$colors = new WP_Query($color_args);
+										if ($colors->have_posts()) {
+											while ($colors->have_posts()) : 
+												$colors->the_post();
+												echo '<option value="' . get_the_title() . '">' . get_the_title() . '</option>';
+											endwhile;
+										} ?>
 									</select>
 								</div>
 								<?php
