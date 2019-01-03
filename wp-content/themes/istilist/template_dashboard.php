@@ -587,21 +587,12 @@
                     url: "https://istilist.com/notify-shopper/",
                     method: "POST",
                     data: {shopperID: shopper_id},
-                    success: function (e) {
-                        if (e == 'na') {
-                            swal({
-                                title: "Error",
-                                text: "This shopper did not authorize text messages.",
-                                type: "info"
-                            });
-                        }
-                    },
                     error: function (e) { //TODO: Make this error message if there is no phone number for customer
                         if (e == 'na') {
                             swal({
                                 title: "Error",
                                 text: "This shopper did not authorize text messages.",
-                                type: "info"
+                                type: "error"
                             });
                         }
                     }

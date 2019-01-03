@@ -27,5 +27,5 @@
         );
         add_post_meta($_POST['shopperID'], 'notified', 'true');
     } else {
-        echo "not authorized";
+        echo "na";
     }
