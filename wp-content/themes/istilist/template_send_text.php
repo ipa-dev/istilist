@@ -80,7 +80,7 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
                         $sms = $client->account->messages->create(
                                 '+1'.$shopper_phone,
                                 array(
-                                    'from' => get_option('twilio_number'),
+                                    'from' => getenv('TWILIO_DEFAULT_NUMBER'),
                                     'body' => $message_text
                                 )
                             );

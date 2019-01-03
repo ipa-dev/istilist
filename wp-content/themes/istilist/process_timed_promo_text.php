@@ -46,7 +46,7 @@ if ($shopper_data->have_posts()) {
             $sms = $client->account->messages->create(
                     '+1' . get_post_meta($shopper_id, 'customer_phone', true),
                     array(
-                        'from' => get_option('twilio_number'),
+                        'from' => getenv('TWILIO_DEFAULT_NUMBER'),
                         'body' => $body
                     )
                 );

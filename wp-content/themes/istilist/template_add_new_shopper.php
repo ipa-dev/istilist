@@ -80,7 +80,7 @@ if (is_user_logged_in()) {
                                         array(
                                             // Step 6: Change the 'From' number below to be a valid Twilio number
                                             // that you've purchased
-                                            'from' => get_option('twilio_number'),
+                                            'from' => getenv('TWILIO_DEFAULT_NUMBER'),
 
                                             // the sms body
                                             'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".get_user_meta($user_ID, 'store_name', true).".Text YES to get messages from us."

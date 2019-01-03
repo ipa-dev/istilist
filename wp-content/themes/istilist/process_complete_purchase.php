@@ -80,7 +80,7 @@ if (!empty($shopper_phone) && $sms_agreement == 'yes') {
             array(
                 // Step 6: Change the 'From' number below to be a valid Twilio number
                 // that you've purchased
-                'from' => get_option('twilio_number'),
+                'from' => getenv('TWILIO_DEFAULT_NUMBER'),
                 // the sms body
                 'body' => $msg_body2
             )

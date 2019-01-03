@@ -1,12 +1,6 @@
 <?php
 global $options;
 
-
-add_option('cipher_key', 'l5qbZFEoKFn0Hau5q4fYatlq91T9c391');
-add_option('cipher_method', 'AES-256-CBC');
-
-add_option('twilio_number', '+18652400405');
-
 function add_istilist_promo_list_controller($controllers)
 {
     $controllers[] = 'istilist_promo_list';

@@ -17,7 +17,7 @@
         '+1'.get_post_meta($_POST['shopperID'], 'customer_phone', true),
         
         array(
-            'from' => get_option('twilio_number'),
+            'from' => getenv('TWILIO_DEFAULT_NUMBER'),
         
             // the sms body
             'body' => "Hey, ".get_post_meta($_POST['shopperID'], 'customer_fname', true).", your fitting room at ".get_user_meta(get_post_meta($_POST['shopperID'], 'store_id', true), 'store_name', true)." is now available."
