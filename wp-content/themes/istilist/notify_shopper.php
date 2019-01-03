@@ -10,8 +10,7 @@
     if (get_post_meta($_POST['shopperID'], 'sms_agreement', true) == 'yes') {
         $sid = 'ACdb92d82faf7befbb1538a208224133a4';
         $token = getenv('TWILIO_AUTH_KEY');
-        var_dump($token);
-        exit();
+
         $client = new Client($sid, $token);
         $sms = $client->account->messages->create(
     
