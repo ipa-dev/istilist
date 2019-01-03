@@ -7,7 +7,7 @@ $reason = $_POST['reason'];
 
 require("/home3/istilist/public_html/vendor/autoload.php");
 
-$dotenv = Dotenv\Dotenv::create("/home3/istilist/public_html/");
+$dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
 $dotenv->load();
 
 require("twilio-php-master/Twilio/autoload.php");
