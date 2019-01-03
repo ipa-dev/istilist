@@ -7,68 +7,6 @@
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <div id="stylistpopup">
 	<?php
-    //When user presses assign stylist button
-    if (isset($_POST['submit'])) {
-        $shopper_id   = $_POST['shopper_id'];
-        $current_date = date('Y-m-d H:i:s');
-        global $wpdb;
-        update_post_meta($shopper_id, 'assign_stylist', $current_date);
-        update_post_meta($shopper_id, 'stylist_id', $_POST['stylist_id']);
-        update_post_meta($shopper_id, 'fitting_room_id', $_POST['fitting_room_id']);
-
-
-        $prev_stylist_array = get_post_meta($shopper_id, 'prev_stylists', true);
-
-        //Store all information on each stylist girl has been assigned
-        if (empty($prev_stylist_array)) {
-            $prev_stylist_array = array(
-                array(
-                    'assignment_date' => $current_date,
-                    'stylist_id'      => $_POST['stylist_id'],
-                    'fitting_room_id' => $_POST['fitting_room_id']
-                )
-            );
-            add_post_meta($shopper_id, 'prev_stylists', $prev_stylist_array);
-        } elseif (! empty($prev_stylist_array)) {
-            $array_addition = array(
-                'assignment_date' => $current_date,
-                'stylist_id'      => $_POST['stylist_id'],
-                'fitting_room_id' => $_POST['fitting_room_id']
-            );
-            array_push($prev_stylist_array, $array_addition);
-            update_post_meta($shopper_id, 'prev_stylists', $prev_stylist_array);
-        }
-
-        $hit_plus = get_post_meta($_POST['shopper_id'], 'hit_plus', true);
-        if (! empty($hit_plus)) {
-            if ($hit_plus == 'true') {
-                $my_post = array(
-                    'ID'            => $_POST['shopper_id'],
-                    'post_modified' => date('Y-m-d H:i:s')
-                    //'orderby' => 'date',
-                    //'order' => 'ASC'
-                );
-                wp_update_post($my_post);
-                $timestamp_array = get_post_meta($_POST['shopper_id'], 'timestamps', true);
-                if (! empty($timestamp_array)) {
-                    array_push($timestamp_array, date('Y-m-d H:i:s'));
-                    update_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
-                } else {
-                    $timestamp_array = array();
-                    array_push($timestamp_array, date('Y-m-d H:i:s'));
-                    add_post_meta($_POST['shopper_id'], 'timestamps', $timestamp_array);
-                }
-                update_post_meta($_POST['shopper_id'], 'hit_plus', 'false');
-            } elseif ($hit_plus == 'false') {
-                update_post_meta($_POST['shopper_id'], 'hit_plus', 'true');
-            }
-        } else {
-            //user has not hit plus button after first round
-            $test = 0;
-        }
-
-        header('Location: ' . get_bloginfo('url') . '/dashboard');
-    }
 
     //When user presses plus button
     if (isset($_POST['plusbtn'])) {
@@ -289,7 +227,7 @@
             }
         }
     } ?>
-    <form method="post" action="">
+    <form method="post" action="<?= get_bloginfo('url'); ?>/process-assign-stylist">
         <div class="section group">
             <div class="col span_12_of_12">
                 <h3>Assign Stylist</h3>
@@ -358,53 +296,56 @@
                         </select>
 
                     </div>
-					<?php if (! isset($_GET['search_query'])) {
-        ?>
-					<?php $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; ?>
-					<?php
+                    <?php 
+                    if (! isset($_GET['search_query'])) {
+                        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-                    $post_args = array(
-                        'post_type'      => 'shopper',
-                        'post_status'    => 'publish',
-                        'meta_key'       => 'store_id',
-                        'meta_value'     => $store_id,
-                        'paged'          => $paged,
-                        'posts_per_page' => 30,
-                        'orderby'        => 'date',
-                    );
+                        $post_args = array(
+                            'post_type'      => 'shopper',
+                            'post_status'    => 'publish',
+                            'meta_key'       => 'store_id',
+                            'meta_value'     => $store_id,
+                            'paged'          => $paged,
+                            'posts_per_page' => 30,
+                            'orderby'        => 'date',
+                        );
 
-        $store_reverse_order = get_user_meta($store_id, 'reverse_order', true);
-        if (empty($store_reverse_order) || $store_reverse_order == null) {
-            $post_args['order'] = 'DESC';
-        } elseif ($store_reverse_order == "on") {
-            $post_args['order'] = 'ASC';
-        }
+                        $store_reverse_order = get_user_meta($store_id, 'reverse_order', true);
+
+                        if (empty($store_reverse_order) || $store_reverse_order == null) {
+                            $post_args['order'] = 'DESC';
+                        } elseif ($store_reverse_order == "on") {
+                            $post_args['order'] = 'ASC';
+                        }
 
 
-        $the_query = new WP_Query($post_args);
+                        $the_query = new WP_Query($post_args);
 
-        if ($the_query->have_posts()) {
-            while ($the_query->have_posts()) : $the_query->the_post();
-            $shopper_id = get_the_ID(); ?>
-					
-                        <?php
-                            require 'php_modules/template-dashboard/shopper-single.php';
-                        endwhile;
-        } else {
+                        if ($the_query->have_posts()) {
+                            while ($the_query->have_posts()) : 
+                                $the_query->the_post();
+                                $shopper_id = get_the_ID();
+                                require 'php_modules/template-dashboard/shopper-single.php';
+                            endwhile;
+                        } else {
             ?>
                             <div class="box">
                                 <p style="text-align: center; padding-bottom: 0;">No Shopper Registered</p>
                             </div>
+                    <?php }
+                        wp_reset_postdata(); 
+                    ?>
+        <div class="paginationWrapper">
+            <?php 
+                if (function_exists('wp_pagenavi')) {
+                    wp_pagenavi(array( 'query' => $the_query ));
+                } 
+            ?>
+        </div>
 						<?php
-        } ?>
-						<?php wp_reset_postdata(); ?>
-                        <div class="paginationWrapper"><?php if (function_exists('wp_pagenavi')) {
-            wp_pagenavi(array( 'query' => $the_query ));
-        } ?></div>
-						<?php
-    } ?>
-		<?php if (isset($_GET['search_query'])) {
-        include 'pagination.class.php';
+    } 
+		if (isset($_GET['search_query'])) {
+            include 'pagination.class.php';
 
         add_filter('posts_where', 'name_filter', 10, 2); // for partial searches
         $query = new WP_Query(array(

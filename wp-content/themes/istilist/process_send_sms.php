@@ -1,5 +1,4 @@
 <?php /* Template Name: Send SMS */
-// Get the PHP helper library from twilio.com/docs/php/install
 
 require_once "/home3/istilist/public_html/vendor/autoload.php";
 use Twilio\Twiml;
