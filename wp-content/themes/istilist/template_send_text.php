@@ -1,6 +1,7 @@
 <?php /* Template Name: Send Text */ ?>
 <?php
 require("twilio-php-master/Twilio/autoload.php");
+require("../../../vendor/autoload.php");
 use Twilio\Rest\Client;
 if (is_user_logged_in() && isset($_POST['send_text'])) {
     $textto = $_POST['textto'];

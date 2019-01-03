@@ -1,10 +1,15 @@
 <?php /* Template Name: Notify Shopper */
     require("twilio-php-master/Twilio/autoload.php");
+    require("../../../vendor/autoload.php");
+
+    $dotenv = Dotenv\Dotenv::create("../../../");
+    $dotenv->load();
+    
     use Twilio\Rest\Client;
 
     if (get_post_meta($_POST['shopperID'], 'sms_agreement', true) == 'yes') {
         $sid = 'ACdb92d82faf7befbb1538a208224133a4';
-        $token = 'c6481d599afc5bedced939b8c53fbf5f';
+        $token = getenv('TWILIO_AUTH_KEY');
         $client = new Client($sid, $token);
         $sms = $client->account->messages->create(
     
