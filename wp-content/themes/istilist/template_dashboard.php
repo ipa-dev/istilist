@@ -262,7 +262,7 @@
         <div class="section group">
             <div class="col span_12_of_12">
                 <input id="shopper_id" type="hidden" name="shopper_id" value=""/>
-                <input type="submit" name="submit" value="Assign"/>
+                <input type="submit" name="assign_stylist" value="Assign"/>
             </div>
         </div>
     </form>
