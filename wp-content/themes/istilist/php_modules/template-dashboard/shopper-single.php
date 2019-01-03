@@ -109,7 +109,7 @@
                             </a>
                         </li>
                         <li>
-                            <form method="post" action="">
+                            <form method="post" action="<?= get_bloginfo('url'); ?>/process-plus-button">
                                 <input hidden=""
                                         value="<?= get_the_modified_date('Y-m-d H:i:s'); ?>"/>
                                 <input type="hidden" name="shopper_id" value="<?= $shopper_id ?>"/>
