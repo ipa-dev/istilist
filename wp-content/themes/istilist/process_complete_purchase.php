@@ -49,15 +49,11 @@ $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 $subject = $result2->subject;
 $msg = $msg_body2;
 
-//echo $from;
-//exit();
 if (!empty($store_name)) {
     if (!empty($from)) {
         wp_mail($shopper_email, $subject, $msg, $headers);
     }
 }
-
-//wp_mail( $shopper_email, $subject, $msg, $headers );
 
 $shopper_phone = get_post_meta($shopper_id, 'customer_phone', true);
 $sms_agreement = get_post_meta($shopper_id, 'sms_agreement', true);
@@ -69,19 +65,14 @@ if (!empty($shopper_phone) && $sms_agreement == 'yes') {
         $msg_body1 = str_replace("{Shopper's Name}", $shopper_name1, $result3->body);
         $msg_body2 = str_replace("{Stylist's Name}", $stylist_name, $msg_body1);
 
-
-        $sid = getenv('TWILIO_SID');
-        $token = getenv('TWILIO_AUTH_KEY');
-        $client = new Client($sid, $token);
+        $client = new Client(getenv('TWILIO_SID'), getenv('TWILIO_AUTH_KEY'));
         $sms = $client->account->messages->create(
 
-            // the number we are sending to - Any phone number
             '+1'.$shopper_phone,
             array(
-                // Step 6: Change the 'From' number below to be a valid Twilio number
-                // that you've purchased
+
                 'from' => getenv('TWILIO_DEFAULT_NUMBER'),
-                // the sms body
+
                 'body' => $msg_body2
             )
         );

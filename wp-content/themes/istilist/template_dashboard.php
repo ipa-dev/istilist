@@ -674,7 +674,6 @@
                                 },
                                 error: function (responce) {
                                     console.log(responce);
-                                    alert("failure : " + responce);
                                 }
                             });
                         } else {
@@ -700,13 +699,11 @@
                                         "reason": inputValue
                                     },
                                     success: function (responce) {
-                                        //alert("success : "+responce);
                                         swal.close();
                                         location.reload();
                                     },
                                     error: function (responce) {
                                         console.log(responce);
-                                        alert("failure : " + responce);
                                     }
                                 });
                             });
