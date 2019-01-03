@@ -7,7 +7,6 @@
 <?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <div id="stylistpopup">
 	<?php
-
     //When user presses plus button
     if (isset($_POST['plusbtn'])) {
         $my_post = array(

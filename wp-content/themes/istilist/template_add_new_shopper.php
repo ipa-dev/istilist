@@ -38,24 +38,14 @@
 										<input type="text" name="customer_lname" />
 									</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('profile_pic') == 1) {
-                                ?>
-									<div class="col span_6_of_12 matchheight">
-										<label>Profile Picture</label>
-										<input type="file" name="profile_pic" />
-									</div>
-								<?php
-                            } ?>
-								<?php if (check_is_active('school_event') == 1) {
+                            }  if (check_is_active('school_event') == 1) {
                                 ?>
 									<div class="col span_6_of_12 matchheight">
 										<label>School/Event <span>*</span></label>
 										<input type="text" name="school_event" />
 									</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('graduation_year') == 1) {
+                            }  if (check_is_active('graduation_year') == 1) {
                                 ?>
 									<div class="col span_6_of_12 matchheight">
 										<label>Graduation Year <span>*</span></label>
@@ -71,48 +61,42 @@
 										</select>
 									</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('customer_email') == 1) {
+                            }  if (check_is_active('customer_email') == 1) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>Email</label>
 									<input type="text" name="customer_email" />
 								</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('customer_phone') == 1) {
+                            }  if (check_is_active('customer_phone') == 1) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>Phone</label>
 									<input type="tel" name="customer_phone">
 								</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('customer_address') == 1) {
+                            }  if (check_is_active('customer_address') == 1) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>Address</label>
 									<input type="text" name="customer_address" />
 								</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('customer_city') == 1) {
+                            } if (check_is_active('customer_city') == 1) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>City</label>
 									<input type="text" name="customer_city" />
 								</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('customer_state') == 1) {
+                            }  if (check_is_active('customer_state') == 1) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>State</label>
 									<input type="text" name="customer_state" />
 								</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('customer_zip') == 1) {
+                            }  if (check_is_active('customer_zip') == 1) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>ZIP</label>
@@ -210,8 +194,7 @@
 									</select>
 								</div>
 								<?php
-                            } ?>
-								<?php if (check_is_active('customer_size') == 1) {
+                            }  if (check_is_active('customer_size') == 1) {
                                 ?>
 								<div class="col span_6_of_12 matchheight">
 									<label>Size</label>
@@ -245,8 +228,7 @@
             $sql2 = "SELECT * FROM $table_name2 WHERE store_owner_id = $store_owner_id AND is_custom = 1 ORDER BY id";
             $results2 = $wpdb->get_results($sql2);
             foreach ($results2 as $r2) {
-                ?>
-						   <?php if (check_is_active($r2->form_slug) == 1) {
+                 if (check_is_active($r2->form_slug) == 1) {
                     ?>
 							<div class="col span_6_of_12">
 								<label><?php echo $r2->form_display_name; ?> <?php if ($r2->is_required == 1) {
@@ -256,17 +238,14 @@
                         ?>
 									<input type="text" name="<?php echo $r2->form_slug; ?>" />
 								<?php
-                    } ?>
-
-								<?php if ($r2->form_type == 'textarea') {
+                    }  if ($r2->form_type == 'textarea') {
                         ?>
 									<textarea name="<?php echo $r2->form_slug; ?>"></textarea>
 								<?php
                     } ?>
 							</div>
 						   <?php
-                } ?>
-							<?php
+                } 
             } ?>
 							</div>
 							<div class="section group">
