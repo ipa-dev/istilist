@@ -83,7 +83,7 @@ if (is_user_logged_in()) {
                                             'from' => getenv('TWILIO_DEFAULT_NUMBER'),
 
                                             // the sms body
-                                            'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".get_user_meta($user_ID, 'store_name', true).".Text YES to get messages from us."
+                                            'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".get_user_meta($user_ID, 'store_name', true)."! Text YES to receive alerts and special offers (Up to 6 autodialed msgs/mo. Consent not required to purchase. Msg&data rates may apply. Text STOP to stop)."
                                         )
                                     );
                                 }
