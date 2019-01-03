@@ -51,21 +51,6 @@ use Twilio\Rest\Client;
 
                 $store_name = get_user_meta($user_ID, 'store_name', true);
 
-                /*if ($_POST['sms_agreement'] == 'yes' && isset($_POST['customer_phone'])) {
-
-                    $sid = 'ACdb92d82faf7befbb1538a208224133a4';
-                    $token = '1859b70bd4b570f6c8ff702b1ffd005d';
-                    $client = new Client($sid, $token);
-                    $sms = $client->account->messages->create(
-                        '+1'.$_POST['customer_phone'],
-                        array(
-                            'from' => get_option('twilio_number'),
-                            'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".$store_name.".Text YES to get messages from us.",
-                            "statusCallback" => "http://postb.in/1234abcd"
-                        )
-                    );
-                }*/
-
                 $store_id = get_user_meta($user_ID, 'store_id', true);
                 $table_name3 = $wpdb->prefix.'dynamic_form';
                 $sql3 = "SELECT * FROM $table_name3 WHERE store_owner_id = $store_id AND is_custom = 1 ORDER BY id";

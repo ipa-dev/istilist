@@ -67,7 +67,8 @@ if (is_user_logged_in()) {
 
                                 if ($_POST['sms_agreement'] == 'yes' && isset($_POST['customer_phone'])) {
                                     $sid = 'ACdb92d82faf7befbb1538a208224133a4';
-                                    $token = '1859b70bd4b570f6c8ff702b1ffd005d';
+                                    $token = 'c6481d599afc5bedced939b8c53fbf5f
+									';
                                     $client = new Client($sid, $token);
                                     $sms = $client->account->messages->create(
 

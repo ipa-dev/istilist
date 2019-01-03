@@ -10,7 +10,7 @@ if (is_user_logged_in() && isset($_POST['send_text'])) {
     $store_id = get_user_meta($user_ID, 'store_id', true);
     $text_credit = get_user_meta($user_ID, 'text_credit', true);
     $sid = 'ACdb92d82faf7befbb1538a208224133a4';
-    $token = '1859b70bd4b570f6c8ff702b1ffd005d';
+    $token = 'c6481d599afc5bedced939b8c53fbf5f';
     $client = new Client($sid, $token);
 
     if ($textto == 'all-shoppers' || $textto == 'purchased' || $textto == 'not-purchased') {

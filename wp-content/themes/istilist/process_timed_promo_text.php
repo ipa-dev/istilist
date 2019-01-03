@@ -35,7 +35,7 @@ if ($shopper_data->have_posts()) {
     $body = get_user_meta(get_post_meta($shopper_id, 'store_id', true), 'daily_promo_text', true);
     if (trim(strtolower($body)) != 'na') {
         $sid = 'ACdb92d82faf7befbb1538a208224133a4';
-        $token = '1859b70bd4b570f6c8ff702b1ffd005d';
+        $token = 'c6481d599afc5bedced939b8c53fbf5f';
         $client = new Client($sid, $token);
         try {
             $sms = $client->account->messages->create(
