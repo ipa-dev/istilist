@@ -542,34 +542,12 @@
 
                             <!-- BX Slider -->
                             <div class="slider">
-                                <div class="bxslider">
-									<?php
-                                    $tips_args = array(
-                                        'post_type'      => 'tips',
-                                        'post_status'    => 'publish',
-                                        'posts_per_page' => 3
-                                    );
-
-    $tips_query = new WP_Query($tips_args);
-    if ($tips_query->have_posts()) {
-        while ($tips_query->have_posts()) : $tips_query->the_post(); ?>
-                                            <div>
-                                                <h2><?php the_title(); ?></h2>
-												<?php the_content(); ?>
-                                            </div>
-										<?php endwhile ?>
-									<?php
-    } else {
-        ?>
-                                        <div>No Tips</div>
-									<?php
-    } ?>
-									<?php wp_reset_postdata(); ?>
-                                </div>
-                                <div class="slider_controls">
-                                    <div class="slider_prev"></div>
-                                    <div class="slider_next"></div>
-                                </div>
+                                <h2>International Prom Association</h2>
+                                <p>
+                                    <a href="http://www.internationalprom.com">internationalprom.com</a><br>
+                                    Phone: (877) 259-5775<br>
+                                    Address: 281 W Old Andrew Johnson Hwy, Jefferson City, TN 37760
+                                </p>
                             </div>
                         </div>
 						<?php get_footer(); ?>
