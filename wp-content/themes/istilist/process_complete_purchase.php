@@ -5,7 +5,7 @@ global $user_ID;
 $store_id = $_POST['store_id'];
 $shopper_id = $_POST['shopper_id'];
 
-require("../../../vendor/autoload.php");
+require("/home3/istilist/public_html/vendor/autoload.php");
 
 $dotenv = Dotenv\Dotenv::create("../../../");
 $dotenv->load();

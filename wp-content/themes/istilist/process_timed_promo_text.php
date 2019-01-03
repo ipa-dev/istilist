@@ -1,6 +1,7 @@
 <?php /* Template Name: Timed Promo Text */ ?>
 <?php
-require("../../../vendor/autoload.php");
+
+require("/home3/istilist/public_html/vendor/autoload.php");
 
 $dotenv = Dotenv\Dotenv::create("../../../");
 $dotenv->load();
