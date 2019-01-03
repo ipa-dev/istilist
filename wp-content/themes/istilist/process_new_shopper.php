@@ -99,7 +99,7 @@ if (is_user_logged_in()) {
         } else {
             echo '<p class="errorMsg">Sorry, your information is not updated.</p>';
         }
-        header('Location: ' .get_bloginfo('url') . '/add-new-shopper');
+        header('Location: ' .get_bloginfo('url') . '/dashboard');
     }
 }
 else { header('Location: '. get_bloginfo('url'). '/login'); }
