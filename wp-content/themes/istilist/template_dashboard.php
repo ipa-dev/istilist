@@ -540,7 +540,6 @@
 							<?php
     } // end of main if loop?>
 
-                            <!-- BX Slider -->
                             <div class="slider">
                                 <h2>International Prom Association</h2>
                                 <p>

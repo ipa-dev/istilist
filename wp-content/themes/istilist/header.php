@@ -152,22 +152,6 @@ jQuery(function($){
 });
 </script>
 
-
-<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/jquery.bxslider.css" />
-
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.bxslider.min.js" defer></script>
-
-<script>
-jQuery(document).ready(function(){
-  jQuery('.bxslider').bxSlider({
-      auto: false,
-      controls: false,
-      pager: false,
-      nextText: '<img src="<?php bloginfo('template_directory'); ?>/images/prev.png" />',
-      prevText: '<img src="<?php bloginfo('template_directory'); ?>/images/next.png" />'
-  });
-});
-</script>
 <script src="<?php bloginfo('template_directory'); ?>/js/jquery.validate.min.js" defer></script>
 <script src="<?php bloginfo('template_directory'); ?>/js/additional-methods.js" defer></script>
 

@@ -127,22 +127,6 @@ jQuery(function($){
 });
 </script>
 
-
-<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/jquery.bxslider.css" />
-
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.bxslider.min.js"></script>
-
-<script>
-jQuery(document).ready(function(){
-  jQuery('.bxslider').bxSlider({
-      auto: true,
-      nextSelector: '.slider_prev',
-      prevSelector: '.slider_next',
-      nextText: '<img src="<?php bloginfo('template_directory'); ?>/images/prev.png" />',
-      prevText: '<img src="<?php bloginfo('template_directory'); ?>/images/next.png" />'
-  });
-});
-</script>
 <script src="<?php bloginfo('template_directory'); ?>/js/jquery.validate.min.js"></script>
 <script src="<?php bloginfo('template_directory'); ?>/js/additional-methods.js"></script>
 
