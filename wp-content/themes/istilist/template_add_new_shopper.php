@@ -1,13 +1,5 @@
 <?php /* Template Name: Add New shopper */ ?>
 <?php get_header(); ?>
-<?php
-	require_once "/home3/istilist/public_html/vendor/autoload.php";
-
-	$dotenv = new Dotenv\Dotenv('/home3/istilist/public_html/');
-	$dotenv->load();
-
-	use Twilio\Rest\Client;
-?>
 <?php if (is_user_logged_in()) {
 	global $user_ID;
 	$store_owner_id = get_user_meta($user_ID, 'store_id', true);

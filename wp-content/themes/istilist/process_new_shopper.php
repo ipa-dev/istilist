@@ -1,7 +1,16 @@
 <?php /* Template Name: Process New shopper */ ?>
-<?php get_header(); ?>
+<?php get_header(); 
+    require_once "/home3/istilist/public_html/vendor/autoload.php";
+
+	$dotenv = new Dotenv\Dotenv('/home3/istilist/public_html/');
+	$dotenv->load();
+
+    use Twilio\Rest\Client;
+?>
 <?php
 if (is_user_logged_in()) {
+
+    
     global $user_ID;
     $user_role = get_user_role($user_ID);
     if (isset($_POST['add_new_shopper'])) {
@@ -93,7 +102,7 @@ if (is_user_logged_in()) {
             }
         }
           End Profile Picture */
-          
+
         header('Location: ' .get_bloginfo('url') . '/dashboard');
     }
 }
