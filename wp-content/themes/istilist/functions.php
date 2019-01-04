@@ -1,9 +1,19 @@
 <?php
 global $options;
 
-// function istilist_scripts() {
-//     ;
-// }
+function istilist_scripts() {
+    wp_enqueue_style('jquery-fancybox', get_bloginfo('template_directory') . '/css/jquery.fancybox.css', array('jquery'));
+    wp_enqueue_style('slicknav', get_bloginfo('template_directory') . '/css/slicknav.css');
+    wp_enqueue_style('jquery-datetime', get_bloginfo('template_directory') . '/css/jquery.datetimepicker.css', array('jquery'));
+
+    wp_enqueue_script('jquery-datetime', get_bloginfo('template_directory') . '/js/jquery.datetimepicker.js', array('jquery'), false, true);
+    wp_enqueue_script('jquery-slicknav', get_bloginfo('template_directory') . '/js/jquery.slicknav.js', array(), false, true);
+    wp_enqueue_script('modernizr', get_bloginfo('template_directory') . '/js/modernizr-2.8.2-min.js', array(), false, true);
+    wp_enqueue_script('jquery-fancybox', get_bloginfo('template_directory') . '/js/jquery.fancybox.pack.js', array(), false, true);
+    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), false, true);
+    wp_enqueue_script('jquery-validate', get_bloginfo('template_directory') . '/js/jquery.validate.min.js', array('jquery'), false, true);
+    wp_enqueue_script('additional-methods', get_bloginfo('template_directory') . '/js/additional-methods.js', array(), false, true);
+}
 
 function add_istilist_promo_list_controller($controllers)
 {

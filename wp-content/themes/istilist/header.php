@@ -89,16 +89,10 @@ if (is_singular() && get_option('thread_comments')) {
 * generally use this hook to add elements to <head> such
 * as styles, scripts, and meta tags.
 */
-//wp_enqueue_script('jquery');
 
 wp_head();
 ?>
 
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/css/jquery.fancybox.css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/modernizr-2.8.2-min.js" defer></script>
-<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/slicknav.css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.slicknav.js" defer></script>
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.fancybox.pack.js" defer></script>
 <script>
 	jQuery(function(){
 		jQuery('.nav').slicknav({
@@ -140,19 +134,12 @@ wp_head();
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.matchHeight-min.js" defer></script>
-
 <script type="text/javascript">
 jQuery(function($){
     $('.matchheight').matchHeight();
 });
 </script>
 
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.validate.min.js" defer></script>
-<script src="<?php bloginfo('template_directory'); ?>/js/additional-methods.js" defer></script>
-
-<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/jquery.datetimepicker.css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.datetimepicker.js" defer></script>
 <script>
 jQuery(document).ready(function(){
     jQuery('#purchase_date').datetimepicker({
