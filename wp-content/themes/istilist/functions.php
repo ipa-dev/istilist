@@ -550,7 +550,7 @@ function print_fitting_room_rounds($shopper_id) {
 
 function is_active($shopper_id, $shopper_field) {
     $field_value = get_post_meta($shopper_id, $shopper_field, true);
-    if (! empty($field_value) && ($field_value || $field_value == 'true')) {
+    if (! empty($field_value) && ($field_value == 1 || $field_value == 'true')) {
         return 'active';
     }
     if (! empty($field_value) && $field_value == 'timestamps') {
