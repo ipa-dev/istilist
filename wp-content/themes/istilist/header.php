@@ -95,68 +95,13 @@ wp_head();
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
-<?php if (is_page(array('analytics-reporting', 'analytics-htmltopdf'))) {
-    ?>
+<?php if (is_page(array('analytics-reporting', 'analytics-htmltopdf'))) { ?>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script>
 google.load('visualization', '1', {packages: ['corechart', 'line', 'bar']});
 </script>
 <?php
 } ?>
-
-<link href="<?php bloginfo('template_directory'); ?>/frameworks/footable/footable.core.css" rel="stylesheet" type="text/css" />
-<link href="<?php bloginfo('template_directory'); ?>/frameworks/footable/footable.standalone.min.css" rel="stylesheet" type="text/css" />
-<script src="<?php bloginfo('template_directory'); ?>/frameworks/footable/footable.all.min.js" type="text/javascript" defer></script>
-<script type="text/javascript">
-jQuery(document).ready(function($){
-    jQuery('.footable').footable();
-    jQuery('.editFormTable').footable();
-});
-</script>
-
-<!-- Auto Complete -->
-<link href="<?php bloginfo('template_directory'); ?>/css/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.autocomplete.js" type="text/javascript" defer></script>
-<script>
-jQuery(document).ready(function(){
-    jQuery("#school_event").autocomplete("<?php get_bloginfo('url'); ?>/autocomplete-school", {
-    	selectFirst: true
-    });
-
-    jQuery("#designer").autocomplete("<?php get_bloginfo('url'); ?>/autocomplete-designer", {
-    	selectFirst: true
-    });
-});
-</script>
-<script>
-jQuery(document).ready(function(){
-    jQuery(".editFormTable input[type=checkbox]").switchButton({
-        width: 50,
-        height: 20,
-        button_width: 25
-    });
-    jQuery(".stylist_employee input[type=checkbox]").switchButton({
-        width: 50,
-        height: 20,
-        button_width: 25
-    });
-});
-</script>
-
-<link href="<?php bloginfo('template_directory'); ?>/css/easy-responsive-tabs.css" rel="stylesheet" />
-<script src="<?php bloginfo('template_directory'); ?>/js/easyResponsiveTabs.js" defer></script>
-<script>
-jQuery(document).ready(function(){
-   jQuery('#parentHorizontalTab').easyResponsiveTabs({
-        type: 'default',
-        width: 'auto',
-        fit: true,
-        tabidentify: 'hor_1',
-        activetab_bg: '#025597',
-        inactive_bg: '#FFFFFF',
-    });
-});
-</script>
 
 <!-- link to the SqPaymentForm library -->
 <script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
@@ -217,7 +162,6 @@ jQuery(document).ready(function(){
                                     jQuery('#user_check').on('click', function() {
                                         var status = jQuery("#forms_recheck_pass").valid();
                                         if(status){
-                                            //window.location.href = 'http://istilist.com/'
                                             var recheck_pass = jQuery('#recheck_pass').val();
                                             jQuery.ajax({
                                                 url: "<?php echo get_bloginfo('url'); ?>/ajax-recheck-pass/",

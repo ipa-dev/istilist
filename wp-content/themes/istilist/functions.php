@@ -7,7 +7,14 @@ function istilist_scripts() {
     wp_enqueue_style('jquery-datetime', get_bloginfo('template_directory') . '/css/jquery.datetimepicker.css', array('jquery'));
     wp_enqueue_style('swal', get_bloginfo('template_directory') . '/css/sweetalert.css');
     wp_enqueue_style('switchButton', get_bloginfo('template_directory') . '/css/jquery.switchButton.css', array('jquery'));
+    wp_enqueue_style('jquery-autocomplete', get_bloginfo('template_directory') . '/css/jquery.autocomplete.css', array('jquery'));
+    wp_enqueue_style('easy-responsive', get_bloginfo('template_directory') . '/css/easy-responsive-tabs.css');
+    wp_enqueue_style('footable-core', get_bloginfo('template_directory') . '/frameworks/footable/footable.core.css');
+    wp_enqueue_style('footable-standalone', get_bloginfo('template_directory') . '/frameworks/footable/footable.standalone.min.css');
 
+    wp_enqueue_script('footable-all', get_bloginfo('template_directory') . '/frameworks/footable/footable.all.min.js', array(), false, true);
+    wp_enqueue_script('easy-responsive', get_bloginfo('template_directory') . '/js/easyResponsiveTabs.js', array(), false, true);
+    wp_enqueue_script('jquery-autocomplete', get_bloginfo('template_directory') . '/js/jquery.autocomplete.js', array('jquery'), false, true);
     wp_enqueue_script('switchButton', get_bloginfo('tempalte_directory') . '/js/jquery.switchButton.js', array('jquery'), false, true);
     wp_enqueue_script('swal', get_bloginfo('template_directory') . '/js/sweetalert.min.js', array('jquery'), false, true);
     wp_enqueue_script('jquery-datetime', get_bloginfo('template_directory') . '/js/jquery.datetimepicker.js', array('jquery'), false, true);
@@ -19,6 +26,8 @@ function istilist_scripts() {
     wp_enqueue_script('additional-methods', get_bloginfo('template_directory') . '/js/additional-methods.js', array(), false, true);
     wp_enqueue_script('custom-script', get_bloginfo('template_directory') . '/js/custom-script.js', array('jquery'), false, true);
 }
+
+add_action('wp_enqueue_scripts', 'istilist_scripts');
 
 function add_istilist_promo_list_controller($controllers)
 {
