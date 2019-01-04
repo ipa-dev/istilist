@@ -12,22 +12,22 @@ function istilist_scripts() {
     wp_enqueue_style('footable-core', get_bloginfo('template_directory') . '/frameworks/footable/footable.core.css');
     wp_enqueue_style('footable-standalone', get_bloginfo('template_directory') . '/frameworks/footable/footable.standalone.min.css');
 
-    wp_enqueue_script('footable-all', get_bloginfo('template_directory') . '/frameworks/footable/footable.all.min.js', array(), false, true);
-    wp_enqueue_script('easy-responsive', get_bloginfo('template_directory') . '/js/easyResponsiveTabs.js', array(), false, true);
-    wp_enqueue_script('jquery-autocomplete', get_bloginfo('template_directory') . '/js/jquery.autocomplete.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-switchButton', get_bloginfo('template_directory') . '/js/jquery.switchButton.js', array('jquery'), false, true);
-    wp_enqueue_script('swal', get_bloginfo('template_directory') . '/js/sweetalert.min.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-datetime', get_bloginfo('template_directory') . '/js/jquery.datetimepicker.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-slicknav', get_bloginfo('template_directory') . '/js/jquery.slicknav.js', array('jquery'), false, true);
-    wp_enqueue_script('modernizr', get_bloginfo('template_directory') . '/js/modernizr-2.8.2-min.js', array(), false, true);
-    wp_enqueue_script('jquery-fancybox', get_bloginfo('template_directory') . '/js/jquery.fancybox.pack.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-validate', get_bloginfo('template_directory') . '/js/jquery.validate.min.js', array('jquery'), false, true);
-    wp_enqueue_script('additional-methods', get_bloginfo('template_directory') . '/js/additional-methods.js', array(), false, true);
+    wp_enqueue_script('footable-all', get_bloginfo('template_directory') . '/frameworks/footable/footable.all.min.js', array(), false, false);
+    wp_enqueue_script('easy-responsive', get_bloginfo('template_directory') . '/js/easyResponsiveTabs.js', array(), false, false);
+    wp_enqueue_script('jquery-autocomplete', get_bloginfo('template_directory') . '/js/jquery.autocomplete.js', array('jquery'), false, false);
+    wp_enqueue_script('jquery-switchButton', get_bloginfo('template_directory') . '/js/jquery.switchButton.js', array('jquery'), false, false);
+    wp_enqueue_script('swal', get_bloginfo('template_directory') . '/js/sweetalert.min.js', array('jquery'), false, false);
+    wp_enqueue_script('jquery-datetime', get_bloginfo('template_directory') . '/js/jquery.datetimepicker.js', array('jquery'), false, false);
+    wp_enqueue_script('jquery-slicknav', get_bloginfo('template_directory') . '/js/jquery.slicknav.js', array('jquery'), false, false);
+    wp_enqueue_script('modernizr', get_bloginfo('template_directory') . '/js/modernizr-2.8.2-min.js', array(), false, false);
+    wp_enqueue_script('jquery-fancybox', get_bloginfo('template_directory') . '/js/jquery.fancybox.pack.js', array('jquery'), false, false);
+    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), false, false);
+    wp_enqueue_script('jquery-validate', get_bloginfo('template_directory') . '/js/jquery.validate.min.js', array('jquery'), false, false);
+    wp_enqueue_script('additional-methods', get_bloginfo('template_directory') . '/js/additional-methods.js', array(), false, false);
     wp_enqueue_script('custom-script', get_bloginfo('template_directory') . '/js/custom-script.js', 
                     array('jquery', 'jquery-switchButton', 'jquery-autocomplete', 
                     'footable-all', 'easy-responsive', 'jquery-datetime', 'jquery-slicknav',
-                    'jquery-fancybox', 'jquery-matchheight', 'jquery-validate'), false, true);
+                    'jquery-fancybox', 'jquery-matchheight', 'jquery-validate'), false, false);
 }
 
 add_action('wp_enqueue_scripts', 'istilist_scripts', 999);
