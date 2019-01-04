@@ -198,9 +198,6 @@ jQuery(document).ready(function($){
 });
 </script>
 
-<link href="<?php bloginfo('template_directory'); ?>/css/sweetalert.css" rel="stylesheet" type="text/css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/sweetalert.min.js" type="text/javascript" defer></script>
-
 <!-- Auto Complete -->
 <link href="<?php bloginfo('template_directory'); ?>/css/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
 <script src="<?php bloginfo('template_directory'); ?>/js/jquery.autocomplete.js" type="text/javascript" defer></script>
@@ -215,9 +212,6 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-
-<link href="<?php bloginfo('template_directory'); ?>/css/jquery.switchButton.css" rel="stylesheet" type="text/css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.switchButton.js" type="text/javascript" defer></script>
 <script>
 jQuery(document).ready(function(){
     jQuery(".editFormTable input[type=checkbox]").switchButton({

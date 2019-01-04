@@ -5,7 +5,11 @@ function istilist_scripts() {
     wp_enqueue_style('jquery-fancybox', get_bloginfo('template_directory') . '/css/jquery.fancybox.css', array('jquery'));
     wp_enqueue_style('slicknav', get_bloginfo('template_directory') . '/css/slicknav.css');
     wp_enqueue_style('jquery-datetime', get_bloginfo('template_directory') . '/css/jquery.datetimepicker.css', array('jquery'));
+    wp_enqueue_style('swal', get_bloginfo('template_directory') . '/css/sweetalert.css');
+    wp_enqueue_style('switchButton', get_bloginfo('template_directory') . '/css/jquery.switchButton.css', array('jquery'));
 
+    wp_enqueue_script('switchButton', get_bloginfo('tempalte_directory') . '/js/jquery.switchButton.js', array('jquery'), false, true);
+    wp_enqueue_script('swal', get_bloginfo('template_directory') . '/js/sweetalert.min.js', array('jquery'), false, true);
     wp_enqueue_script('jquery-datetime', get_bloginfo('template_directory') . '/js/jquery.datetimepicker.js', array('jquery'), false, true);
     wp_enqueue_script('jquery-slicknav', get_bloginfo('template_directory') . '/js/jquery.slicknav.js', array(), false, true);
     wp_enqueue_script('modernizr', get_bloginfo('template_directory') . '/js/modernizr-2.8.2-min.js', array(), false, true);
