@@ -112,6 +112,8 @@ google.load('visualization', '1', {packages: ['corechart', 'line', 'bar']});
 
 <!-- link to the custom styles for SqPaymentForm -->
 <link rel="stylesheet" type="text/css" href="<?php bloginfo( 'template_directory' ); ?>/css/sqpaymentform.css">
+<script src="<?= get_bloginfo('template_directory') ?>/js/jquery.validate.min.js"></script>
+<script src="<?= get_bloginfo('template_directory') ?>/js/jquery.fancybox.pack.js"></script>
 
 <?php wp_head(); ?>
 <script>
@@ -235,6 +237,7 @@ jQuery(document).ready(function() {
     });
 });
 </script>
+
 </head>
 <?php global $options; ?>
 <?php if (is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {
