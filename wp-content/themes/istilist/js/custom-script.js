@@ -5,7 +5,7 @@ jQuery( function () {
   });
 })
 
-jQuery(document).ready(function() {
+jQuery(window).load(function() {
     jQuery(".fancybox").fancybox({
 
     });
