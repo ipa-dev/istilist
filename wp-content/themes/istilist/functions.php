@@ -30,7 +30,7 @@ function istilist_scripts() {
                     'jquery-fancybox', 'jquery-matchheight', 'jquery-validate'), false, true);
 }
 
-add_action('wp_enqueue_scripts', 'istilist_scripts');
+add_action('wp_enqueue_scripts', 'istilist_scripts', 999);
 
 function add_istilist_promo_list_controller($controllers)
 {

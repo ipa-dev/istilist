@@ -90,7 +90,6 @@ if (is_singular() && get_option('thread_comments')) {
 * as styles, scripts, and meta tags.
 */
 
-wp_head();
 ?>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
@@ -114,6 +113,7 @@ google.load('visualization', '1', {packages: ['corechart', 'line', 'bar']});
 <!-- link to the custom styles for SqPaymentForm -->
 <link rel="stylesheet" type="text/css" href="<?php bloginfo( 'template_directory' ); ?>/css/sqpaymentform.css">
 
+<?php wp_head(); ?>
 </head>
 <?php global $options; ?>
 <?php if (is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {
