@@ -10,7 +10,6 @@
 <?php
 if (is_user_logged_in()) {
 
-    
     global $user_ID;
     $user_role = get_user_role($user_ID);
     if (isset($_POST['add_new_shopper'])) {
@@ -103,7 +102,7 @@ if (is_user_logged_in()) {
         }
           End Profile Picture */
 
-        header('Location: ' .get_bloginfo('url') . '/dashboard');
+        header('Location: ' . $_POST['redirect_to']);
     }
 }
 else { header('Location: '. get_bloginfo('url'). '/login'); }
