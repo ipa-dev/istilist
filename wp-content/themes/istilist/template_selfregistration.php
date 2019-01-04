@@ -35,7 +35,7 @@ if (is_user_logged_in()) {
                 <div class="dash_content">
                     <?php 
                     require_once 'php_modules/template-new-shopper/new-shopper-form.php';
-                    generate_new_form($store_id, get_bloginfo('url') . '/self-registration');
+                    generate_new_shopper_form($store_id, get_bloginfo('url') . '/self-registration');
                     ?>
                 </div>
           </div>
