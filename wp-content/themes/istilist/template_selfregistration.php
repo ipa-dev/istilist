@@ -29,10 +29,14 @@ if (is_user_logged_in()) {
                   <p class="successMsg">Thank you for your valuable time and information!</p>
                   <a style="justify-content:center" href="<?php bloginfo('url'); ?>/self-registration">New user? Register!</a>
                 </div>
-            </div>-->
+            </div>
+            -->
 	        <div class="col span_8_of_12 matchheight">
                 <div class="dash_content">
-                    <?php require_once 'php_modules/template-new-shopper/new-shopper-form.php'; ?>
+                    <?php 
+                    require_once 'php_modules/template-new-shopper/new-shopper-form.php';
+                    generate_new_form($store_id, get_bloginfo('url') . '/self-registration');
+                    ?>
                 </div>
           </div>
           <div class="col span_2_of_12"></div>

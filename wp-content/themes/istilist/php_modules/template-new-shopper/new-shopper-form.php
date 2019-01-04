@@ -1,4 +1,6 @@
+<?php function generate_new_shopper_form ($store_id, $redirect_to) { ?>
 <form id="forms" method="post" action="<?= bloginfo('url') ?>/process-new-shopper" enctype="multipart/form-data">
+    <input type="hidden" value="<?= $redirect_to ?>" name="redirect_to" />
     <div class="section group form_list">
         <?php if (check_is_active('customer_fname')) { ?>
             <div class="col span_6_of_12 matchheight">
@@ -173,7 +175,7 @@
     	<div class="section group">
         <?php
         $table_name2 = $wpdb->prefix.'dynamic_form';
-        $sql2 = "SELECT * FROM $table_name2 WHERE store_owner_id = $store_owner_id AND is_custom = 1 ORDER BY id";
+        $sql2 = "SELECT * FROM $table_name2 WHERE store_owner_id = $store_id AND is_custom = 1 ORDER BY id";
         $results2 = $wpdb->get_results($sql2);
         foreach ($results2 as $r2) {
             if (check_is_active($r2->form_slug)) {
@@ -213,3 +215,4 @@
         </div>
     </div>
 </form>
+<? } ?>
