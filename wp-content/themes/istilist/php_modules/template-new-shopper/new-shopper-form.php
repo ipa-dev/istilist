@@ -1,4 +1,5 @@
-<?php function generate_new_shopper_form ($store_id, $redirect_to) { ?>
+<?php 
+function generate_new_shopper_form ($wpdb, $store_id, $redirect_to) { ?>
 <form id="forms" method="post" action="<?= bloginfo('url') ?>/process-new-shopper" enctype="multipart/form-data">
     <input type="hidden" value="<?= $redirect_to ?>" name="redirect_to" />
     <div class="section group form_list">

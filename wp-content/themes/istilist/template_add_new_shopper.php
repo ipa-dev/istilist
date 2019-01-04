@@ -23,7 +23,10 @@
 						?>
 					</h1>
 					<div class="box addnewshoppers">
-						<?php require_once 'php_modules/template-new-shopper/new-shopper-form.php'; ?>
+						<?php 
+							require_once 'php_modules/template-new-shopper/new-shopper-form.php';
+							generate_new_shopper_form($wpdb, $store_id, get_bloginfo('url') . '/dashboard');
+						?>
 					</div>
 				</div>
 				<?php get_footer(); ?>
