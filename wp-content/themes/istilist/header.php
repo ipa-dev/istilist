@@ -1,10 +1,8 @@
 <?php ob_start(); ?>
 <?php
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-?>
-<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 if (is_user_logged_in()) {
     global $user_ID;
     $timezone = get_user_meta($user_ID, 'selecttimezone', true);
@@ -95,8 +93,6 @@ if (is_singular() && get_option('thread_comments')) {
 
 wp_head();
 ?>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" defer></script>
 
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/css/jquery.fancybox.css" />
 <script src="<?php bloginfo('template_directory'); ?>/js/modernizr-2.8.2-min.js" defer></script>
