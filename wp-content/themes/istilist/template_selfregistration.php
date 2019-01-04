@@ -76,4 +76,4 @@ if (is_user_logged_in()) {
         })
     });
 </script>
-<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
+<?php wp_footer(); } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
