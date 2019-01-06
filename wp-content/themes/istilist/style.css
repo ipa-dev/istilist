@@ -890,14 +890,16 @@ input[type="submit"].fa-input {
     background: #14b9d6;
     border-radius: 5px;
     color: #fff !important;
-    font-weight: 400;
+    font-weight: 425;
     font-size: 18px;
-    padding: 10px 16px;
+    padding: 7px 16px;
     text-shadow: none;
     margin: 0 10px;
+    width: 60px;
 }
 .custom_button:hover {
     text-decoration: none;
+    cursor: pointer;
 }
 .active {
     color: #14b9d6 !important;

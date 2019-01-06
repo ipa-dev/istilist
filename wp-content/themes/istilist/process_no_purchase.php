@@ -5,12 +5,11 @@ $store_id = $_POST['store_id'];
 $shopper_id = $_POST['shopper_id'];
 $reason = $_POST['reason'];
 
-require_once "/home3/istilist/public_html/vendor/autoload.php";
+require_once ABSPATH . 'vendor/autoload.php';
 
-$dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
+$dotenv = new Dotenv\Dotenv(ABSPATH);
 $dotenv->load();
 
-require("twilio-php-master/Twilio/autoload.php");
 use Twilio\Rest\Client;
 
 $table_name1 = $wpdb->prefix.'folloup_messages';

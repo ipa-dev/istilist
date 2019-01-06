@@ -4,7 +4,7 @@
     global $user_ID;
     global $wpdb; 
     $store_id = get_user_meta($user_ID, 'store_id', true);
-    require_once 'php_modules/template-dashboard/stylist-popup.php';
+    require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-dashboard/stylist-popup.php';
 ?>
 <div id="dashboard">
     <div class="maincontent noPadding">
@@ -23,8 +23,8 @@
                     </form>
                     <div class="bullkActionsForm">
                         <form method="post" action="<?= get_bloginfo( 'url' ); ?>/process-bulk-actions" id="bulkActionForm" >
-                            <a id="bulkActionSubmit" class="custom_button" style="width:50px;">Submit</a>
-                            <select form="bulkActionForm" id="bulk_select" name="bulk_select" style="">
+                            <a id="bulkActionSubmit" class="custom_button">Submit</a>
+                            <select form="bulkActionForm" id="bulk_select" name="bulk_select">
                                 <option value="NULL" selected="selected">Bulk Actions...</option>
                                 <option value="all-shoppers">All Shoppers</option>
                                 <option value="purchased">Purchased Shoppers</option>

@@ -58,7 +58,7 @@ if ($paged >= 2 || $page >= 2) {
 <link rel="profile" href="https://gmpg.org/xfn/11" />
 <link rel="icon" 
       type="image/ico" 
-      href="https://istilist.com/wp-content/uploads/2018/12/istilist-favicon.png">
+      href="<?= get_bloginfo('url') ?>/wp-content/uploads/2018/12/istilist-favicon.png">
 <!-- Responsive Stylesheets -->
 <link rel="stylesheet" media="all" href="<?php bloginfo('template_directory'); ?>/css/commoncssloader.css" />
 <link rel="stylesheet" media="only screen and (max-width: 1024px) and (min-width: 769px)" href="<?php bloginfo('template_directory'); ?>/css/1024.css">
@@ -95,9 +95,9 @@ if (is_singular() && get_option('thread_comments')) {
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <?php if (is_page(array('analytics-reporting', 'analytics-htmltopdf'))) { ?>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-google.load('visualization', '1', {packages: ['corechart', 'line', 'bar']});
+google.charts.load('current', {packages: ['corechart', 'line', 'bar']});
 </script>
 <?php
 } ?>
@@ -106,137 +106,7 @@ google.load('visualization', '1', {packages: ['corechart', 'line', 'bar']});
 <script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
 </script>
 
-<!-- link to the local SqPaymentForm initialization -->
-<script type="text/javascript" src="<?php bloginfo( 'template_directory' ); ?>/js/sqpaymentform.js">
-</script>
-
-<!-- link to the custom styles for SqPaymentForm -->
-<link rel="stylesheet" type="text/css" href="<?php bloginfo( 'template_directory' ); ?>/css/sqpaymentform.css">
-<script src="<?= get_bloginfo('template_directory') ?>/js/jquery.validate.min.js"></script>
-<script src="<?= get_bloginfo('template_directory') ?>/js/jquery.fancybox.pack.js"></script>
-
 <?php wp_head(); ?>
-<script>
-jQuery(document).ready(function() {
-    jQuery(".fancybox").fancybox({
-
-    });
-
-    jQuery(".assignStylist").fancybox({
-        maxWidth	: 300,
-           maxHeight	: 220,
-        fitToView	: false,
-        width		: '90%',
-        height		: '90%',
-        autoSize	: false,
-        closeClick	: false,
-        openEffect	: 'none',
-        closeEffect	: 'none'
-    });
-    jQuery(".popupform").fancybox({
-        maxWidth	: 300,
-        maxHeight	: 172,
-        fitToView	: false,
-        width		: '90%',
-        height		: '90%',
-        autoSize	: false,
-        closeClick	: false,
-        openEffect	: 'none',
-        closeEffect	: 'none'
-    });
-    jQuery('#purchase_date').datetimepicker({
-        timepicker:false,
-        format:'m-d-Y',
-        onSelectDate:function(ct,$i){
-            jQuery('.xdsoft_datetimepicker').hide();
-        }
-    });
-    jQuery('#customer_wear_date').datetimepicker({
-        timepicker:false,
-        format:'m-d-Y',
-        onSelectDate:function(ct,$i){
-            jQuery('.xdsoft_datetimepicker').hide();
-        }
-    });
-    jQuery('#fromdate').datetimepicker({
-        timepicker:false,
-        format:'m-d-Y',
-        onSelectDate:function(ct,$i){
-            jQuery('.xdsoft_datetimepicker').hide();
-        }
-    });
-    jQuery('#todate').datetimepicker({
-        timepicker:false,
-        format:'m-d-Y',
-        onSelectDate:function(ct,$i){
-            jQuery('.xdsoft_datetimepicker').hide();
-        }
-    });
-    jQuery('#shoppersfromdate').datetimepicker({
-    	timepicker:false,
-    	format:'Y-m-d',
-    	onSelectDate:function(ct,$i){
-            jQuery('.xdsoft_datetimepicker').hide();
-        }
-    });
-    jQuery(".editFormTable input[type=checkbox]").switchButton({
-        width: 50,
-        height: 20,
-        button_width: 25
-    });
-    jQuery(".stylist_employee input[type=checkbox]").switchButton({
-        width: 50,
-        height: 20,
-        button_width: 25
-    });
-    jQuery("#school_event").autocomplete("<?php get_bloginfo('url'); ?>/autocomplete-school", {
-    	selectFirst: true
-    });
-
-    jQuery("#designer").autocomplete("<?php get_bloginfo('url'); ?>/autocomplete-designer", {
-    	selectFirst: true
-    });
-    jQuery('#parentHorizontalTab').easyResponsiveTabs({
-        type: 'default',
-        width: 'auto',
-        fit: true,
-        tabidentify: 'hor_1',
-        activetab_bg: '#025597',
-        inactive_bg: '#FFFFFF',
-    });
-    jQuery('.footable').footable();
-    jQuery('.editFormTable').footable();
-    jQuery("#forms_recheck_pass").validate({
-        rules: {
-            recheck_pass:{
-                required: true,
-                minlength: 6
-            }
-        }
-    });
-
-    jQuery('#user_check').on('click', function() {
-        var status = jQuery("#forms_recheck_pass").valid();
-        if(status){
-            var recheck_pass = jQuery('#recheck_pass').val();
-            jQuery.ajax({
-                url: "<?php echo get_bloginfo('url'); ?>/ajax-recheck-pass/",
-                type: "post",
-                cache: false,
-                data: {"recheck_pass": recheck_pass},
-                success: function(response){
-                    if(response == 1){
-                        window.location.href = "<?php echo get_bloginfo('url'); ?>";
-                    }
-                },
-                error:function(response){
-                    console.log(response);
-                }
-            });
-        }
-    });
-});
-</script>
 
 </head>
 <?php global $options; ?>
@@ -255,8 +125,7 @@ jQuery(document).ready(function() {
 	<div class="maincontent noPadding">
 	    <div class="section group">
 	        <div class="col span_6_of_12">
-                <?php if (is_page('self-registration')) {
-            ?>
+                <?php if (is_page('self-registration')) { ?>
                     <div id="setpasswordpopup" style="display: none;">
                         <h4>Enter Account Password</h4>
                         <form id="forms_recheck_pass" method="post" action="">
@@ -272,39 +141,6 @@ jQuery(document).ready(function() {
                                     </div>
                                 </div>
                             </div>
-                            <script>
-                                jQuery(document).ready(function(){
-                                    jQuery("#forms_recheck_pass").validate({
-                                        rules: {
-                                            recheck_pass:{
-                                                required: true,
-                                                minlength: 6
-                                            }
-                                        }
-                                    });
-
-                                    jQuery('#user_check').on('click', function() {
-                                        var status = jQuery("#forms_recheck_pass").valid();
-                                        if(status){
-                                            var recheck_pass = jQuery('#recheck_pass').val();
-                                            jQuery.ajax({
-                                                url: "<?php echo get_bloginfo('url'); ?>/ajax-recheck-pass/",
-                                                type: "post",
-                                                cache: false,
-                                                data: {"recheck_pass": recheck_pass},
-                                                success: function(response){
-                                                    if(response == 1){
-                                                        window.location.href = "<?php echo get_bloginfo('url'); ?>";
-                                                    }
-                                                },
-                                                error:function(response){
-                                                    console.log(response);
-                                                }
-                                            });
-                                        }
-                                    });
-                                });
-                            </script>
                         </form>
                     </div>
                     <h1><a href="#setpasswordpopup" class="popupform"><?php echo $options['general-logo']; ?></a></h1>

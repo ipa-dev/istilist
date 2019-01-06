@@ -1,5 +1,5 @@
 /**
- * jquery.switchButton.js v1.0
+ * jQuery.switchButton.js v1.0
  * jQuery iPhone-like switch button
  * @author Olivier Lance <olivier.lance@sylights.com>
  *
@@ -37,9 +37,9 @@
  *
  */
 
-(function($) {
+(function(jQuery) {
 
-    $.widget("sylightsUI.switchButton", {
+    jQuery.widget("sylightsUI.switchButton", {
 
         options: {
             checked: undefined,			// State of the switch
@@ -74,11 +74,11 @@
             this.element.hide();
 
             // Create our objects: two labels and the button
-            this.off_label = $("<span>").addClass("switch-button-label");
-            this.on_label = $("<span>").addClass("switch-button-label");
+            this.off_label = jQuery("<span>").addClass("switch-button-label");
+            this.on_label = jQuery("<span>").addClass("switch-button-label");
 
-            this.button_bg = $("<div>").addClass("switch-button-background");
-            this.button = $("<div>").addClass("switch-button-button");
+            this.button_bg = jQuery("<div>").addClass("switch-button-background");
+            this.button = jQuery("<div>").addClass("switch-button-button");
 
             // Insert the objects into the DOM
             this.off_label.insertAfter(this.element);
@@ -93,7 +93,7 @@
                 if (this.options.clear_after === null) {
                     this.options.clear_after = this.on_label;
                 }
-                $("<div>").css({
+                jQuery("<div>").css({
                     clear: "left"
                 }).insertAfter(this.options.clear_after);
             }

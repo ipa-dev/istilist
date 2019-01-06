@@ -66,7 +66,7 @@
             }
         }
 
-        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+        /*require_once(ABSPATH . "wp-admin" . '/includes/image.php');
         require_once(ABSPATH . "wp-admin" . '/includes/file.php');
         require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
@@ -90,7 +90,7 @@
             } else {
                 wp_die('No image was uploaded.');
             }
-        }
+        }*/
 
         if ($shopper_id) {
             echo '<p class="successMsg">Thank you for your valuable time and information.</p>';

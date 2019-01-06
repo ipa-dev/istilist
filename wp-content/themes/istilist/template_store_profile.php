@@ -68,10 +68,10 @@
                                 </div>
                                 
                                 <!-- Security Questions -->
-                                <?php require_once 'php_modules/template-store-profile/security-question.php'; ?>
+                                <?php require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-store-profile/security-question.php'; ?>
                                 
                                 <!-- Security Question Answer -->
-                                <?php require_once 'php_modules/template-store-profile/security-question-answer.php'; ?>
+                                <?php require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-store-profile/security-question-answer.php'; ?>
 
                             </div>
                             <div class="section group">
@@ -88,7 +88,7 @@
                                 </div>
                                 
                                 <!-- Reverse Ordering -->
-                                <?php require_once 'php_modules/template-store-profile/reverse-order.php'; ?>
+                                <?php require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-store-profile/reverse-order.php'; ?>
                             </div>
                             
                             <!-- Profile Picture 
@@ -99,7 +99,7 @@
 
                             <div class="section group">
                                 <!-- Timed Promo Text -->
-                                <?php require_once 'php_modules/template-store-profile/timed-promo-text.php'; ?>
+                                <?php require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-store-profile/timed-promo-text.php'; ?>
                                 
                                 <!-- Text Credits -->
                                 <div class="col span_5_of_12">
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
                             <!-- User Timezone HIDDEN -->
-                            <?php require_once 'php_modules/template-store-profile/select-timezone.php'; ?>
+                            <?php require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-store-profile/select-timezone.php'; ?>
                         </form>
                     </div>
                 </div>

@@ -30,7 +30,7 @@
                             //$wpdb->query('UPDATE wp_users SET user_status = 1 WHERE ID = '.$employee_id);
                             update_user_meta($employee_id, 'phone_number', $_POST['phone_number']);
                                 
-                            require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+                            /*require_once(ABSPATH . "wp-admin" . '/includes/image.php');
                             require_once(ABSPATH . "wp-admin" . '/includes/file.php');
                             require_once(ABSPATH . "wp-admin" . '/includes/media.php');
                                 
@@ -56,6 +56,7 @@
                                     }
                                 }
                             }
+                            */
                                 
                             header("Location: ".get_bloginfo('home')."/stylist-employee");
                         } ?>

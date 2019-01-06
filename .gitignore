@@ -7,3 +7,4 @@ wp-config-sample.php
 /vendor/
 .env
 node_modules
+docker-compose.yml

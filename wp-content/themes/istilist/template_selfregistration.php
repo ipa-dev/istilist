@@ -1,7 +1,7 @@
 <?php /* Template Name: Self Registration */ ?>
 <?php 
 get_header(); 
-require_once "/home3/istilist/public_html/vendor/autoload.php";
+require_once ABSPATH . 'vendor/autoload.php';
 use Twilio\Rest\Client;
 if (is_user_logged_in()) {
     global $user_ID;
@@ -34,7 +34,7 @@ if (is_user_logged_in()) {
 	        <div class="col span_8_of_12 matchheight">
                 <div class="dash_content">
                     <?php 
-                    require_once 'php_modules/template-new-shopper/new-shopper-form.php';
+                    require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-new-shopper/new-shopper-form.php';
                     generate_new_shopper_form($wpdb, $store_id, get_bloginfo('url') . '/self-registration');
                     ?>
                 </div>

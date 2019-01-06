@@ -1,9 +1,9 @@
 <?php /* Template Name: Timed Promo Text */ ?>
 <?php
 
-require_once "/home3/istilist/public_html/vendor/autoload.php";
+require_once ABSPATH . "vendor/autoload.php";
 
-$dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
+$dotenv = new Dotenv\Dotenv(ABSPATH);
 $dotenv->load();
 
 use Twilio\Rest\Client;

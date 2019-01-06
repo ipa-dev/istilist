@@ -38,6 +38,7 @@
                                 add_user_meta($new_user_id, 'store_id', $store_id);
                                 add_user_meta($new_user_id, 'store_name', $store_name);
                                 
+                                /*
                                 require_once(ABSPATH . "wp-admin" . '/includes/image.php');
                                 require_once(ABSPATH . "wp-admin" . '/includes/file.php');
                                 require_once(ABSPATH . "wp-admin" . '/includes/media.php');
@@ -64,7 +65,7 @@
                                         }
                                     }
                                 }
-                                
+                                */
                                 $key = $wpdb->get_var($wpdb->prepare("SELECT user_activation_key FROM $wpdb->users WHERE user_login = %s", $_POST['email_address']));
                                 if (empty($key)) {
                                     $key = wp_generate_password(20, false);

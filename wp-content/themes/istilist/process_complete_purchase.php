@@ -5,9 +5,9 @@ global $user_ID;
 $store_id = $_POST['store_id'];
 $shopper_id = $_POST['shopper_id'];
 
-require_once "/home3/istilist/public_html/vendor/autoload.php";
+require_once ABSPATH . 'vendor/autoload.php';
 
-$dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
+$dotenv = new Dotenv\Dotenv(ABSPATH);
 $dotenv->load();
 
 use Twilio\Rest\Client;

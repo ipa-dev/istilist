@@ -13,29 +13,6 @@
                         
                         <?php
                         if (isset($_POST['register'])) {
-                            //require_once(TEMPLATEPATH.'/smtp/class.phpmailer.php');
-                            /*function smtpmailer($to, $from, $from_name, $subject, $body) {
-                            	$mail = new PHPMailer();  // create a new object
-                            	$mail->IsSMTP(); // enable SMTP
-                            	$mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
-                            	$mail->SMTPAuth = true;  // authentication enabled
-                            	//$mail->SMTPSecure = $options['smtp-authentication-type']; // secure transfer enabled REQUIRED for GMail
-                                $mail->SMTPSecure = 'SSL'; // secure transfer enabled REQUIRED for GMail
-                            	$mail->Host = $options['smtp-host'];
-                            	$mail->Port = $options['smtp-port'];
-                            	$mail->Username = $options['smtp-username'];
-                            	$mail->Password = $options['smtp-password'];
-                            	$mail->SetFrom($from, $from_name);
-                            	$mail->Subject = $subject;
-                                $mail->IsHTML(true);
-                            	$mail->Body = $body;
-                            	$mail->AddAddress($to);
-                            	if(!$mail->Send()) {
-                            		$error = 'Mail error: '.$mail->ErrorInfo;
-                            	} else {
-                            		$error = 'Message sent!';
-                            	}
-                            }*/
                             
                             global $wpdb;
                             $email_addr = explode(',', $_POST['email_address']);

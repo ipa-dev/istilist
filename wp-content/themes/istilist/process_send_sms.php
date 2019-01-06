@@ -1,6 +1,6 @@
 <?php /* Template Name: Send SMS */
 
-require_once "/home3/istilist/public_html/vendor/autoload.php";
+require_once ABSPATH . "vendor/autoload.php";
 use Twilio\Twiml;
 
 $response = new Twiml;

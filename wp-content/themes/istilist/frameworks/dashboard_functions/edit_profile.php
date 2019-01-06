@@ -7,11 +7,11 @@ if(isset($_POST['update'])){
         }
     }
     
-    if($_FILES["profile_pic"]["error"] == 0) {
+    /*if($_FILES["profile_pic"]["error"] == 0) {
         echo ABSPATH . "wp-admin" . '/includes/image.php';
-        require_once(ABSPATH . "wp-admin" . '/includes/image.php'); 
-        require_once(ABSPATH . "wp-admin" . '/includes/file.php'); 
-        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+        require_once ABSPATH . "wp-admin" . '/includes/image.php'; 
+        require_once ABSPATH . "wp-admin" . '/includes/file.php'; 
+        require_once ABSPATH . "wp-admin" . '/includes/media.php';
         
         $image = array();
         $image = $_FILES["profile_pic"]; 
@@ -36,7 +36,7 @@ if(isset($_POST['update'])){
                 wp_die('No image was uploaded.');     
                 }   
             }
-    }
+    }*/
     
     $display_name = $_POST['fname'].' '.$_POST['lname'];
     wp_update_user(array('ID' => $user_ID, 'display_name' => $display_name));

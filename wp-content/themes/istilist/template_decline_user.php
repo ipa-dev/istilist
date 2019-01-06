@@ -11,7 +11,7 @@
                         <?php
                             if (!empty($_GET['udi'])) {
                                 global $wpdb;
-                                require_once(ABSPATH.'wp-admin/includes/user.php');
+                                require_once ABSPATH.'wp-admin/includes/user.php';
                                 wp_delete_user($_GET['udi']);
                                 echo '<div class="successMsg">User Declined.</div>';
                             }

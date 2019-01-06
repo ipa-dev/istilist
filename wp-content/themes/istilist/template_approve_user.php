@@ -9,7 +9,6 @@
                 <div class="loginSection">
                     <div class="box">
                         <?php if (!empty($_GET['udi'])) {
-    //require_once(TEMPLATEPATH.'/smtp/class.phpmailer.php');
     global $wpdb;
     $user_status = 2;
     $key = $_GET['key'];

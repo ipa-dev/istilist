@@ -1,6 +1,6 @@
 <?php
 /* Template Name: Dial Store */
-require_once 'twilio-php-master/Twilio/autoload.php';
+require_once ABSPATH . 'vendor/autoload.php';
 use Twilio\Twiml;
 
 $response = new Twiml();

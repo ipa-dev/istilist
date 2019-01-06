@@ -83,13 +83,6 @@ if (is_singular() && get_option('thread_comments'))
 wp_head();
 ?>
 
-
-
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/css/jquery.fancybox.css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/modernizr-2.8.2-min.js"></script>
-<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/slicknav.css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.slicknav.js"></script>
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.fancybox.pack.js"></script>
 <script>
 	jQuery(function(){
 		jQuery('.nav').slicknav({
@@ -97,12 +90,7 @@ wp_head();
           label:''
 		});
 	});
-</script>
-<script type="text/javascript">
 	jQuery(document).ready(function() {
-		jQuery(".fancybox").fancybox({
-            
-		});
         
         jQuery(".assignStylist").fancybox({
             maxWidth	: 300,
@@ -115,40 +103,24 @@ wp_head();
         	openEffect	: 'none',
         	closeEffect	: 'none'
         });
-	});
-</script>
-
-
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.matchHeight-min.js"></script>
-
-<script type="text/javascript">
-jQuery(function($){
-    $('.matchheight').matchHeight();
-});
-</script>
-
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.validate.min.js"></script>
-<script src="<?php bloginfo('template_directory'); ?>/js/additional-methods.js"></script>
-
-<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/jquery.datetimepicker.css" />
-<script src="<?php bloginfo('template_directory'); ?>/js/jquery.datetimepicker.js"></script>
-<script>
-jQuery(document).ready(function(){
-    jQuery('#purchase_date').datetimepicker({
+        jQuery('#purchase_date').datetimepicker({
         timepicker:false,
         format:'m-d-Y',
         onSelectDate:function(ct,$i){
             jQuery('.xdsoft_datetimepicker').hide();
         }
+        });
+        jQuery('#customer_wear_date').datetimepicker({
+            timepicker:false,
+            format:'m-d-Y',
+            onSelectDate:function(ct,$i){
+                jQuery('.xdsoft_datetimepicker').hide();
+            }
+        });
     });
-    jQuery('#customer_wear_date').datetimepicker({
-        timepicker:false,
-        format:'m-d-Y',
-        onSelectDate:function(ct,$i){
-            jQuery('.xdsoft_datetimepicker').hide();
-        }
+    jQuery(function($){
+        $('.matchheight').matchHeight();
     });
-});
 </script>
 <?php if(is_page(array('analytics-reporting', 'analytics-htmltopdf'))){ ?>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
