@@ -94,20 +94,7 @@ if (is_singular() && get_option('thread_comments')) {
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
-<?php if (is_page(array('analytics-reporting', 'analytics-htmltopdf'))) { ?>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>
-google.charts.load('current', {packages: ['corechart', 'line', 'bar']});
-</script>
-<?php
-} ?>
-
-<!-- link to the SqPaymentForm library -->
-<script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
-</script>
-
 <?php wp_head(); ?>
-
 </head>
 <?php global $options; ?>
 <?php if (is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {
@@ -125,44 +112,25 @@ google.charts.load('current', {packages: ['corechart', 'line', 'bar']});
 	<div class="maincontent noPadding">
 	    <div class="section group">
 	        <div class="col span_6_of_12">
-                <?php if (is_page('self-registration')) { ?>
-                    <div id="setpasswordpopup" style="display: none;">
-                        <h4>Enter Account Password</h4>
-                        <form id="forms_recheck_pass" method="post" action="">
-                            <div class="section group">
-                                <div class="col span_12_of_12">
-                                    <input id="recheck_pass" type="password" name="recheck_pass" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="section group">
-                                <div class="col span_12_of_12">
-                                    <div style="text-align: center;padding-top: 30px;">
-                                        <input id="user_check" type="button" name="user_check" value="Submit">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <h1><a href="#setpasswordpopup" class="popupform"><?php echo $options['general-logo']; ?></a></h1>
-                <?php
-        } else {
-            ?>
+                <?php 
+                if (is_page('self-registration')) { 
+                    require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-selfregistration/setpasswordpopup.php';
+                } else {
+                ?>
                     <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a></h1>
                 <?php
-        } ?>
+                }
+                ?>
 	        </div>
 	        <div class="col span_6_of_12">
-                <?php if (is_user_logged_in()) {
-            ?>
-                <?php global $user_ID; ?>
+                <?php 
+                if (is_user_logged_in()) {
+                    global $user_ID;
+                ?>
                 <div class="unav">
                     <ul>
-                        <li class="user" style="color:white;">
-                           <!-- <a href="#"> -->
-                                <?php //echo get_store_img($user_ID); ?>
-                                <?php echo get_the_author_meta('display_name', $user_ID); ?>
-                                <!--<i class="fa fa-chevron-down"></i>   -->
-                           <!-- </a> -->
+                        <li class="user">
+                            <?php echo get_the_author_meta('display_name', $user_ID); ?>
                         </li>
                         <li class="logout">
                             <a href="<?php echo wp_logout_url(home_url().'/login'); ?>">
@@ -173,8 +141,8 @@ google.charts.load('current', {packages: ['corechart', 'line', 'bar']});
                     </ul>
                 </div>
                 <?php
-        } else {
-            ?>
+                } else {
+                ?>
                 <div class="unav notunav">
                     <ul>
                         <li><a href="<?php bloginfo('url'); ?>/register">Register</a></li>
@@ -182,10 +150,10 @@ google.charts.load('current', {packages: ['corechart', 'line', 'bar']});
                     </ul>
                 </div>
                 <?php
-        } ?>
+                }
+                ?>
 	        </div>
 	    </div>
 	</div>
 </div>
-<?php
-    } ?>
+<?php } ?>

@@ -5,16 +5,6 @@ jQuery( function() {
     });
 });
 
-function initializeTimepicker( objectString ) {
-    jQuery( objectString ).datetimepicker({
-        timepicker: false,
-        format: 'm-d-Y',
-        onSelectDate: function( ct, $i ) {
-            jQuery( '.xdsoft_datetimepicker' ).hide();
-        }
-    });
-}
-
 jQuery( document ).ready( function() {
     var baseUrl = window.location.origin;
     jQuery( '.assignStylist' ).fancybox({
@@ -39,11 +29,6 @@ jQuery( document ).ready( function() {
         openEffect: 'none',
         closeEffect: 'none'
     });
-    initializeTimepicker( '#purchase_date' );
-    initializeTimepicker( '#customer_wear_date' );
-    initializeTimepicker( '#fromdate' );
-    initializeTimepicker( '#todate' );
-    initializeTimepicker( '#shoppersfromdate' );
 
     jQuery( '.editFormTable input[type=checkbox]' ).switchButton({
         width: 50,

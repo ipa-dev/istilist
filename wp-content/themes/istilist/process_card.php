@@ -1,4 +1,4 @@
-<?php /* Template Name: Purchase Texts */ ?>
+<?php /* Template Name: Process Card */ ?>
 <?php get_header(); ?>
 <?php if (is_user_logged_in()) { 
         global $user_ID; 

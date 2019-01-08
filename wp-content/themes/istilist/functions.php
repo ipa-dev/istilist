@@ -2,28 +2,38 @@
 global $options;
 
 function istilist_scripts() {
+    //TODO: INCLUDE SHOPPER ACTION SCRIPTS ON DASHBOARD AND HISTORY PAGES
     wp_enqueue_style('jquery-fancybox', get_bloginfo('template_directory') . '/css/jquery.fancybox.css', array('jquery'));
     wp_enqueue_style('slicknav', get_bloginfo('template_directory') . '/css/slicknav.css');
-    wp_enqueue_style('jquery-datetime', '/node_modules/jquery-datetimepicker/jquery.datetimepicker.css', array('jquery'));
+
     wp_enqueue_style('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.css');
     wp_enqueue_style('switchButton', get_bloginfo('template_directory') . '/css/jquery.switchButton.css', array('jquery'));
     wp_enqueue_style('jquery-autocomplete', get_bloginfo('template_directory') . '/css/jquery.autocomplete.css', array('jquery'));
     wp_enqueue_style('easy-responsive', get_bloginfo('template_directory') . '/css/easy-responsive-tabs.css');
     wp_enqueue_style('footable-core', '/node_modules/footable/css/footable.core.min.css');
     wp_enqueue_style('footable-standalone', '/node_modules/footable/css/footable.standalone.min.css');
-    wp_enqueue_style('sqpayment', get_bloginfo('template_directory') . '/css/sqpaymentform.css');
     wp_enqueue_style('fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css');
+    
+    if (is_page(array('analytics-reporting', 'analytics-htmltopdf'))) {
+        wp_enqueue_script('google-charts', '//www.gstatic.com/charts/loader.js', array(), false, true);
+        wp_enqueue_script('custom-google-charts', get_bloginfo('template_directory') . '/js/custom-google-graph.js', array('google-charts'), false, true);
+    }
+    if (is_page(array('purchase-texts', 'process-card'))) {
+        wp_enqueue_style('sqpayment', get_bloginfo('template_directory') . '/css/sqpaymentform.css');
+        wp_enqueue_script('square-base', '//js.squareup.com/v2/paymentform', array(), false, true);
+        wp_enqueue_script('sqpayment', get_bloginfo('template_directory') . '/js/sqpaymentform.js', array('jquery', 'square-base'), false, true);
+    }
+    if (is_page(array('dress-registration', 'analytics-reporting', 'analytics-htmltopdf', 'history'))) {
+        wp_enqueue_style('jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/' . wp_scripts()->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css');        
+        wp_enqueue_script('jquery-ui-datepicker', '', array('jquery'), false, true);
+        wp_enqueue_script( 'custom-datepicker', get_bloginfo('template_directory') . '/js/custom-datepicker.js', array('jquery', 'jquery-ui-datepicker'), false, true);
+    }
 
-    wp_enqueue_script('jquery', '', array(), false, true);
-    wp_enqueue_script('jquery-ui-core', '', array('jquery'), false, true);
-    wp_enqueue_script('jquery-ui-widget', '', array('jquery'), false, true);
-    wp_enqueue_script('sqpayment', get_bloginfo('template_directory') . '/js/sqpaymentform.js', array('jquery'), false, true);
     wp_enqueue_script('footable-all', '/node_modules/footable/dist/footable.all.min.js', array(), false, true);
     wp_enqueue_script('easy-responsive', get_bloginfo('template_directory') . '/js/easyResponsiveTabs.js', array(), false, true);
     wp_enqueue_script('jquery-autocomplete', get_bloginfo('template_directory') . '/js/jquery.autocomplete.js', array('jquery'), false, true);
     wp_enqueue_script('jquery-switchbutton', get_bloginfo('template_directory') . '/js/jquery.switchButton.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget'), false, true);
     wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-datetime', '/node_modules/jquery-datetimepicker/jquery.datetimepicker.js', array('jquery'), false, true);
     wp_enqueue_script('jquery-slicknav', get_bloginfo('template_directory') . '/js/jquery.slicknav.js', array('jquery'), false, true);
     wp_enqueue_script('modernizr', '/node_modules/modernizr/modernizr.js', array(), false, true);
     wp_enqueue_script('jquery-fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js', array('jquery'), true, true);
@@ -32,8 +42,13 @@ function istilist_scripts() {
     wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), false, true);
     wp_enqueue_script('custom-script', get_bloginfo('template_directory') . '/js/custom-script.js', 
                     array('jquery', 'jquery-switchbutton', 'jquery-autocomplete', 
-                    'footable-all', 'easy-responsive', 'jquery-datetime', 'jquery-slicknav',
+                    'footable-all', 'easy-responsive', 'jquery-slicknav',
                     'jquery-fancybox', 'jquery-matchheight', 'jquery-validate'), false, true);
+
+
+    if (is_page(array('history', 'dashboard'))) {
+        wp_enqueue_script('custom-shopper-actions', get_bloginfo( 'template_directory' ) . '/js/custom-shopper-actions.js', array('jquery', 'swal2'), false, true);
+    }
 }
 
 add_action('wp_enqueue_scripts', 'istilist_scripts');

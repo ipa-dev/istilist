@@ -391,6 +391,9 @@ label.error{
     padding-left: 8px;
     vertical-align: middle;
 }
+.unav li.user {
+    color: white;
+}
 .unav li.user img {
     height: 48px;
     width: 48px;
@@ -703,9 +706,6 @@ a.buttonLink1{
     font-style: italic;
     line-height: 150%;
 }
-.banner1{
-    margin-bottom: 20px;
-}
 .screen-reader-text {
     display: none !important;
 }
@@ -903,4 +903,18 @@ input[type="submit"].fa-input {
 }
 .active {
     color: #14b9d6 !important;
+}
+#update_shoppers {
+    float: right;
+}
+#update_shoppers div {
+    margin-bottom: 2%;
+}
+#upate_shoppers div span {
+    float:left;
+    margin: 2px 1% 0 0;
+}
+#upate_shoppers div input {
+    width:40%;
+    height:25px;
 }
