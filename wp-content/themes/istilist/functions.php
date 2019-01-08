@@ -3,9 +3,14 @@ global $options;
 
 function istilist_scripts() {
     wp_enqueue_style('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.css');
+    wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), false, true);
+    wp_enqueue_script('modernizr', '/node_modules/modernizr/modernizr.js', array(), false, true);
+    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), false, true);
+    wp_enqueue_script('custom-matchheight', get_bloginfo('template_directory') . '/js/custom-matchheight.js', array('jquery', 'jquery-matchheight'), false, true);
 
+    //Conditionally load scripts
     if (is_page( array( 'store-preferences', 'dashboard') ) ) {
-        wp_enqueue_script('jstz.min', '/node_modules/jstimezonedetect/dist/jstz.min.js', array(), false, false);
+        wp_enqueue_script('jstz.min', '/node_modules/jstimezonedetect/dist/jstz.min.js', array(), false, true);
     }
     if ( is_page( array( 'store-preferences', 'stylist-employee', 'edit-shoppers-form' ) ) ) {
         wp_enqueue_style('footable-core', '/node_modules/footable/css/footable.core.min.css');
@@ -56,11 +61,6 @@ function istilist_scripts() {
             wp_enqueue_script('custom-validate', get_bloginfo('template_directory') . '/js/custom-validate.js', array('jquery', 'jquery-validate', 'additional-methods'), false, true);
         }
     }
-    
-    wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), false, true);
-    wp_enqueue_script('modernizr', '/node_modules/modernizr/modernizr.js', array(), false, true);
-    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), false, true);
-    wp_enqueue_script('custom-matchheight', get_bloginfo('template_directory') . '/js/custom-matchheight.js', array('jquery', 'jquery-matchheight'), false, true);
 }
 
 add_action('wp_enqueue_scripts', 'istilist_scripts');
