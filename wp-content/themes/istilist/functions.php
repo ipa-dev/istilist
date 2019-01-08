@@ -2,21 +2,24 @@
 global $options;
 
 function istilist_scripts() {
-    //TODO: INCLUDE SHOPPER ACTION SCRIPTS ON DASHBOARD AND HISTORY PAGES
-    wp_enqueue_style('jquery-fancybox', get_bloginfo('template_directory') . '/css/jquery.fancybox.css', array('jquery'));
-    wp_enqueue_style('slicknav', get_bloginfo('template_directory') . '/css/slicknav.css');
-
     wp_enqueue_style('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.css');
-    wp_enqueue_style('switchButton', get_bloginfo('template_directory') . '/css/jquery.switchButton.css', array('jquery'));
-    wp_enqueue_style('jquery-autocomplete', get_bloginfo('template_directory') . '/css/jquery.autocomplete.css', array('jquery'));
-    wp_enqueue_style('easy-responsive', get_bloginfo('template_directory') . '/css/easy-responsive-tabs.css');
-    wp_enqueue_style('footable-core', '/node_modules/footable/css/footable.core.min.css');
-    wp_enqueue_style('footable-standalone', '/node_modules/footable/css/footable.standalone.min.css');
-    wp_enqueue_style('fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css');
-    
+
+    if (is_page( array( 'store-preferences', 'dashboard') ) ) {
+        wp_enqueue_script('jstz.min', '/node_modules/jstimezonedetect/dist/jstz.min.js', array(), false, false);
+    }
+    if ( is_page( array( 'store-preferences', 'stylist-employee', 'edit-shoppers-form' ) ) ) {
+        wp_enqueue_style('footable-core', '/node_modules/footable/css/footable.core.min.css');
+        wp_enqueue_style('footable-standalone', '/node_modules/footable/css/footable.standalone.min.css');
+        wp_enqueue_script('footable-all', '/node_modules/footable/dist/footable.all.min.js', array(), false, true);
+        wp_enqueue_script('custom-footable', get_bloginfo('template_directory') . '/js/custom-footable.js', array('footable-all'), false, true);
+    }
     if (is_page(array('analytics-reporting', 'analytics-htmltopdf'))) {
-        wp_enqueue_script('google-charts', '//www.gstatic.com/charts/loader.js', array(), false, true);
-        wp_enqueue_script('custom-google-charts', get_bloginfo('template_directory') . '/js/custom-google-graph.js', array('google-charts'), false, true);
+        wp_enqueue_script('google-charts', '//www.gstatic.com/charts/loader.js', array(), false, false);
+        wp_enqueue_script('custom-google-charts', get_bloginfo('template_directory') . '/js/custom-google-graph.js', array('google-charts'), false, false);
+        wp_enqueue_script('purchaseflow', get_bloginfo('template_directory') . '/js/purchaseflow.js', array('google-charts', 'custom-google-charts'), false, true);
+        wp_enqueue_script('trafficflow', get_bloginfo('template_directory') . '/js/trafficflow.js', array('google-charts', 'custom-google-charts'), false, true);
+        wp_enqueue_script('employeeconversion', get_bloginfo('template_directory') . '/js/employeeconversion.js', array('google-charts', 'custom-google-charts'), false, true);
+        wp_enqueue_script('sendreport-ajax', get_bloginfo('template_directory') . '/js/custom-sendreport-ajax.js', array('jquery'), false, true);
     }
     if (is_page(array('purchase-texts', 'process-card'))) {
         wp_enqueue_style('sqpayment', get_bloginfo('template_directory') . '/css/sqpaymentform.css');
@@ -28,27 +31,36 @@ function istilist_scripts() {
         wp_enqueue_script('jquery-ui-datepicker', '', array('jquery'), false, true);
         wp_enqueue_script( 'custom-datepicker', get_bloginfo('template_directory') . '/js/custom-datepicker.js', array('jquery', 'jquery-ui-datepicker'), false, true);
     }
-
-    wp_enqueue_script('footable-all', '/node_modules/footable/dist/footable.all.min.js', array(), false, true);
-    wp_enqueue_script('easy-responsive', get_bloginfo('template_directory') . '/js/easyResponsiveTabs.js', array(), false, true);
-    wp_enqueue_script('jquery-autocomplete', get_bloginfo('template_directory') . '/js/jquery.autocomplete.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-switchbutton', get_bloginfo('template_directory') . '/js/jquery.switchButton.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget'), false, true);
-    wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-slicknav', get_bloginfo('template_directory') . '/js/jquery.slicknav.js', array('jquery'), false, true);
-    wp_enqueue_script('modernizr', '/node_modules/modernizr/modernizr.js', array(), false, true);
-    wp_enqueue_script('jquery-fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js', array('jquery'), true, true);
-    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), false, true);
-    wp_enqueue_script('jquery-validate', '/node_modules/jquery-validation/dist/jquery.validate.min.js', array('jquery'), false, true);
-    wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), false, true);
-    wp_enqueue_script('custom-script', get_bloginfo('template_directory') . '/js/custom-script.js', 
-                    array('jquery', 'jquery-switchbutton', 'jquery-autocomplete', 
-                    'footable-all', 'easy-responsive', 'jquery-slicknav',
-                    'jquery-fancybox', 'jquery-matchheight', 'jquery-validate'), false, true);
-
-
-    if (is_page(array('history', 'dashboard'))) {
-        wp_enqueue_script('custom-shopper-actions', get_bloginfo( 'template_directory' ) . '/js/custom-shopper-actions.js', array('jquery', 'swal2'), false, true);
+    if ( is_page( array( 'edit-shoppers-form', 'stylist-employee') ) ) {
+        wp_enqueue_style('switch-button', get_bloginfo('template_directory') . '/css/jquery.switchButton.css', array('jquery'));
+        wp_enqueue_script('jquery-switchbutton', get_bloginfo('template_directory') . '/js/jquery.switchButton.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget'), false, true);
+        wp_enqueue_script( 'custom-switchbutton', get_bloginfo( 'template_directory' ) . '/js/custom-switchbutton.js', array('jquery', 'jquery-switchbutton'), false, true);
     }
+
+    if ( is_page( array( 'dress-registration' ) ) ) {
+        wp_enqueue_style('jquery-autocomplete', get_bloginfo('template_directory') . '/css/jquery.autocomplete.css', array('jquery'));
+        wp_enqueue_script('jquery-autocomplete', get_bloginfo('template_directory') . '/js/jquery.autocomplete.js', array('jquery'), false, true);
+        wp_enqueue_script('custom-autocomplete', get_bloginfo( 'template_directory' ) . '/js/custom-autocomplete.js', array( 'jquery', 'jquery-autocomplete' ), false, true);
+    }
+    if ( is_page( array( 'dashboard', 'history', 'self-registration' ) ) ) {
+        wp_enqueue_style('fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css');
+        wp_enqueue_script('jquery-fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js', array('jquery'), false, true);
+        wp_enqueue_script('custom-fancybox', get_bloginfo( 'template_directory' ) . '/js/custom-fancybox.js', array('jquery', 'jquery-fancybox'), false, true);;
+        
+        if (is_page(array('history', 'dashboard'))) {
+            wp_enqueue_script('custom-shopper-actions', get_bloginfo( 'template_directory' ) . '/js/custom-shopper-actions.js', array('jquery', 'swal2'), false, true);
+        }
+        if (is_page(array('self-registration'))) {
+            wp_enqueue_script('jquery-validate', '/node_modules/jquery-validation/dist/jquery.validate.min.js', array('jquery'), false, true);
+            wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), false, true);
+            wp_enqueue_script('custom-validate', get_bloginfo('template_directory') . '/js/custom-validate.js', array('jquery', 'jquery-validate', 'additional-methods'), false, true);
+        }
+    }
+    
+    wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), false, true);
+    wp_enqueue_script('modernizr', '/node_modules/modernizr/modernizr.js', array(), false, true);
+    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), false, true);
+    wp_enqueue_script('custom-matchheight', get_bloginfo('template_directory') . '/js/custom-matchheight.js', array('jquery', 'jquery-matchheight'), false, true);
 }
 
 add_action('wp_enqueue_scripts', 'istilist_scripts');
@@ -99,13 +111,9 @@ function revslider_scripts_cleanup()
     wp_enqueue_script('jquery.themepunch.revolution.min', plugin_dir_url(__FILE__) . 'revslider/rs-plugin/js/jquery.themepunch.revolution.min.js', array(), '', true);
 }
 
-//add_action( 'wp_enqueue_scripts', 'revslider_scripts_cleanup' );
+add_action( 'wp_enqueue_scripts', 'revslider_scripts_cleanup' );
 
-function jstimezone_scripts() {
-    wp_enqueue_script('jstz.min', '/node_modules/jstimezonedetect/dist/jstz.min.js', array(), '', false);
-}
 
-add_action( 'wp_enqueue_scripts', 'jstimezone_scripts');
 
 add_filter('wp_mail_from_name', 'new_mail_from_name');
 function new_mail_from_name($old)
@@ -578,5 +586,11 @@ function is_active($shopper_id, $shopper_field) {
         return 'active';
     }
     return '';
+}
+
+function active_section( $active_section, $test_string ) {
+    if ($active_section == $test_string) {
+        return 'activeSection';
+    }
 }
 ?>
