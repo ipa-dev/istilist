@@ -16,7 +16,7 @@
                     <div class="banner">
 						<?php echo do_shortcode('[rev_slider home]'); ?>
                     </div>
-                    <form method="get" action="<?= get_bloginfo('url'); ?>/dashboard" style="width:25%;margin-bottom:2%;float:right;">
+                    <form method="get" id="dash_search" action="<?= get_bloginfo('url'); ?>/dashboard">
                         <div class="searchForm">
                             <input type="text" id="search_query" name="search_query" value="<?php echo $_GET['search_query']; ?>"/>
                             <input type="submit" id="search_btn" name="search_btn" value="&#xf002"/>

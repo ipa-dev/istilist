@@ -259,6 +259,9 @@ input[type="submit"], input[type="button"]{
     border: 0;
     text-shadow: none;
 }
+input[type="submit"]:active, input[type="button"]:active {
+    outline: none;
+}
 textarea{
     height: 130px;
 }
@@ -917,4 +920,9 @@ input[type="submit"].fa-input {
 #upate_shoppers div input {
     width:40%;
     height:25px;
+}
+#dash_search {
+    width: 25%;
+    margin-bottom: 2%;
+    float: right;
 }
