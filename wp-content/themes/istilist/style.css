@@ -720,6 +720,7 @@ select.attachment-filters {
 }
 span.h1inlinelink{
     float: right;
+    margin-left: 10px;
 }
 span.h1inlinelink a{
     background: #14b9d6 none repeat scroll 0 0;

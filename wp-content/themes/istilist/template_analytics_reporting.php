@@ -167,7 +167,15 @@ if (isset($_POST['download_csv'])) {
 	        <?php get_sidebar('menu'); ?>
 	        <div class="col span_9_of_12 matchheight">
                 <div class="dash_content">
-                    <h1><?php the_title(); ?> <span class="h1inlinelink"><a href="javascript:void(0)" id="emailthisreport">Email this report</a></span></h1>
+                    <h1>
+                        <?php the_title(); ?>
+                        <span class="h1inlinelink"><a href="javascript:void(0)" id="emailthisreport">Email this report</a></span>
+                        <span class="h1inlinelink">
+                            <form method="post" id="download_form" action="">
+                                <input type="submit" name="download_csv" class="download_csv" value="&#xf019; Export Shoppers to CSV" />
+                            </form>
+                        </span>
+                    </h1>
                     <div class="reportBox" id="demo1">
                         <h3 class="toggleHeading" id="toggleHeading1">Traffic Flow</h3>
                         <div class="toggleSection"><?php get_template_part('trafficflow'); ?></div>
@@ -191,15 +199,6 @@ if (isset($_POST['download_csv'])) {
                     <div class="reportBox" id="toggleHeading6">
                         <h3 class="toggleHeading">Size Preferences</h3>
                         <div class="toggleSection"><?php get_template_part('size_preff'); ?></div>
-                    </div>
-                    <div class="reportBox">
-                        <h3>Export all registered shoppers</h3>
-                        <span class="h1inlinelink">
-                            <form method="post" id="download_form" action="">
-                                <input type="submit" name="download_csv" class="download_csv" value="&#xf019; Export to CSV" />
-                            </form>
-                        </span>
-                        <div style="clear: both;"></div>
                     </div>
                 </div>
                 <?php get_footer(); ?>
