@@ -191,14 +191,6 @@ function add_theme_caps()
 }
 add_action('admin_init', 'add_theme_caps');
 
-if (!class_exists('ReduxFramework')) {
-    require_once(dirname(__FILE__) . '/frameworks/redux/ReduxCore/framework.php');
-}
-
-if (!isset($redux_demo)) {
-    require_once(dirname(__FILE__) . '/frameworks/redux/admin-config.php');
-}
-
 function get_profile_img($postid)
 {
     $attachment_id = get_post_meta($postid, 'profile_pic', true);
@@ -329,7 +321,6 @@ function is_user_active($user_id)
     return '<div style="color:' . $color . 'text-align:center;" title="' . $title . '"><i class="fa fa-circle"></i></div>';
 }
 
-/*************************/
 add_filter('manage_users_columns', 'pippin_add_user_id_column');
 function pippin_add_user_id_column($columns)
 {
@@ -428,8 +419,8 @@ function print_timestamps($shopper_id) {
     $entry_date = get_post_meta($shopper_id, 'entry_date', true);
     if (! empty($timestamps)) {
         $index = count($timestamps);
-        while ($index) {
-            echo "<span>on " . date('m.d.Y', strtotime($timestamps[ -- $index ])) . " at " . date('h:i a', strtotime($timestamps[ $index ]));
+        while (-- $index) {
+            echo "<span>on " . date('m.d.Y', strtotime($timestamps[ $index  ])) . " at " . date('h:i a', strtotime($timestamps[ $index ]));
             if ($index != (count($timestamps) - 1)) {
                 if ($purchases[ $index - 1 ] == 'true') {
                     echo "\tPurchase";
