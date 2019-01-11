@@ -1,18 +1,17 @@
 <?php /* Template Name: Folloup Messages */ ?>
-<?php get_header(); ?>
-<?php if (is_user_logged_in()) {
-    ?>
-<?php global $user_ID;
-    global $wpdb; ?>
-<?php $store_owner_id = get_user_meta($user_ID, 'store_id', true); ?>
-<?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
-<?php $user_role = get_user_role($user_ID); ?>
-<?php
-  require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+<?php 
+get_header();
+if (is_user_logged_in()) {
+    global $user_ID;
+    global $wpdb;
+    $store_owner_id = get_user_meta($user_ID, 'store_id', true);
+    $store_id = get_user_meta($user_ID, 'store_id', true);
+    $user_role = get_user_role($user_ID); 
+    require_once(ABSPATH . "wp-admin" . '/includes/image.php');
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-    require_once(ABSPATH . "wp-admin" . '/includes/media.php'); ?>
-
-<?php $table_name = $wpdb->prefix.'folloup_messages'; ?>
+    require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+    $table_name = $wpdb->prefix.'folloup_messages';
+?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
 	    <div class="section group">
@@ -29,15 +28,16 @@
                                 if ($update == 1) {
                                     echo '<p class="successMsg">Your email template is updated successfully.</p>';
                                 } else {
-                                    echo '<p class="successMsg">Some thing goes wrong.</p>';
+                                    echo '<p class="errorMsg">Something went wrong.</p>';
                                 }
                             }
-    $sql1 = "SELECT * FROM $table_name WHERE message_type = 'thankyou' and store_id = $store_id";
-    $result1 = $wpdb->get_row($sql1); ?>
+                            $sql1 = "SELECT * FROM $table_name WHERE message_type = 'thankyou' and store_id = $store_id";
+                            $result1 = $wpdb->get_row($sql1); 
+                            ?>
                         <form method="post" action="" enctype="multipart/form-data">
                             <div class="section group">
                                 <div class="col span_2_of_12">Subject</div>
-                                <div class="col span_10_of_12"><input type="text" name="thankyou_subject" value="<?php echo $result1->subject; ?>" /></div>
+                                <div class="col span_10_of_12"><input type="text" name="thankyou_subject" value="<?php if (!empty( $result1)) echo $result1->subject; ?>" /></div>
                             </div>
                             <div class="section group">
                                 <div class="col span_2_of_12">Email Body</div>
@@ -57,14 +57,16 @@
                                         'quicktags' => true,
                                         'drag_drop_upload' => true
                                     );
-
-    wp_editor($result1->body, 'thankyou_email_body', $settings1); ?>
+                                if (!empty($result1))
+                                    wp_editor($result1->body, 'thankyou_email_body', $settings1);
+                                else
+                                    wp_editor('', 'thankyou_email_body', $settings1);
+                                ?>
                                 <div class="allowedtag">
                                     <em>{Shopper's Name}</em> for auto generated shopper's name<br />
                                     <em>{Stylist's Name}</em> for auto generated stylist's name
                                 </div>
                             </div>
-
                             <div class="section group">
                                 <div class="col span_12_of_12">
                                     <div class="alignright">
@@ -87,12 +89,13 @@
                                     echo '<p class="successMsg">Some thing goes wrong.</p>';
                                 }
                             }
-    $sql3 = "SELECT * FROM $table_name WHERE message_type = 'promo' and store_id = $store_id";
-    $result3 = $wpdb->get_row($sql3); ?>
+                            $sql3 = "SELECT * FROM $table_name WHERE message_type = 'promo' and store_id = $store_id";
+                            $result3 = $wpdb->get_row($sql3); 
+                        ?>
                         <form method="post" action="">
                             <div class="section group">
                                 <div class="col span_2_of_12">Subject</div>
-                                <div class="col span_10_of_12"><input type="text" name="promo_subject" value="<?php echo $result3->subject; ?>" /></div>
+                                <div class="col span_10_of_12"><input type="text" name="promo_subject" value="<?php if (!empty($result3)) echo $result3->subject; ?>" /></div>
                             </div>
                             <div class="section group">
                                 <div class="col span_2_of_12">Email Body</div>
@@ -111,9 +114,11 @@
                                         'tinymce' => true,
                                         'quicktags' => true,
                                         'drag_drop_upload' => true
-                                    ); ?>
-
-                                <?php wp_editor($result3->body, 'promo_email_body', $settings3); ?>
+                                    );
+                                    if (!empty($result3))
+                                        wp_editor($result3->body, 'promo_email_body', $settings3);
+                                    else
+                                        wp_editor('', 'promo_email_body', $settings3); ?>
                                 <div class="allowedtag">
                                     <em>{Shopper's Name}</em> for auto generated shopper's name<br />
                                     <em>{Stylist's Name}</em> for auto generated stylist's name
@@ -133,7 +138,8 @@
                       <h3>Send Email to Shoppers/Stylist/Employees</h3>
 	                    <?php
                         $sql1 = "SELECT * FROM $table_name WHERE message_type = 'shoppers-stylist-employees' and store_id = $store_id";
-    $result1 = $wpdb->get_row($sql1); ?>
+                        $result1 = $wpdb->get_row($sql1);
+                        ?>
                       <form name='shopper_email_form' id='shopper_email_form' method='post' action='<?php bloginfo('url'); ?>/send-mails/'>
                         <div class="section group">
                           <div class="col span_2_of_12">Email to</div>
@@ -149,7 +155,7 @@
                         </div>
                         <div class="section group">
                             <div class="col span_2_of_12">Subject</div>
-                            <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value="<?php echo $result1->subject; ?>"/></div>
+                            <div class="col span_10_of_12"><input type="text" name="shopper_email_subject" value="<?php if(! empty($result1)) echo $result1->subject; ?>"/></div>
                         </div>
                         <div class="section group">
                             <div class="col span_2_of_12">Email Body</div>
@@ -168,9 +174,12 @@
                                     'tinymce' => true,
                                     'quicktags' => true,
                                     'drag_drop_upload' => true
-                                ); ?>
-
-                            <?php wp_editor($result1->body, 'shopper_email_body', $settings3); ?>
+                                );
+                                if (!empty($result1))
+                                    wp_editor($result1->body, 'shopper_email_body', $settings3);
+                                else
+                                    wp_editor('', 'shopper_email_body', $settings1);
+                            ?>
                             <div class="allowedtag">
                                 <em>{Shopper's Name}</em> for auto generated shopper's name<br />
                                 <em>{Stylist's Name}</em> for auto generated stylist's name
@@ -206,7 +215,7 @@
                             <div class="section group">
                                 <div class="col span_2_of_12">Message Body</div>
                                 <div class="col span_10_of_12">
-                                    <textarea form='thankyou_text_form' name="thankyou_text_body"><?php echo $result4->body; ?></textarea>
+                                    <textarea form='thankyou_text_form' name="thankyou_text_body"><?php if (!empty($result4)) echo $result4->body; ?></textarea>
                                     <div class="allowedtag">
                                     <em>{Shopper's Name}</em> for auto generated shopper's name<br />
                                     <em>{Stylist's Name}</em> for auto generated stylist's name
@@ -240,7 +249,7 @@
                             <div class="section group">
                                 <div class="col span_2_of_12">Message Body</div>
                                 <div class="col span_10_of_12">
-                                    <textarea form='promo_text_form' name='promo_text_body'><?php echo $result5->body; ?></textarea>
+                                    <textarea form='promo_text_form' name='promo_text_body'><?php if (!empty($result5)) echo $result5->body; ?></textarea>
                                     <div class="allowedtag">
                                         <em>{Shopper's Name}</em> for auto generated shopper's name<br />
                                         <em>{Stylist's Name}</em> for auto generated stylist's name
@@ -293,12 +302,5 @@
 	    </div>
 	</div>
 </div>
-<style>
-    .switch-html{
-        display: none !important;
-    }
-</style>
 <?php
-} else {
-        header('Location: '.get_bloginfo('url').'/login');
-    } ?>
+} else { header('Location: '.get_bloginfo('url').'/login'); } ?>

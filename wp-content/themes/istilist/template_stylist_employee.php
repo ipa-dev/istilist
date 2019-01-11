@@ -13,7 +13,7 @@
                     <div class="box">
                         <div class="buttonLink"><a href="<?php bloginfo('url'); ?>/add-employee"><i class="fa fa-user-plus"></i> Add Employee</a></div>
                         <?php
-                            if ($_POST['save_changes'] == 'Save Changes') {
+                            if (isset($_POST['save_changes']) && $_POST['save_changes'] == 'Save Changes') {
                                 foreach ($_POST['user_id'] as $userid) {
                                     global $wpdb;
                                     $user_status = 0;

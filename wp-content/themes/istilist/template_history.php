@@ -26,7 +26,7 @@ if (is_user_logged_in()) {
                    		 });
                     	</script>
                     	<?php
-                            if ($_POST["shoppersfromdate"]) {
+                            if (isset($_POST["shoppersfromdate"])) {
                                 $post_args = array(
                                 'post_type' => 'shopper',
                                     'post_status' => 'publish',

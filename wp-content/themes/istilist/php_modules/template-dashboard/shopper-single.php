@@ -75,7 +75,7 @@
                                     echo 'NO';
                         ?>
                                     <p class="reasone">
-                                        <strong>Reason not purchased: </strong><?php echo get_post_meta($shopper_id, 'reason_not_purchased', true); ?>
+                                        <strong>Reason not purchased: </strong><?= implode(', ', get_post_meta($shopper_id, 'reason_not_purchased', true)); ?>
                                     </p>
 						<?php
                                 } else {
