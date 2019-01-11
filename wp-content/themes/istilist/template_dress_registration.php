@@ -142,7 +142,6 @@ if (isset($_POST['download_csv'])) {
                                     add_post_meta($new_post_id, 'store_id', $store_id);
 
                                     echo '<p class="successMsg">Thank you for your valuable time and information.</p>';
-                                //header("Location: ".get_bloginfo('home')."/dashboard");
                                 } else {
                                     echo '<p class="errorMsg">Sorry, your information is not updated.</p>';
                                 }

@@ -77,7 +77,7 @@ add_filter('json_api_controllers', 'add_istilist_promo_list_controller');
 
 function istilist_promo_list_controller_path($default_path)
 {
-    return '/home/istilist/public_html/wp-content/themes/istilist/istilist_promo_list_controller.php';
+    return ABSPATH . 'wp-content/themes/istilist/istilist_promo_list_controller.php';
 }
 
 add_filter('json_api_istilist_promo_list_controller_path', 'istilist_promo_list_controller_path');
@@ -93,7 +93,7 @@ add_filter('json_api_controllers', 'add_authorize_controller');
 
 function authorize_controller_path($default_path)
 {
-    return '/home/istilist/public_html/wp-content/themes/istilist/authorize_controller.php';
+    return ABSPATH . 'wp-content/themes/istilist/authorize_controller.php';
 }
 
 add_filter('json_api_authorize_controller_path', 'authorize_controller_path');

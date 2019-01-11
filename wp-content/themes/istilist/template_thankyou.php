@@ -17,7 +17,7 @@
                     echo "<p class='successMsg'>Please check your registered email and click on the reset password link.</p>";
                 }
                 if ($action == 'resetpassword') {
-                    echo '<p class="successMsg">Your password updated successfully. Please click here to <a class="alink" href="'.get_bloginfo('home').'/login">Login</a>.</p>';
+                    echo '<p class="successMsg">Your password updated successfully. Please click here to <a class="alink" href="'.get_bloginfo('url').'/login">Login</a>.</p>';
                 }
             ?>
                     </div>

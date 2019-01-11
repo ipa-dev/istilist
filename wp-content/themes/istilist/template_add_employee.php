@@ -72,21 +72,6 @@
                                     $wpdb->update($wpdb->users, array('user_activation_key' => $key), array('user_login' => $_POST['email_address']));
                                 }
                                                                                         
-                                
-                                // mail to user
-                                /*$to1 = $_POST['email_address'];
-                            	$from1 = "no-reply@".$_SERVER['HTTP_HOST'];
-                            	$headers1 = 'From: '.$from1. "\r\n";
-                                $headers1 .= "Reply-To: ".get_option('admin_email')."\r\n";
-                                $headers1 .= "MIME-Version: 1.0\n";
-                                $headers1 .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                            	$subject1 = "Update account password";
-                                $msg1 = 'Welcome to '.$store_name.'! Please click on the link to update the password process<br><br>Update Password Link :<a href="'.get_site_url().'/add-member?key='.$key.'" target="_blank">'.get_site_url().'/add-member?key='.$key.'</a><br><br>Regards,<br>'.$store_name;
-                            	wp_mail( $to1, $subject1, $msg1, $headers1 );
-
-
-                                header("Location: ".get_bloginfo('home')."/stylist-employee");*/
-                                //header("Location: ".get_bloginfo('home').'/add-member?key='.$key);
                             }
                         } ?>
                         <form id="forms" method="post" action="" enctype="multipart/form-data">

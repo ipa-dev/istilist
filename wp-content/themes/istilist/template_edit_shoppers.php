@@ -94,7 +94,7 @@
 
         if ($shopper_id) {
             echo '<p class="successMsg">Thank you for your valuable time and information.</p>';
-            header("Location: ".get_bloginfo('home')."/dashboard");
+            header("Location: ".get_bloginfo('url')."/dashboard");
         } else {
             echo '<p class="errorMsg">Sorry, your information is not updated.</p>';
         }

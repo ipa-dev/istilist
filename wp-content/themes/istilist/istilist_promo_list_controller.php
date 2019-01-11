@@ -30,12 +30,9 @@ class json_api_istilist_promo_list_controller {
       }
 
 
-      //return openssl_encrypt(json_encode($ret), get_option('cipher_method'), get_option('cipher_key')); 
       return array(
             "message" => $ret,  
-        );
-      //return $text_list;
-      
+        );      
     }
 	      	
 		

@@ -117,7 +117,7 @@
                                         
                                 wp_mail($to, $subject, $msg, $headers);
                                                                                     
-                                header("Location: ".get_bloginfo('home')."/thank-you/?action=".encripted('registration'));
+                                header("Location: ".get_bloginfo('url')."/thank-you/?action=".encripted('registration'));
                             }
                         }
                         ?>

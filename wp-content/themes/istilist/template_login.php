@@ -9,8 +9,8 @@
                 $errorCode = 0;
                 if (isset($_POST['login'])) {
                     global $wpdb;
-                    $username = $wpdb->escape($_POST['useremail']);
-                    $pwd = $wpdb->escape($_POST['pwd']);
+                    $username = $wpdb->prepare($_POST['useremail']);
+                    $pwd = $wpdb->prepare($_POST['pwd']);
                     $user_status = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->users WHERE user_login = %s", $username));
                     if ($user_status[0]->user_status == 2) {
                         $login_data = array();
@@ -22,7 +22,7 @@
                             $user_verify->get_error_message();
                             $errorCode = 1;
                         } else {
-                            header('Location: '.get_bloginfo('home').'/dashboard');
+                            header('Location: '.get_bloginfo('url').'/dashboard');
                         }
                     } else {
                         $errorCode = 2; // invalid login details

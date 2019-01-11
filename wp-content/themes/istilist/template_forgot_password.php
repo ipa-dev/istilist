@@ -11,7 +11,6 @@
                         if (isset($_POST['sendid'])) {
                             $user_login = $_POST['userid'];
                             $user = get_user_by('email', $user_login);
-                            //print_r($user->ID);
                             $security_questions = get_user_meta($user->ID, 'security_questions', true);
                             $security_answer = get_user_meta($user->ID, 'security_answer', true);
                             
@@ -25,16 +24,14 @@
                                 $reseturl = get_bloginfo('url');
                                 $emailmsg = "Please click on the following link to reset your password <a href='$reseturl/reset-password/?action=$useremail'>Reset Password</a>";
                                 wp_mail($useremail, $subject, $emailmsg, $headers);
-                                //wp_mail( 'bhulbhal1981@gmail.com', $subject, $emailmsg, $headers );
                                 $sucess= 'Please check your registered email and click on the reset password link.';
-                                header("Location: ".get_bloginfo('home')."/thank-you/?action=".encripted('forgotpassword'));
-                            //}
+                                header("Location: ".get_bloginfo('url')."/thank-you/?action=".encripted('forgotpassword'));
                             } else {
                                 $errorCode = 1;
                             }
                         }
                     } else {
-                        header('Location:'.get_bloginfo('home').'/forgot-password');
+                        header('Location:'.get_bloginfo('url').'/forgot-password');
                     }
                 ?>
                 <div class="logo"><h1><?php echo $options['general-logo']; ?></h1></div>

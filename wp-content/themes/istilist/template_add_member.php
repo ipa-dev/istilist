@@ -17,7 +17,7 @@
 
                         $pwd = $_POST['pwd1'];
                         wp_set_password($pwd, $userid);
-                        echo '<div class="successMsg"><strong>Congratulations</strong><br /><br />Your account has been activated. Click here to <strong><a href="'.get_bloginfo('home').'/login">Login</a></strong></div>';
+                        echo '<div class="successMsg"><strong>Congratulations</strong><br /><br />Your account has been activated. Click here to <strong><a href="'.get_bloginfo('url').'/login">Login</a></strong></div>';
                     }
                 ?>
                 <div class="logo"><h1><?php echo $options['general-logo']; ?></h1></div>

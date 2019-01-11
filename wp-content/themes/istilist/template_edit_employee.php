@@ -58,7 +58,7 @@
                             }
                             */
                                 
-                            header("Location: ".get_bloginfo('home')."/stylist-employee");
+                            header("Location: ".get_bloginfo('url')."/stylist-employee");
                         } ?>
                         <form method="post" action="" enctype="multipart/form-data">
                             <div class="section group">
