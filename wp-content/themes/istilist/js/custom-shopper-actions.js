@@ -2,6 +2,20 @@ var baseUrl = window.location.origin;
 var storeId = document.getElementById( 'store_id' ).value;
 
 jQuery( document ).ready( function() {
+    var storeId = document.getElementById( 'store_id' ).value;
+    jQuery.ajax({
+        url: window.location.origin + '/wp-json/istilist/v2/shoppers/' + storeId,
+        method: 'GET',
+        data: {
+            'paged': '0'
+        },
+        success: function( response ) {
+            console.log( response );
+        },
+        error: function( response ) {
+            console.log( response );
+        }
+    });
 
     jQuery( '#bulkActionSubmit' ).click( function() {
         Swal({
@@ -65,8 +79,7 @@ jQuery( document ).ready( function() {
         jQuery( '#shopper_id' ).val( shopperId );
     });
 
-    // this is for 3rd button
-    // TODO MASON : Should convert this into a question with input defaulting to yes
+    // Purchased or Not Button
     jQuery( '.dollar' ).click( function() {
         var shopperId = jQuery( this ).data( 'id' );
         function followUpSentAlert() {
@@ -89,9 +102,9 @@ jQuery( document ).ready( function() {
             inputValidator: function( value ) {
                 return ! value && 'You must choose one option.';
             },
-            inputClass: 'swal-radio-font',
             preConfirm: function( inputValue ) {
-                console.log( inputValue );
+
+                // TODO MASON: Work on this dynamic queue
                 if ( 'true' == inputValue ) {
 
                     // Send Purchased Shopper Message
@@ -126,8 +139,6 @@ jQuery( document ).ready( function() {
                             error: errorProcessAlert()
                         });
                     });
-
-                    //TODO MASON: Add .catch? here
                 }
             }
         } ]);

@@ -5,6 +5,7 @@
     global $wpdb; 
     $store_id = get_user_meta($user_ID, 'store_id', true);
     require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-dashboard/stylist-popup.php';
+    require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-dashboard/shopper-single.php';
 ?>
 <input id="store_id" type="hidden" value="<?= get_user_meta($user_ID, 'store_id', true); ?>"/>
 <div id="dashboard">
@@ -22,9 +23,12 @@
                             <input type="submit" id="search_btn" name="search_btn" value="&#xf002"/>
                         </div>
                     </form>
-                    <?php require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-dashboard/bulk-action-form.php';
+                    <?php 
+                    //TODO MASON: Re-enable reverse order
+                    require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-dashboard/bulk-action-form.php';
+                    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
                     if (! isset($_GET['search_query'])) {
-                        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
                         $post_args = array(
                             'post_type'      => 'shopper',
@@ -48,11 +52,7 @@
                         $the_query = new WP_Query($post_args);
 
                         if ($the_query->have_posts()) {
-                            while ($the_query->have_posts()) : 
-                                $the_query->the_post();
-                                $shopper_id = get_the_ID();
-                                require 'php_modules/template-dashboard/shopper-single.php';
-                            endwhile;
+                            echo_shoppers( $the_query );
                         } else {
                         ?>
                             <div class="box">
@@ -71,41 +71,54 @@
 		<?php
             } 
 		if (isset($_GET['search_query'])) {
-            include 'pagination.class.php';
 
-            add_filter('posts_where', 'name_filter', 10, 2); // for partial searches
             $query = new WP_Query(array(
-                'search_shopper_name' => $_GET['search_query'],
                 'post_type'           => 'shopper',
                 'post_status'         => 'publish',
-                'posts_per_page'      => - 1
+                'posts_per_page'      => - 1,
+                'meta_key'            => 'store_id',
+                'meta_vaue'           => get_user_meta( $user_ID, 'store_id', true ),
+                'paged'          => $paged,
+                'posts_per_page' => 15,
+                'orderby'        => 'date',
+                'meta_query' => array(
+                    array(
+                        'key' => 'store_id',
+                        'value' => $store_id
+                    ),
+                    array(
+                        array(
+                            'key' => 'customer_fname',
+                            'value' => $_GET['search_query'],
+                            'compare' => 'LIKE'
+                        ),
+                        array(
+                            'key' => 'customer_lname',
+                            'value' => $_GET['search_query'],
+                            'compare' => 'LIKE'
+                        ),
+                        // TODO MASON: NEED ANOTHER ONE FOR THE WHOLE NAME/REALLY JUST REPLACE THESE WITH ONE FOR THE WHOLE NAME
+                        'relation' => 'OR'
+                    ),
+                    'relation' => 'AND'
+                )
             ));
-            remove_filter('posts_where', 'name_filter', 10, 2);
 
-            $storeposts = array();
-            while ($query->have_posts()) : 
-                $query->the_post();
-                $shopper_store_id = get_post_meta(get_the_ID(), 'store_id', true);
-                if ($shopper_store_id == get_user_meta($user_ID, 'store_id', true)) {
-                    array_push($storeposts, get_the_ID());
-                }
-            endwhile;
+            echo_shoppers( $query );
+            wp_reset_postdata(); 
+?>
+      <div class="paginationWrapper">
+            <?php 
+                if (function_exists('wp_pagenavi')) {
+                    wp_pagenavi(array( 'query' => $query ));
+                } 
+            ?>
+        </div>
+<?php
+        }
+        ?>
 
-            if (count($storeposts)) {
-                $pagination = new pagination($storeposts, (isset($_GET['pageno']) ? $_GET['pageno'] : 1), 5);
-                $pagination->setShowFirstAndLast(false);
-                $pagination->setMainSeperator('  ');
-                $productPages = $pagination->getResults();
-                if (count($productPages) != 0) {
-                    $pageNumbers = '<div class="numbers">' . $pagination->getLinks($_GET) . '</div>';
-                    foreach ($productPages as $shopper_id) {
-                        require 'php_modules/template-dashboard/shopper-single.php';
-                    }
-                    echo '<div style="clear: both;"></div><div class="customPagination" style="margin-bottom:2%">' . $pageNumbers . '</div>';
-                }				
-            }
-        }?>
-
+  
                     <div class="slider">
                         <h2>International Prom Association</h2>
                         <p>

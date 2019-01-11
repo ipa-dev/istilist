@@ -6,12 +6,42 @@ $options['general-background'] = get_bloginfo( 'url' ) . '/wp-content/uploads/20
 
 remove_action( 'shutdown', 'wp_ob_end_flush_all', 1 );
 
+require_once 'api/api.php';
+
+add_action( 'rest_api_init', function () {
+    $args = array('store_id' => array( 'validate_callback' => 'validate_shoppers' ));
+    register_rest_route('istilist/v2', '/shoppers/(?P<store_id>[\d]+)', array(
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => 'get_shoppers',
+            'args' => $args,
+        ),
+        array(
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => 'create_shoppers',
+            'args' => $args
+        ),
+        array(
+            'methods' => WP_REST_Server::DELETABLE,
+            'callback' => 'delete_shoppers',
+            'args' => $args
+        ),
+        array(
+            'methods' => 'PUT',
+            'callback' => 'update_shoppers',
+            'args' => $args
+        )
+    ));
+});
+
+
 function istilist_scripts() {
     //Scripts that load on all pages
     wp_enqueue_style('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.css');
     wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), rand(1, 100), true);
     wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), rand(1, 100), true);
     wp_enqueue_script('custom-matchheight', get_bloginfo('template_directory') . '/js/custom-matchheight.js', array('jquery', 'jquery-matchheight'), rand(1, 100), true);
+    wp_enqueue_script( 'wp-api' );
 
     //Conditionally load scripts
     if (is_page( array( 'store-preferences', 'dashboard') ) ) {
@@ -406,11 +436,11 @@ function get_unique_post_meta_values($searchkey = '', $searchvalue = '', $status
 }
 
 /* Code Allows for Partial Searches */
-function name_filter($where, &$query7)
+function name_filter($where, $query)
 {
     global $wpdb;
-    if ($search_term = $query7->get('search_shopper_name')) {
-        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql(like_escape($search_term)) . '%\'';
+    if ($search_term = $query->get('search_shopper_name')) {
+        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql($wpdb->esc_like($search_term)) . '%\'';
     }
 
     return $where;

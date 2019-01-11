@@ -934,3 +934,6 @@ input[type="submit"].fa-input {
 .switch-html {
     display: none !important;
 }
+.swal2-label {
+    font-size: 25px;
+}
