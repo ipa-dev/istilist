@@ -1,135 +1,132 @@
 var baseUrl = window.location.origin;
 var storeId = document.getElementById( 'store_id' ).value;
-function sendTextNotification( shopperId ) {
-
-    //Send AJAX request to PHP script that sends text message to shopper
-    jQuery.ajax({
-        url: baseUrl + '/notify-shopper/',
-        method: 'POST',
-        data: {shopperID: shopperId},
-        error: function( e ) {
-            if ( 'na' == e ) {
-                swal({
-                    title: 'Error',
-                    text: 'This shopper did not authorize text messages.',
-                    type: 'error'
-                });
-            }
-        }
-    });
-
-    jQuery( '#' + shopperId + '-bell' ).css( 'color', '#14b9d6' );
-}
-
-function check( shopperId ) {
-    var input = document.getElementById( 'checkInput' + shopperId );
-
-    if ( '' == input.value || 'no' == input.value ) {
-        input.value = 'yes';
-        jQuery( '#checkBox' + shopperId ).append( '<i class="fa fa-check"></i>' );
-        jQuery( '#checkBox' + shopperId ).css( 'color', '#14b9d6' );
-    } else if ( 'yes' == input.value ) {
-        input.value = 'no';
-        jQuery( '#checkBox' + shopperId ).empty();
-        jQuery( '#checkBox' + shopperId ).css( 'color', '' );
-    }
-}
-
-function confirmation( event ) {
-    event.preventDefault();
-    swal({
-        title: 'Are you sure?',
-        text: 'This action cannot be undone.',
-        type: 'warning',
-        showCancelButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
-        closeOnConfirm: false,
-        closeOnCancel: true
-    }, function( isConfirm ) {
-        if ( isConfirm ) {
-            document.getElementById( 'bulkActionForm' ).submit();
-        }
-    });
-}
 
 jQuery( document ).ready( function() {
 
-    document.getElementById( 'bulkActionSubmit' ).onclick = confirmation;
+    jQuery( '#bulkActionSubmit' ).click( function() {
+        Swal({
+            title: 'Are you sure?',
+            text: 'This action cannot be undone.',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            preConfirm: function() {
+                document.getElementById( 'bulkActionForm' ).submit();
+            }
+        });
+    });
 
-    // this is for second button
+    //Send AJAX request to send text message to shopper
+    jQuery( '.notifyShopper' ).click( function() {
+        jQuery.ajax({
+            context: this,
+            url: baseUrl + '/notify-shopper/',
+            method: 'POST',
+            data: { shopperID: jQuery( this ).data( 'id' ) },
+            success: function( e ) {
+                swal({
+                    title: 'Success!',
+                    text: 'The shopper has been notified.',
+                    type: 'success'
+                });
+
+                jQuery( this ).addClass( 'active' );
+            },
+            error: function( e ) {
+                if ( 'na' == e.responseText ) {
+                    swal({
+                        title: 'Error',
+                        text: 'This shopper did not authorize text messages.',
+                        type: 'error'
+                    });
+                }
+
+                jQuery( this ).addClass( 'shopper_action_error' );
+            }
+        });
+    });
+
+    jQuery( '.checkbox' ).click( function() {
+        var inputElement = jQuery( this ).children( 'input' );
+        var newValue = ! ( 'true' == inputElement.val() );
+        inputElement.val( newValue.toString() );
+        if ( newValue ) {
+            jQuery( this ).append( '<i class="fa fa-check"></i>' );
+        } else {
+            jQuery( this ).children( 'i' ).remove();
+        }
+    });
+
+    // Place shopper_id into the div
+    // TODO MASON: Look into what this is really doing
     jQuery( '.assignStylist' ).click( function() {
-        var shopperId = jQuery( this ).attr( 'rel' );
+        var shopperId = jQuery( this ).data( 'id' );
         jQuery( '#shopper_id' ).val( shopperId );
     });
 
     // this is for 3rd button
+    // TODO MASON : Should convert this into a question with input defaulting to yes
     jQuery( '.dollar' ).click( function() {
-        var shopperId = jQuery( this ).attr( 'rel' );
-        swal({
-            title: 'Made a Purchase?',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No',
-            closeOnConfirm: false,
-            closeOnCancel: false
-        }, function( isConfirm ) {
-            if ( isConfirm ) {
+        var shopperId = jQuery( this ).data( 'id' );
+        function followUpSentAlert() {
+            Swal( 'Follow Up Sent', '', 'success' );
+            jQuery( this ).addClass( 'active' );
+        }
+        function errorProcessAlert() {
+            Swal( 'Error', 'There was an error in processing your request, please try again!', 'error' );
+            jQuery( this ).addClass( 'shopper_action_error' );
+        }
+        Swal({
+            title: 'Did the shopper make a purchase?',
+            type: 'question',
+            input: 'radio',
+            confirmButtonText: 'Next',
+            inputOptions: {
+                'true': 'Yes',
+                'false': 'No'
+            },
+            inputValidator: function( value ) {
+                return ! value && 'You must choose one option.';
+            },
+            inputClass: 'swal-radio-font'
+        }).then( function( inputValue ) {
+            if ( 'true' === inputValue.value[0] ) {
+
+                // Send Purchased Shopper Message
                 jQuery.ajax({
                     url: baseUrl + '/complete-purchase',
-                    type: 'post',
+                    method: 'POST',
                     data: {
                         'store_id': storeId,
                         'shopper_id': shopperId
                     },
-                    success: function( response ) {
-                        swal({
-                            title: 'Thank You',
-                            type: 'success'
-                        }, function() {
-                            location.reload();
-                        });
-                    },
-                    error: function( response ) {
-                        console.log( response );
-                    }
+                    success: followUpSentAlert(),
+                    error: errorProcessAlert()
                 });
             } else {
-                swal({
-                    title: 'Reason',
-                    type: 'input',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    animation: 'slide-from-top',
+
+                // Gather additional details and send Not Purchased Shopper Message
+                Swal({
+                    title: 'What was the reason?',
+                    type: 'question',
+                    input: 'text',
                     inputPlaceholder: ''
-                }, function( inputValue ) {
-                    if ( false == inputValue ) {
-                        return false;
-                    }
-                    if ( '' == inputValue ) {
-                        inputValue = '.';
-                    }
+                }).then( function( inputValue ) {
                     jQuery.ajax({
                         url: baseUrl + '/no-purchase',
-                        type: 'post',
+                        method: 'POST',
                         data: {
                             'store_id': storeId,
                             'shopper_id': shopperId,
                             'reason': inputValue
                         },
-                        success: function( response ) {
-                            swal.close();
-                            location.reload();
-                        },
-                        error: function( response ) {
-                            console.log( response );
-                        }
+                        success: followUpSentAlert(),
+                        error: errorProcessAlert()
                     });
                 });
+
+                //TODO MASON: Add .catch? here
             }
         });
     });

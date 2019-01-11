@@ -70,34 +70,6 @@
                                     $insert_form = "INSERT INTO $table_name2 (form_display_name, form_slug, form_type, is_required, is_active, store_owner_id) VALUES ('First Name', 'customer_fname', 'text', '1', '1', '".$new_user_id."'),('Last Name', 'customer_lname', 'text', '1', '1', '".$new_user_id."'), ('Profile Picture', 'profile_pic', 'file', '1', '1', '".$new_user_id."'), ('School/Event', 'school_event', 'text', '1', '1', '".$new_user_id."'),('Graduation Year', 'graduation_year', 'select', '1', '1', '".$new_user_id."'),('Email', 'customer_email', 'text', '1', '1', '".$new_user_id."'),('Phone','customer_phone', 'text', '1', '1', '".$new_user_id."'),('Address', 'customer_address', 'text', '1', '1', '".$new_user_id."'),('City', 'customer_city', 'text','1', '1', '".$new_user_id."'),('State', 'customer_state', 'text', '1', '1', '".$new_user_id."'),('ZIP', 'customer_zip', 'text', '1', '1', '".$new_user_id."'),('Designer Preference','design_preferences', 'checkbox', '1', '1', '".$new_user_id."'),('Style Preference', 'style_preferences', 'checkbox', '1', '1', '".$new_user_id."'),('Color Preferences', 'color_preferences', 'text', '1', '1', '".$new_user_id."'),('Size', 'customer_size', 'select', '1', '1', '".$new_user_id."')";
                                     $wpdb->query($insert_form);
                                 }
-                                // mail to user
-                                /*$to1 = $email_addr[0];
-                                if($options['smtp-active'] == 1){
-                                    $from1 = $options['smtp-from-email'];
-                                } else {
-                                    $from1 = "info@istilist.com";
-                                }
-
-                            	$headers1 = 'From: '.$from1. "\r\n";
-                                $headers1 .= "Reply-To: ".get_option('admin_email')."\r\n";
-                                $headers1 .= "MIME-Version: 1.0\n";
-                                $headers1 .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                            	$subject1 = "Activate your account";
-                                $msg1 = 'Welcome to '.get_bloginfo('name').'! Please click on the link to complete the registration process<br><br>Activation Link :<a href="'.get_site_url().'/activation?key='.$key.'" target="_blank">'.get_site_url().'/activation?key='.$key.'</a><br><br>Regards,<br>'.$admin_name;
-
-                                if($options['smtp-active'] != 1){
-                                    wp_mail( $to1, $subject1, $msg1, $headers1 );
-                                } else {
-                                    //smtpmailer($to1, $from1, $options['smtp-from-name'], $subject1, $msg1);
-                                    if (($error = smtpmailer($to1, $from1, $options['smtp-from-name'], $subject1, $msg1)) === true){
-                                         echo 'Email send';
-                                    } else {
-                                        echo $error;
-                                    }
-                                }*/
-                                //
-                                
-                                
                                 
                                 // Mail to admin
                                 $admin_name = get_bloginfo('name');
@@ -144,20 +116,7 @@
                                         </table><br><br>Regards,<br>'.$admin_name;
                                         
                                 wp_mail($to, $subject, $msg, $headers);
-                                        
-                                //if($options['smtp-active'] != 1){
-                                            
-                                /*} else {
-                                    echo "SMTP";
-                                    exit();
-                                    smtpmailer($to, $from, $options['smtp-from-name'], $subject, $msg);
-                                    if (($error = smtpmailer($to, $from, $options['smtp-from-name'], $subject, $msg)) === true){
-                                         echo 'Email send';
-                                    } else {
-                                        echo $error;
-                                    }
-                                }*/
-                                //
+                                                                                    
                                 header("Location: ".get_bloginfo('home')."/thank-you/?action=".encripted('registration'));
                             }
                         }

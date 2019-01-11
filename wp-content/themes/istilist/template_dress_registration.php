@@ -301,7 +301,7 @@ if (isset($_POST['download_csv'])) {
                       <form method="post" action="<?php bloginfo('url'); ?>/dress-registration">
                         <div class="searchForm section group">
                             <div class="col span_12_of_12">
-                              <input placeholder="Style No." type="text" id="search_query" name="search_query" value="<?php echo $_POST['search_query']; ?>" />
+                              <input placeholder="Style No." type="text" id="search_query" name="search_query" value="<?= isset($_POST['search_query']) ? $_POST['search_query'] : ''; ?>" />
                               <input type="submit" id="search_btn" name="search_btn" value="&#xf002" />
                             </div>
                         </div>

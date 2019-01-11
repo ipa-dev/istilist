@@ -1,12 +1,14 @@
 <?php
 global $options;
 
+remove_action( 'shutdown', 'wp_ob_end_flush_all', 1 );
+
 function istilist_scripts() {
+    //Scripts that load on all pages
     wp_enqueue_style('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.css');
-    wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), false, true);
-    wp_enqueue_script('modernizr', '/node_modules/modernizr/modernizr.js', array(), false, true);
-    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), false, true);
-    wp_enqueue_script('custom-matchheight', get_bloginfo('template_directory') . '/js/custom-matchheight.js', array('jquery', 'jquery-matchheight'), false, true);
+    wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), rand(1, 100), true);
+    wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), rand(1, 100), true);
+    wp_enqueue_script('custom-matchheight', get_bloginfo('template_directory') . '/js/custom-matchheight.js', array('jquery', 'jquery-matchheight'), rand(1, 100), true);
 
     //Conditionally load scripts
     if (is_page( array( 'store-preferences', 'dashboard') ) ) {
@@ -15,31 +17,31 @@ function istilist_scripts() {
     if ( is_page( array( 'store-preferences', 'stylist-employee', 'edit-shoppers-form' ) ) ) {
         wp_enqueue_style('footable-core', '/node_modules/footable/css/footable.core.min.css');
         wp_enqueue_style('footable-standalone', '/node_modules/footable/css/footable.standalone.min.css');
-        wp_enqueue_script('footable-all', '/node_modules/footable/dist/footable.all.min.js', array(), false, true);
-        wp_enqueue_script('custom-footable', get_bloginfo('template_directory') . '/js/custom-footable.js', array('footable-all'), false, true);
+        wp_enqueue_script('footable-all', '/node_modules/footable/dist/footable.all.min.js', array(), rand(1, 100), true);
+        wp_enqueue_script('custom-footable', get_bloginfo('template_directory') . '/js/custom-footable.js', array('footable-all'), rand(1, 100), true);
     }
     if (is_page(array('analytics-reporting', 'analytics-htmltopdf'))) {
-        wp_enqueue_script('google-charts', '//www.gstatic.com/charts/loader.js', array(), false, false);
-        wp_enqueue_script('custom-google-charts', get_bloginfo('template_directory') . '/js/custom-google-graph.js', array('google-charts'), false, false);
-        wp_enqueue_script('purchaseflow', get_bloginfo('template_directory') . '/js/purchaseflow.js', array('google-charts', 'custom-google-charts'), false, true);
-        wp_enqueue_script('trafficflow', get_bloginfo('template_directory') . '/js/trafficflow.js', array('google-charts', 'custom-google-charts'), false, true);
-        wp_enqueue_script('employeeconversion', get_bloginfo('template_directory') . '/js/employeeconversion.js', array('google-charts', 'custom-google-charts'), false, true);
-        wp_enqueue_script('sendreport-ajax', get_bloginfo('template_directory') . '/js/custom-sendreport-ajax.js', array('jquery'), false, true);
+        wp_enqueue_script('google-charts', '//www.gstatic.com/charts/loader.js', array(), rand(1, 100), false);
+        wp_enqueue_script('custom-google-charts', get_bloginfo('template_directory') . '/js/custom-google-graph.js', array('google-charts'), rand(1, 100), false);
+        wp_enqueue_script('purchaseflow', get_bloginfo('template_directory') . '/js/purchaseflow.js', array('google-charts', 'custom-google-charts'), rand(1, 100), true);
+        wp_enqueue_script('trafficflow', get_bloginfo('template_directory') . '/js/trafficflow.js', array('google-charts', 'custom-google-charts'), rand(1, 100), true);
+        wp_enqueue_script('employeeconversion', get_bloginfo('template_directory') . '/js/employeeconversion.js', array('google-charts', 'custom-google-charts'), rand(1, 100), true);
+        wp_enqueue_script('sendreport-ajax', get_bloginfo('template_directory') . '/js/custom-sendreport-ajax.js', array('jquery'), rand(1, 100), true);
     }
     if (is_page(array('purchase-texts', 'process-card'))) {
         wp_enqueue_style('sqpayment', get_bloginfo('template_directory') . '/css/sqpaymentform.css');
-        wp_enqueue_script('square-base', '//js.squareup.com/v2/paymentform', array(), false, true);
-        wp_enqueue_script('sqpayment', get_bloginfo('template_directory') . '/js/sqpaymentform.js', array('jquery', 'square-base'), false, true);
+        wp_enqueue_script('square-base', '//js.squareup.com/v2/paymentform', array(), rand(1, 100), true);
+        wp_enqueue_script('sqpayment', get_bloginfo('template_directory') . '/js/sqpaymentform.js', array('jquery', 'square-base'), rand(1, 100), true);
     }
     if (is_page(array('dress-registration', 'analytics-reporting', 'analytics-htmltopdf', 'history'))) {
         wp_enqueue_style('jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/' . wp_scripts()->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css');        
-        wp_enqueue_script('jquery-ui-datepicker', '', array('jquery'), false, true);
-        wp_enqueue_script( 'custom-datepicker', get_bloginfo('template_directory') . '/js/custom-datepicker.js', array('jquery', 'jquery-ui-datepicker'), false, true);
+        wp_enqueue_script('jquery-ui-datepicker', '', array('jquery'), rand(1, 100), true);
+        wp_enqueue_script( 'custom-datepicker', get_bloginfo('template_directory') . '/js/custom-datepicker.js', array('jquery', 'jquery-ui-datepicker'), rand(1, 100), true);
     }
     if ( is_page( array( 'edit-shoppers-form', 'stylist-employee') ) ) {
         wp_enqueue_style('switch-button', get_bloginfo('template_directory') . '/css/jquery.switchButton.css', array('jquery'));
-        wp_enqueue_script('jquery-switchbutton', get_bloginfo('template_directory') . '/js/jquery.switchButton.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget'), false, true);
-        wp_enqueue_script( 'custom-switchbutton', get_bloginfo( 'template_directory' ) . '/js/custom-switchbutton.js', array('jquery', 'jquery-switchbutton'), false, true);
+        wp_enqueue_script('jquery-switchbutton', get_bloginfo('template_directory') . '/js/jquery.switchButton.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget'), rand(1, 100), true);
+        wp_enqueue_script( 'custom-switchbutton', get_bloginfo( 'template_directory' ) . '/js/custom-switchbutton.js', array('jquery', 'jquery-switchbutton'), rand(1, 100), true);
     }
 
     if ( is_page( array( 'dress-registration' ) ) ) {
@@ -49,16 +51,16 @@ function istilist_scripts() {
     }
     if ( is_page( array( 'dashboard', 'history', 'self-registration' ) ) ) {
         wp_enqueue_style('fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css');
-        wp_enqueue_script('jquery-fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js', array('jquery'), false, true);
-        wp_enqueue_script('custom-fancybox', get_bloginfo( 'template_directory' ) . '/js/custom-fancybox.js', array('jquery', 'jquery-fancybox'), false, true);;
+        wp_enqueue_script('jquery-fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js', array('jquery'), rand(1, 100), true);
+        wp_enqueue_script('custom-fancybox', get_bloginfo( 'template_directory' ) . '/js/custom-fancybox.js', array('jquery', 'jquery-fancybox'), rand(1, 100), true);;
         
         if (is_page(array('history', 'dashboard'))) {
-            wp_enqueue_script('custom-shopper-actions', get_bloginfo( 'template_directory' ) . '/js/custom-shopper-actions.js', array('jquery', 'swal2'), false, true);
+            wp_enqueue_script('custom-shopper-actions', get_bloginfo( 'template_directory' ) . '/js/custom-shopper-actions.js', array('jquery', 'swal2', 'custom-fancybox'), rand(1, 100), true);
         }
         if (is_page(array('self-registration'))) {
-            wp_enqueue_script('jquery-validate', '/node_modules/jquery-validation/dist/jquery.validate.min.js', array('jquery'), false, true);
-            wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), false, true);
-            wp_enqueue_script('custom-validate', get_bloginfo('template_directory') . '/js/custom-validate.js', array('jquery', 'jquery-validate', 'additional-methods'), false, true);
+            wp_enqueue_script('jquery-validate', '/node_modules/jquery-validation/dist/jquery.validate.min.js', array('jquery'), rand(1, 100), true);
+            wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), rand(1, 100), true);
+            wp_enqueue_script('custom-validate', get_bloginfo('template_directory') . '/js/custom-validate.js', array('jquery', 'jquery-validate', 'additional-methods'), rand(1, 100), true);
         }
     }
 }
@@ -96,9 +98,6 @@ function authorize_controller_path($default_path)
 
 add_filter('json_api_authorize_controller_path', 'authorize_controller_path');
 
-
-
-
 function revslider_scripts_cleanup()
 {
     //DeRegister jquery.themepunch.tools.min
@@ -122,12 +121,6 @@ function new_mail_from_name($old)
     return $site_title;
 }
 
-/*add_role('storeowner', 'Store Owner', array(
-    'read' => true,
-    'edit_posts' => true,
-    'delete_posts' => true,
-    'upload_files' => true
-));*/
 add_role('storeowner', 'Store Owner');
 add_role('storeemployee', 'Store Employee');
 add_role('storesupervisor', 'Store Supervisor');
@@ -148,6 +141,7 @@ register_nav_menus(array(
 
 register_sidebar(array(
     'name'=>'Sidebar',
+    'id' => 'sidebar',
     'before_widget' => '<div>',
     'after_widget' => '</div>',
     'before_title' => '<h2>',
@@ -156,6 +150,7 @@ register_sidebar(array(
 
 register_sidebar(array(
     'name'=>'Dashboard Banner',
+    'id' => 'dashboard-banner',
     'before_widget' => '<div>',
     'after_widget' => '</div>',
     'before_title' => '<h2 style="display:none;">',
@@ -167,21 +162,6 @@ add_image_size('img_49_49', 49, 49, array('center', 'center'), true);
 add_image_size('img_77_77', 77, 77, array('center', 'center'), true);
 add_image_size('img_982_379', 982, 379, array('center', 'center'), true);
 
-function content($limit, $postid)
-{
-    $post = get_page($postid);
-    $fullContent = $post->post_content;
-    $content = explode(' ', $fullContent, $limit);
-    if (count($content)>=$limit) {
-        array_pop($content);
-        $content = implode(" ", $content).'...';
-    } else {
-        $content = implode(" ", $content);
-    }
-    $content = preg_replace('/\[.+\]/', '', $content);
-    $content = str_replace(']]>', ']]&gt;', $content);
-    return $content;
-}
 function encripted($data)
 {
     $key1 = '644CBEF595BC9';
@@ -309,7 +289,7 @@ function get_shopper_email($shopper_id)
     return $result->customer_email;
 }
 
-function check_is_active($form_slug)
+function check_is_active( $form_slug )
 {
     global $wpdb;
     global $user_ID;
@@ -323,24 +303,6 @@ function check_is_active($form_slug)
         }
     }
 }
-
-/*add_filter('manage_users_columns', 'pippin_add_user_id_column');
-function pippin_add_user_id_column($columns) {
-    $columns['user_status'] = 'User Status';
-    return $columns;
-}
-
-add_action('manage_users_custom_column',  'pippin_show_user_id_column_content', 10, 3);
-function pippin_show_user_id_column_content($value, $column_name, $user_id) {
-    $user = get_userdata( $user_id );
-    if ( 'user_status' == $column_name ){
-       if($user->user_status == 1){
-           $status = "<strong style='color:#00FF00;'>Active</strong>";
-       }
-    }
-        return $status;
-    return $value;
-}*/
 
 function excerpt($limit)
 {
@@ -357,78 +319,14 @@ function excerpt($limit)
 
 function is_user_active($user_id)
 {
-    global $wpdb;
     $user_status = get_the_author_meta('user_status', $user_id);
+    $color = 'red';
+    $title = 'Inactive';
     if ($user_status == 1) {
-        $status = '<div style="color:green; text-align:center;" title="Active"><i class="fa fa-circle"></i></div>';
-    } else {
-        $status = '<div style="color:red; text-align:center;" title="Inactive"><i class="fa fa-circle"></i></div>';
+        $color = 'green';
+        $title = 'Active';
     }
-    return $status;
-}
-
-function tz_list()
-{
-    $zones_array = array();
-    $timestamp = time();
-    foreach (timezone_identifiers_list(DateTimeZone::AMERICA) as $key => $zone) {
-        //if ( preg_match( '/^(America)\//', $zone['timezone_id'] )){
-        date_default_timezone_set($zone);
-        $zones_array[$key]['zone'] = $zone;
-        $zones_array[$key]['diff_from_GMT'] = 'UTC/GMT ' . date('P', $timestamp);
-        //}
-    }
-    return $zones_array;
-}
-
-function smtpmailer($to, $from, $from_name, $subject, $body)
-{
-    $mail = new PHPMailer();  // create a new object
-    $mail->IsSMTP(); // enable SMTP
-    $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
-    $mail->SMTPAuth = true;  // authentication enabled
-    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-    //$mail->Host = 'smtp.gmail.com';
-        $mail->Host = 'mail.istilist.com';
-    $mail->Port = 465;
-    //$mail->Username = 'bhulbhal1981@gmail.com';
-    //$mail->Password = 'bhulbhal098';
-    $mail->Username = 'info@istilist.com';
-    $mail->Password = 'Formal!1468';
-    $mail->SetFrom($from, $from_name);
-    $mail->Subject = $subject;
-    $mail->IsHTML(true);
-    $mail->Body = $body;
-    $mail->AddAddress($to);
-    if (!$mail->Send()) {
-        $error = 'Mail error: '.$mail->ErrorInfo;
-    } else {
-        $error = 'Message sent!';
-    }
-}
-
-function smtpmailer1($to, $from, $from_name, $subject, $body, $smtp_user, $smtp_pass)
-{
-    $mail = new PHPMailer();  // create a new object
-    $mail->IsSMTP(); // enable SMTP
-    $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
-    $mail->SMTPAuth = true;  // authentication enabled
-    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-    //$mail->Host = 'smtp.gmail.com';
-        $mail->Host = 'mail.istilist.com';
-    $mail->Port = 465;
-    $mail->Username = $smtp_user;
-    $mail->Password = $smtp_pass;
-    $mail->SetFrom($from, $from_name);
-    $mail->Subject = $subject;
-    $mail->IsHTML(true);
-    $mail->Body = $body;
-    $mail->AddAddress($to);
-    if (!$mail->Send()) {
-        $error = 'Mail error: '.$mail->ErrorInfo;
-    } else {
-        $error = 'Message sent!';
-    }
+    return '<div style="color:' . $color . 'text-align:center;" title="' . $title . '"><i class="fa fa-circle"></i></div>';
 }
 
 /*************************/
@@ -466,7 +364,7 @@ function add_scripts()
 
     if ($current_screen = 'users.php') {
         global $wpdb;
-        if ($_GET['up_user_status'] == 'Deactivate') {
+        if (isset($_GET['up_user_status']) && $_GET['up_user_status'] == 'Deactivate') {
             $uid = $_GET['uid'];
             $user_status = 1;
             $wpdb->update($wpdb->users, array('user_status' => $user_status), array('ID' => $uid));
@@ -474,12 +372,11 @@ function add_scripts()
             $current_url .= $_SERVER['HTTP_HOST']; // Get host
             $path = explode('?', $_SERVER['REQUEST_URI']); // Blow up URI
             $current_url .= $path[0]; // Only use the rest of URL - before any parameters
-            //$current_url = urlencode( $current_url ); // Encode it for use
             ?>
 				<script>window.location="<?php echo $current_url; ?>";</script>
 			<?php
         }
-        if ($_GET['up_user_status'] == 'Activate') {
+        if (isset($_GET['up_user_status']) && $_GET['up_user_status'] == 'Activate') {
             $uid = $_GET['uid'];
             $user_status = 2;
             $wpdb->update($wpdb->users, array('user_status' => $user_status), array('ID' => $uid));
@@ -487,7 +384,6 @@ function add_scripts()
             $current_url .= $_SERVER['HTTP_HOST']; // Get host
             $path = explode('?', $_SERVER['REQUEST_URI']); // Blow up URI
             $current_url .= $path[0]; // Only use the rest of URL - before any parameters
-            //$current_url = urlencode( $current_url ); // Encode it for use
             ?>
 				<script>window.location="<?php echo $current_url; ?>";</script>
 			<?php
@@ -593,4 +489,38 @@ function active_section( $active_section, $test_string ) {
         return 'activeSection';
     }
 }
+
+$optional_shopper_fields = array('customer_fname', 'customer_lname', 'school_event', 'graduation_year', 'customer_email', 
+'customer_phone', 'customer_address', 'customer_city', 'customer_state', 'customer_phone',
+'customer_address', 'customer_city', 'customer_state', 'customer_zip', 'design_preferences',
+'style_preferences', 'color_preferences', 'customer_size');
+
+//TODO MASON: COMBINE THESE FUNCTIONS IN SOME WAY
+function push_active_sections_headers( $base_array ) {
+    foreach ( $optional_shopper_fields as $optional_shopper_field ) {
+        if ( check_is_active( $optional_shopper_field ) == 1) {
+            array_push( $base_array, $optional_shopper_field );
+        }
+    }
+    return $base_array;
+}
+
+function push_active_sections_meta_values( $base_array, $post_id ) {
+    foreach ( $optional_shopper_fields as $optional_shopper_field ) {
+        if ( check_is_active( $optional_shopper_field ) == 1) {
+            array_push( $base_array, get_post_meta( $post_id, $optional_shopper_field, true ) );
+        }
+    }
+
+    if (check_is_active('customer_phone') == 1) { //TODO MASON: here there are two fields
+        array_push($base_array, get_post_meta($post->ID, 'promo_list_timestamp', true));
+    }
+
+    if (get_post_meta($post->ID, 'complete_purchase', true) == 1) {
+        array_push($output, 'yes');
+    } else {
+        array_push($output, 'no');
+    }
+}
+//END NEEDED COMBINATION
 ?>

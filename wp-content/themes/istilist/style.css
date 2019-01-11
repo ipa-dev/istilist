@@ -4,6 +4,7 @@
     Author URI: http://coregensolutions.com
     Version: 9.7.2015
  **/
+
 #delete, #changepass, #delete_shopper, div.submit {
     background: #14b9d6;
     border-radius: 5px;
@@ -328,7 +329,7 @@ select{
     color: #000000;
     line-height: 150%;
 }
-.commonForm label span, .commonForm1 label span, label span{
+.commonForm label span, .commonForm1 label span{
     color: red;
 }
 label.error{
@@ -509,7 +510,7 @@ label.error{
     display: inline-block;
     vertical-align: top;
 }
-.box .box_actions li a {
+.box .box_actions li a, .box .box_actions li span {
     border: 1px solid #cccccc;
     border-radius: 100%;
     color: #616f77;
@@ -926,4 +927,7 @@ input[type="submit"].fa-input {
     width: 25%;
     margin-bottom: 2%;
     float: right;
+}
+.shopper_action_error {
+    color: #D8000C !important;
 }

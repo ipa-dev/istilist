@@ -7,56 +7,15 @@ $store_id = get_user_meta($user_ID, 'store_id', true);
 if (isset($_POST['download_csv'])) {
     $output_filename = 'export_' . strftime('%Y-%m-%d-%H-%M-%S')  . '.csv';
     $output_handle = @fopen('php://output', "a");
-
     $csv_header = array();
+
     array_push($csv_header, 'registered_timestamp');
 
-    if (check_is_active('customer_fname') == 1) {
-        array_push($csv_header, 'customer_fname');
-    }
-    if (check_is_active('customer_lname') == 1) {
-        array_push($csv_header, 'customer_lname');
-    }
-    if (check_is_active('school_event') == 1) {
-        array_push($csv_header, 'school_event');
-    }
-    if (check_is_active('graduation_year') == 1) {
-        array_push($csv_header, 'graduation_year');
-    }
-    if (check_is_active('customer_email') == 1) {
-        array_push($csv_header, 'customer_email');
-    }
-    if (check_is_active('customer_phone') == 1) {
-        array_push($csv_header, 'customer_phone');
-        array_push($csv_header, 'received_yes_or_no');
-    }
-    if (check_is_active('customer_address') == 1) {
-        array_push($csv_header, 'customer_address');
-    }
-    if (check_is_active('customer_city') == 1) {
-        array_push($csv_header, 'customer_city');
-    }
-    if (check_is_active('customer_state') == 1) {
-        array_push($csv_header, 'customer_state');
-    }
-    if (check_is_active('customer_zip') == 1) {
-        array_push($csv_header, 'customer_zip');
-    }
+    $csv_header = push_active_sections_headers( $csv_header );
 
-    if (check_is_active('design_preferences') == 1) {
-        array_push($csv_header, 'design_preferences');
-    }
-    if (check_is_active('style_preferences') == 1) {
-        array_push($csv_header, 'style_preferences');
-    }
-    if (check_is_active('color_preferences') == 1) {
-        array_push($csv_header, 'color_preferences');
-    }
-    if (check_is_active('customer_size') == 1) {
-        array_push($csv_header, 'customer_size');
-    }
     array_push($csv_header, 'purchased');
     array_push($csv_header, 'purchased_date');
+
     $table_name2 = $wpdb->prefix.'dynamic_form';
     $sql2 = "SELECT * FROM $table_name2 WHERE store_owner_id = $store_id AND is_custom = 1 ORDER BY id";
     $results2 = $wpdb->get_results($sql2);
@@ -65,7 +24,6 @@ if (isset($_POST['download_csv'])) {
             array_push($csv_header, $r2->form_slug);
         }
     }
-
 
     fputcsv($output_handle, $csv_header);
 
@@ -90,56 +48,11 @@ if (isset($_POST['download_csv'])) {
     foreach ($posts as $post) {
         $output = array();
         array_push($output, get_the_date("m-d-Y H:i:s", $post->ID));
-        if (check_is_active('customer_fname') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_fname', true));
-        }
-        if (check_is_active('customer_lname') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_lname', true));
-        }
-        if (check_is_active('school_event') == 1) {
-            array_push($output, get_post_meta($post->ID, 'school_event', true));
-        }
-        if (check_is_active('graduation_year') == 1) {
-            array_push($output, get_post_meta($post->ID, 'graduation_year', true));
-        }
-        if (check_is_active('customer_email') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_email', true));
-        }
-        if (check_is_active('customer_phone') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_phone', true));
-            array_push($output, get_post_meta($post->ID, 'promo_list_timestamp', true));
-        }
-        if (check_is_active('customer_address') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_address', true));
-        }
-        if (check_is_active('customer_city') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_city', true));
-        }
-        if (check_is_active('customer_state') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_state', true));
-        }
-        if (check_is_active('customer_zip') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_zip', true));
-        }
 
-        if (check_is_active('design_preferences') == 1) {
-            array_push($output, get_post_meta($post->ID, 'design_preferences', true));
-        }
-        if (check_is_active('style_preferences') == 1) {
-            array_push($output, get_post_meta($post->ID, 'style_preferences', true));
-        }
-        if (check_is_active('color_preferences') == 1) {
-            array_push($output, get_post_meta($post->ID, 'color_preferences', true));
-        }
-        if (check_is_active('customer_size') == 1) {
-            array_push($output, get_post_meta($post->ID, 'customer_size', true));
-        }
-        if (get_post_meta($post->ID, 'complete_purchase', true) == 1) {
-            array_push($output, 'yes');
-        } else {
-            array_push($output, 'no');
-        }
+        $output = push_active_sections_meta_values( $output, $post->ID );
+
         array_push($output, get_the_modified_date("m-d-Y H:i:s", $post->ID));
+
         $table_name2 = $wpdb->prefix.'dynamic_form';
         $sql2 = "SELECT * FROM $table_name2 WHERE store_owner_id = $store_id AND is_custom = 1 ORDER BY id";
         $results2 = $wpdb->get_results($sql2);
@@ -155,12 +68,11 @@ if (isset($_POST['download_csv'])) {
     fclose($output_handle);
     exit;
 }
+get_header();
+if (is_user_logged_in()) {
+     global $user_ID;
+     $store_id = get_user_meta($user_ID, 'store_id', true);
 ?>
-<?php get_header(); ?>
-<?php if (is_user_logged_in()) {
-    ?>
-<?php global $user_ID; ?>
-<?php $store_id = get_user_meta($user_ID, 'store_id', true); ?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
 	    <div class="section group">
@@ -169,7 +81,7 @@ if (isset($_POST['download_csv'])) {
                 <div class="dash_content">
                     <h1>
                         <?php the_title(); ?>
-                        <span class="h1inlinelink"><a href="javascript:void(0)" id="emailthisreport">Email this report</a></span>
+                        <span class="h1inlinelink"><span id="emailthisreport">Email this report</span></span>
                         <span class="h1inlinelink">
                             <form method="post" id="download_form" action="">
                                 <input type="submit" name="download_csv" class="download_csv" value="&#xf019; Export Shoppers to CSV" />
@@ -206,7 +118,4 @@ if (isset($_POST['download_csv'])) {
 	    </div>
 	</div>
 </div>
-<?php
-} else {
-        header('Location: '.get_bloginfo('url').'/login');
-    } ?>
+<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>

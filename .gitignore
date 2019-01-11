@@ -8,3 +8,4 @@ wp-config-sample.php
 .env
 node_modules
 docker-compose.yml
+wp-content/debug.log

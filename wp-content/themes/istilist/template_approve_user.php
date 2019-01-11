@@ -30,16 +30,7 @@
     $subject1 = "Your iSTiLiST account has been activated";
     $msg1 = 'Welcome to '.get_bloginfo('name').'! Please click on the link to login to your account.<br><br><a href="'.get_site_url().'" target="_blank">'.get_site_url().'</a><br><br>Regards,<br>'.get_bloginfo('name');
                                 
-    //if($options['smtp-active'] != 1){
     wp_mail($to1, $subject1, $msg1, $headers1);
-    /*} else {
-        //smtpmailer($to1, $from1, $options['smtp-from-name'], $subject1, $msg1);
-        if (($error = smtpmailer($to1, $from1, $options['smtp-from-name'], $subject1, $msg1)) === true){
-             echo 'Email send';
-        } else {
-            echo $error;
-        }
-    }*/
 }
                         ?>
                     </div>

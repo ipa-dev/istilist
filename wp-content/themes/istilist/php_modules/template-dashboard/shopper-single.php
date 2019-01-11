@@ -93,18 +93,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)" 
-                            id="<?= $shopper_id ?>-bell"
-                            class="notifyShopper <?= is_active($shopper_id, "notified") ?>"
-                            onClick="sendTextNotification(<?= $shopper_id ?>)"
-                            rel="<?= $shopper_id ?>">
+                            <span class="notifyShopper <?= is_active($shopper_id, "notified") ?>" data-id="<?= $shopper_id ?>">
                                 <i class="fa fa-bell"></i>
-                            </a>
+                            </span>
                         </li>
                         <li>
                                 <a href="#stylistpopup" 
                                          class="assignStylist <?= is_active($shopper_id, "assign_stylist") ?>"
-                                         rel="<?= $shopper_id ?>">
+                                         data-id="<?= $shopper_id ?>">
                                 <i class="icon-clothes4"></i>
                             </a>
                         </li>
@@ -118,18 +114,17 @@
                             </form>
                         </li>
                         <li>
-                            <a href="javascript:void(0)" 
-                                class="dollar <?= is_active($shopper_id, "dollar_button_clicked"); ?>"
-                                rel="<?= $shopper_id ?>">
+                            <span class="dollar <?= is_active($shopper_id, "dollar_button_clicked"); ?>" data-id="<?= $shopper_id ?>">
                                 <i class="fa fa-usd"></i>
-                            </a>
+                            </span>
                         </li>
                         <li>
-                            <a href="javascript:void(0);" onclick="check(<?= $shopper_id ?>);"
-                                id="checkBox<?= $shopper_id ?>"></a>
+                            <span class="checkbox active">
+                                <input type="hidden" value="false" form="bulkActionForm"
+                                    data-id="<?= $shopper_id ?>" name="<?= $shopper_id ?>"/>
+                            </span>
                         </li>
-                       <input type="hidden" value="no" form="bulkActionForm"
-                                id="checkInput<?= $shopper_id ?>" name="<?= $shopper_id ?>"/>
+                       
                     </ul>
                 </div>
                 <div style="clear: both;"></div>

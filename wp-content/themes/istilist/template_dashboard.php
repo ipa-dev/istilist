@@ -18,7 +18,7 @@
                     </div>
                     <form method="get" id="dash_search" action="<?= get_bloginfo('url'); ?>/dashboard">
                         <div class="searchForm">
-                            <input type="text" id="search_query" name="search_query" value="<?php echo $_GET['search_query']; ?>"/>
+                            <input type="text" id="search_query" name="search_query" value="<?= isset($_GET['search_query']) ? $_GET['search_query'] : ''; ?>"/>
                             <input type="submit" id="search_btn" name="search_btn" value="&#xf002"/>
                         </div>
                     </form>

@@ -6,6 +6,7 @@
             <div class="col span_4_of_12"></div>
             <div class="col span_4_of_12">
             <?php
+                $errorCode = 0;
                 if (isset($_POST['login'])) {
                     global $wpdb;
                     $username = $wpdb->escape($_POST['useremail']);
@@ -23,27 +24,21 @@
                         } else {
                             header('Location: '.get_bloginfo('home').'/dashboard');
                         }
-                        //exit();
                     } else {
                         $errorCode = 2; // invalid login details
                     }
                 }
                 ?>
                 
-                <div class="logo"><h1><?php echo $options['general-logo']; ?></h1></div>
+                <div class="logo"><h1><?= $options['general-logo']; ?></h1></div>
                 
                 <div class="loginSection">
                     <div class="box">
-                        <?php if ($errorCode == 1) {
-                    ?>
+                        <?php if ($errorCode == 1) { ?>
                             <div class="errorMsg">Incorrect login details...Please try again.</div>
-                        <?php
-                } ?>
-                        <?php if ($errorCode == 2) {
-                    ?>
+                        <?php } if ($errorCode == 2) { ?>
                             <div class="infoMsg">Your istilist user account has not been activated. Please check your inbox and spam/junk folder for your approval email.</div>
-                        <?php
-                } ?>
+                        <?php } ?>
                         <div class="commonForm">
                             <form method="post" action="">
                                 <div>

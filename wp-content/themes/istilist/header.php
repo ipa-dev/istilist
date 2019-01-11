@@ -1,8 +1,5 @@
-<?php ob_start(); ?>
-<?php
-if (!isset($_SESSION)) {
-    session_start();
-}
+<?php 
+ob_start();
 if (is_user_logged_in()) {
     global $user_ID;
     $timezone = get_user_meta($user_ID, 'selecttimezone', true);
