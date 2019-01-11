@@ -9,8 +9,8 @@
                 $errorCode = 0;
                 if (isset($_POST['login'])) {
                     global $wpdb;
-                    $username = $wpdb->prepare($_POST['useremail']);
-                    $pwd = $wpdb->prepare($_POST['pwd']);
+                    $username = $_POST['useremail'];
+                    $pwd = $_POST['pwd'];
                     $user_status = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->users WHERE user_login = %s", $username));
                     if ($user_status[0]->user_status == 2) {
                         $login_data = array();

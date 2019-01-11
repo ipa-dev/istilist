@@ -11,25 +11,27 @@
         $token = getenv('TWILIO_AUTH_KEY');
 
         $client = new Client($sid, $token);
-        $sms = $client->account->messages->create(
-    
-        '+1'.get_post_meta($_POST['shopperID'], 'customer_phone', true),
+        try {
+            $sms = $client->account->messages->create(
         
-        array(
-            'from' => getenv('TWILIO_DEFAULT_NUMBER'),
+                '+1'.get_post_meta($_POST['shopperID'], 'customer_phone', true),
+            
+                array(
+                    'from' => getenv('TWILIO_DEFAULT_NUMBER'),
+                
+                    // the sms body
+                    'body' => "Hey, ".get_post_meta($_POST['shopperID'], 'customer_fname', true).", your fitting room at ".get_user_meta(get_post_meta($_POST['shopperID'], 'store_id', true), 'store_name', true)." is now available."
+                )
+            );
+        } catch ( Twilio\Exceptions\RestException $e ) {
+            if ( $e->getCode() == 21610 ) {
+                header('HTTP/1.1 500 Internal Server Error');
+                die( 'na' );
+            }
+        }
         
-            // the sms body
-            'body' => "Hey, ".get_post_meta($_POST['shopperID'], 'customer_fname', true).", your fitting room at ".get_user_meta(get_post_meta($_POST['shopperID'], 'store_id', true), 'store_name', true)." is now available."
-        )
-        );
-        // TODO MASON: figure out twilio error handling
-        // if ($sms->code == '21610') { //error code for blacklisted number
-        //     echo "na";
-        // }
-        // else {
-            add_post_meta($_POST['shopperID'], 'notified', 'true');
-        // }
+        add_post_meta($_POST['shopperID'], 'notified', 'true', true);
     } else {
         header('HTTP/1.1 500 Internal Server Error');
-        echo die("na");
+        die( 'na' );
     }

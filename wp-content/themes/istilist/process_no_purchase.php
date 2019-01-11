@@ -38,7 +38,7 @@ $styist_id = get_post_meta($shopper_id, 'stylist_id', true);
 $stylist_name = get_the_author_meta('display_name', $styist_id);
 $msg_body2 = str_replace("{Stylist's Name}", $stylist_name, $msg_body1);
 
-if ($options['smtp-active'] == 1) {
+if (isset($options['smtp-active']) && $options['smtp-active'] == 1) {
     $from = get_user_meta($user_ID, 'email_to_shopper', true);
 } else {
     $from = get_user_meta($user_ID, 'email_to_shopper', true);

@@ -1,8 +1,8 @@
 <?php /* Template Name: Add Size */ ?>
-<?php get_header(); ?>
-<?php if (is_user_logged_in()) {
-    ?>
-<?php global $user_ID; ?>
+<?php get_header();
+if (is_user_logged_in()) {
+    global $user_ID; 
+?>
 <div id="dashboard">
 	<div class="maincontent noPadding">
 	    <div class="section group">
@@ -52,7 +52,4 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-<?php
-} else {
-                                header('Location: '.get_bloginfo('url').'/login');
-                            } ?>
+<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>

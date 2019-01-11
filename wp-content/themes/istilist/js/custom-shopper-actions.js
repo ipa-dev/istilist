@@ -24,7 +24,7 @@ jQuery( document ).ready( function() {
             url: baseUrl + '/notify-shopper/',
             method: 'POST',
             data: { shopperID: jQuery( this ).data( 'id' ) },
-            success: function( e ) {
+            success: function( response ) {
                 swal({
                     title: 'Success!',
                     text: 'The shopper has been notified.',
@@ -33,8 +33,8 @@ jQuery( document ).ready( function() {
 
                 jQuery( this ).addClass( 'active' );
             },
-            error: function( e ) {
-                if ( 'na' == e.responseText ) {
+            error: function( response ) {
+                if ( 'na' == response.responseText ) {
                     swal({
                         title: 'Error',
                         text: 'This shopper did not authorize text messages.',
@@ -77,7 +77,7 @@ jQuery( document ).ready( function() {
             Swal( 'Error', 'There was an error in processing your request, please try again!', 'error' );
             jQuery( this ).addClass( 'shopper_action_error' );
         }
-        Swal({
+        Swal.queue([ {
             title: 'Did the shopper make a purchase?',
             type: 'question',
             input: 'radio',
@@ -89,45 +89,47 @@ jQuery( document ).ready( function() {
             inputValidator: function( value ) {
                 return ! value && 'You must choose one option.';
             },
-            inputClass: 'swal-radio-font'
-        }).then( function( inputValue ) {
-            if ( 'true' === inputValue.value[0] ) {
+            inputClass: 'swal-radio-font',
+            preConfirm: function( inputValue ) {
+                console.log( inputValue );
+                if ( 'true' == inputValue ) {
 
-                // Send Purchased Shopper Message
-                jQuery.ajax({
-                    url: baseUrl + '/complete-purchase',
-                    method: 'POST',
-                    data: {
-                        'store_id': storeId,
-                        'shopper_id': shopperId
-                    },
-                    success: followUpSentAlert(),
-                    error: errorProcessAlert()
-                });
-            } else {
-
-                // Gather additional details and send Not Purchased Shopper Message
-                Swal({
-                    title: 'What was the reason?',
-                    type: 'question',
-                    input: 'text',
-                    inputPlaceholder: ''
-                }).then( function( inputValue ) {
+                    // Send Purchased Shopper Message
                     jQuery.ajax({
-                        url: baseUrl + '/no-purchase',
+                        url: baseUrl + '/complete-purchase',
                         method: 'POST',
                         data: {
                             'store_id': storeId,
-                            'shopper_id': shopperId,
-                            'reason': inputValue
+                            'shopper_id': shopperId
                         },
                         success: followUpSentAlert(),
                         error: errorProcessAlert()
                     });
-                });
+                } else {
 
-                //TODO MASON: Add .catch? here
+                    // Gather additional details and send Not Purchased Shopper Message
+                    Swal({
+                        title: 'What was the reason?',
+                        type: 'question',
+                        input: 'text',
+                        inputPlaceholder: ''
+                    }).then( function( inputValue ) {
+                        jQuery.ajax({
+                            url: baseUrl + '/no-purchase',
+                            method: 'POST',
+                            data: {
+                                'store_id': storeId,
+                                'shopper_id': shopperId,
+                                'reason': inputValue
+                            },
+                            success: followUpSentAlert(),
+                            error: errorProcessAlert()
+                        });
+                    });
+
+                    //TODO MASON: Add .catch? here
+                }
             }
-        });
+        } ]);
     });
 });

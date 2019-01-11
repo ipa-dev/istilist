@@ -1,5 +1,8 @@
 <?php
 global $options;
+$options['general-copyright'] = 'Copyright © All Rights Reserved ' . date( 'Y' ) . ' iSTiLiST - International Prom Association';
+$options['general-logo'] = 'istilist';
+$options['general-background'] = get_bloginfo( 'url' ) . '/wp-content/uploads/2017/03/istilist-main-image-background-compressor.jpg';
 
 remove_action( 'shutdown', 'wp_ob_end_flush_all', 1 );
 
