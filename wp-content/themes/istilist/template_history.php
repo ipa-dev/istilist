@@ -5,7 +5,6 @@ if (is_user_logged_in()) {
     global $user_ID;
     $store_id = get_user_meta($user_ID, 'store_id', true); 
 ?>
-<input id="store_id" type="hidden" value="<?= get_user_meta($user_ID, 'store_id', true); ?>"/>
 <div id="dashboard">
 	<div class="maincontent noPadding">
 	    <div class="section group">

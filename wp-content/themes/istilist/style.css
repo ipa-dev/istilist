@@ -937,3 +937,6 @@ input[type="submit"].fa-input {
 .swal2-label {
     font-size: 25px;
 }
+.popupform {
+    font-size: 100%;
+}

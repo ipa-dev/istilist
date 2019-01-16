@@ -1,21 +1,30 @@
-var baseUrl = window.location.origin;
-var storeId = document.getElementById( 'store_id' ).value;
-
 jQuery( document ).ready( function() {
+    var baseUrl = window.location.origin;
     var storeId = document.getElementById( 'store_id' ).value;
+
+    // Get store stylist info
+    var fittingRoomHTML = '<label>Fitting Room ID</label><input type="number" pattern="[0-9]*" inputmode="numeric" id="fitting_room_id"/>';
+    var stylistsHTML = '<label>Select Stylist</label><select id="stylist_id">';
+
     jQuery.ajax({
-        url: window.location.origin + '/wp-json/istilist/v2/shoppers/' + storeId,
+        url: baseUrl + '/wp-json/istilist/v2/stylists/' + storeId,
         method: 'GET',
-        data: {
-            'paged': '0'
-        },
         success: function( response ) {
-            console.log( response );
+            var i = 0;
+            response =  JSON.parse( response );
+            for ( ; i < response.length; i++ ) {
+                stylistsHTML += '<option value="' + response[i].id + '">' + response[i].display_name + '</option>';
+            }
         },
         error: function( response ) {
             console.log( response );
+        },
+        complete: function() {
+            stylistsHTML += '</select>';
         }
     });
+
+    // End get stylist info
 
     jQuery( '#bulkActionSubmit' ).click( function() {
         Swal({
@@ -73,10 +82,30 @@ jQuery( document ).ready( function() {
     });
 
     // Place shopper_id into the div
-    // TODO MASON: Look into what this is really doing
+    // TODO MASON: theoretically could get into race condition with needed info above
     jQuery( '.assignStylist' ).click( function() {
-        var shopperId = jQuery( this ).data( 'id' );
-        jQuery( '#shopper_id' ).val( shopperId );
+        Swal({
+            title: 'Assign Stylist',
+            html: stylistsHTML + '<br/>' + fittingRoomHTML,
+            preConfirm: function() {
+                var fittingRoomId = document.getElementById( 'fitting_room_id' ).value;
+                var stylistId = document.getElementById( 'stylist_id' ).value;
+                jQuery.ajax({
+                    url: window.location.origin + '/process-assign-stylist/',
+                    method: 'POST',
+                    data: {
+                        stylistId: stylistId,
+                        fittingRoomId: fittingRoomId,
+                        shopperId: jQuery( this ).data( 'id' ),
+                        assignStylist: 'true'
+                    },
+                    success: function( response ) {
+                    },
+                    error: function( response ) {
+                    }
+                });
+            }
+        });
     });
 
     // Purchased or Not Button

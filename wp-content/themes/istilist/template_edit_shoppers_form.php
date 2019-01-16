@@ -14,17 +14,7 @@
                             global $wpdb;
     global $user_ID;
     $store_id = get_user_meta($user_ID, 'store_id', true);
-    if (isset($_POST['validate_me'])) {
-        global $user_ID;
-        $valid_authentication = 0;
-        $user = get_user_by('id', $user_ID);
-        $pass = $_POST['authentication_pass'];
-        if ($user && wp_check_password($pass, $user->data->user_pass, $user->ID)) {
-            $valid_authentication = 1;
-        } else {
-            $valid_authentication = 0;
-        }
-    }
+
     if (isset($_POST['save_changes'])) {
         if (!empty($_POST)) {
             $table_name2 = $wpdb->prefix.'dynamic_form';
@@ -53,8 +43,6 @@
         $field_added = 1;
         $valid_authentication = 1;
     } ?>
-                        <?php if ($valid_authentication == 1) {
-        ?>
                             <div class="section group">
                                 <div class="col span_12_of_12">
                                     <form method="post" action="">
@@ -105,7 +93,7 @@
                                         <form method="post" action="">
                                         <fieldset>
                                             <legend>Add New Field</legend>
-                                            <?php if ($field_added == 1) {
+                                            <?php if ( isset( $field_added ) && $field_added == 1 ) {
             ?>
                                             <div class="successMsg">New field added.</div>
                                             <?php
@@ -141,27 +129,6 @@
                                     </div>
                                 </div>
                             </div>
-                        <?php
-    } else {
-        ?>
-                        <div class="section group">
-                            <div class="col span_4_of_12"></div>
-                            <div class="col span_4_of_12">
-                                <div class="passwordFrom">
-                                    <form method="post" action="">
-                                        <h1>istilist</h1>
-                                        <div>
-                                            <label>Password</label>
-                                            <input type="password" name="authentication_pass" />
-                                        </div>
-                                        <div style="text-align: center; margin-top: 15px;"><input type="submit" name="validate_me" value="Submit" /></div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col span_4_of_12"></div>
-                        </div>
-                        <?php
-    } ?>
                     </div>
                 </div>
                 <?php get_footer(); ?>                          
@@ -169,7 +136,4 @@
 	    </div>
 	</div>
 </div>
-<?php
-} else {
-        header('Location: '.get_bloginfo('url').'/login');
-    } ?>
+<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>

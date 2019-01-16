@@ -1,6 +1,6 @@
 <?php
 function get_shoppers( $request ) {
-    //TODO MASON: HANDLE FOR NULL STORE ID
+
     $needed_metadata_fields = array(
         'dollar_button_clicked', 'customer_fname', 'customer_lname', 'school_event',
         'assign_stylist', 'stylist_id', 'fitting_room_id', 'entry_date',

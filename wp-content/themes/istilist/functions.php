@@ -2,7 +2,7 @@
 global $options;
 $options['general-copyright'] = 'Copyright © All Rights Reserved ' . date( 'Y' ) . ' iSTiLiST - International Prom Association';
 $options['general-logo'] = 'istilist';
-$options['general-background'] = get_bloginfo( 'url' ) . '/wp-content/uploads/2017/03/istilist-main-image-background-compressor.jpg';
+$options['general-background']['url'] = get_bloginfo( 'url' ) . '/wp-content/uploads/2017/03/istilist-main-image-background-compressor.jpg';
 
 remove_action( 'shutdown', 'wp_ob_end_flush_all', 1 );
 
@@ -10,7 +10,7 @@ require_once 'api/api.php';
 
 add_action( 'rest_api_init', function () {
     $args = array('store_id' => array( 'validate_callback' => 'validate_shoppers' ));
-    register_rest_route('istilist/v2', '/shoppers/(?P<store_id>[\d]+)', array(
+    register_rest_route( 'istilist/v2', '/shoppers/(?P<store_id>[\d]+)', array(
         array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => 'get_shoppers',
@@ -32,16 +32,44 @@ add_action( 'rest_api_init', function () {
             'args' => $args
         )
     ));
+
+    $args = array('store_id' => array( 'validate_callback' => 'validate_stylists' ));
+    register_rest_route( 'istilist/v2', '/stylists/(?P<store_id>[\d]+)', array(
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => 'get_stylists',
+            'args' => $args,
+        ),
+        array(
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => 'create_stylists',
+            'args' => $args
+        ),
+        array(
+            'methods' => WP_REST_Server::DELETABLE,
+            'callback' => 'delete_stylists',
+            'args' => $args
+        ),
+        array(
+            'methods' => 'PUT',
+            'callback' => 'update_stylists',
+            'args' => $args
+        )
+    ));
 });
 
 
 function istilist_scripts() {
+    //Stylesheets for all
+
     //Scripts that load on all pages
     wp_enqueue_style('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.css');
     wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), rand(1, 100), true);
     wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), rand(1, 100), true);
     wp_enqueue_script('custom-matchheight', get_bloginfo('template_directory') . '/js/custom-matchheight.js', array('jquery', 'jquery-matchheight'), rand(1, 100), true);
     wp_enqueue_script( 'wp-api' );
+    wp_enqueue_script( 'axios', '/node_modules/axios/dist/axios.min.js', array(), rand( 1, 100 ), true );
+    // wp_enqueue_script( 'error-logging', get_bloginfo( 'template_directory' ) . '/js/error-logging.js', array( 'jquery' ), rand( 1, 100 ), true );
 
     //Conditionally load scripts
     if (is_page( array( 'store-preferences', 'dashboard') ) ) {
@@ -83,53 +111,21 @@ function istilist_scripts() {
         wp_enqueue_script('custom-autocomplete', get_bloginfo( 'template_directory' ) . '/js/custom-autocomplete.js', array( 'jquery', 'jquery-autocomplete' ), false, true);
     }
     if ( is_page( array( 'dashboard', 'history', 'self-registration' ) ) ) {
-        wp_enqueue_style('fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css');
-        wp_enqueue_script('jquery-fancybox', '/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js', array('jquery'), rand(1, 100), true);
-        wp_enqueue_script('custom-fancybox', get_bloginfo( 'template_directory' ) . '/js/custom-fancybox.js', array('jquery', 'jquery-fancybox'), rand(1, 100), true);;
+        wp_enqueue_script( 'recheck-passform', get_bloginfo( 'template_directory' ) . '/js/recheck-passform.js', array( 'jquery' ), rand( 1, 100 ), true );
         
         if (is_page(array('history', 'dashboard'))) {
-            wp_enqueue_script('custom-shopper-actions', get_bloginfo( 'template_directory' ) . '/js/custom-shopper-actions.js', array('jquery', 'swal2', 'custom-fancybox'), rand(1, 100), true);
+            wp_enqueue_script('custom-shopper-actions', get_bloginfo( 'template_directory' ) . '/js/custom-shopper-actions.js', array('jquery', 'swal2'), rand(1, 100), true);
         }
-        if (is_page(array('self-registration'))) {
-            wp_enqueue_script('jquery-validate', '/node_modules/jquery-validation/dist/jquery.validate.min.js', array('jquery'), rand(1, 100), true);
-            wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), rand(1, 100), true);
-            wp_enqueue_script('custom-validate', get_bloginfo('template_directory') . '/js/custom-validate.js', array('jquery', 'jquery-validate', 'additional-methods'), rand(1, 100), true);
-        }
+    }
+    if ( is_page( array( 'self-registration', 'add-employee' ) ) ) {
+        wp_enqueue_script('jquery-validate', '/node_modules/jquery-validation/dist/jquery.validate.min.js', array('jquery'), rand( 1, 100 ), true );
+        wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), rand( 1, 100 ), true) ;
+        wp_enqueue_script('custom-validate', get_bloginfo('template_directory') . '/js/custom-validate.js', array('jquery', 'jquery-validate', 'additional-methods'), rand( 1, 100 ), true );
+        wp_enqueue_script( 'add-employee', get_bloginfo( 'template_directory' ) . '/js/add-employee.js', array( 'jquery' ), rand( 1, 100 ), true );
     }
 }
 
 add_action('wp_enqueue_scripts', 'istilist_scripts');
-
-function add_istilist_promo_list_controller($controllers)
-{
-    $controllers[] = 'istilist_promo_list';
-    return $controllers;
-}
-
-add_filter('json_api_controllers', 'add_istilist_promo_list_controller');
-
-function istilist_promo_list_controller_path($default_path)
-{
-    return ABSPATH . 'wp-content/themes/istilist/istilist_promo_list_controller.php';
-}
-
-add_filter('json_api_istilist_promo_list_controller_path', 'istilist_promo_list_controller_path');
-
-function add_authorize_controller($controllers)
-{
-    // Corresponds to the class JSON_API_MyController_Controller
-    $controllers[] = 'authorize';
-    return $controllers;
-}
-
-add_filter('json_api_controllers', 'add_authorize_controller');
-
-function authorize_controller_path($default_path)
-{
-    return ABSPATH . 'wp-content/themes/istilist/authorize_controller.php';
-}
-
-add_filter('json_api_authorize_controller_path', 'authorize_controller_path');
 
 function revslider_scripts_cleanup()
 {
@@ -139,13 +135,11 @@ function revslider_scripts_cleanup()
     wp_deregister_script('jquery.themepunch.revolution.min');
 
     //Enqueue js files in footer
-    wp_enqueue_script('jquery.themepunch.tools.min', plugin_dir_url(__FILE__) . 'revslider/rs-plugin/js/jquery.themepunch.tools.min.js', array(), '', true);
-    wp_enqueue_script('jquery.themepunch.revolution.min', plugin_dir_url(__FILE__) . 'revslider/rs-plugin/js/jquery.themepunch.revolution.min.js', array(), '', true);
+    wp_enqueue_script('jquery.themepunch.tools.min', '/wp-content/plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js', array( 'jquery' ), rand( 1, 100 ), true);
+    wp_enqueue_script('jquery.themepunch.revolution.min', '/wp-content/plugins/revslider/public/assets/js/jquery.themepunch.revolution.min.js', array( 'jquery' ), rand( 1, 100 ), true);
 }
 
 add_action( 'wp_enqueue_scripts', 'revslider_scripts_cleanup' );
-
-
 
 add_filter('wp_mail_from_name', 'new_mail_from_name');
 function new_mail_from_name($old)
@@ -293,25 +287,6 @@ function elapsedtime($time1, $time2)
     $diff = $first->diff($second);
 
     echo $diff->format('%H:%I:%S'); // -> 00:25:25
-}
-
-function get_shopper_name($shopper_id)
-{
-    global $wpdb;
-    $table_name = $wpdb->prefix.'shoppers';
-    $sql = "SELECT * FROM $table_name WHERE id = $shopper_id";
-    $result = $wpdb->get_row($sql);
-    $shopper_name = $result->customer_fname.' '.$result->customer_lname;
-    return $shopper_name;
-}
-
-function get_shopper_email($shopper_id)
-{
-    global $wpdb;
-    $table_name = $wpdb->prefix.'shoppers';
-    $sql = "SELECT * FROM $table_name WHERE id = $shopper_id";
-    $result = $wpdb->get_row($sql);
-    return $result->customer_email;
 }
 
 function check_is_active( $form_slug )

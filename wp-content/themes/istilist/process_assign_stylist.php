@@ -2,12 +2,12 @@
 <?php get_header();
 if (is_user_logged_in()) {
 
-    if (isset($_POST['assign_stylist'])) {
+    if (isset($_POST['assignStylist'])) {
         global $wpdb;
 
-        $shopper_id   = $_POST['shopper_id'];
-        $stylist_id = $_POST['stylist_id'];
-        $fitting_room_id = $_POST['fitting_room_id'];
+        $shopper_id   = $_POST['shopperId'];
+        $stylist_id = $_POST['stylistId'];
+        $fitting_room_id = $_POST['fittingRoomId'];
         $current_date = date('Y-m-d H:i:s');
 
         update_post_meta($shopper_id, 'assign_stylist', $current_date);
@@ -42,8 +42,6 @@ if (is_user_logged_in()) {
                 $my_post = array(
                     'ID'            => $shopper_id,
                     'post_modified' => date('Y-m-d H:i:s')
-                    //'orderby' => 'date',
-                    //'order' => 'ASC'
                 );
                 wp_update_post($my_post);
                 $timestamp_array = get_post_meta($shopper_id, 'timestamps', true);
@@ -60,14 +58,14 @@ if (is_user_logged_in()) {
                 update_post_meta($shopper_id, 'hit_plus', 'true');
             }
         } else {
-            //user has not hit plus button after first round
+            //TODO MASON: user has not hit plus button after first round
         }
-
-        header('Location: ' . get_bloginfo('url') . '/dashboard');
     }
     else {
-        //TODO: no form submission WHAT TO DO?
+        //TODO MASON: no form submission WHAT TO DO?
     }
 
-} else { header('Location: ' . get_bloginfo('url') . '/login'); }
+} else { 
+    header('Location: ' . get_bloginfo('url') . '/login'); 
+}
 ?>

@@ -94,11 +94,10 @@
                             </span>
                         </li>
                         <li>
-                                <a href="#stylistpopup" 
-                                         class="assignStylist <?= is_active($shopper_id, "assign_stylist") ?>"
-                                         data-id="<?= $shopper_id ?>">
+                            <span   class="assignStylist <?= is_active($shopper_id, "assign_stylist") ?>"
+                                    data-id="<?= $shopper_id ?>">
                                 <i class="icon-clothes4"></i>
-                            </a>
+                            </span>
                         </li>
                         <li>
                             <form method="post" action="<?= get_bloginfo('url'); ?>/process-plus-button">

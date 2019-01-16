@@ -63,6 +63,7 @@ if ($paged >= 2 || $page >= 2) {
 <link rel="stylesheet" media="only screen and (max-width: 480px)" href="<?php bloginfo('template_directory'); ?>/css/480.css">
 <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('stylesheet_url'); ?>?ver=<?php echo(mt_rand(10, 100)); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"</script>
 <![endif]-->
@@ -101,20 +102,19 @@ if (is_singular() && get_option('thread_comments')) {
     } else {
         ?>
 <body <?php body_class(); ?>>
-<?php
-    } ?>
-<?php if (!is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {
+<?php } if (!is_page(array('login', 'forgot-password', 'register', 'reset-password', 'add-member', 'thank-you', 'activation'))) {
         ?>
 <div id="header">
 	<div class="maincontent noPadding">
 	    <div class="section group">
 	        <div class="col span_6_of_12">
                 <?php 
-                if (is_page('self-registration')) { 
-                    require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-selfregistration/setpasswordpopup.php';
-                } else {
+                if (is_page('self-registration')) {
                 ?>
-                    <h1><a href="<?php bloginfo('url'); ?>"><?php echo $options['general-logo']; ?></a></h1>
+                    <h1><span class="popupform"><?php echo $options['general-logo']; ?></span></h1>                
+                <?php } else {
+                ?>
+                    <h1><a href="<?php bloginfo( 'url' ); ?>"><?php echo $options['general-logo']; ?></a></h1>
                 <?php
                 }
                 ?>
@@ -153,4 +153,5 @@ if (is_singular() && get_option('thread_comments')) {
 	    </div>
 	</div>
 </div>
+<input id="store_id" type="hidden" value="<?= get_user_meta($user_ID, 'store_id', true); ?>"/>
 <?php } ?>
