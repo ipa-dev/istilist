@@ -18,10 +18,37 @@ function get_shoppers( $request ) {
     );
 
     if (isset($request['search_query'])) {
-        header('HTTP/1.1 501 Invalid Parameters');
-        return rest_ensure_response('Functionality not yet supported');
+        $post_args['meta_query'] = array(
+            array(
+                'key' => 'store_id',
+                'value' => $request['store_id']
+            ),
+            array(
+                array(
+                    'key' => 'customer_fname',
+                    'value' => $request['search_query'],
+                    'compare' => 'LIKE'
+                ),
+                array(
+                    'key' => 'customer_lname',
+                    'value' => $request['search_query'],
+                    'compare' => 'LIKE'
+                ),
+                // TODO MASON: NEED ANOTHER ONE FOR THE WHOLE NAME/REALLY JUST REPLACE THESE WITH ONE FOR THE WHOLE NAME
+                'relation' => 'OR'
+            ),
+            'relation' => 'AND'
+        );
     }
     
+    $store_reverse_order = get_user_meta($request['store_id'], 'reverse_order', true);
+
+    if (empty($store_reverse_order) || $store_reverse_order == null) {
+        $post_args['order'] = 'DESC';
+    } elseif ($store_reverse_order == "on") {
+        $post_args['order'] = 'ASC';
+    }
+
     $query = new WP_Query($post_args);
 
     //building return array - TODO MASON: Is there a way to avoid looping through again

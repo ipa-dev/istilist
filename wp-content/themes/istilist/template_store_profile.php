@@ -90,12 +90,6 @@
                                 <!-- Reverse Ordering -->
                                 <?php require_once ABSPATH . 'wp-content/themes/istilist/php_modules/template-store-profile/reverse-order.php'; ?>
                             </div>
-                            
-                            <!-- Profile Picture 
-                            <div class="section group">
-                                <?php //require_once 'php_modules/template-store-profile/profile-picture.php'; ?>
-                            </div>
-                            -->
 
                             <div class="section group">
                                 <!-- Timed Promo Text -->
@@ -177,7 +171,4 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-<?php
-} else {
-        header('Location: '.get_bloginfo('url').'/login');
-    } ?>
+<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>

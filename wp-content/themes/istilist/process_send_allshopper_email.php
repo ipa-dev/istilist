@@ -41,30 +41,4 @@ $store_name = get_the_author_meta('display_name', $store_id);
             }
         }
     } ?>
-<div class="maincontent">
-    <div class="section group">
-        <div class="col span_3_of_12"></div>
-        <div class="col span_6_of_12">
-<?php
-if ($deliv) {
-        ?>
-  <div class="successMsg">E-mail Sent</div>
-<?php
-    } else {
-        ?>
-  <div class="errorMsg">There was an error in processing your message. Please do not retry to send your message as some users may have received one copy
-  Error Message: </div>
-<?php print_r(error_get_last());
-    } ?>
-        </div>
-        <div class="col span_3_of_12"></div>
-    </div>
-    <div class="section group">
-      <div class="col span_5_of_12"></div>
-      <div class="col span_2_of_12">
-        <a href="<?php bloginfo('url') ?>/dashboard">Return to Dashboard</a>
-      </div>
-      <div class="col span_5_of_12"></div>
-    </div>
-</div>
 <?php } else { header("Location: " . get_bloginfo( 'url' ) . '/login'); } ?>

@@ -16,8 +16,6 @@ jQuery( document ).ready( function() {
         })
         .catch( function( error ) {
             swal( 'Error!', 'Whoops! There was an error on our end. Please try again later!', 'error' );
-
-            //TODO MASON: NEED AN ERROR LOG HERE
         });
     });
 });

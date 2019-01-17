@@ -138,14 +138,16 @@ jQuery( document ).ready( function() {
 
                     // Send Purchased Shopper Message
                     jQuery.ajax({
-                        url: baseUrl + '/complete-purchase',
+                        url: baseUrl + '/wp-json/istilist/v2/emails/' + storeId,
                         method: 'POST',
                         data: {
-                            'store_id': storeId,
+                            'type': 'purchase',
                             'shopper_id': shopperId
                         },
                         success: followUpSentAlert(),
                         error: errorProcessAlert()
+
+                        //TODO MASON: Add text component
                     });
                 } else {
 
@@ -157,16 +159,18 @@ jQuery( document ).ready( function() {
                         inputPlaceholder: ''
                     }).then( function( inputValue ) {
                         jQuery.ajax({
-                            url: baseUrl + '/no-purchase',
+                            url: baseUrl + '/wp-json/istilist/v2/emails/' + storeID,
                             method: 'POST',
                             data: {
-                                'store_id': storeId,
+                                'type': 'no-purchase',
                                 'shopper_id': shopperId,
                                 'reason': inputValue
                             },
                             success: followUpSentAlert(),
                             error: errorProcessAlert()
                         });
+
+                        // TODO MASON: Send text request as well
                     });
                 }
             }

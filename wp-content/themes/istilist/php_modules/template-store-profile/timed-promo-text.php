@@ -7,5 +7,5 @@
             echo 'NA';
         } ?></textarea>
     <div id="textarea_feedback"></div>
-    <a href="http://istilist.com/test-promo-text" class="custom_button">Send Test</a>
+    <span id="testPromoText" class="custom_button">Send Test</a>
 </div>

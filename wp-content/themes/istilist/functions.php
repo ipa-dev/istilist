@@ -8,28 +8,37 @@ remove_action( 'shutdown', 'wp_ob_end_flush_all', 1 );
 
 require_once 'api/api.php';
 
+//TODO MASON: Make this a controller pattern https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/#the-controller-pattern
 add_action( 'rest_api_init', function () {
+    $perm_callback = function () {
+        return true;
+    };
+
     $args = array('store_id' => array( 'validate_callback' => 'validate_shoppers' ));
     register_rest_route( 'istilist/v2', '/shoppers/(?P<store_id>[\d]+)', array(
         array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => 'get_shoppers',
             'args' => $args,
+            'permission_callback' => $perm_callback
         ),
         array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => 'create_shoppers',
-            'args' => $args
+            'args' => $args,
+            'permission_callback' => $perm_callback,
         ),
         array(
             'methods' => WP_REST_Server::DELETABLE,
             'callback' => 'delete_shoppers',
-            'args' => $args
+            'args' => $args,
+            'permission_callback' => $perm_callback
         ),
         array(
             'methods' => 'PUT',
             'callback' => 'update_shoppers',
-            'args' => $args
+            'args' => $args,
+            'permission_callback' => $perm_callback
         )
     ));
 
@@ -39,34 +48,123 @@ add_action( 'rest_api_init', function () {
             'methods' => WP_REST_Server::READABLE,
             'callback' => 'get_stylists',
             'args' => $args,
+            'permission_callback' => $perm_callback
         ),
         array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => 'create_stylists',
-            'args' => $args
+            'args' => $args,
+            'permission_callback' => $perm_callback
         ),
         array(
             'methods' => WP_REST_Server::DELETABLE,
             'callback' => 'delete_stylists',
-            'args' => $args
+            'args' => $args,
+            'permission_callback' => $perm_callback
         ),
         array(
             'methods' => 'PUT',
             'callback' => 'update_stylists',
-            'args' => $args
+            'args' => $args,
+            'permission_callback' => $perm_callback
         )
+    ));
+
+    $args = array('store_id' => array( 'validate_callback' => 'validate_shopper_forms' ));
+    register_rest_route( 'istilist/v2', '/shopper-forms/(?P<store_id>[\d]+)', array(
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => 'get_shopper_forms',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        ),
+        array(
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => 'create_shopper_forms_field',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        ),
+        array(
+            'methods' => 'PUT',
+            'callback' => 'update_shopper_forms',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        )
+    ));
+
+    $args = array('store_id' => array( 'validate_callback' => 'validate_emails' ));
+    register_rest_route( 'istilist/v2', '/emails/(?P<store_id>[\d]+)', array(
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => 'get_emails',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        ),
+        array(
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => 'create_email',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        ),
+        array(
+            'methods' => 'PUT',
+            'callback' => 'update_email',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        )
+    ));
+
+    $args = array('store_id' => array( 'validate_callback' => 'validate_texts' ));
+    register_rest_route( 'istilist/v2', '/texts/(?P<store_id>[\d]+)', array(
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => 'get_texts',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        ),
+        array(
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => 'create_text',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        ),
+        array(
+            'methods' => 'PUT',
+            'callback' => 'update_text',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        )
+    ));
+
+    register_rest_route( 'istilist/v2', '/errors', array(
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => 'get_errors',
+            'permission_callback' => $perm_callback
+        ),
+        array(
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => 'create_errors',
+            'permission_callback' => $perm_callback
+        ),
     ));
 });
 
 
 function istilist_scripts() {
-    //Stylesheets for all
-
     //Scripts that load on all pages
     wp_enqueue_style('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.css');
     wp_enqueue_script('swal2', '/node_modules/sweetalert2/dist/sweetalert2.min.js', array('jquery'), rand(1, 100), true);
     wp_enqueue_script('jquery-matchheight', get_bloginfo('template_directory') . '/js/jquery.matchHeight-min.js', array('jquery'), rand(1, 100), true);
     wp_enqueue_script('custom-matchheight', get_bloginfo('template_directory') . '/js/custom-matchheight.js', array('jquery', 'jquery-matchheight'), rand(1, 100), true);
+    wp_enqueue_script('jquery-validate', '/node_modules/jquery-validation/dist/jquery.validate.min.js', array('jquery'), rand( 1, 100 ), true );
+    wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), rand( 1, 100 ), true) ;
+    wp_enqueue_script('custom-validate', get_bloginfo('template_directory') . '/js/custom-validate.js', array('jquery', 'jquery-validate', 'additional-methods'), rand( 1, 100 ), true );
+    //temporary api testing scripts
+    wp_enqueue_script( 'add-employee', get_bloginfo( 'template_directory' ) . '/js/add-employee.js', array( 'jquery' ), rand( 1, 100 ), true );
+    wp_enqueue_script( 'add-shopper', get_bloginfo( 'template_directory' ) . '/js/add-shopper.js', array('jquery', 'jquery-validate'), rand( 1, 100 ), true );
+    wp_enqueue_script( 'test-promotext', get_bloginfo( 'template_directory' ). '/js/test-promotext.js', array( 'jquery' ), rand( 1, 100 ), true );
+    //API FUNCTIONALITY    
     wp_enqueue_script( 'wp-api' );
     wp_enqueue_script( 'axios', '/node_modules/axios/dist/axios.min.js', array(), rand( 1, 100 ), true );
     // wp_enqueue_script( 'error-logging', get_bloginfo( 'template_directory' ) . '/js/error-logging.js', array( 'jquery' ), rand( 1, 100 ), true );
@@ -99,12 +197,6 @@ function istilist_scripts() {
         wp_enqueue_script('jquery-ui-datepicker', '', array('jquery'), rand(1, 100), true);
         wp_enqueue_script( 'custom-datepicker', get_bloginfo('template_directory') . '/js/custom-datepicker.js', array('jquery', 'jquery-ui-datepicker'), rand(1, 100), true);
     }
-    if ( is_page( array( 'edit-shoppers-form', 'stylist-employee') ) ) {
-        wp_enqueue_style('switch-button', get_bloginfo('template_directory') . '/css/jquery.switchButton.css', array('jquery'));
-        wp_enqueue_script('jquery-switchbutton', get_bloginfo('template_directory') . '/js/jquery.switchButton.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget'), rand(1, 100), true);
-        wp_enqueue_script( 'custom-switchbutton', get_bloginfo( 'template_directory' ) . '/js/custom-switchbutton.js', array('jquery', 'jquery-switchbutton'), rand(1, 100), true);
-    }
-
     if ( is_page( array( 'dress-registration' ) ) ) {
         wp_enqueue_style('jquery-autocomplete', get_bloginfo('template_directory') . '/css/jquery.autocomplete.css', array('jquery'));
         wp_enqueue_script('jquery-autocomplete', get_bloginfo('template_directory') . '/js/jquery.autocomplete.js', array('jquery'), false, true);
@@ -117,12 +209,7 @@ function istilist_scripts() {
             wp_enqueue_script('custom-shopper-actions', get_bloginfo( 'template_directory' ) . '/js/custom-shopper-actions.js', array('jquery', 'swal2'), rand(1, 100), true);
         }
     }
-    if ( is_page( array( 'self-registration', 'add-employee' ) ) ) {
-        wp_enqueue_script('jquery-validate', '/node_modules/jquery-validation/dist/jquery.validate.min.js', array('jquery'), rand( 1, 100 ), true );
-        wp_enqueue_script('additional-methods', '/node_modules/jquery-validation/dist/additional-methods.min.js', array(), rand( 1, 100 ), true) ;
-        wp_enqueue_script('custom-validate', get_bloginfo('template_directory') . '/js/custom-validate.js', array('jquery', 'jquery-validate', 'additional-methods'), rand( 1, 100 ), true );
-        wp_enqueue_script( 'add-employee', get_bloginfo( 'template_directory' ) . '/js/add-employee.js', array( 'jquery' ), rand( 1, 100 ), true );
-    }
+
 }
 
 add_action('wp_enqueue_scripts', 'istilist_scripts');

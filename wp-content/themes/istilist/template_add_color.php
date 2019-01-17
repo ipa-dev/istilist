@@ -52,7 +52,4 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-<?php
-} else {
-                                header('Location: '.get_bloginfo('url').'/login');
-                            } ?>
+<?php } else { header('Location: '.get_bloginfo('url').'/login'); } ?>
