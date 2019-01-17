@@ -136,6 +136,29 @@ add_action( 'rest_api_init', function () {
         )
     ));
 
+    $args = array('store_id' => array( 'validate_callback' => 'validate_stores' ));
+    register_rest_route( 'istilist/v2', '/stores/(?P<store_id>[\d]+)', array(
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => 'get_stores',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        ),
+        array(
+            'methods' => 'PUT',
+            'callback' => 'update_store',
+            'args' => $args,
+            'permission_callback' => $perm_callback
+        )
+    ));
+    register_rest_route( 'istilist/v2', '/stores', array(
+        array(
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => 'create_store',
+            'permission_callback' => $perm_callback
+        )
+    ));
+    
     register_rest_route( 'istilist/v2', '/errors', array(
         array(
             'methods' => WP_REST_Server::READABLE,
@@ -196,11 +219,6 @@ function istilist_scripts() {
         wp_enqueue_style('jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/' . wp_scripts()->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css');        
         wp_enqueue_script('jquery-ui-datepicker', '', array('jquery'), rand(1, 100), true);
         wp_enqueue_script( 'custom-datepicker', get_bloginfo('template_directory') . '/js/custom-datepicker.js', array('jquery', 'jquery-ui-datepicker'), rand(1, 100), true);
-    }
-    if ( is_page( array( 'dress-registration' ) ) ) {
-        wp_enqueue_style('jquery-autocomplete', get_bloginfo('template_directory') . '/css/jquery.autocomplete.css', array('jquery'));
-        wp_enqueue_script('jquery-autocomplete', get_bloginfo('template_directory') . '/js/jquery.autocomplete.js', array('jquery'), false, true);
-        wp_enqueue_script('custom-autocomplete', get_bloginfo( 'template_directory' ) . '/js/custom-autocomplete.js', array( 'jquery', 'jquery-autocomplete' ), false, true);
     }
     if ( is_page( array( 'dashboard', 'history', 'self-registration' ) ) ) {
         wp_enqueue_script( 'recheck-passform', get_bloginfo( 'template_directory' ) . '/js/recheck-passform.js', array( 'jquery' ), rand( 1, 100 ), true );

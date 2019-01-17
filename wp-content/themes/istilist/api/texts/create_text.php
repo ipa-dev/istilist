@@ -7,6 +7,7 @@ $dotenv = new Dotenv\Dotenv(ABSPATH);
 $dotenv->load();
 
 use Twilio\Rest\Client;
+use Twilio\Exceptions\RestException;
 
 function create_text( $request ) {
 
@@ -28,6 +29,7 @@ function create_text( $request ) {
     $shopper_phone = get_post_meta($shopper_id, 'customer_phone', true);
     $sms_agreement = get_post_meta($shopper_id, 'sms_agreement', true);
 
+    // TODO MASON: These two if statements will lead to trouble
     if (!empty($shopper_phone) && $sms_agreement == 'yes') {
         if ( $request['type'] == 'no-purchase' ) {
             $sql = "SELECT * FROM $table_name WHERE store_id = $store_id and message_type='promotext'";
@@ -36,6 +38,13 @@ function create_text( $request ) {
         elseif ( $request['type'] == 'purchase' ) {
             $sql = "SELECT * FROM $table_name1 WHERE message_type = 'thankyoutext' and store_id = $store_id";
             $result = $wpdb->get_row($sql);
+        }
+        elseif ( $request['type'] == 'notify-shopper' ) {
+            add_post_meta($shopper_id, 'notified', 'true', true);
+
+            $result = ( object ) array(
+                'body' => 'Hey, ' . get_post_meta($shopper_id, 'customer_fname', true) . ', your fitting room at ' . get_user_meta($store_id, 'store_name', true) . ' is now available.'
+            );
         }
     }
     if ( $request['type'] == 'test-timed-promo' ) {
@@ -65,7 +74,7 @@ function create_text( $request ) {
                     'body' => $msg
                 )
             );
-        } catch ( \Services_Twilio_RestException $e ) {
+        } catch ( RestException $e ) {
             return new WP_Error( 'twilio', $e->getMessage(), array( 'status' => 500 ) );
         }
 

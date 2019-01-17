@@ -44,9 +44,12 @@ jQuery( document ).ready( function() {
     jQuery( '.notifyShopper' ).click( function() {
         jQuery.ajax({
             context: this,
-            url: baseUrl + '/notify-shopper/',
+            url: baseUrl + '/wp-json/istilist/v2/texts/' + document.getElementById( 'store_id' ).value,
             method: 'POST',
-            data: { shopperID: jQuery( this ).data( 'id' ) },
+            data: {
+                type: 'notify-shopper',
+                shopper_id: jQuery( this ).data( 'id' )
+            },
             success: function( response ) {
                 swal({
                     title: 'Success!',

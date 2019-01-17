@@ -48,7 +48,19 @@ function create_email( $request ) {
 
         $sql = "SELECT * FROM $table_name WHERE message_type = 'thankyou' and store_id = $store_id";
     }
-    elseif ( $request['type'] == 'employee' ) {
+    elseif ( $request['type'] == 'all-employees' ) {
+
+    }
+    elseif ( $request['type'] == 'all-purchased' ) {
+
+    }
+    elseif ( $request['type'] == 'all-not-purchased' ) {
+
+    }
+    elseif ( $request['type'] == 'all-shoppers' ) {
+        
+    }
+    elseif ( $request['type'] == 'admin' ) {
 
     }
     else {
