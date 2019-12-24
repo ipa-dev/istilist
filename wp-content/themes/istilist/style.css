@@ -908,5 +908,5 @@ input[type="submit"].fa-input {
 }
 
 .active {
-    color: #14b9d6;
+    color: #14b9d6 !important;
 }

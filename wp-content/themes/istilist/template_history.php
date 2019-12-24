@@ -126,14 +126,14 @@
                    
                     <div class="dash_content"> 
                     	<h1><?php the_title(); ?></h1>
-	        	<form id="update_shoppers" action="http://istilist.com/history" method="POST" style="float:right;">
+	        	<form id="update_shoppers" action="https://istilist.com/history" method="POST" style="float:right;">
                     		<div style="margin-bottom:2%">
                     			<span style="float:left;margin: 2px 1% 0 0">Select Date</span>
                     			<input id="shoppersfromdate" name="shoppersfromdate" type="text" style="width:40%;height:25px;">
                     		</div>
                     	</form>
                     	<div class="bullkActionsForm" style="margin-bottom:7%;">
-	                    <form method="post" action="http://istilist.com/dashboard" id="bulkActionForm" style="">
+	                    <form method="post" action="https://istilist.com/dashboard" id="bulkActionForm" style="">
 	                    	<!--<input type="submit" name="bulk_btn" value="Submit" style=""/>-->
 	                    	<div class="submit" style="width:50px;" onclick="confirmation();">Submit</div>
 	                    </form>

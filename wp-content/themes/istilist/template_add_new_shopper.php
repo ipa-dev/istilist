@@ -67,7 +67,7 @@ if (is_user_logged_in()) {
                                 add_post_meta($new_post_id, 'entry_date', date('Y-m-d H:i:s'));
                                 add_post_meta($new_post_id, 'store_id', get_user_meta($user_ID, 'store_id', true));
                                 add_post_meta($new_post_id, 'hit_plus', 'false');
-
+                                add_post_meta($new_post_id, 'customer_instagram', $_POST['customer_instagram']);
                                 if ($_POST['sms_agreement'] == 'yes' && isset($_POST['customer_phone'])) {
                                     $sid = getenv("TWILIO_SID");
 									$token = getenv("TWILIO_AUTH_KEY");
@@ -83,7 +83,7 @@ if (is_user_logged_in()) {
                                             'from' => getenv('TWILIO_DEFAULT_NUMBER'),
 
                                             // the sms body
-                                            'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".get_user_meta($user_ID, 'store_name', true).".Text YES to get messages from us."
+                                            'body' => "Hey, ".$_POST['customer_fname'].", welcome to ".get_user_meta($user_ID, 'store_name', true)."! Text YES to receive alerts and special offers (Up to 6 autodialed msgs/mo. Consent not required to purchase. Msg&data rates may apply. Text STOP to stop)."
                                         )
                                     );
                                 }
@@ -240,6 +240,16 @@ if (is_user_logged_in()) {
 								<div class="col span_12_of_12">
 									<input type="checkbox" name="sms_agreement" value="yes" /> Yes, I want istilist texts!<br /><br />
 									<p>Up to 6 autodialed msgs/mo.  Consent not required to purchase. Msg&data rates may apply. Text STOP to stop, HELP for help. Terms:<a href="internationalprom.com/privacy-policy">internationalprom.com</a></p>
+								</div>
+							</div>
+							<?php
+                            } ?>
+                            <?php if (check_is_active('customer_instagram') == 1) {
+                                ?>
+							<div class="section group">
+								<div class="col span_12_of_12">
+								    <label for="customer_instagram">Instagram Handle</label>
+									<input type="text" name="customer_instagram" id="customer_instagram" value="@" />
 								</div>
 							</div>
 							<?php

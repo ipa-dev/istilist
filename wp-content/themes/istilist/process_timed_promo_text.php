@@ -1,7 +1,7 @@
 <?php /* Template Name: Timed Promo Text */ ?>
 <?php
 
-require_once "/home3/istilist/public_html/vendor/autoload.php";
+require_once ABSPATH . "vendor/autoload.php";
 
 $dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
 $dotenv->load();
@@ -28,7 +28,7 @@ $shopper_args = array(
     'date_query' => array(
         array(
             'column' => 'post_date',
-            'after' => '20 minutes ago',
+            'after' => '5 minutes ago',
         )
     )
 );

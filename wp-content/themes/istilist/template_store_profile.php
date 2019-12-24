@@ -101,27 +101,7 @@
                                 <!-- Timed Promo Text -->
                                 <?php require_once 'php_modules/template-store-profile/timed-promo-text.php'; ?>
                                 
-                                <!-- Text Credits -->
-                                <div class="col span_5_of_12">
-                                    <label>Text Credit</label>
-                                    <input type="text" disabled name="text_credit" value="<?php echo get_user_meta($user_ID, 'text_credit', true); ?>" />
-                                    <div class="divnote">Current number of subscribers:
-                                        <?php 
-                                            $data = new WP_Query(array(
-                                                'post_type' => 'shopper',
-                                                'post_status' => 'publish',
-                                                'author' => get_user_meta($user_ID, 'store_id', true),
-                                                'posts_per_page' => -1,
-                                                'meta_key' => 'sms_agreement',
-                                                'meta_value' => 'yes',
-                                            ));
-                                            echo $data->found_posts;
-                                        ?>
-                                    </div>
-                                </div>
-                                <div class="col span_1_of_12" style="margin-top:35px">
-                                    <?php echo '<a class="custom_button" href="' . get_bloginfo( 'url' ) . '/purchase-texts">Buy</a>'; ?>
-                                </div>
+                                
                             </div>
 
                             <div class="section group">

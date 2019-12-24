@@ -51,6 +51,8 @@
         update_post_meta($shopper_id, 'customer_state', $_POST['customer_state']);
         update_post_meta($shopper_id, 'customer_zip', $_POST['customer_zip']);
         update_post_meta($shopper_id, 'sms_agreement', $_POST['sms_agreement']);
+        update_post_meta($shopper_id, 'customer_instagram', $_POST['customer_instagram']);
+
         //update_post_meta($shopper_id, 'entry_date', date('Y-m-d H:i:s'));
         //update_post_meta($shopper_id, 'store_id', get_user_meta($user_ID, 'store_id', true));
 
@@ -211,6 +213,16 @@
                             </div>
                             <?php
     } ?>
+    <?php if (check_is_active('customer_instagram') == 1) {
+                                ?>
+							<div class="section group">
+								<div class="col span_12_of_12">
+								    <label for="customer_instagram">Instagram Handle</label>
+									<input type="text" name="customer_instagram" id="customer_instagram" value="@" />
+								</div>
+							</div>
+							<?php
+                            } ?>
                             <div class="section group form_list">
                                 <?php if (check_is_active('design_preferences') == 1) {
         ?>

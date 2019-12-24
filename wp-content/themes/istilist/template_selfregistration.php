@@ -2,7 +2,7 @@
 <?php //a lot of duplicate code from add new shopper?>
 <?php get_header(); ?>
 <?php
-require("twilio-php-master/Twilio/autoload.php");
+require_once ABSPATH . 'vendor/autoload.php';
 use Twilio\Rest\Client;
 
 ?>

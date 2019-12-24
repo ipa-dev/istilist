@@ -370,7 +370,7 @@
                         'meta_value'     => $store_id,
                         'paged'          => $paged,
                         'posts_per_page' => 30,
-                        'orderby'        => 'date',
+                        'orderby'        => 'modified',
                     );
 
         $store_reverse_order = get_user_meta($store_id, 'reverse_order', true);

@@ -1,7 +1,8 @@
 <?php /* Template Name: No Purchase */ ?>
 <?php
 global $wpdb;
-$store_id = $_POST['store_id'];
+global $user_ID;
+$store_id = get_user_meta($user_ID, 'store_id', true);
 $shopper_id = $_POST['shopper_id'];
 $reason = $_POST['reason'];
 
@@ -10,7 +11,6 @@ require_once "/home3/istilist/public_html/vendor/autoload.php";
 $dotenv = new Dotenv\Dotenv("/home3/istilist/public_html/");
 $dotenv->load();
 
-require("twilio-php-master/Twilio/autoload.php");
 use Twilio\Rest\Client;
 
 $table_name1 = $wpdb->prefix.'folloup_messages';
@@ -40,9 +40,9 @@ $stylist_name = get_the_author_meta('display_name', $styist_id);
 $msg_body2 = str_replace("{Stylist's Name}", $stylist_name, $msg_body1);
 
 if ($options['smtp-active'] == 1) {
-    $from = get_user_meta($user_ID, 'email_to_shopper', true);
+    $from = get_user_meta($store_id, 'email_to_shopper', true);
 } else {
-    $from = get_user_meta($user_ID, 'email_to_shopper', true);
+    $from = get_user_meta($store_id, 'email_to_shopper', true);
 }
 
 $store_name = get_the_author_meta('display_name', $store_id);

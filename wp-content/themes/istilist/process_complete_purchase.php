@@ -2,7 +2,7 @@
 <?php
 global $wpdb;
 global $user_ID;
-$store_id = $_POST['store_id'];
+$store_id = get_user_meta($user_ID, 'store_id', true);
 $shopper_id = $_POST['shopper_id'];
 
 require_once "/home3/istilist/public_html/vendor/autoload.php";
